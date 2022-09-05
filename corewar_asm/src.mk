@@ -1,17 +1,14 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    asm.mk                                             :+:      :+:    :+:    #
+#    src.mk                                             :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
+#    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/09/05 13:34:29 by cchen             #+#    #+#              #
-#    Updated: 2022/09/05 13:34:30 by cchen            ###   ########.fr        #
+#    Created: 2022/09/05 17:20:05 by caruychen         #+#    #+#              #
+#    Updated: 2022/09/05 17:20:17 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_DIR_ASM := $(SRC_DIR)/asm
-SRCS_ASM := $(SRC_DIR_ASM)/main.c
-
-OBJ_DIR_ASM := $(OBJ_DIR)/asm
-OBJS_ASM := $(SRCS_ASM:$(SRC_DIR_ASM)/%.c=$(OBJ_DIR_ASM)/%.o)
+SRC_DIR := ./src
+SRCS := $(SRC_DIR)/main.c

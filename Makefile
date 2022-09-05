@@ -6,32 +6,39 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 13:16:36 by cchen             #+#    #+#              #
-#    Updated: 2022/09/05 13:19:36 by cchen            ###   ########.fr        #
+#    Updated: 2022/09/05 23:51:40 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ASM := asm
-COREWAR := corewar
+VM := corewar
 
-CC := gcc
-CFLAGS := -Wall -Werror -Wextra
-INCLUDES := -I./libft -I./includes
-
-SRC_DIR := ./src
-OBJ_DIR := ./obj
-include Makeincludes/asm.mk Makeincludes/asm.mk
-
-include Makeincludes/libft.mk
+ASM_DIR := corewar_asm
+VM_DIR := corewar_vm
 
 .PHONY: all clean fclean re
 
-all: $(LIBFT) $(ASM) $(COREWAR)
+all:
+	$(MAKE) -C ./$(ASM_DIR)
+	$(MAKE) -C ./$(VM_DIR)
+	mv ./$(ASM_DIR)/$(ASM) ./
+	mv ./$(VM_DIR)/$(VM) ./
 
-$(ASM): $(OBJ_DIR_ASM) $(OBJS_ASM)
-	@$(CC) $(CFLAGS) $(OBJS_ASM) $(LIB_OBJS) $(LINK) -o $(@)
+assembler:
+	$(MAKE) -C ./$(ASM_DIR)
+	mv ./$(ASM_DIR)/$(ASM) ./
 
-$(COREWAR): $(OBJ_DIR_COREWAR) $(OBJS_COREWAR)
-	@$(CC) $(CFLAGS) $(OBJS_COREWAR) $(LIB_OBJS) $(LINK) -o $(@)
+vm:
+	$(MAKE) -C ./$(VM_DIR)
+	mv ./$(VM_DIR)/$(VM) ./
 
-$(LIBFT):
-	@$(MAKE) -C $(LIB_DIR) CFLAGS='$(CFLAGS)'
+clean:
+	@$(MAKE) -C ./$(ASM_DIR) clean
+	@$(MAKE) -C ./$(VM_DIR) clean
+
+fclean:
+	@$(MAKE) -C ./$(ASM_DIR) fclean
+	@$(MAKE) -C ./$(VM_DIR) fclean
+	rm $(ASM) $(VM)
+
+re: fclean all

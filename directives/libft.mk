@@ -1,17 +1,18 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    corewar.mk                                         :+:      :+:    :+:    #
+#    libft.mk                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
+#    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/09/05 13:34:21 by cchen             #+#    #+#              #
-#    Updated: 2022/09/05 13:34:23 by cchen            ###   ########.fr        #
+#    Created: 2022/09/05 22:53:20 by caruychen         #+#    #+#              #
+#    Updated: 2022/09/05 23:08:59 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_DIR_COREWAR := $(SRC_DIR)/corewar
-SRCS_COREWAR := $(SRC_DIR_COREWAR)/op.c
+LIB_DIR := ../libft
+LIB_OBJS = $(shell find $(LIB_DIR) -type f | grep -E "\.o$$")
+LIB_INCLUDES := $(addprefix -I, $(shell find $(LIB_DIR)/includes -type d))
 
-OBJ_DIR_COREWAR := $(OBJ_DIR)/corewar
-OBJS_COREWAR := $(SRCS_COREWAR:$(SRC_DIR_COREWAR)/%.c=$(OBJ_DIR_COREWAR)/%.o)
+LIBFT := $(addprefix $(LIB_DIR), libft.a)
+LINK := -L $(LIB_DIR) -lft
