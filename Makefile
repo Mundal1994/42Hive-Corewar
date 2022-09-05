@@ -17,10 +17,21 @@ CC := gcc
 CFLAGS := -Wall -Werror -Wextra
 INCLUDES := -I./libft -I./includes
 
-SRC := ./src
-SRC_ASM := $(SRC)/asm
-SRC_COREWAR := $(SRC)/corewar
+SRC_DIR := ./src
+OBJ_DIR := ./obj
+include Makeincludes/asm.mk Makeincludes/asm.mk
+
+include Makeincludes/libft.mk
 
 .PHONY: all clean fclean re
 
-all: $(ASM) $(COREWAR)
+all: $(LIBFT) $(ASM) $(COREWAR)
+
+$(ASM): $(OBJ_DIR_ASM) $(OBJS_ASM)
+	@$(CC) $(CFLAGS) $(OBJS_ASM) $(LIB_OBJS) $(LINK) -o $(@)
+
+$(COREWAR): $(OBJ_DIR_COREWAR) $(OBJS_COREWAR)
+	@$(CC) $(CFLAGS) $(OBJS_COREWAR) $(LIB_OBJS) $(LINK) -o $(@)
+
+$(LIBFT):
+	@$(MAKE) -C $(LIB_DIR) CFLAGS='$(CFLAGS)'
