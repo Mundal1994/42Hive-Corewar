@@ -6,7 +6,7 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 13:16:36 by cchen             #+#    #+#              #
-#    Updated: 2022/09/05 23:51:40 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 09:13:06 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,7 @@ VM_DIR := corewar_vm
 
 .PHONY: all clean fclean re
 
-all:
-	$(MAKE) -C ./$(ASM_DIR)
-	$(MAKE) -C ./$(VM_DIR)
-	mv ./$(ASM_DIR)/$(ASM) ./
-	mv ./$(VM_DIR)/$(VM) ./
+all: assembler vm
 
 assembler:
 	$(MAKE) -C ./$(ASM_DIR)
