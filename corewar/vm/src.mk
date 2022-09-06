@@ -6,12 +6,9 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 16:59:05 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 10:26:57 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 10:48:40 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR := ./src
 SRCS := $(SRC_DIR)/op.c
-
-INCLUDES_DIR := ./includes
-HEADERS := $(INCLUDES_DIR)/op.h

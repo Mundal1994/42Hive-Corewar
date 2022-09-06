@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 09:57:02 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 10:28:18 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 11:02:03 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LIBFT := $(addprefix $(LIB_DIR), libft.a)
 ########################### Include & Link variables ###########################
 ################################################################################
 INCLUDES := $(addprefix -I, $(shell find $(LIB_DIR)/includes -type d)) \
-		-I$(INCLUDES_DIR)
+		-I./includes
 LINK := -L $(LIB_DIR) -lft
 
 ################################################################################
@@ -44,7 +44,7 @@ LINK := -L $(LIB_DIR) -lft
 all: $(LIBFT) $(NAME)
 	@echo "Done!"
 
-$(NAME): $(HEADERS) $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "Compiling $(NAME)..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_OBJS) $(LINK) -o $(@)
 
