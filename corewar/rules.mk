@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 09:57:02 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 11:02:03 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 11:22:36 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,8 @@ LINK := -L $(LIB_DIR) -lft
 all: $(LIBFT) $(NAME)
 	@echo "Done!"
 
+include $(SRCS:.c=.d)
+
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "Compiling $(NAME)..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_OBJS) $(LINK) -o $(@)
@@ -51,8 +53,11 @@ $(NAME): $(OBJ_DIR) $(OBJS)
 $(OBJ_DIR):
 	@mkdir -p $(@)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -c $(CFLAGS) $(INCLUDES) -o $@ $<
+$(SRC_DIR)/%.d: $(SRC_DIR)/%.c
+	@set -e; rm -f $@; \
+	$(CC) -MM $(CFLAGS) $(INCLUDES) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,$(OBJ_DIR)/\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
 
 $(LIBFT):
 	@$(MAKE) -C $(LIB_DIR) CFLAGS='$(CFLAGS)'
