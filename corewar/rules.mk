@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 09:57:02 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 11:22:36 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 13:28:25 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ CFLAGS := -Wall -Werror -Wextra
 ################################################################################
 OBJ_DIR := ./obj
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEP_DIR := dep
 
 ################################################################################
 ############################### Libft variables ################################
@@ -44,26 +45,30 @@ LINK := -L $(LIB_DIR) -lft
 all: $(LIBFT) $(NAME)
 	@echo "Done!"
 
-include $(SRCS:.c=.d)
+-include $(SRCS:$(SRC_DIR)/%.c=$(DEP_DIR)/%.d)
 
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(DEP_DIR) $(OBJ_DIR) $(OBJS)
 	@echo "Compiling $(NAME)..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_OBJS) $(LINK) -o $(@)
 
 $(OBJ_DIR):
 	@mkdir -p $(@)
 
-$(SRC_DIR)/%.d: $(SRC_DIR)/%.c
-	@set -e; rm -f $@; \
-	$(CC) -MM $(CFLAGS) $(INCLUDES) $< > $@.$$$$; \
-	sed 's,\($*\)\.o[ :]*,$(OBJ_DIR)/\1.o $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
+$(DEP_DIR):
+	@mkdir -p $(@)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -c $(CFLAGS) $(INCLUDES) -o $@ $<
+	@set -e; rm -f $(DEP_DIR)/$*.d; \
+	$(CC) -MM $(CFLAGS) $(INCLUDES) $< > $(DEP_DIR)/$*.d.$$$$; \
+	sed 's,\($*\)\.o[ :]*,$@ $(DEP_DIR)/\1.d : ,g' < $(DEP_DIR)/$*.d.$$$$ > $(DEP_DIR)/$*.d; \
+	rm -f $(DEP_DIR)/$*.d.$$$$
 
 $(LIBFT):
 	@$(MAKE) -C $(LIB_DIR) CFLAGS='$(CFLAGS)'
 
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(DEP_DIR)
 	$(MAKE) -C $(LIB_DIR) clean
 
 fclean: clean
