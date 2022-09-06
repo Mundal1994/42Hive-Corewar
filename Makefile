@@ -6,35 +6,37 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 13:16:36 by cchen             #+#    #+#              #
-#    Updated: 2022/09/06 09:13:06 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 09:26:58 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ASM := asm
-VM := corewar
+COREWAR := corewar
+VM := vm
 
-ASM_DIR := corewar_asm
-VM_DIR := corewar_vm
+DIR := ./corewar
+DIR_ASM := $(DIR)/$(ASM)
+DIR_VM := $(DIR)/$(VM)
 
 .PHONY: all clean fclean re
 
 all: assembler vm
 
 assembler:
-	$(MAKE) -C ./$(ASM_DIR)
-	mv ./$(ASM_DIR)/$(ASM) ./
+	$(MAKE) -C ./$(DIR_ASM)
+	mv ./$(DIR_ASM)/$(ASM) ./
 
 vm:
-	$(MAKE) -C ./$(VM_DIR)
-	mv ./$(VM_DIR)/$(VM) ./
+	$(MAKE) -C ./$(DIR_VM)
+	mv ./$(DIR_VM)/$(COREWAR) ./
 
 clean:
-	@$(MAKE) -C ./$(ASM_DIR) clean
-	@$(MAKE) -C ./$(VM_DIR) clean
+	@$(MAKE) -C ./$(DIR_ASM) clean
+	@$(MAKE) -C ./$(DIR_VM) clean
 
 fclean:
-	@$(MAKE) -C ./$(ASM_DIR) fclean
-	@$(MAKE) -C ./$(VM_DIR) fclean
+	@$(MAKE) -C ./$(DIR_ASM) fclean
+	@$(MAKE) -C ./$(DIR_VM) fclean
 	rm $(ASM) $(VM)
 
 re: fclean all
