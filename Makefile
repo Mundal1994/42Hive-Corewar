@@ -6,7 +6,7 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 13:16:36 by cchen             #+#    #+#              #
-#    Updated: 2022/09/06 09:26:58 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 13:41:50 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,12 @@ DIR_VM := $(DIR)/$(VM)
 all: assembler vm
 
 assembler:
-	$(MAKE) -C ./$(DIR_ASM)
-	mv ./$(DIR_ASM)/$(ASM) ./
+	@$(MAKE) -C ./$(DIR_ASM)
+	@mv ./$(DIR_ASM)/$(ASM) ./
 
 vm:
-	$(MAKE) -C ./$(DIR_VM)
-	mv ./$(DIR_VM)/$(COREWAR) ./
+	@$(MAKE) -C ./$(DIR_VM)
+	@mv ./$(DIR_VM)/$(COREWAR) ./
 
 clean:
 	@$(MAKE) -C ./$(DIR_ASM) clean
