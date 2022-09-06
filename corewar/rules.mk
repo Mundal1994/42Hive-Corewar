@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 09:57:02 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 10:07:28 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/06 10:08:22 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,11 @@ LIB_INCLUDES := $(addprefix -I, $(shell find $(LIB_DIR)/includes -type d))
 INCLUDES := $(LIB_INCLUDES) -I./includes
 LINK := -L $(LIB_DIR) -lft
 
-.PHONY: all clean fclean re
-
 ################################################################################
 ############################### Rules & Recipes ################################
 ################################################################################
+.PHONY: all clean fclean re
+
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
