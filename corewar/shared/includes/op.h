@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:03:39 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/05 13:03:40 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/07 10:24:40 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define IDX_MOD			512
 # define CHAMP_MAX_SIZE		682
 
+/* Defines assembly language characters */
 # define COMMENT_CHAR		'#'
 # define LABEL_CHAR			':'
 # define DIRECT_CHAR		'%'
@@ -34,9 +35,11 @@
 
 # define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
 
+/* Champion name and description */
 # define NAME_CMD_STRING	".name"
 # define COMMENT_CMD_STRING	".comment"
 
+/* Corewar will have REG_NUMBER registers */
 # define REG_NUMBER			16
 
 # define CYCLE_TO_DIE		1536
