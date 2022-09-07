@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:03:39 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/07 11:01:45 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/07 21:43:59 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@
   * Register (Register mode):
     * Address field refers directly to data in register memory location.
   * Direct (Direct addressing mode):
-    Address field refers directly to the memory location in which the data is stored.
+    Address field refers directly to the memory location in which the
+    data is stored.
   * Indirect (Indirect addressing mode):
-    Address field refers to the register first, which is then directed to memory location
+    Address field contains memory location where the effective address of
+    the data is stored
 */
 typedef char	t_arg_type;
 
