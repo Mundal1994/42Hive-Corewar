@@ -6,20 +6,16 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:03:39 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/07 10:24:40 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/07 11:01:45 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OP_H
 # define OP_H
 
-# define IND_SIZE			2
-# define REG_SIZE			4
-# define DIR_SIZE			REG_SIZE
-
-# define REG_CODE			1
-# define DIR_CODE			2
-# define IND_CODE			3
+/*
+  ALL SIZES ARE IN BYTES
+*/
 
 # define MAX_ARGS_NUMBER	4
 # define MAX_PLAYERS		4
@@ -39,7 +35,7 @@
 # define NAME_CMD_STRING	".name"
 # define COMMENT_CMD_STRING	".comment"
 
-/* Corewar will have REG_NUMBER registers */
+/* Corewar register will have REG_NUMBER registries */
 # define REG_NUMBER			16
 
 # define CYCLE_TO_DIE		1536
@@ -47,12 +43,32 @@
 # define NBR_LIVE			21
 # define MAX_CHECKS			10
 
+/* Argument types: Register, Direct, Indirect
+  * Register (Register mode):
+    * Address field refers directly to data in register memory location.
+  * Direct (Direct addressing mode):
+    Address field refers directly to the memory location in which the data is stored.
+  * Indirect (Indirect addressing mode):
+    Address field refers to the register first, which is then directed to memory location
+*/
 typedef char	t_arg_type;
 
 # define T_REG				1
 # define T_DIR				2
 # define T_IND				4
 # define T_LAB				8
+
+/*
+  REG_SIZE: size of each register entry
+  DIR_SIZE: size of operand holding memory address
+*/
+# define IND_SIZE			2
+# define REG_SIZE			4
+# define DIR_SIZE			REG_SIZE
+
+# define REG_CODE			1
+# define DIR_CODE			2
+# define IND_CODE			3
 
 # define PROG_NAME_LENGTH	(128)
 # define COMMENT_LENGTH		(2048)
