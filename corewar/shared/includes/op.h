@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:03:39 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/07 21:43:59 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/13 16:01:05 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,21 @@
   ALL SIZES ARE IN BYTES
 */
 
+/*
+  IND_SIZE: size of indirect address encoding
+  REG_SIZE: size of each register entry (registry)
+  DIR_SIZE: size of direct address encoding
+*/
+# define IND_SIZE			2
+# define REG_SIZE			4
+# define DIR_SIZE			REG_SIZE
+
+/* Instruction's ACB (Argument coding byte */
+# define REG_CODE			1
+# define DIR_CODE			2
+# define IND_CODE			3
+
+/* Game environment and champion settings */
 # define MAX_ARGS_NUMBER	4
 # define MAX_PLAYERS		4
 # define MEM_SIZE			4096
@@ -38,6 +53,7 @@
 /* Corewar register will have REG_NUMBER registries */
 # define REG_NUMBER			16
 
+/* Cycle and lives tracking macros */
 # define CYCLE_TO_DIE		1536
 # define CYCLE_DELTA		50
 # define NBR_LIVE			21
@@ -53,6 +69,7 @@
     Address field contains memory location where the effective address of
     the data is stored
 */
+
 typedef char	t_arg_type;
 
 # define T_REG				1
@@ -60,18 +77,7 @@ typedef char	t_arg_type;
 # define T_IND				4
 # define T_LAB				8
 
-/*
-  REG_SIZE: size of each register entry
-  DIR_SIZE: size of operand holding memory address
-*/
-# define IND_SIZE			2
-# define REG_SIZE			4
-# define DIR_SIZE			REG_SIZE
-
-# define REG_CODE			1
-# define DIR_CODE			2
-# define IND_CODE			3
-
+/* Binary file identifier, champion name and champion comment */
 # define PROG_NAME_LENGTH	(128)
 # define COMMENT_LENGTH		(2048)
 # define COREWAR_EXEC_MAGIC	0xea83f3
