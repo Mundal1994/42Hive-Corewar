@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/06 09:57:02 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 13:28:25 by cchen            ###   ########.fr        #
+#    Updated: 2022/09/07 10:29:05 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBFT := $(addprefix $(LIB_DIR), libft.a)
 ########################### Include & Link variables ###########################
 ################################################################################
 INCLUDES := $(addprefix -I, $(shell find $(LIB_DIR)/includes -type d)) \
-		-I./includes
+		-I./includes -I../shared/includes
 LINK := -L $(LIB_DIR) -lft
 
 ################################################################################
