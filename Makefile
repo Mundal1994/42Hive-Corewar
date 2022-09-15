@@ -12,31 +12,30 @@
 
 ASM := asm
 COREWAR := corewar
-VM := vm
 
 DIR := ./src
 DIR_ASM := $(DIR)/$(ASM)
-DIR_VM := $(DIR)/$(VM)
+DIR_COREWAR := $(DIR)/$(COREWAR)
 
 .PHONY: all clean fclean re
 
-all: assembler vm
+all: assembler corewar
 
 assembler:
 	@$(MAKE) -C ./$(DIR_ASM)
 	@mv $(DIR_ASM)/$(ASM) ./
 
-vm:
-	@$(MAKE) -C ./$(DIR_VM)
-	@mv $(DIR_VM)/$(COREWAR) ./
+corewar:
+	@$(MAKE) -C ./$(DIR_COREWAR)
+	@mv $(DIR_COREWAR)/$(COREWAR) ./
 
 clean:
 	@$(MAKE) -C ./$(DIR_ASM) clean
-	@$(MAKE) -C ./$(DIR_VM) clean
+	@$(MAKE) -C ./$(DIR_COREWAR) clean
 
 fclean:
 	@$(MAKE) -C ./$(DIR_ASM) fclean
-	@$(MAKE) -C ./$(DIR_VM) fclean
+	@$(MAKE) -C ./$(DIR_COREWAR) fclean
 	rm $(ASM) $(COREWAR)
 
 re: fclean all
