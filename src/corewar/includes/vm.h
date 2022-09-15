@@ -16,5 +16,6 @@
 # include "libft.h"
 # include "op.h"
 # include "opcodes.h"
+# include "error.h"
 
 #endif
