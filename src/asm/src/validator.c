@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:09:06 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 10:09:42 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/18 10:30:00 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#include "asm.h"
 
-# include "libft.h"
-# include "error.h"
-# include "validator.h"
+void	validate_arguments(int argc, char **argv)
+{
+	char	*extension;
 
-#endif
+	if (argc != 2)
+	{
+		ft_putendl_fd(MSG_USAGE, 2);
+		exit(EXIT_FAILURE);
+	}
+	extension = ft_strrchr(argv[1], '.');
+	if (extension && !ft_strcmp(extension, EXTENSION_IN))
+		return ;
+	ft_putendl_fd(ERR_MSG_INVALID_EXT, 2);
+	ft_putendl_fd(MSG_USAGE, 2);
+	exit(EXIT_FAILURE);
+}

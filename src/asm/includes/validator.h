@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   validator.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:09:06 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 10:08:24 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/18 10:20:15 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#ifndef VALIDATOR_H
+# define VALIDATOR_H
 
-# include "libft.h"
-# include "error.h"
-# include "validator.h"
+# define EXTENSION_IN ".s"
+# define EXTENSION_OUT ".cor"
+
+void	validate_arguments(int argc, char **argv);
 
 #endif

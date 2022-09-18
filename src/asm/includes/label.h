@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   label.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:09:06 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 09:40:20 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/18 09:40:46 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#ifndef LABEL_H
+# define LABEL_H
 
-# include "libft.h"
-# include "error.h"
-# include "validator.h"
+# include "op.h"
 
 #endif

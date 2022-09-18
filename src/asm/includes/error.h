@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:09:06 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 09:45:26 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/18 10:28:39 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#ifndef ERROR_H
+# define ERROR_H
 
-# include "libft.h"
-# include "error.h"
-# include "validator.h"
+# define MSG_USAGE "Usage: ./asm <sourcefile.s>"
+# define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
 
 #endif
