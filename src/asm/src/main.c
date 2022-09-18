@@ -6,7 +6,7 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/05 23:50:21 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/18 09:42:08 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	main(void)
 {
 	ft_printf("hello from asm\n");
-	return (0);
+	return (EXIT_SUCCESS);
 }
