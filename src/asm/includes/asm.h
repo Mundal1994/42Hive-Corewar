@@ -6,7 +6,7 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:09:06 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/18 10:36:50 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ASM_H
 
 # include "libft.h"
-# include "error.h"
+# include "msg.h"
 # include "validator.h"
 
 #endif
