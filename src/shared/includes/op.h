@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:03:39 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/13 16:01:05 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/18 09:31:07 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 
 /* Defines assembly language characters */
 # define COMMENT_CHAR		'#'
+# define ALT_COMMENT_CHAR	';'
 # define LABEL_CHAR			':'
 # define DIRECT_CHAR		'%'
 # define SEPARATOR_CHAR		','
