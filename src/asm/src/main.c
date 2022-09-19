@@ -14,7 +14,9 @@
 
 int	main(int argc, char **argv)
 {
+	char	*buffer;
+
 	validate_arguments(argc, argv);
-	ft_printf("hello from asm %s\n", argv[1]);
+	buffer = io_read(argv[1]);
 	return (EXIT_SUCCESS);
 }
