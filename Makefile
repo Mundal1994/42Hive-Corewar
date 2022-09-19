@@ -39,3 +39,19 @@ fclean:
 	rm $(ASM) $(COREWAR)
 
 re: fclean all
+
+assembler_debug:
+	@$(MAKE) debug -C ./$(DIR_ASM)
+	@mv $(DIR_ASM)/$(ASM) ./
+
+corewar_debug:
+	@$(MAKE) debug -C ./$(DIR_COREWAR)
+	@mv $(DIR_COREWAR)/$(COREWAR) ./
+
+assembler_fsan:
+	@$(MAKE) fsan -C ./$(DIR_ASM)
+	@mv $(DIR_ASM)/$(ASM) ./
+
+corewar_fsan:
+	@$(MAKE) fsan -C ./$(DIR_COREWAR)
+	@mv $(DIR_COREWAR)/$(COREWAR) ./
