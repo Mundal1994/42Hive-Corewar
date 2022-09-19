@@ -16,42 +16,36 @@ COREWAR := corewar
 DIR := ./src
 DIR_ASM := $(DIR)/$(ASM)
 DIR_COREWAR := $(DIR)/$(COREWAR)
+DIR_MK := $(patsubst %/Makefile, %, $(abspath $(lastword $(MAKEFILE_LIST))))
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re asm corewar
 
-all: assembler corewar
+all: $(ASM) $(COREWAR)
 
-assembler:
-	@$(MAKE) -C ./$(DIR_ASM)
-	@mv $(DIR_ASM)/$(ASM) ./
+$(ASM):
+	@$(MAKE) -C ./$(DIR_ASM) EXEC='$(DIR_MK)/$(@)'
 
-corewar:
-	@$(MAKE) -C ./$(DIR_COREWAR)
-	@mv $(DIR_COREWAR)/$(COREWAR) ./
+$(COREWAR):
+	@$(MAKE) -C ./$(DIR_COREWAR) EXEC='$(DIR_MK)/$(@)'
 
 clean:
 	@$(MAKE) -C ./$(DIR_ASM) clean
 	@$(MAKE) -C ./$(DIR_COREWAR) clean
 
 fclean:
-	@$(MAKE) -C ./$(DIR_ASM) fclean
-	@$(MAKE) -C ./$(DIR_COREWAR) fclean
-	rm $(ASM) $(COREWAR)
+	@$(MAKE) -C ./$(DIR_ASM) fclean EXEC='$(DIR_MK)/$(ASM)'
+	@$(MAKE) -C ./$(DIR_COREWAR) fclean EXEC='$(DIR_MK)/$(COREWAR)'
 
 re: fclean all
 
-assembler_debug:
-	@$(MAKE) debug -C ./$(DIR_ASM)
-	@mv $(DIR_ASM)/$(ASM) ./
+$(ASM)_debug:
+	@$(MAKE) debug -C ./$(DIR_ASM) EXEC='$(DIR_MK)/$(ASM)'
 
-corewar_debug:
-	@$(MAKE) debug -C ./$(DIR_COREWAR)
-	@mv $(DIR_COREWAR)/$(COREWAR) ./
+$(COREWAR)_debug:
+	@$(MAKE) debug -C ./$(DIR_COREWAR) EXEC='$(DIR_MK)/$(COREWAR)'
 
-assembler_fsan:
-	@$(MAKE) fsan -C ./$(DIR_ASM)
-	@mv $(DIR_ASM)/$(ASM) ./
+$(ASM)_fsan:
+	@$(MAKE) fsan -C ./$(DIR_ASM) EXEC='$(DIR_MK)/$(ASM)'
 
-corewar_fsan:
-	@$(MAKE) fsan -C ./$(DIR_COREWAR)
-	@mv $(DIR_COREWAR)/$(COREWAR) ./
+$(COREWAR)_fsan:
+	@$(MAKE) fsan -C ./$(DIR_COREWAR) EXEC='$(DIR_MK)/$(COREWAR)'
