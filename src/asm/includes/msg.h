@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   msg.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 10:44:51 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/18 10:45:14 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#ifndef MSG_H
+# define MSG_H
 
-int	main(int argc, char **argv)
-{
-	t_vec	buffer;
+# define MSG_USAGE "Usage: ./asm <sourcefile.s>"
+# define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
+# define ERR_MSG_EMPTY_FILE "ERROR: empty file"
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &buffer);
-	return (EXIT_SUCCESS);
-}
+#endif

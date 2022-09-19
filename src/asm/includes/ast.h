@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 10:48:21 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/19 11:23:24 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#ifndef AST_H
+# define AST_H
 
-int	main(int argc, char **argv)
+typedef enum e_type
 {
-	t_vec	buffer;
+	LABEL,
+	STATEMENT,
+	ARGUMENT
+}		t_type;
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &buffer);
-	return (EXIT_SUCCESS);
-}
+typedef struct s_node
+{
+	uint8_t	type;
+	char	*token;
+	t_vec	nodes;
+}		t_node;
+
+/* Abstract Syntax Tree */
+typedef struct s_ast
+{
+	t_vec	nodes;
+}		t_ast;
+
+#endif

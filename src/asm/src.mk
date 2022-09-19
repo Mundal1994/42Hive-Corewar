@@ -6,9 +6,12 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 17:20:05 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/06 10:48:36 by caruychen        ###   ########.fr        #
+#    Updated: 2022/09/19 11:22:49 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR := ./src
 SRCS := $(SRC_DIR)/main.c
+SRCS += $(SRC_DIR)/validator.c
+SRCS += $(SRC_DIR)/io_read.c
+SRCS += $(SRC_DIR)/cleanup.c

@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/18 10:09:42 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/18 10:46:07 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int	main(int argc, char **argv)
+static int	is_valid_extension(char *arg)
 {
-	t_vec	buffer;
+	char	*extension;
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &buffer);
-	return (EXIT_SUCCESS);
+	extension = ft_strrchr(arg, '.');
+	return (extension && !ft_strcmp(extension, EXTENSION_IN));
+}
+
+void	validate_arguments(int argc, char **argv)
+{
+	if (argc == 2 && is_valid_extension(argv[1]))
+		return ;
+	if (argc == 2)
+		ft_putendl_fd(ERR_MSG_INVALID_EXT, 2);
+	exit_error_str(MSG_USAGE);
 }

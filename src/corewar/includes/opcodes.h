@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:10:51 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/15 09:10:53 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/18 09:38:25 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-typedef enum	e_opcodes
+typedef enum e_opcodes
 {
 	OP_NULL,
 	OP_LIVE,
@@ -38,7 +38,7 @@ typedef enum	e_opcodes
 	OP_AFF
 }			t_opcodes;
 
-typedef enum	e_opindex
+typedef enum e_opindex
 {
 	IDX_LIVE,
 	IDX_LD,

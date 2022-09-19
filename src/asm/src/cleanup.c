@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/19 10:45:13 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/19 10:51:50 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int	main(int argc, char **argv)
+void	exit_error(void)
 {
-	t_vec	buffer;
+	perror("ERROR");
+	exit(EXIT_FAILURE);
+}
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &buffer);
-	return (EXIT_SUCCESS);
+void	exit_error_str(char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(EXIT_FAILURE);
 }

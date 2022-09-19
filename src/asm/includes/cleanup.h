@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleanup.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/19 11:00:57 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/19 11:01:14 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#ifndef CLEANUP_H
+# define CLEANUP_H
 
-int	main(int argc, char **argv)
-{
-	t_vec	buffer;
+void	exit_error(void);
+void	exit_error_str(char *str);
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &buffer);
-	return (EXIT_SUCCESS);
-}
+#endif
