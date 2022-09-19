@@ -42,13 +42,13 @@ LINK := -L $(LIB_DIR) -lft
 ################################################################################
 .PHONY: all clean fclean re
 
-all: $(LIBFT) $(NAME)
+all: $(LIBFT) $(EXEC)
 	@echo "Done!"
 
 -include $(SRCS:$(SRC_DIR)/%.c=$(DEP_DIR)/%.d)
 
-$(NAME): $(DEP_DIR) $(OBJ_DIR) $(OBJS)
-	@echo "Compiling $(NAME)..."
+$(EXEC): $(DEP_DIR) $(OBJ_DIR) $(OBJS)
+	@echo "Compiling $(EXEC)..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_OBJS) $(LINK) -o $(@)
 
 $(OBJ_DIR):
@@ -68,17 +68,17 @@ $(LIBFT):
 	@$(MAKE) -C $(LIB_DIR) CFLAGS='$(CFLAGS)'
 
 debug: CFLAGS += -g
-debug: clean $(LIBFT) $(NAME)
+debug: clean $(LIBFT) $(EXEC)
 
 fsan: CFLAGS += -fsanitize=address -g
-fsan: clean $(LIBFT) $(NAME)
+fsan: clean $(LIBFT) $(EXEC)
 
 clean:
 	@rm -rf $(OBJ_DIR) $(DEP_DIR)
 	$(MAKE) -C $(LIB_DIR) clean
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(EXEC)
 	$(MAKE) -C $(LIB_DIR) fclean
 
 re: fclean all
