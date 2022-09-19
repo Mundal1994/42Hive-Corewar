@@ -17,6 +17,6 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-char	*io_read(const char *filename);
+void	io_read(const char *filename, t_vec *buffer);
 
 #endif

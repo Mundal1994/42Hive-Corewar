@@ -36,33 +36,33 @@ static off_t	file_size(int fd)
 	return (size);
 }
 
-static void	init_buffer(const int fd, char **buffer, size_t	*size_ptr)
+static void	init_buffer(const int fd, t_vec *buffer)
 {
 	size_t	size;
 
 	size = (size_t) file_size(fd);
 	if (!size)
 		exit_error_str(ERR_MSG_EMPTY_FILE);
-	*buffer = ft_memalloc(sizeof(**buffer) * size);
-	if (!*buffer)
+	if (vec_new(buffer, size, sizeof(char)) == ERROR)
 		exit_error();
-	*size_ptr = size;
 }
 
-static long	read_file(const int fd, char *buffer, size_t size)
+static void read_file(const int fd, t_vec *buffer)
 {
-	return (read(fd, buffer, size));
+	long	res;
+
+	res = read(fd, buffer->memory, buffer->alloc_size);
+	if (res == ERROR)
+		exit_error();
+	buffer->len = res;
 }
 
-char	*io_read(const char *filename)
+void	io_read(const char *filename, t_vec *buffer)
 {
 	int		fd;
-	size_t	size;
-	char	*buffer;
 
 	open_file(&fd, filename);
-	init_buffer(fd, &buffer, &size);
-	read_file(fd, buffer, size);
+	init_buffer(fd, buffer);
+	read_file(fd, buffer);
 	close(fd);
-	return (buffer);
 }

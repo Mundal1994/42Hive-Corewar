@@ -14,9 +14,9 @@
 
 int	main(int argc, char **argv)
 {
-	char	*buffer;
+	t_vec	buffer;
 
 	validate_arguments(argc, argv);
-	buffer = io_read(argv[1]);
+	io_read(argv[1], &buffer);
 	return (EXIT_SUCCESS);
 }
