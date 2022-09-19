@@ -6,13 +6,12 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 10:48:21 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 11:12:59 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/19 11:23:24 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
-
 
 typedef enum e_type
 {
