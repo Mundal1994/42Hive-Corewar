@@ -67,6 +67,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(LIBFT):
 	@$(MAKE) -C $(LIB_DIR) CFLAGS='$(CFLAGS)'
 
+debug: CFLAGS += -g
+debug: clean $(LIBFT) $(NAME)
+
+fsan: CFLAGS += -fsanitize=address -g
+fsan: clean $(LIBFT) $(NAME)
+
 clean:
 	@rm -rf $(OBJ_DIR) $(DEP_DIR)
 	$(MAKE) -C $(LIB_DIR) clean
