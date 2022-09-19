@@ -12,7 +12,7 @@
 
 #include "asm.h"
 
-int	is_valid_extension(char *arg)
+static int	is_valid_extension(char *arg)
 {
 	char	*extension;
 
@@ -26,6 +26,5 @@ void	validate_arguments(int argc, char **argv)
 		return ;
 	if (argc == 2)
 		ft_putendl_fd(ERR_MSG_INVALID_EXT, 2);
-	ft_putendl_fd(MSG_USAGE, 2);
-	exit(EXIT_FAILURE);
+	exit_error_str(MSG_USAGE);
 }
