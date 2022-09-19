@@ -78,7 +78,7 @@ clean:
 	$(MAKE) -C $(LIB_DIR) clean
 
 fclean: clean
-	@rm -f $(EXEC)
+	@rm -rf $(EXEC)
 	$(MAKE) -C $(LIB_DIR) fclean
 
 re: fclean all
