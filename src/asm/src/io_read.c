@@ -43,13 +43,13 @@ static void	init_buffer(const int fd, t_vec *buffer)
 	size = (size_t) file_size(fd);
 	if (!size)
 		exit_error_str(ERR_MSG_EMPTY_FILE);
-	if (vec_new(buffer, size, sizeof(char)) == ERROR)
+	if (vec_new(buffer, ++size, sizeof(char)) == ERROR)
 		exit_error();
 }
 
 static void read_file(const int fd, t_vec *buffer)
 {
-	long	res;
+	ssize_t	res;
 
 	while (buffer->len < buffer->alloc_size)
 	{
@@ -58,8 +58,9 @@ static void read_file(const int fd, t_vec *buffer)
 			exit_error();
 		if (!res)
 			break;
-		buffer->len += res;
+		buffer->len += (size_t) res;
 	}
+	vec_push(buffer, "\0");
 }
 
 void	io_read(const char *filename, t_vec *buffer)
