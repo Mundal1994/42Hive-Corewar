@@ -51,10 +51,15 @@ static void read_file(const int fd, t_vec *buffer)
 {
 	long	res;
 
-	res = read(fd, buffer->memory, buffer->alloc_size);
-	if (res == ERROR)
-		exit_error();
-	buffer->len = res;
+	while (buffer->len < buffer->alloc_size)
+	{
+		res = read(fd, buffer->memory, buffer->alloc_size);
+		if (res == ERROR)
+			exit_error();
+		if (!res)
+			break;
+		buffer->len += res;
+	}
 }
 
 void	io_read(const char *filename, t_vec *buffer)
