@@ -15,5 +15,6 @@
 
 # define MSG_USAGE "Usage: ./asm <sourcefile.s>"
 # define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
+# define ERR_MSG_EMPTY_FILE "ERROR: empty file"
 
 #endif
