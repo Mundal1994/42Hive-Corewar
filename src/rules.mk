@@ -43,7 +43,6 @@ LINK := -L $(LIB_DIR) -lft
 .PHONY: all clean fclean re
 
 all: $(LIBFT) $(EXEC)
-	@echo "Done!"
 
 -include $(SRCS:$(SRC_DIR)/%.c=$(DEP_DIR)/%.d)
 

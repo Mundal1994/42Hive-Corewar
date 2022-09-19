@@ -23,9 +23,11 @@ DIR_MK := $(patsubst %/Makefile, %, $(abspath $(lastword $(MAKEFILE_LIST))))
 all: $(ASM) $(COREWAR)
 
 $(ASM):
+	@echo "$(@):"
 	@$(MAKE) -C ./$(DIR_ASM) EXEC='$(DIR_MK)/$(@)'
 
 $(COREWAR):
+	@echo "$(@):"
 	@$(MAKE) -C ./$(DIR_COREWAR) EXEC='$(DIR_MK)/$(@)'
 
 clean:
