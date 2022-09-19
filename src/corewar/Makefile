@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME := corewar
+EXEC := corewar
 
 include src.mk
 include ../rules.mk
