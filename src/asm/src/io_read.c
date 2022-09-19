@@ -47,7 +47,7 @@ static void	init_buffer(const int fd, t_vec *buffer)
 		exit_error();
 }
 
-static void read_file(const int fd, t_vec *buffer)
+static void	read_file(const int fd, t_vec *buffer)
 {
 	ssize_t	res;
 
@@ -57,7 +57,7 @@ static void read_file(const int fd, t_vec *buffer)
 		if (res == ERROR)
 			exit_error();
 		if (!res)
-			break;
+			break ;
 		buffer->len += (size_t) res;
 	}
 	vec_push(buffer, "\0");
