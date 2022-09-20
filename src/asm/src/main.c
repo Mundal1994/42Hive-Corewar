@@ -15,8 +15,10 @@
 int	main(int argc, char **argv)
 {
 	t_vec	buffer;
+	t_ast	syntax_tree;
 
 	validate_arguments(argc, argv);
 	io_read(argv[1], &buffer);
+	vec_free(&buffer);
 	return (EXIT_SUCCESS);
 }
