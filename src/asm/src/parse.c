@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/20 13:45:41 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/20 13:45:44 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int	main(int argc, char **argv)
+static void	parse_init(t_ast syntax_tree,t_vec *buffer)
 {
-	t_vec	buffer;
-	t_ast	syntax_tree;
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &buffer);
-	vec_free(&buffer);
-	return (EXIT_SUCCESS);
+}
+
+int	parse(t_ast *syntax_tree, t_vec *buffer)
+{
+	parse_init(syntax_tree, buffer);
 }

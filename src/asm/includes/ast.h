@@ -30,7 +30,9 @@ typedef struct s_node
 /* Abstract Syntax Tree */
 typedef struct s_ast
 {
-	t_vec	nodes;
+	t_header	header;
+	t_vec		nodes;
 }		t_ast;
 
+void	ast_init(t_ast *ast);
 #endif
