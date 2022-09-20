@@ -15,6 +15,27 @@
 int	main(int argc, char **argv)
 {
 	/*	added non useful comment to test pull requests	*/
+	/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	 */
 	if (argc < 2)
 		return (ft_putendl(MSG_USAGE), 1);
 	ft_putendl(argv[0]);
