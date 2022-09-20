@@ -12,7 +12,8 @@
 
 #include "asm.h"
 
-void	ast_init(t_ast *ast)
+/* Initializes Abstract Syntax Tree data */
+int	ast_init(t_ast *ast)
 {
 	t_header	*header;
 
@@ -21,6 +22,5 @@ void	ast_init(t_ast *ast)
 	header->prog_size = 0;
 	ft_bzero(header->prog_name, PROG_NAME_LENGTH + 1);
 	ft_bzero(header->comment, COMMENT_LENGTH + 1);
-	if (vec_new(ast->nodes, 1, sizeof(t_node)) == ERROR)
-		exit_error();
+	return (vec_new(&ast->nodes, 1, sizeof(t_node)));
 }

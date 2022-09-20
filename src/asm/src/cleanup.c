@@ -23,3 +23,9 @@ void	exit_error_str(char *str)
 	ft_putendl_fd(str, 2);
 	exit(EXIT_FAILURE);
 }
+
+int	error(char *msg)
+{
+	ft_putendl_fd(msg, 2);
+	return (ERROR);
+}
