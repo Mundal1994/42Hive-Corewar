@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:03:29 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/15 10:11:54 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/20 16:31:18 by molesen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,28 @@
 
 int	main(int argc, char **argv)
 {
+	/*	added non useful comment to test pull requests	*/
+	/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	 */
 	if (argc < 2)
 		return (ft_putendl(MSG_USAGE), 1);
 	ft_putendl(argv[0]);
