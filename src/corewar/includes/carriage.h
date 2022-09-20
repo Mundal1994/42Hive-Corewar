@@ -24,8 +24,13 @@ typedef enum e_carry
 
 typedef struct s_carriage
 {
-	uint32_t	registry[REG_NUMBER];
-	uint32_t	carry;
+	int32_t	id;
+	int32_t	registry[REG_NUMBER];
+	int32_t	carry;
+	int32_t	last_live;
+	int32_t	program_counter;
+	int32_t	next_statement;
+	int32_t	cycle_delay;
 }				t_carriage;
 
 #endif
