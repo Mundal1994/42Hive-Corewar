@@ -14,11 +14,14 @@
 # define ASM_H
 
 # include "libft.h"
-# include "op.h"
+# include "ast.h"
+# include "opmap.h"
 # include "ast.h"
 # include "msg.h"
 # include "validator.h"
 # include "io.h"
+# include "lexer.h"
+# include "parse.h"
 # include "cleanup.h"
 
 # define ERROR	-1

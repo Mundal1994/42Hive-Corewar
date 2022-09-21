@@ -13,6 +13,9 @@
 #ifndef OPMAP_H
 # define OPMAP_H
 
+# include <stdbool.h>
+# include "op.h"
+
 # define MAX_ARGS 3
 
 typedef enum e_opcodes

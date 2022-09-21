@@ -13,6 +13,8 @@
 #ifndef AST_H
 # define AST_H
 
+# include "opmap.h"
+
 typedef struct s_statement
 {
 	t_op	operation;
