@@ -15,7 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_vec	buffer;
-	t_ast	syntax_tree;
+	t_ast	ast;
 
 	validate_arguments(argc, argv);
 	io_read(argv[1], &buffer);
