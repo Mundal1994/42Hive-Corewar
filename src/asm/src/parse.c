@@ -21,7 +21,7 @@ static void	parse_init(t_ast *ast, t_vec *buffer)
 	exit(EXIT_FAILURE);
 }
 
-int	parse(t_ast *ast, t_lexer *lexer)
+void	parse(t_ast *ast, t_lexer *lexer)
 {
 	parse_init(ast, &lexer->buffer);
 	parse_header(&ast->header, lexer);

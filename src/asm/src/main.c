@@ -18,7 +18,8 @@ int	main(int argc, char **argv)
 	t_ast	ast;
 
 	validate_arguments(argc, argv);
-	io_read(argv[1], &lexer->buffer);
-	vec_free(&buffer);
+	io_read(argv[1], &lexer.buffer);
+	parse(&ast, &lexer);
+	vec_free(&lexer.buffer);
 	return (EXIT_SUCCESS);
 }

@@ -40,7 +40,7 @@ int	opmap_new(t_hashmap *opmap)
 	index = 0;
 	while (index < OP_NUMBER)
 	{
-		if (hashmap_try_insert(opmap, g_op_tab[index].name, index) == ERROR)
+		if (!hashmap_try_insert(opmap, g_op_tab[index].name, index))
 			return (perror("ERROR"), ERROR);
 		++index;
 	}
@@ -51,7 +51,7 @@ t_op	*opmap_get(t_hashmap *opmap, const char *key)
 {
 	int	*index;
 
-	index = *hashmap_get(opmap, key);
+	index = hashmap_get(opmap, key);
 	if (!index)
 		return (error(ERR_MSG_NO_OP), NULL);
 	if (*index < 0 || *index >= OP_NUMBER)

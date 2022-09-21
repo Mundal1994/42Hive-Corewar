@@ -15,5 +15,6 @@
 
 void	exit_error(void);
 void	exit_error_str(char *str);
+int		error(char *msg);
 
 #endif

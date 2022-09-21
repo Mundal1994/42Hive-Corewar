@@ -15,7 +15,7 @@
 
 # define WHITESPACE " \t\n\v\f\r"
 
-int		parse(t_ast *ast, t_lexer *lexer);
-void	parse_header(t_header *header, t_vec *buffer);
+void	parse(t_ast *ast, t_lexer *lexer);
+int		parse_header(t_header *header, t_lexer *lexer);
 
 #endif

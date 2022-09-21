@@ -17,10 +17,11 @@ static int	is_valid_name_cmd(char *str)
 	char	*next;
 	char	*delim;
 	char	*token;
-	int		result;
+	size_t	len;
 
 	token = ft_strchr(str, '.');
-	if (!token || ft_strspn(str, WHITESPACE) != (token - str))
+	len = token - str;
+	if (!token || ft_strspn(str, WHITESPACE) != len)
 		return (FALSE);
 	delim = " \t";
 	token = ft_strtok_r(token, delim, &next);
@@ -34,11 +35,11 @@ static char	*parse_name(t_lexer *lexer)
 	char	*delim;
 
 	delim = "\"";
-	str = ft_strtok_r(buffer, delim, &lexer->next);
+	str = ft_strtok_r(lexer_buffer(*lexer), delim, &lexer->next);
 	if (!is_valid_name_cmd(str))
 		return (error(ERR_MSG_INVALID_NAME), NULL);
 	if (*lexer->next == '"')
-		return (*lexer->next == '\0', lexer->next++);
+		return (*lexer->next = '\0', lexer->next++);
 	str = ft_strtok_r(NULL, delim, &lexer->next);
 	if (lexer->next - str - 1 > PROG_NAME_LENGTH)
 		return (error(ERR_MSG_NAME_TOO_LONG), NULL);
@@ -52,5 +53,6 @@ int	parse_header(t_header *header, t_lexer *lexer)
 	token = parse_name(lexer);
 	if (!token)
 		return (ERROR);
-	ft_memcpy(header->prog_name, token, lexer->next - str);
+	ft_memcpy(header->prog_name, token, lexer->next - token);
+	return (OK);
 }
