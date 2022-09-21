@@ -13,25 +13,18 @@
 #ifndef AST_H
 # define AST_H
 
-typedef enum e_type
+typedef struct s_statement
 {
-	LABEL,
-	STATEMENT,
-	ARGUMENT
-}		t_type;
-
-typedef struct s_node
-{
-	uint8_t	type;
-	char	*token;
-	t_vec	nodes;
-}		t_node;
+	t_op	operation;
+	t_vec	args;
+}
 
 /* Abstract Syntax Tree */
 typedef struct s_ast
 {
 	t_header	header;
-	t_vec		nodes;
+	t_vec		statements;
+	t_hashmap	labels;
 }		t_ast;
 
 void	ast_init(t_ast *ast);
