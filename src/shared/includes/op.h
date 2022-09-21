@@ -53,6 +53,9 @@
 /* Corewar register will have REG_NUMBER registries */
 # define REG_NUMBER			16
 
+/* Nummber of operators */
+# define OP_NUMBER			16
+
 /* Cycle and lives tracking macros */
 # define CYCLE_TO_DIE		1536
 # define CYCLE_DELTA		50
