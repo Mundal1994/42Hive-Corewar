@@ -14,15 +14,15 @@
 
 static void	parse_init(t_ast *ast, t_vec *buffer)
 {
-	if (ast_init(ast) == ERROR);
-	{
-		vec_free(buffer);
-		error(ERR_MSG_AST_INIT_FAIL);
-		exit(EXIT_FAILURE);
-	}
+	if (ast_init(ast) == OK)
+		return ;
+	vec_free(buffer);
+	error(ERR_MSG_AST_INIT_FAIL);
+	exit(EXIT_FAILURE);
 }
 
-int	parse(t_ast *ast, t_vec *buffer)
+int	parse(t_ast *ast, t_lexer *lexer)
 {
-	parse_init(ast, buffer);
+	parse_init(ast, &lexer->buffer);
+	parse_header(&ast->header, lexer);
 }

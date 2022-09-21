@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/21 14:26:44 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int	main(int argc, char **argv)
+char	*lexer_buffer(t_lexer lexer)
 {
-	t_lexer	lexer;
-	t_ast	ast;
+	char	*str;
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &lexer->buffer);
-	vec_free(&buffer);
-	return (EXIT_SUCCESS);
+	str = (char *) lexer.buffer.memory;
+	return (str);
 }

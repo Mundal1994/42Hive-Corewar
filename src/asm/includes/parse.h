@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:22 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/21 12:19:07 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#ifndef PARSE_H
+# define PARSE_H
 
-int	main(int argc, char **argv)
-{
-	t_lexer	lexer;
-	t_ast	ast;
+# define WHITESPACE " \t\n\v\f\r"
 
-	validate_arguments(argc, argv);
-	io_read(argv[1], &lexer->buffer);
-	vec_free(&buffer);
-	return (EXIT_SUCCESS);
-}
+int		parse(t_ast *ast, t_lexer *lexer);
+void	parse_header(t_header *header, t_vec *buffer);
+
+#endif
