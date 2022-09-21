@@ -22,5 +22,17 @@ int	ast_init(t_ast *ast)
 	header->prog_size = 0;
 	ft_bzero(header->prog_name, PROG_NAME_LENGTH + 1);
 	ft_bzero(header->comment, COMMENT_LENGTH + 1);
-	return (vec_new(&ast->nodes, 1, sizeof(t_node)));
+	if (vec_new(&ast->statements, 1, sizeof(t_statement)) == OK
+		&& hashmap_new(&ast->labels) == OK)
+		return (OK);
+	ast_free(&ast);
+	return (perror(ERR_MSG_AST_INIT_FAIL), ERROR);
+}
+
+void	ast_free(t_ast **ast)
+{
+	if ((*ast)->statements.memory)
+		vec_free(&(*ast)->statements);
+	hashmap_free(&(*ast)->labels);
+	*ast = NULL;
 }

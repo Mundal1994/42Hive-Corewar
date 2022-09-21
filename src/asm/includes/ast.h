@@ -16,7 +16,7 @@
 typedef struct s_statement
 {
 	t_op	operation;
-	t_vec	args;
+	char	*args[MAX_ARGS];
 }				t_statement;
 
 /* Abstract Syntax Tree */
@@ -27,5 +27,7 @@ typedef struct s_ast
 	t_hashmap	labels;
 }		t_ast;
 
-void	ast_init(t_ast *ast);
+int		ast_init(t_ast *ast);
+void	ast_free(t_ast **ast);
+
 #endif
