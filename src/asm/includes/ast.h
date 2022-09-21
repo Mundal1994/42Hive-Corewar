@@ -17,7 +17,7 @@ typedef struct s_statement
 {
 	t_op	operation;
 	t_vec	args;
-}
+}				t_statement;
 
 /* Abstract Syntax Tree */
 typedef struct s_ast
