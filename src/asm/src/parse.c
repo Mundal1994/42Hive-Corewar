@@ -12,12 +12,17 @@
 
 #include "asm.h"
 
-static void	parse_init(t_ast syntax_tree,t_vec *buffer)
+static void	parse_init(t_ast *ast, t_vec *buffer)
 {
-
+	if (ast_init(ast) == ERROR);
+	{
+		vec_free(buffer);
+		error(ERR_MSG_AST_INIT_FAIL);
+		exit(EXIT_FAILURE);
+	}
 }
 
-int	parse(t_ast *syntax_tree, t_vec *buffer)
+int	parse(t_ast *ast, t_vec *buffer)
 {
-	parse_init(syntax_tree, buffer);
+	parse_init(ast, buffer);
 }
