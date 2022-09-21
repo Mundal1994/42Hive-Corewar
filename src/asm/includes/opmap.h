@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opcodes.h                                          :+:      :+:    :+:   */
+/*   opmap.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 09:39:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 09:39:48 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/21 11:05:33 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/21 11:05:38 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OPCODES_H
-# define OPCODES_H
+#ifndef OPMAP_H
+# define OPMAP_H
+
+# define MAX_ARGS 3
 
 typedef enum e_opcodes
 {
@@ -38,10 +40,14 @@ typedef struct s_op
 {
 	char		*name;
 	uint8_t		argc;
-	t_arg_type	arg_types[3];
+	t_arg_type	arg_types[MAX_ARGS];
 	uint8_t		opcode;
 	bool		no_acb;
 	bool		label;
 }				t_op;
+
+int		opmap_new(t_hashmap *opmap);
+t_op	*opmap_get(t_hashmap *opmap, const char *key);
+void	opmap_free(t_hashmap **opmap);
 
 #endif
