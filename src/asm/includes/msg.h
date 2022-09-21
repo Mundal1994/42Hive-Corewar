@@ -17,11 +17,14 @@
 # define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
 # define ERR_MSG_EMPTY_FILE "ERROR: empty file"
 
+/* Parser related messages */
+# define ERR_MSG_PARSE_INIT_FAIL "ERROR: Failed to initialize parser"
+
 /* AST related messages */
-# define ERR_MSG_NO_NODE "ERROR: Missing node location to initialise to"
-# define ERR_MSG_NO_TOKEN "ERROR: Missing token string"
-# define ERR_MSG_BAD_TYPE "ERROR: Invalid token type"
-# define ERR_MSG_NO_NODE "ERROR: Node not supplied"
-# define ERR_MSG_BAD_ORDER "ERROR: Incorrect token order"
+# define ERR_MSG_AST_INIT_FAIL "ERROR: AST initialisation failed"
+
+/* opmap related messages */
+# define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
+# define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
 #endif
