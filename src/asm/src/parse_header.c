@@ -6,13 +6,13 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:14:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 12:14:33 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/21 21:12:31 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int	is_valid_name_cmd(char *str)
+static int	is_valid_cmd(char *str, char *cmd)
 {
 	char	*next;
 	char	*delim;
@@ -25,34 +25,46 @@ static int	is_valid_name_cmd(char *str)
 		return (FALSE);
 	delim = " \t";
 	token = ft_strtok_r(token, delim, &next);
-	return (ft_strequ(NAME_CMD_STRING, token)
+	return (ft_strequ(token, cmd)
 		&& ft_strtok_r(NULL, delim, &next) == NULL);
 }
 
-static char	*parse_name(t_lexer *lexer)
+static char	*parse_header_line(t_lexer *lexer, char *cmd, long len)
 {
-	char	*str;
-	char	*delim;
+	char		*str;
+	char		*delim;
+	char		*buffer;
 
 	delim = "\"";
-	str = ft_strtok_r(lexer_buffer(*lexer), delim, &lexer->next);
-	if (!is_valid_name_cmd(str))
-		return (error(ERR_MSG_INVALID_NAME), NULL);
+	buffer = NULL;
+	if (lexer->next == NULL)
+		buffer = lexer_buffer(*lexer);
+	str = ft_strtok_r(buffer, delim, &lexer->next);
+	if (!is_valid_cmd(str, cmd))
+		return (error(ERR_MSG_BAD_CMD), NULL);
 	if (*lexer->next == '"')
 		return (*lexer->next = '\0', lexer->next++);
 	str = ft_strtok_r(NULL, delim, &lexer->next);
-	if (lexer->next - str - 1 > PROG_NAME_LENGTH)
-		return (error(ERR_MSG_NAME_TOO_LONG), NULL);
+	if (lexer->next - str - 1 > len)
+		return (error(ERR_MSG_STR_TOO_LONG), NULL);
 	return (str);
+}
+
+static int	parse_line(char *dst, t_lexer *lexer,
+	char *cmd, long len)
+{
+	char	*token;
+
+	token = parse_header_line(lexer, cmd, len);
+	if (!token)
+		return (ERROR);
+	return (ft_memcpy(dst, token, lexer->next - token), OK);
 }
 
 int	parse_header(t_header *header, t_lexer *lexer)
 {
-	char	*token;
-
-	token = parse_name(lexer);
-	if (!token)
-		return (ERROR);
-	ft_memcpy(header->prog_name, token, lexer->next - token);
-	return (OK);
+	return (parse_line(header->prog_name, lexer,
+			NAME_CMD_STRING, PROG_NAME_LENGTH) == OK
+		&& parse_line(header->comment, lexer,
+			COMMENT_CMD_STRING, COMMENT_LENGTH) == OK);
 }

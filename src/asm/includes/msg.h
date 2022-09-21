@@ -6,7 +6,7 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 10:44:51 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:45:14 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/21 20:20:39 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 /* Parser related messages */
 # define ERR_MSG_PARSE_INIT_FAIL "ERROR: Failed to initialize parser"
-# define ERR_MSG_INVALID_NAME "ERROR: Lexical error: invalid name command"
-# define ERR_MSG_NAME_TOO_LONG "ERROR: Name string too long"
+# define ERR_MSG_BAD_CMD "ERROR: Invalid Name/Comment command"
+# define ERR_MSG_STR_TOO_LONG "ERROR: Name/Comment string too long"
 
 /* AST related messages */
 # define ERR_MSG_AST_INIT_FAIL "ERROR: AST initialisation failed"

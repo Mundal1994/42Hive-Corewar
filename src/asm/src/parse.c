@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 13:45:41 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/20 13:45:44 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/21 21:08:57 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	parse_init(t_ast *ast, t_vec *buffer)
 
 void	parse(t_ast *ast, t_lexer *lexer)
 {
+	lexer->next = NULL;
 	parse_init(ast, &lexer->buffer);
 	parse_header(&ast->header, lexer);
 }
