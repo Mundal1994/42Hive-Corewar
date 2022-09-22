@@ -20,5 +20,6 @@ typedef struct s_lexer
 }				t_lexer;
 
 char	*lexer_buffer(t_lexer lexer);
+void	lexer_free(t_lexer *lexer);
 
 #endif

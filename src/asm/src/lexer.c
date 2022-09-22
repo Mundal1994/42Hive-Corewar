@@ -19,3 +19,10 @@ char	*lexer_buffer(t_lexer lexer)
 	str = (char *) lexer.buffer.memory;
 	return (str);
 }
+
+void	lexer_free(t_lexer *lexer)
+{
+	if (lexer->buffer.memory)
+		vec_free(&lexer->buffer);
+	lexer->next = NULL;
+}
