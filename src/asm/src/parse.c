@@ -12,18 +12,18 @@
 
 #include "asm.h"
 
-static void	parse_init(t_ast *ast, t_vec *buffer)
+static void	parse_init(t_ast *ast, t_lexer *lexer)
 {
+	lexer->next = NULL;
 	if (ast_init(ast) == OK)
 		return ;
-	vec_free(buffer);
+	vec_free(&lexer->buffer);
 	error(ERR_MSG_AST_INIT_FAIL);
 	exit(EXIT_FAILURE);
 }
 
 void	parse(t_ast *ast, t_lexer *lexer)
 {
-	lexer->next = NULL;
-	parse_init(ast, &lexer->buffer);
+	parse_init(ast, lexer);
 	parse_header(&ast->header, lexer);
 }

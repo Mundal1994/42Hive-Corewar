@@ -55,12 +55,16 @@ static void	read_file(const int fd, t_vec *buffer)
 	{
 		res = read(fd, buffer->memory, buffer->alloc_size);
 		if (res == ERROR)
+		{
+			vec_free(buffer);
 			exit_error();
+		}
 		if (!res)
 			break ;
 		buffer->len += (size_t) res;
 	}
-	vec_push(buffer, "\0");
+	if (vec_push(buffer, "\0") == ERROR)
+		exit_error();
 }
 
 void	io_read(const char *filename, t_vec *buffer)
