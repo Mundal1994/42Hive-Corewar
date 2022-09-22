@@ -18,8 +18,7 @@ static void	parse_init(t_ast *ast, t_lexer *lexer)
 	if (ast_init(ast) == OK)
 		return ;
 	vec_free(&lexer->buffer);
-	error(ERR_MSG_AST_INIT_FAIL);
-	exit(EXIT_FAILURE);
+	exit_error_str(ERR_MSG_AST_INIT_FAIL);
 }
 
 void	parse(t_ast *ast, t_lexer *lexer)
