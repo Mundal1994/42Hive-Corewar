@@ -49,12 +49,10 @@ int	main(int argc, char **argv)
 		(flag_count == 2 && argc <= 7 && argc >= 4))
 	{
 		init(argc, argv);
-		return (ft_putendl("successfull"), 1);
 	}
 	else if (argc < 4 || flag_count == -1)
 		return (ft_putendl(MSG_USAGE), 1);
 	else
 		return (ft_putendl(TOO_MANY_CHAMPS), 1);
-	ft_putendl(argv[0]);
 	return (0);
 }

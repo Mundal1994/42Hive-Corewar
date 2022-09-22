@@ -47,7 +47,6 @@ static int	init_info(t_info *info)
 	info = (t_info *)malloc(sizeof(t_info));
 	if (!info)
 		return (-1);
-	info->winner = 0;//needs to be player with highest identification number
 	info->total_cycles = 0;
 	info->live_statement = 0;
 	info->cycle_of_death = CYCLE_TO_DIE;
@@ -55,7 +54,7 @@ static int	init_info(t_info *info)
 	info->head = NULL;
 	if (init_carriage(info) == -1)
 		return (-1);
-	ft_printf("%d\n", info->head->id);
+	info->winner = info->head->id;
 	return (0);
 }
 
@@ -70,7 +69,12 @@ int	init(int argc, char **argv)
 	// loop through core and set everything to 0
 	i = 0;
 	while (i < MEM_SIZE)
-		core[i++] = 0;
+	{
+		core[i] = 0;
+		ft_printf("%d ", core[i]);
+		i++;
+	}
+	ft_printf("\n");
 	//place players
 	if (init_info(info) == -1)
 		return (-1);
@@ -80,16 +84,3 @@ int	init(int argc, char **argv)
 		return (1);
 	return (0);
 }
-
-
-/*
-
-
-initialize game play
-
-initialize carriage
-copy singular carriage and add to the beginning of the struct
-
-
-
-*/
