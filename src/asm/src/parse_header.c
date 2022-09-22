@@ -29,7 +29,7 @@ static int	is_valid_cmd(char *str, char *cmd)
 		&& ft_strtok_r(NULL, delim, &next) == NULL);
 }
 
-static char	*parse_header_line(t_lexer *lexer, char *cmd, long len)
+static char	*get_string(t_lexer *lexer, char *cmd, long len)
 {
 	char		*str;
 	char		*delim;
@@ -55,7 +55,7 @@ static int	parse_line(char *dst, t_lexer *lexer,
 {
 	char	*token;
 
-	token = parse_header_line(lexer, cmd, len);
+	token = get_string(lexer, cmd, len);
 	if (!token)
 		return (ERROR);
 	return (ft_memcpy(dst, token, lexer->next - token), OK);
