@@ -20,6 +20,16 @@ char	*lexer_buffer(t_lexer lexer)
 	return (str);
 }
 
+char	*lexer_next_line(t_lexer *lexer)
+{
+	char	*buffer;
+
+	buffer = NULL;
+	if (lexer->next == NULL)
+		buffer = lexer_buffer(*lexer);
+	return (ft_strtok_r(buffer, NEWLINE, &lexer->next));
+}
+
 void	lexer_free(t_lexer *lexer)
 {
 	if (lexer->buffer.memory)

@@ -15,6 +15,7 @@
 static void	parse_init(t_ast *ast, t_lexer *lexer)
 {
 	lexer->next = NULL;
+	lexer->row = 1;
 	if (ast_init(ast) == OK)
 		return ;
 	vec_free(&lexer->buffer);
