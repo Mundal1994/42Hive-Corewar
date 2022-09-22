@@ -25,14 +25,13 @@ int	ast_init(t_ast *ast)
 	if (vec_new(&ast->statements, 1, sizeof(t_statement)) != ERROR
 		&& hashmap_new(&ast->labels) == OK)
 		return (OK);
-	ast_free(&ast);
+	ast_free(ast);
 	return (ERROR);
 }
 
-void	ast_free(t_ast **ast)
+void	ast_free(t_ast *ast)
 {
-	if ((*ast)->statements.memory)
-		vec_free(&(*ast)->statements);
-	hashmap_free(&(*ast)->labels);
-	*ast = NULL;
+	if (ast->statements.memory)
+		vec_free(&ast->statements);
+	hashmap_free(&ast->labels);
 }

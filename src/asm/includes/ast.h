@@ -30,6 +30,6 @@ typedef struct s_ast
 }		t_ast;
 
 int		ast_init(t_ast *ast);
-void	ast_free(t_ast **ast);
+void	ast_free(t_ast *ast);
 
 #endif
