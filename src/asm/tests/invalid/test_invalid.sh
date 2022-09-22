@@ -19,7 +19,7 @@ LEAKS () {
 TEST_INVALID () {
 	echo $1
 	../../asm $1 &> res
-	if grep -q 'ERROR' res; then
+	if grep 'ERROR' res; then
 		echo "${GREEN}ERROR reported${NC}"
 	else
 		echo "${RED}No ERROR reported${NC}"
@@ -33,5 +33,3 @@ for f in $(find . -type f -name "*"); do
 	LEAKS $f
 	echo ""
 done
-
-/bin/rm res
