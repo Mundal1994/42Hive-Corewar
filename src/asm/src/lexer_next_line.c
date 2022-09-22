@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   lexer_next_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 13:45:41 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 21:08:57 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/22 17:11:39 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/22 17:11:40 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static void	parse_init(t_ast *ast, t_lexer *lexer)
+static int	is_empty_line(char *token)
 {
-	lexer_init(lexer);
-	if (ast_init(ast) == OK)
-		return ;
-	vec_free(&lexer->buffer);
-	exit_error_str(ERR_MSG_AST_INIT_FAIL);
+	while (*token && ft_strchr(TABSPACE, *token))
+		++token;
+	return (*token == '\0' || ft_strchr("#;", *token));
 }
 
-void	parse(t_ast *ast, t_lexer *lexer)
+char	*lexer_next_line(t_lexer *lexer)
 {
-	parse_init(ast, lexer);
-	parse_header(&ast->header, lexer);
+	char	*token;
+
+	token = lexer_next(lexer, NEWLINE);
+	while (is_empty_line(token))
+		token = lexer_next(lexer, NEWLINE);
+	return (token);
 }

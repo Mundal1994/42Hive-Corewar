@@ -12,6 +12,12 @@
 
 #include "asm.h"
 
+void	lexer_init(t_lexer *lexer)
+{
+	lexer->next = NULL;
+	lexer->row = 1;
+}
+
 char	*lexer_buffer(t_lexer lexer)
 {
 	char	*str;
