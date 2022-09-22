@@ -31,7 +31,7 @@ static int	is_valid_cmd(char *str, char *cmd)
 
 static char	*get_string(t_lexer *lexer, char *cmd, long len)
 {
-	char		*str;
+	char		*token;
 	char		*delim;
 	char		*buffer;
 
@@ -39,15 +39,15 @@ static char	*get_string(t_lexer *lexer, char *cmd, long len)
 	buffer = NULL;
 	if (lexer->next == NULL)
 		buffer = lexer_buffer(*lexer);
-	str = ft_strtok_r(buffer, delim, &lexer->next);
-	if (!is_valid_cmd(str, cmd))
-		return (error(ERR_MSG_BAD_CMD), NULL);
+	token = ft_strtok_r(buffer, delim, &lexer->next);
+	if (!is_valid_cmd(token, cmd))
+		return (syntax_error(ERR_MSG_BAD_CMD, token, *lexer), NULL);
 	if (*lexer->next == '"')
 		return (*lexer->next = '\0', lexer->next++);
-	str = ft_strtok_r(NULL, delim, &lexer->next);
-	if (lexer->next - str - 1 > len)
-		return (error(ERR_MSG_STR_TOO_LONG), NULL);
-	return (str);
+	token = ft_strtok_r(NULL, delim, &lexer->next);
+	if (lexer->next - token - 1 > len)
+		return (syntax_error(ERR_MSG_STR_TOO_LONG, token, *lexer), NULL);
+	return (token);
 }
 
 static int	parse_line(char *dst, t_lexer *lexer,

@@ -29,3 +29,14 @@ int	error(char *msg)
 	ft_putendl_fd(msg, 2);
 	return (ERROR);
 }
+
+int	syntax_error(char *msg, char *token, t_lexer lexer)
+{
+	ssize_t	row;
+	ssize_t	col;
+
+	start = token - lexer_buffer(lexer);
+	end = lexer.next - token;
+	ft_printf("%s at [%ld:%ld] \"%s\"\n", msg, start, end, token);
+	return (ERROR);
+}

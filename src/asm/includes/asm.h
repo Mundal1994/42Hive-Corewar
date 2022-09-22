@@ -14,6 +14,7 @@
 # define ASM_H
 
 # include "libft.h"
+# include "lexer.h"
 # include "cleanup.h"
 # include "ast.h"
 # include "opmap.h"
@@ -21,7 +22,6 @@
 # include "msg.h"
 # include "validator.h"
 # include "io.h"
-# include "lexer.h"
 # include "parse.h"
 
 # define ERROR	-1
