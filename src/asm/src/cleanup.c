@@ -32,24 +32,11 @@ int	error(char *msg)
 
 int	syntax_error(char *msg, char *token, t_lexer lexer)
 {
-	char	*buffer;
-	size_t	index;
-	size_t	len;
 	size_t	col;
 
-	buffer = lexer_buffer(lexer);
-	len = lexer.next - buffer;
-	col = token - buffer;
-	index = 0;
-	while (index < len)
-	{
-		if (buffer[index] == '\n')
-		{
-			++lexer.row;
-			col -= index * (index < col);
-		}
-		++index;
-	}
+	col = 1;
+	while (token - col > lexer_buffer(lexer) && token[-col] != '\n')
+		++col;
 	ft_printf("%s at [%ld:%ld] \"%s\"\n", msg, lexer.row, col, token);
 	return (ERROR);
 }

@@ -20,14 +20,23 @@ char	*lexer_buffer(t_lexer lexer)
 	return (str);
 }
 
-char	*lexer_next_line(t_lexer *lexer)
+char	*lexer_next(t_lexer *lexer, const char *delim)
 {
 	char	*buffer;
 
 	buffer = NULL;
 	if (lexer->next == NULL)
 		buffer = lexer_buffer(*lexer);
-	return (ft_strtok_r(buffer, NEWLINE, &lexer->next));
+	return (ft_strtok_r(buffer, delim, &lexer->next));
+}
+
+char	*lexer_token_trim_start(t_lexer *lexer, char *token)
+{
+	if (!lexer || !token)
+		return (NULL);
+	while (*token && ft_strchr(WHITESPACE, *token))
+		lexer->row += *token++ == '\n';
+	return (token);
 }
 
 void	lexer_free(t_lexer *lexer)

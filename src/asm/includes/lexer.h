@@ -14,6 +14,9 @@
 # define LEXER_H
 
 # define NEWLINE "\n"
+# define NEWLINE_C '\n'
+# define WHITESPACE " \t\n\v\f\r"
+# define TABSPACE " \t"
 
 typedef struct s_lexer
 {
@@ -23,7 +26,8 @@ typedef struct s_lexer
 }				t_lexer;
 
 char	*lexer_buffer(t_lexer lexer);
-char	*lexer_next_line(t_lexer *lexer);
+char	*lexer_next(t_lexer *lexer, const char *delim);
+char	*lexer_token_trim_start(t_lexer *lexer, char *token);
 void	lexer_free(t_lexer *lexer);
 
 #endif
