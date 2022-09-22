@@ -13,3 +13,4 @@
 SRC_DIR := ./src
 SRCS := $(SRC_DIR)/main.c
 SRCS += $(SRC_DIR)/op.c
+SRCS += $(SRC_DIR)/init.c

@@ -21,4 +21,6 @@
 # define TRUE 1
 # define FALSE 0
 
+int	init(int argc, char **argv);
+
 #endif
