@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 	validate_arguments(argc, argv);
 	io_read(argv[1], &lexer.buffer);
 	parse(&ast, &lexer);
-	vec_free(&lexer.buffer);
+	ast_free(&ast);
+	lexer_free(&lexer);
 	return (EXIT_SUCCESS);
 }
