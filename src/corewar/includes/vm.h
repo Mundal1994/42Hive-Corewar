@@ -18,8 +18,31 @@
 # include "opcodes.h"
 # include "error.h"
 
-# define TRUE 1
-# define FALSE 0
+# define TRUE	1
+# define FALSE	0
+
+typedef struct s_carriage
+{
+	int32_t				id;//unique carriage number
+	int32_t				carry;//can be 1 or 0 - has the value of false upon initialization
+	int32_t				statement_code;//prior to battle this value is not set
+	int32_t				last_live_call;//initialized to 0? cycle in which the statement live performed last
+	int32_t				delay;//initialized to 0
+	int32_t				pos;//current carriage position
+	int32_t				skip;//nbr of bytes that needs to be skipped to go to next statement
+	int32_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
+	struct s_carriage	*next;
+}						t_carriage;
+
+typedef struct s_info
+{
+	int			winner;//initialized to player with highest identification number
+	int			total_cycles;//initialized to 0
+	int			live_statement;//initialized to 0
+	int			cycle_of_death;// initialized with macro CYCLES_TO_DIE
+	int			checks_count;// initialized to 0
+	t_carriage	*head;
+}				t_info;
 
 int	init(int argc, char **argv);
 
