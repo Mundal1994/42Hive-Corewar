@@ -166,6 +166,7 @@ int	main (int argc, char *argv[])
 	while ((int)i < argc)
 	{
 		//file passed ends with .cor
+		//add check got max size of file
 		fd = open(argv[i], O_RDONLY | 0);
 		if (fd == -1)
 		{
