@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io_read.c                                          :+:      :+:    :+:   */
+/*   source_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 09:50:52 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/19 11:23:35 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/23 16:49:48 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/23 17:01:47 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ static void	read_file(const int fd, t_vec *buffer)
 		exit_error();
 }
 
-void	io_read(const char *filename, t_vec *buffer)
+void	source_read(t_source *source, const char *filename)
 {
 	int		fd;
 
 	open_file(&fd, filename);
-	init_buffer(fd, buffer);
-	read_file(fd, buffer);
+	init_buffer(fd, &source->buffer);
+	read_file(fd, &source->buffer);
 	close(fd);
 }

@@ -6,19 +6,11 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:50:38 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/23 11:33:37 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/23 17:38:17 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-void	source_init(t_source *source)
-{
-	source->index = 0;
-	source->pos = (t_pos){1, 0};
-	source->curr = NULL;
-	source->next = NULL;
-}
 
 static void	reset(t_source *source)
 {
@@ -26,6 +18,14 @@ static void	reset(t_source *source)
 	source->pos = (t_pos){1, 0};
 	source->curr = NULL;
 	source->next = (char *)source->buffer.memory;
+}
+
+void	source_init(t_source *source)
+{
+	source->index = 0;
+	source->pos = (t_pos){1, 0};
+	source->curr = NULL;
+	source->next = NULL;
 }
 
 char	*source_peek(t_source *source)

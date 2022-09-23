@@ -6,7 +6,7 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/23 11:28:53 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/23 17:00:22 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include "ast.h"
 # include "msg.h"
 # include "validator.h"
-# include "io.h"
 # include "parse.h"
 
 # define ERROR	-1

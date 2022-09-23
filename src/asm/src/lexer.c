@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/23 11:34:47 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/23 17:04:54 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,12 @@
 
 void	lexer_init(t_lexer *lexer)
 {
-	t_source	*source;
+	t_vec	*buffer;
 
 	lexer->next = NULL;
-	source = &lexer->source;
-	source_init(source);
-	if (!source->buffer.alloc_size || !source->buffer.memory)
+	buffer = &lexer->source.buffer;
+	if (!buffer->alloc_size || !buffer->memory)
 		exit_error_str(ERR_MSG_NO_SOURCE);
-}
-
-char	*lexer_buffer(t_lexer lexer)
-{
-	char	*str;
-
-	str = (char *) lexer.source.buffer.memory;
-	return (str);
 }
 
 char	*lexer_next(t_lexer *lexer, const char *delim)

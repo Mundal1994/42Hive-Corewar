@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io.h                                               :+:      :+:    :+:   */
+/*   source_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 10:01:35 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/19 10:09:44 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/23 17:08:03 by caruychen         #+#    #+#             */
+/*   Updated: 2022/09/23 17:38:19 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IO_H
-# define IO_H
+#include "asm.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
-
-void	io_read(const char *filename, t_vec *buffer);
-
-#endif
+bool	source_endline(t_source source)
+{
+	
+}
+bool	source_startline(t_source source);
