@@ -57,11 +57,26 @@ static void	check(t_info *info)
 	info->live_statement = 0;
 }
 
+/*
+Introducing contestants...
+* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
+* Player 2, weighing 394 bytes, "turtle" ("TURTLE FFS U LAMA") !
+*/
+
+static void	introduce_contestants(void)//add player struct
+{
+	ft_printf("Introducing contestants...\n");
+	// while (players)
+	// {
+	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", 1, 23, "zork", "I'M ALIIIIVE");
+	// }
+}
+
 int	game_start(uint32_t core[MEM_SIZE], t_info *info)//add player struct
 {
 	int i = 0;
-	//FUNCTION
-	//introduce contestants function
+
+	introduce_contestants();//add player struct
 	while (!one_carriage_left(info))
 	{
 		if (update_carriages(info) == ERROR)
@@ -70,7 +85,7 @@ int	game_start(uint32_t core[MEM_SIZE], t_info *info)//add player struct
 		++i;
 	}
 	//print_core(core);
-	ft_printf("Contestant %d, [name of winner], has won !\n", info->winner);
+	ft_printf("Contestant %d, \"name of winner\", has won !\n", info->winner);
 	if (core)
 		i++;
 	return (0);
