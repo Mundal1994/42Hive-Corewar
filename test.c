@@ -1,8 +1,8 @@
-#include "libft/libft.h"
+#include "../vm_champs/libft/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
 
-t_input *create_buf(t_input **input, int argc)
+t_input **create_buf(t_input **input, int argc)
 {
 	int	i;
 
@@ -31,6 +31,7 @@ t_input *create_buf(t_input **input, int argc)
 			}
 			input[i]->capacity = (BUFF_SIZE * 2);
 			input[i]->current = 0;
+			++i;
 		}
 	}
 	return (input);
@@ -101,7 +102,7 @@ static int	usage_champs_count(int argc)
 	return (0);
 }
 
-static t_profile *store_champs(t_profile **champ, int argc, t_input **input)
+static t_profile **store_champs(t_profile **champ, int argc, t_input **input)
 {
 	int i;
 	int	j;
@@ -114,36 +115,34 @@ static t_profile *store_champs(t_profile **champ, int argc, t_input **input)
 		if (!champ)
 		{
 			//free everything
-			return (-1);
+			return (NULL);
 		}
 		while (i < (argc - 1))
 		{
 			if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
-				!= 234 || input[i]->t_script[2] != 131 || input[3]->t_script[0] \
+				!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
 				!= 243)
 				exit (1);
 			champ[i] = (t_profile *) malloc (sizeof(t_profile));
 			if (!champ[i])
 			{
 				//free all 
-				return (-1);
+				return (NULL);
 			}
-			ft_bzero(champ[i]->name, 129);
+			ft_bzero(champ[i]->name, 129); //
 			j = 0;
 			k = 4;
-			while (j < 129)
+			while (j < 128) //PROG_NAME_LENGTH
 			{
-				if ((input[i]->t_script[k] >= 'a' && input[i]->t_script[k] <= 'z') \
-					|| input[i]->t_script[k] == '-' || (input[i]->t_script[k] >= '0' \
-					&& input[i]->t_script[k] <= '9'))
-				{
-					champ[i]->name[j] = 
-				}
+				champ[i]->name[j] = input[i]->t_script[k + j];
 				++j;
 			}
+			ft_printf("%s\n", champ[i]->name);
+			//exit (0);
 			++i;
 		}
 	}
+	return (champ);
 }
 
 int	main (int argc, char *argv[])
@@ -164,7 +163,7 @@ int	main (int argc, char *argv[])
 	{
 		return (-1);
 	}
-	while (i < argc)
+	while ((int)i < argc)
 	{
 		//file passed ends with .cor
 		fd = open(argv[i], O_RDONLY | 0);
