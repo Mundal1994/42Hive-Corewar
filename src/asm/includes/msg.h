@@ -6,7 +6,7 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 10:44:51 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/21 20:20:39 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/23 11:19:31 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define MSG_USAGE "Usage: ./asm <sourcefile.s>"
 # define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
 # define ERR_MSG_EMPTY_FILE "ERROR: empty file"
+
+# define ERR_MSG_NO_SOURCE "ERROR: Source memory not initialized"
 
 /* Parser related messages */
 # define ERR_MSG_PARSE_INIT_FAIL "ERROR: Failed to initialize parser"

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:06:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 14:06:48 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:15:10 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 
 typedef struct s_lexer
 {
-	t_vec	buffer;
-	char	*next;
-	size_t	row;
+	t_source	source;
+	char		*next;
 }				t_lexer;
 
+void	lexer_init(t_lexer *lexer);
 char	*lexer_buffer(t_lexer lexer);
 char	*lexer_next(t_lexer *lexer, const char *delim);
 char	*lexer_token_trim_start(t_lexer *lexer, char *token);

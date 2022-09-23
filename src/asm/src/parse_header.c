@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:14:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 21:12:31 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/23 11:36:30 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	parse_line(char *dst, t_lexer *lexer,
 	if (!token)
 		return (ERROR);
 	len = lexer->next - token;
-	lexer->row += ft_count_charn(token, NEWLINE_C, len);
+//	lexer->row += ft_count_charn(token, NEWLINE_C, len);
 	return (ft_memcpy(dst, token, len), OK);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:45:13 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/19 10:51:50 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:37:04 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	syntax_error(char *msg, char *token, t_lexer lexer)
 	col = 1;
 	while (token - col > lexer_buffer(lexer) && token[-col] != '\n')
 		++col;
-	ft_printf("%s at [%ld:%ld] \"%s\"\n", msg, lexer.row, col, token);
+	ft_printf("%s at [%ld:%ld] \"%s\"\n", msg, lexer.source.pos.r, col, token);
 	return (ERROR);
 }

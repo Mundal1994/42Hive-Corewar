@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 14:26:44 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:34:47 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,20 @@
 
 void	lexer_init(t_lexer *lexer)
 {
+	t_source	*source;
+
 	lexer->next = NULL;
-	lexer->row = 1;
+	source = &lexer->source;
+	source_init(source);
+	if (!source->buffer.alloc_size || !source->buffer.memory)
+		exit_error_str(ERR_MSG_NO_SOURCE);
 }
 
 char	*lexer_buffer(t_lexer lexer)
 {
 	char	*str;
 
-	str = (char *) lexer.buffer.memory;
+	str = (char *) lexer.source.buffer.memory;
 	return (str);
 }
 
@@ -41,13 +46,12 @@ char	*lexer_token_trim_start(t_lexer *lexer, char *token)
 	if (!lexer || !token)
 		return (NULL);
 	while (*token && ft_strchr(WHITESPACE, *token))
-		lexer->row += *token++ == '\n';
+		token++;
 	return (token);
 }
 
 void	lexer_free(t_lexer *lexer)
 {
-	if (lexer->buffer.memory)
-		vec_free(&lexer->buffer);
 	lexer->next = NULL;
+	source_free(&lexer->source);
 }
