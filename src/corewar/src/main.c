@@ -34,7 +34,7 @@ static int	valid_flags(int argc, char **argv)
 		if (argc > 3 && str_digit(argv[2]))
 			return (2);//figure out how strict to be with this flag
 		else
-			return (-1);
+			return (ERROR);
 	}
 	return (0);
 }
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	{
 		init(argc, argv);
 	}
-	else if (argc < 4 || flag_count == -1)
+	else if (argc < 4 || flag_count == ERROR)
 		return (ft_putendl(MSG_USAGE), 1);
 	else
 		return (ft_putendl(TOO_MANY_CHAMPS), 1);

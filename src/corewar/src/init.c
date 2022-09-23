@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "vm.h"
 
-static int	init_carriage(t_info *info)
+static int	init_carriage(t_info **info)
 {
 	t_carriage	*new;
 	int			i;
@@ -22,7 +21,7 @@ static int	init_carriage(t_info *info)
 	//{
 	new = (t_carriage *)malloc(sizeof(t_carriage));
 	if (!new)
-		return (-1);
+		return (ERROR);
 	new->id = 1;//equal to player id
 	new->carry = 0;
 	new->statement_code = 0;
@@ -31,31 +30,62 @@ static int	init_carriage(t_info *info)
 	//new->pos = //current carriage position
 	new->skip = 0;
 	i = 0;
+	// reg_1 = - player_id
 	while (i < REG_NUMBER)
 		new->registry[i++] = 0;
-	new->next = info->head;
-	info->head = new;
+	new->next = (*info)->head;
+	(*info)->head = new;
 	//}
 	return (0);
 }
 
-static int	init_info(t_info *info)
+static int	init_info(t_info **info)
 {
 	int	i;
 
 	i = 0;
-	info = (t_info *)malloc(sizeof(t_info));
-	if (!info)
-		return (-1);
-	info->total_cycles = 0;
-	info->live_statement = 0;
-	info->cycle_of_death = CYCLE_TO_DIE;
-	info->checks_count = 0;
-	info->head = NULL;
-	if (init_carriage(info) == -1)
-		return (-1);
-	info->winner = info->head->id;
+	*info = (t_info *)malloc(sizeof(t_info));
+	if (!(*info))
+		return (ERROR);
+	(*info)->total_cycles = 0;
+	(*info)->live_statement = 0;
+	(*info)->cycle_of_death = CYCLE_TO_DIE;
+	(*info)->death_count = CYCLE_TO_DIE;
+	(*info)->checks_count = 0;
+	(*info)->head = NULL;
+	if (init_carriage(info) == ERROR)
+		return (ERROR);
+	(*info)->winner = (*info)->head->id;
 	return (0);
+}
+
+void	print_core(uint32_t core[MEM_SIZE])
+{
+	int	i;
+	int	line;
+
+	i = 0;
+	line = 0;
+	ft_printf("0x0000 : ");
+	while (i < MEM_SIZE)
+	{
+		if (core[i] < 16)
+			ft_printf("0%x", core[i]);
+		else
+			ft_printf("%x", core[i]);
+		++line;
+		++i;
+		if (line >= 64)
+		{
+			ft_printf("\n");
+			line = 0;
+			if (i >= MEM_SIZE)
+				break ;
+			ft_printf("%#0.4x : ", i);
+		}
+		else
+			ft_printf(" ");
+	}
 }
 
 int	init(int argc, char **argv)
@@ -69,17 +99,13 @@ int	init(int argc, char **argv)
 	// loop through core and set everything to 0
 	i = 0;
 	while (i < MEM_SIZE)
-	{
-		core[i] = 0;
-		ft_printf("%d ", core[i]);
-		i++;
-	}
-	ft_printf("\n");
+		core[i++] = 0;
+	print_core(core);
 	//place players
-	if (init_info(info) == -1)
-		return (-1);
-	// init info struct with carriage etc
-	//start game
+	if (init_info(&info) == ERROR)//add player struct
+		return (ERROR);
+	if (game_start(core, info) == ERROR)//add player struct
+		return (ERROR);
 	if (argc || argv)
 		return (1);
 	return (0);

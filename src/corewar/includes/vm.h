@@ -20,6 +20,7 @@
 
 # define TRUE	1
 # define FALSE	0
+# define ERROR	-1
 
 typedef struct s_carriage
 {
@@ -40,10 +41,14 @@ typedef struct s_info
 	int			total_cycles;//initialized to 0
 	int			live_statement;//initialized to 0
 	int			cycle_of_death;// initialized with macro CYCLES_TO_DIE
+	int			death_count;
 	int			checks_count;// initialized to 0
 	t_carriage	*head;
 }				t_info;
 
-int	init(int argc, char **argv);
+int		init(int argc, char **argv);
+int		game_start(uint32_t core[MEM_SIZE], t_info *info);//add player struct
+int		update_carriages(t_info *info);
+void	print_core(uint32_t core[MEM_SIZE]);
 
 #endif
