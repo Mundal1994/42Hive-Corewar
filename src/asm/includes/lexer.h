@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:06:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/25 11:27:14 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 11:35:31 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,22 @@
 
 typedef enum s_symtypes
 {
-	LA_UNKNOWN,
-	LA_EOFSYM,
-	LA_EOLSYM,
-	LA_IDSYM,
-	LA_NUMSYM,
-	LA_CMDSYM,
-	LA_COMSYM,
-	LA_COMMASYM,
-	LA_PLUSSYM,
-	LA_MINUSSYM
+	LA_unknown,
+	LA_eof,
+	LA_eol,
+	LA_id,
+	LA_num,
+	LA_cmd,
+	LA_com,
+	LA_comma,
+	LA_plus,
+	LA_minus
 }		t_symtypes;
 
 typedef struct s_symbols
 {
 	bool		is_label;
-	t_symtypes	sym;
+	t_symtypes	type;
 	t_vec		str;
 	int			num;
 }		t_symbols;
@@ -49,7 +49,11 @@ typedef struct s_lexer
 }			t_lexer;
 
 void	lexer(t_lexer *lexer);
-void	lexer_getsym(t_lexer *lexer, t_symbols &sym);
 void	lexer_free(t_lexer *lexer);
+
+/* Returns next symbol on the current source line. Sets errors if necessary
+   and returns sym = sym.type = unknowwn if no valid symbol can be
+   recognised */
+void	lexer_getsym(t_lexer *lexer, t_symbols *sym);
 
 #endif
