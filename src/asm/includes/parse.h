@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/25 12:22:04 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 17:53:16 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@ typedef struct s_terms
 }		t_terms;
 
 /* Entries are stored in a dynamic array, allowing for varying number */
-typedef struct s_addresses
-{
-	uint8_t	length;
-	t_vec	terms;
-}		t_addresses;
+typedef struct t_vec	t_addresses;
 
 /* Source text, unpacked into field */
 typedef struct s_unpackedlines
@@ -47,11 +43,11 @@ typedef struct s_unpackedlines
 	t_alfa		labfield;
 	t_alfa		mnemonic;
 	t_addresses	address;
-	t_vec		comment;
+	t_string	comment;
 
 }		t_unpackedlines;
 
-void	parse(t_ast *ast, t_lexer *lexer);
-int		parse_header(t_header *header, t_lexer *lexer);
+void	parser(t_ast *ast, t_lexer *lexer);
+int		parser_header(t_header *header, t_lexer *lexer);
 
 #endif
