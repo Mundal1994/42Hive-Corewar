@@ -6,17 +6,12 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:06:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/25 11:35:31 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 11:37:21 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
-# define NEWLINE "\n"
-# define NEWLINE_C '\n'
-# define WHITESPACE " \t\n\v\f\r"
-# define TABSPACE " \t"
 
 # include <stdbool.h>
 
