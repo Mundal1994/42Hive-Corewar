@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:33:19 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/23 17:10:31 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 22:23:50 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ typedef struct s_pos
 
 typedef struct s_source
 {
-	t_vec	buffer;
-	size_t	index;
-	t_pos	pos;
-	char	*curr;
-	char	*next;
+	t_string	buffer;
+	size_t		index;
+	t_pos		pos;
+	char		*curr;
+	char		*next;
 }				t_source;
 
 void	source_init(t_source *source);

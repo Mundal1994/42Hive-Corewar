@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:06:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/25 11:37:21 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 22:07:18 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ typedef struct s_symbols
 {
 	bool		is_label;
 	t_symtypes	type;
-	t_vec		str;
+	t_string	str;
 	int			num;
 }		t_symbols;
 
 typedef struct s_lexer
 {
 	t_source	source;
-	char		*next;
 }			t_lexer;
 
 void	lexer(t_lexer *lexer);

@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:49:48 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/23 17:01:47 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 22:22:55 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,33 @@ static off_t	file_size(int fd)
 	return (size);
 }
 
-static void	init_buffer(const int fd, t_vec *buffer)
+static void	init_buffer(const int fd, t_string *buffer)
 {
 	size_t	size;
 
 	size = (size_t) file_size(fd);
 	if (!size)
 		exit_error_str(ERR_MSG_EMPTY_FILE);
-	if (vec_new(buffer, ++size, sizeof(char)) == ERROR)
+	if (!string_new(buffer, size))
 		exit_error();
 }
 
-static void	read_file(const int fd, t_vec *buffer)
+static void	read_file(const int fd, t_string *buffer)
 {
 	ssize_t	res;
 
-	while (buffer->len < buffer->alloc_size)
+	while (buffer->length < buffer->capacity - 1)
 	{
-		res = read(fd, buffer->memory, buffer->alloc_size);
+		res = read(fd, buffer->memory, buffer->capacity - 1);
 		if (res == ERROR)
 		{
-			vec_free(buffer);
+			string_free(buffer);
 			exit_error();
 		}
 		if (!res)
 			break ;
-		buffer->len += (size_t) res;
+		buffer->length += (size_t) res;
 	}
-	if (vec_push(buffer, "\0") == ERROR)
-		exit_error();
 }
 
 void	source_read(t_source *source, const char *filename)

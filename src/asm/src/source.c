@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:50:38 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/23 17:38:17 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/25 22:17:16 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	reset(t_source *source)
 	source->index = 0;
 	source->pos = (t_pos){1, 0};
 	source->curr = NULL;
-	source->next = (char *)source->buffer.memory;
+	source->next = source->buffer.memory;
 }
 
 void	source_init(t_source *source)
@@ -48,7 +48,7 @@ char	*source_next(t_source *source)
 	if (!source->next)
 		return (source->curr = NULL);
 	source->curr = source->next;
-	if (++source->index >= source->buffer.len)
+	if (++source->index >= source->buffer.length)
 		source->next = NULL;
 	else
 		source->next++;
@@ -60,6 +60,6 @@ char	*source_next(t_source *source)
 void	source_free(t_source *source)
 {
 	if (source->buffer.memory)
-		vec_free(&source->buffer);
+		string_free(&source->buffer);
 	ft_bzero(source, sizeof(*source));
 }
