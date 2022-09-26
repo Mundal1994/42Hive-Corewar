@@ -63,29 +63,40 @@ Introducing contestants...
 * Player 2, weighing 394 bytes, "turtle" ("TURTLE FFS U LAMA") !
 */
 
-static void	introduce_contestants(void)//add player struct
+static void	introduce_contestants(t_profile **champ, int total)//add player struct
 {
+	int	i;
+
 	ft_printf("Introducing contestants...\n");
-	// while (players)
-	// {
-	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", 1, 23, "zork", "I'M ALIIIIVE");
-	// }
+	i = 0;
+	while (i < total)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", champ[i]->i, 23, champ[i]->name, champ[i]->comment);
+		++i;
+	}
 }
 
-int	game_start(uint32_t core[MEM_SIZE], t_info *info)//add player struct
+int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ, int total)//add player struct
 {
-	int i = 0;
+	int	i;
 
-	introduce_contestants();//add player struct
+	introduce_contestants(champ, total);//add player struct
 	while (!one_carriage_left(info))
 	{
 		if (update_carriages(info) == ERROR)
 			return (ERROR);
 		check(info);
-		++i;
 	}
 	//print_core(core);
-	ft_printf("Contestant %d, \"name of winner\", has won !\n", info->winner);
+	i = 0;
+	while (i < total)
+	{
+		if (info->winner == champ[i]->i)
+		{
+			ft_printf("Contestant %d, \"name of winner\", has won !\n", info->winner);
+		}
+		++i;
+	}
 	if (core)
 		i++;
 	return (0);

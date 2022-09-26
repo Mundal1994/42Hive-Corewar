@@ -115,7 +115,7 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input, in
 	i = 0;
 	if (!champ)
 	{
-		champ = (t_profile **) malloc ((argc - c - 1) * sizeof(t_profile));
+		champ = (t_profile **) malloc ((argc - c) * sizeof(t_profile));
 		if (!champ)
 		{
 			//free everything
@@ -192,7 +192,7 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input, in
 	return (champ);
 }
 
-int	read_init(int argc, char **argv, int i, t_profile **champ)
+t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 {
 	t_input		**input;
 	u_int8_t	buff[BUFF_SIZE];
@@ -210,7 +210,7 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 	input = create_buf(input, argc);
 	if (!input)
 	{
-		return (-1);
+		return (NULL);
 	}
 	origin_i = i;
 	j = 0;
@@ -221,16 +221,18 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 		if (j != 0)
 			close(fd);
 		fd = open(argv[i], O_RDONLY | 0);
+		if (j)
+			close(fd);
 		if (fd == -1)
 		{
 			ft_printf("Can't read file %s\n", argv[i]);
-			return (-1);
+			return (NULL);
 		}
 		ret = read(fd, buff, BUFF_SIZE);
 		if (ret == -1)
 		{
 			//clean out
-			return (-1);
+			return (NULL);
 		}
 		while (ret)
 		{
@@ -240,16 +242,22 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 				//free(input[i]->t_script); all
 				//free(input[i]); all
 				//free(input);
-				return (-1);
+				return (NULL);
 			}
 			ret = read(fd, buff, BUFF_SIZE);
 		}
 		//collect and store information
 		++j;
 		++i;
+		++j;
 	}
 	champ = NULL;
 	champ = store_champs(champ, argc, input, origin_i);
+	ft_printf("i: %d\n", champ[1]->i);
+	ft_printf("name: %s\n", champ[1]->name);
+	ft_printf("comment: %s\n", champ[0]->comment);
+	ft_printf("exec code: %d\n", champ[0]->exec_cd_sz);
+	ft_printf("%x\n", input[0]->t_script[champ[0]->exec_cd_sz]);
 	// i = 0;
 	// while (i < input->current)
 	// {
@@ -258,5 +266,5 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 	// 	i++;
 	// }
 
-	return (0);
+	return (input);
 }
