@@ -28,7 +28,7 @@ typedef enum s_errors
 	ASM_invalidchar,
 	ASM_invaliduote,
 	ASM_overflow
-}
+}			t_errors;
 
 void	exit_error(void);
 void	exit_error_str(char *str);
