@@ -64,6 +64,12 @@ static int	store_buf(t_input *input, u_int8_t *buff, size_t size)
 		input->current++;
 		++i;
 	}
+	//ft_printf("size %i\n", input->current);
+	// if (input->current > 682) //MEM_SIZE / 6
+	// {
+	// 	ft_printf("HERE LIES\n");
+	// 	return (-1);
+	// }
 	//ft_printf("\n");
 	return (0);
 }
@@ -129,7 +135,8 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input)
 				//free all 
 				return (NULL);
 			}
-			ft_bzero(champ[i]->name, 129); //
+			ft_bzero(champ[i]->name, 129); //(PROG_NAME_LENGTH + 1)
+			ft_bzero(champ[i]->comment, 2049); //(COMMENT_LENGTH + 1)what checks unprintable chars?
 			j = 0;
 			k = 4;
 			while (j < 128) //PROG_NAME_LENGTH
@@ -137,8 +144,46 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input)
 				champ[i]->name[j] = input[i]->t_script[k + j];
 				++j;
 			}
-			ft_printf("%s\n", champ[i]->name);
+			k += j;
+			//ft_printf("%i\n", k);
 			//exit (0);
+			while (k < 136)
+			{
+				if (input[i]->t_script[k] != 0)
+				{
+					ft_printf("PROBLEM\n");
+					//if next four bytes arent NULL
+					exit (1);
+				}
+				k++;
+			}
+			//ft_printf("%i\n", k);
+			//exit (0);
+			champ[i]->exec_cd_sz = 0;
+			while (k < 140)
+			{
+				champ[i]->exec_cd_sz += input[i]->t_script[k];
+				++k;
+			}
+			//ft_printf("exec %i\n", champ[i]->exec_cd_sz);
+			//exit (0);
+			j = 0;
+			while (j < 2048)
+			{
+				champ[i]->comment[j] = input[i]->t_script[k + j];
+				j++;
+			}
+			k += j;
+			while (k < 2192)
+			{
+				if (input[i]->t_script[k] != 0)
+				{
+					ft_printf("PROBLEM\n");
+					//if next four bytes arent NULL
+					exit (1);
+				}
+				k++;
+			}
 			++i;
 		}
 	}
