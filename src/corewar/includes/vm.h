@@ -60,12 +60,13 @@ typedef struct s_info
 	int			cycle_of_death;// initialized with macro CYCLES_TO_DIE
 	int			death_count;
 	int			checks_count;// initialized to 0
+	int			carriage_count;
 	t_carriage	*head_carriage;
 }				t_info;
 
 int		init(int argc, char **argv, int i);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
-int		game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ);//add player struct
+int		game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ);
 int		update_carriages(t_info *info);
 void	print_core(uint32_t core[MEM_SIZE]);
 

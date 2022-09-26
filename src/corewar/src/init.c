@@ -14,11 +14,9 @@
 
 static int	init_carriage(t_info **info, t_profile **champ)
 {
-	t_profile	*head;
 	t_carriage	*new;
 	int			i;
 
-	head = *champ;
 	while (*champ)
 	{
 		new = (t_carriage *)malloc(sizeof(t_carriage));
@@ -40,7 +38,6 @@ static int	init_carriage(t_info **info, t_profile **champ)
 		(*info)->head_carriage = new;
 		*champ = (*champ)->next;
 	}
-	*champ = head;
 	return (0);
 }
 
@@ -61,6 +58,7 @@ static int	init_info(t_info **info, t_profile **champ)
 	if (init_carriage(info, champ) == ERROR)
 		return (ERROR);
 	(*info)->winner = (*info)->head_carriage->id;
+	(*info)->carriage_count = (*info)->head_carriage->id;
 	return (0);
 }
 
@@ -139,13 +137,13 @@ int	init(int argc, char **argv, int i)
 	//ft_printf("comment: %s\n", champ[0]->comment);
 	//ft_printf("exec code: %d\n", champ[0]->exec_cd_sz);
 	//ft_printf("%s\n", input[0]->t_script[champ[0]->exec_cd_sz]);
-	add_players_to_core(core, champ, input, argc - i);
+	add_players_to_core(core, champ, input, argc - i);//need to modify and return champ
 	// doens't use input anymore after this point
 	print_core(core);
 	//place players
-	if (init_info(&info, champ) == ERROR)//add player struct
+	if (init_info(&info, champ) == ERROR)//don't have to return modification of champ
 		return (ERROR);//free info and champ here before exiting
-	if (game_start(core, info, champ) == ERROR)//add player struct
+	if (game_start(core, info, champ) == ERROR)//don't have to return modification of champ
 		return (ERROR);//free info and champ here before exiting
 	return (0);
 }
