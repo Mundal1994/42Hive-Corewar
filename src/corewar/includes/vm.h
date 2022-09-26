@@ -29,6 +29,7 @@ typedef struct s_profile
 	char	name[PROG_NAME_LENGTH + 1];
 	char	comment[COMMENT_LENGTH + 1];
 	int		exec_cd_sz;
+	int		pos;
 }			t_profile;
 
 typedef struct s_input
@@ -63,8 +64,8 @@ typedef struct s_info
 }				t_info;
 
 int		init(int argc, char **argv, int i);
-int		read_init(int argc, char **argv, int i, t_profile **champ);
-int		game_start(uint32_t core[MEM_SIZE], t_info *info);//add player struct
+t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
+int		game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ, int total);//add player struct
 int		update_carriages(t_info *info);
 void	print_core(uint32_t core[MEM_SIZE]);
 
