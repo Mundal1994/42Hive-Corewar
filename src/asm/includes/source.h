@@ -41,5 +41,6 @@ char	*source_next(t_source *source);
 void	source_free(t_source *source);
 bool	source_endline(t_source source);
 bool	source_startline(t_source source);
+char	*source_seekstart(t_source *source);
 
 #endif

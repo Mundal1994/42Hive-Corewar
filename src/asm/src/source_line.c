@@ -21,3 +21,12 @@ bool	source_startline(t_source source)
 {
 	return (source.pos.c == 1);
 }
+
+char	*source_seekstart(t_source *source)
+{
+	if (!source->curr)
+		source_next(source);
+	while (ft_strchr(TABSPACE, *(source->curr)), && !source_endline(*source))
+		source_next(source);
+	return (source->curr);
+}

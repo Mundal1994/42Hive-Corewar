@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   lexer_getsym.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 11:01:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 11:01:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/26 11:08:01 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/26 11:08:02 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#include "lexer.h"
 
-typedef enum s_errors
+void	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 {
-	ASM_invalidcode,
-	ASM_undefinedlabel,
-	ASM_invalidaddress,
-	ASM_unlabelled,
-	ASM_hasaddress,
-	ASM_noaddress,
-	ASM_ecessfields,
-	ASM_mismatched,
-	ASM_nonalpha,
-	ASM_badlabel,
-	ASM_invalidchar,
-	ASM_invaliduote,
-	ASM_overflow
+	t_source	*source;
+
+	sym->num = 0;
+	source = &lexer->source;
+	source_seekstart(source);
 }
-
-void	exit_error(void);
-void	exit_error_str(char *str);
-int		error(char *msg);
-
-#endif
