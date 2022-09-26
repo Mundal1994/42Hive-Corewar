@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 		(flag_count == 1 && argc <= 6 && argc >= 3) || \
 		(flag_count == 2 && argc <= 7 && argc >= 4))
 	{
-		init(argc, argv);
+		init(argc, argv, flag_count + 1);
 	}
 	else if (argc < 4 || flag_count == ERROR)
 		return (ft_putendl(MSG_USAGE), 1);

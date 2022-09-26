@@ -17,10 +17,26 @@
 # include "op.h"
 # include "opcodes.h"
 # include "error.h"
+# include <fcntl.h>
 
 # define TRUE	1
 # define FALSE	0
 # define ERROR	-1
+
+typedef struct s_profile
+{
+	int		i;
+	char	name[PROG_NAME_LENGTH + 1];
+	char	comment[COMMENT_LENGTH + 1];
+	int		exec_cd_sz;
+}			t_profile;
+
+typedef struct s_input
+{
+	u_int8_t	*t_script;
+	size_t		capacity;
+	size_t		current;
+}				t_input;
 
 typedef struct s_carriage
 {
@@ -46,7 +62,8 @@ typedef struct s_info
 	t_carriage	*head;
 }				t_info;
 
-int		init(int argc, char **argv);
+int		init(int argc, char **argv, int i);
+int		read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint32_t core[MEM_SIZE], t_info *info);//add player struct
 int		update_carriages(t_info *info);
 void	print_core(uint32_t core[MEM_SIZE]);

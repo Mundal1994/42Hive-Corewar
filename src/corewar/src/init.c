@@ -117,18 +117,22 @@ static void	add_zork(uint32_t core[MEM_SIZE])
 	core[i++] = 251;
 }
 
-int	init(int argc, char **argv)
+int	init(int argc, char **argv, int i)
 {
 	t_info		*info;
+	t_profile	**champ;
 	uint32_t	core[MEM_SIZE];
-	int			i;
+	int			j;
 
 	info = NULL;
+	champ = NULL;
 	//read from files - if error exit
 	// loop through core and set everything to 0
-	i = 0;
-	while (i < MEM_SIZE)
-		core[i++] = 0;
+	if (read_init(argc, argv, i, champ) == ERROR)
+		return (ERROR);
+	j = 0;
+	while (j < MEM_SIZE)
+		core[j++] = 0;
 	add_zork(core);
 	print_core(core);
 	//place players
