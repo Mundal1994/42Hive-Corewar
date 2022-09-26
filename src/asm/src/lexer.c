@@ -22,3 +22,4 @@ void	lexer_free(t_lexer *lexer)
 {
 	source_free(&lexer->source);
 }
+

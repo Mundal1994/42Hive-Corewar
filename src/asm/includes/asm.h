@@ -6,7 +6,7 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:17:31 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/25 11:38:05 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/26 11:02:41 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libft.h"
 # include "source.h"
 # include "lexer.h"
-# include "cleanup.h"
+# include "errors.h"
 # include "opmap.h"
 # include "msg.h"
 # include "validator.h"

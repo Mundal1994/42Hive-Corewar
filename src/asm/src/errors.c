@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.h                                          :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 11:00:57 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/19 11:01:14 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/26 11:02:52 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/26 11:02:54 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEANUP_H
-# define CLEANUP_H
+#include "asm.h"
 
-void	exit_error(void);
-void	exit_error_str(char *str);
-int		error(char *msg);
+void	exit_error(void)
+{
+	perror("ERROR");
+	exit(EXIT_FAILURE);
+}
 
-#endif
+void	exit_error_str(char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(EXIT_FAILURE);
+}
+
+int	error(char *msg)
+{
+	ft_putendl_fd(msg, 2);
+	return (ERROR);
+}
