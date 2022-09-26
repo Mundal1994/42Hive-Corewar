@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:06:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/25 22:07:18 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/26 23:12:44 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum s_symtypes
 	LA_num,
 	LA_cmd,
 	LA_cmdstr,
-	LA_comment,
+	LA_com,
 	LA_comma,
 	LA_plus,
 	LA_minus
@@ -52,6 +52,8 @@ void	lexer_free(t_lexer *lexer);
    recognised */
 void	lexer_getsym(t_lexer *lexer, t_symbols *sym);
 
-void	_lexer_getcmd(t_source *source, t_symbols *sym);
+void	lexer_getcmd(t_source *source, t_symbols *sym);
+
+bool	is_labelch(char c);
 
 #endif

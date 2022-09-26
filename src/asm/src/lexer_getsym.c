@@ -6,44 +6,42 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:08:01 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 11:08:02 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/26 23:12:37 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static bool	is_word(char c)
-{
-	return (ft_islower(c) || ft_isdigit(c) || c == '_' || c == ':' || c == '%');
-}
-
-void	lexer_getsym(t_lexer *lexer, t_symbols *sym)
+int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 {
 	t_source	*source;
+	char		*curr;
 
 	sym->num = 0;
 	source = &lexer->source;
 	source_seekstart(source);
-	sym->islabel = source_at_linestart(*source) && *source->curr
-			&& *source->curr != COMMENT_CHAR
-			&& *source->curr != ALT_COMMENT_CHAR
-			&& *source->curr != CMD_CHAR;
-	if (*source->curr == '\0')
-	{
-		sym.type = LA_eof;
-		return;
-	}
+	curr = source->curr;
+	if (!curr)
+		return (sym->type = LA_eof, OK);
 	if (source_at_lineend(*source))
 	{
-		sym.type = LA_eol;
 		source_next(source);
-		return;
+		return (sym->type = LA_eol, OK);
 	}
-	if (is_label_char(*source->curr))
-		_lexer_getword(lexer, sym);
-	if (*source->curr == CMD_CHAR)
+	if (source_at_linestart(*source))
 	{
-		sym.type = LA_cmd;
-		_lexer_getcmd(lexer, sym);
+		if (is_wordch(*curr))
+		{
+			sym->islabel = true;
+			return (lexer_getword(lexer, sym));
+		}
+		if (*curr == CMD_CHAR)
+			return (lexer_getcmd(lexer, sym));
+		lexer_getcomment(lexer, sym);
+		return (sym->type = LA_unknown, ERROR);
 	}
+	if (is_wordch(*curr))
+		return (lexer_getword(lexer, sym));
+	if (*curr == COMMENT_CHAR || *curr == ALT_COMMENT_CHAR)
+		return (sym->type = LA_com, lexer_getcomment(lexer, sym));
 }
