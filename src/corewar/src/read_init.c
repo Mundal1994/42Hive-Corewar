@@ -121,13 +121,14 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input, in
 			//free everything
 			return (NULL);
 		}
-		while (i < (argc - c - 1))
+		while (i < (argc - c))
 		{
+			
 			if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
 				!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
 				!= 243)
 			{
-				ft_printf("Here[%s]\n", input[i]->t_script);
+				ft_printf("i = %i\nHere[%s]\n", i, input[i]->t_script);
 				exit (1);
 			}
 			champ[i] = (t_profile *) malloc (sizeof(t_profile));
@@ -146,7 +147,7 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input, in
 				++j;
 			}
 			k += j;
-			//ft_printf("%i\n", k);
+			ft_printf("%s\n", champ[i]->name);
 			//exit (0);
 			while (k < 136)
 			{
@@ -198,6 +199,7 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 	int			fd;
 	int			ret;
 	int			origin_i;
+	int			j;
 	//size_t		i;
 	//t_profile	**champ;
 
@@ -211,10 +213,13 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 		return (-1);
 	}
 	origin_i = i;
+	j = 0;
 	while (i < argc)
 	{
 		//file passed ends with .cor
 		//add check got max size of file
+		if (j != 0)
+			close(fd);
 		fd = open(argv[i], O_RDONLY | 0);
 		if (fd == -1)
 		{
@@ -229,7 +234,8 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 		}
 		while (ret)
 		{
-			if (store_buf(input[i - 1], buff, ret) == -1)
+			ft_printf("%i\n", j);
+			if (store_buf(input[j], buff, ret) == -1)
 			{
 				//free(input[i]->t_script); all
 				//free(input[i]); all
@@ -239,6 +245,7 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 			ret = read(fd, buff, BUFF_SIZE);
 		}
 		//collect and store information
+		++j;
 		++i;
 	}
 	champ = NULL;
