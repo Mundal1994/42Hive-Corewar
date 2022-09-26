@@ -130,6 +130,7 @@ int	init(int argc, char **argv, int i)
 	// loop through core and set everything to 0
 	if (read_init(argc, argv, i, champ) == ERROR)
 		return (ERROR);
+	//ft_printf("")
 	j = 0;
 	while (j < MEM_SIZE)
 		core[j++] = 0;
