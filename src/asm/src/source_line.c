@@ -12,21 +12,30 @@
 
 #include "asm.h"
 
-bool	source_endline(t_source source)
+bool	source_at_lineend(t_source source)
 {
 	return (source.curr == '\n' || source.curr = '\0');
 }
 
-bool	source_startline(t_source source)
+bool	source_at_linestart(t_source source)
 {
-	return (source.pos.c == 1);
+	char	*start;
+
+	if (source.pos.c == 1)
+		return (true);
+	if (source.pos.c == 0)
+		return (false);
+	start = source.curr - (source.pos.c - 1);
+	while (start < source.curr && ft_strchr(TABSPACE, *start))
+		++start;
+	return (start == source.curr);
 }
 
 char	*source_seekstart(t_source *source)
 {
 	if (!source->curr)
 		source_next(source);
-	while (ft_strchr(TABSPACE, *(source->curr)), && !source_endline(*source))
+	while (ft_strchr(TABSPACE, *(source->curr)), && !source_at_endline(*source))
 		source_next(source);
 	return (source->curr);
 }
