@@ -125,6 +125,8 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input)
 		}
 		while (i < (argc - 1))
 		{
+			ft_printf("i = %i\n %u %u %u %u\n", i, input[i]->t_script[0], input[i]->t_script[1], input[i]->t_script[2], input[i]->t_script[3]);
+			
 			if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
 				!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
 				!= 243)
