@@ -15,13 +15,10 @@
 int	main(int argc, char **argv)
 {
 	t_lexer		lexer;
-	t_ast		ast;
 
 	validate_arguments(argc, argv);
 	source_init(&lexer.source);
 	source_read(&lexer.source, argv[1]);
-	parse(&ast, &lexer);
-	ast_free(&ast);
 	lexer_free(&lexer);
 	return (EXIT_SUCCESS);
 }

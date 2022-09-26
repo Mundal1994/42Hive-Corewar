@@ -14,6 +14,7 @@
 # define LEXER_H
 
 # include <stdbool.h>
+# include "Strings.h"
 
 typedef enum s_symtypes
 {

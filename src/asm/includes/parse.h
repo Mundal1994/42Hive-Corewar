@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/25 17:53:16 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/26 10:37:43 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSE_H
 
 # include <stdbool.h>
+# include "vec.h"
 
 typedef enum s_termkinds
 {
@@ -34,7 +35,7 @@ typedef struct s_terms
 }		t_terms;
 
 /* Entries are stored in a dynamic array, allowing for varying number */
-typedef struct t_vec	t_addresses;
+typedef t_vec	t_addresses;
 
 /* Source text, unpacked into field */
 typedef struct s_unpackedlines
@@ -46,8 +47,5 @@ typedef struct s_unpackedlines
 	t_string	comment;
 
 }		t_unpackedlines;
-
-void	parser(t_ast *ast, t_lexer *lexer);
-int		parser_header(t_header *header, t_lexer *lexer);
 
 #endif

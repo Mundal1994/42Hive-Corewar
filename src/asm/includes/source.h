@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include "Strings.h"
 
 typedef struct s_pos
 {
