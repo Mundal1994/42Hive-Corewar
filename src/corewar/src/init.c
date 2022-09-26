@@ -28,6 +28,7 @@ static int	init_carriage(t_info **info)
 	new->last_live_call = 0;
 	new->delay = 0;
 	//new->pos = //current carriage position
+	new->pos = 0;
 	new->skip = 0;
 	i = 0;
 	// reg_1 = - player_id
@@ -88,6 +89,34 @@ void	print_core(uint32_t core[MEM_SIZE])
 	}
 }
 
+static void	add_zork(uint32_t core[MEM_SIZE])
+{
+	int i = 0;
+	core[i++] = 11;
+	core[i++] = 104;
+	core[i++] = 1;
+	core[i++] = 0;
+	core[i++] = 15;
+	core[i++] = 0;
+	core[i++] = 1;
+	core[i++] = 6;
+	core[i++] = 100;
+	core[i++] = 1;
+	core[i++] = 0;
+	core[i++] = 0;
+	core[i++] = 0;
+	core[i++] = 0;
+	core[i++] = 1;
+	core[i++] = 1;
+	core[i++] = 0;
+	core[i++] = 0;
+	core[i++] = 0;
+	core[i++] = 1;
+	core[i++] = 9;
+	core[i++] = 255;
+	core[i++] = 251;
+}
+
 int	init(int argc, char **argv)
 {
 	t_info		*info;
@@ -100,6 +129,7 @@ int	init(int argc, char **argv)
 	i = 0;
 	while (i < MEM_SIZE)
 		core[i++] = 0;
+	add_zork(core);
 	print_core(core);
 	//place players
 	if (init_info(&info) == ERROR)//add player struct
