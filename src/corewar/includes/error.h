@@ -15,8 +15,16 @@
 
 # define MSG_USAGE "Usage: ./corewar [-dump nbr_cycles] \
 [-n [number] champion.cor ...]\n\
-	-dump	nbr_cycles: dumps memory after <nbr_cycles> on standard output,\
+	-d	N: dumps memory after <nbr_cycles> on standard output,\
  then quits the game\n\
- 	-n	number: Manually set the number of the next player"
+ 	-n	number: Manually set the number of the next player\n\
+	-v	N: Verbosity levels, can be added together to enable several\n\
+			- 0 : Show only essentials\n\
+			- 1 : Show lives\n\
+			- 2 : Show cycles\n\
+			- 4 : Show operations (Params are NOT litteral ...)\n\
+			- 8 : Show deaths\n\
+			- 16 : Show PC movements (Except for jumps)"
+# define TOO_MANY_CHAMPS "Too many champions"
 
 #endif

@@ -106,47 +106,79 @@ static int	store_buf(t_input *input, u_int8_t *buff, size_t size)
 // 	return (0);
 // }
 
-static t_profile **store_champs(t_profile **champ, int argc, t_input **input, int c)
+static t_profile	*create_champ(t_profile	*champ)
+{
+		ft_printf("HERE\n");
+	if (!champ)
+	{
+		champ = (t_profile *) malloc (sizeof(t_profile));
+		champ->head = champ;
+		if (!champ)
+		{
+			//free everything
+			return (NULL);
+		}
+		champ->next = NULL;
+	}
+	else
+	{
+		champ->next = (t_profile *) malloc (sizeof(t_profile));
+		if (!champ->next)
+		{
+			//free head
+			return (NULL);
+		}
+		champ->next->head = champ->head;
+		champ = champ->next;
+		champ->next = NULL;
+	}
+	return (champ);
+}
+
+static t_profile *store_champs(t_profile **champ, int argc, t_input **input, int c)
 {
 	int i;
 	int	j;
 	int	k;
 
 	i = 0;
-	if (!champ)
-	{
-		champ = (t_profile **) malloc ((argc - c - 1) * sizeof(t_profile));
-		if (!champ)
-		{
-			//free everything
-			return (NULL);
-		}
+	//if (!champ)
+	//{
+		// *champ = (t_profile *) malloc (sizeof(t_profile));
+		// if (!champ)
+		// {
+		// 	//free everything
+		// 	return (NULL);
+		// }
 		while (i < (argc - c))
 		{
+			*champ = create_champ(*champ);
+		ft_printf("HERE\n");
+
 			if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
 				!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
 				!= 243)
 			{
-				ft_printf("Here[%s]\n", input[i]->t_script);
+				ft_printf("i = %i\nHere[%s]\n", i, input[i]->t_script);
 				exit (1);
 			}
-			champ[i] = (t_profile *) malloc (sizeof(t_profile));
-			if (!champ[i])
-			{
-				//free all 
-				return (NULL);
-			}
-			ft_bzero(champ[i]->name, 129); //(PROG_NAME_LENGTH + 1)
-			ft_bzero(champ[i]->comment, 2049); //(COMMENT_LENGTH + 1)what checks unprintable chars?
+			//champ = (t_profile *) malloc (sizeof(t_profile));
+			// if (!champ)
+			// {
+			// 	//free all 
+			// 	return (NULL);
+			// }
+			ft_bzero((*champ)->name, 129); //(PROG_NAME_LENGTH + 1)
+			ft_bzero((*champ)->comment, 2049); //(COMMENT_LENGTH + 1)what checks unprintable chars?
 			j = 0;
 			k = 4;
 			while (j < PROG_NAME_LENGTH) //PROG_NAME_LENGTH
 			{
-				champ[i]->name[j] = input[i]->t_script[k + j];
+				(*champ)->name[j] = input[i]->t_script[k + j];
 				++j;
 			}
 			k += j;
-			//ft_printf("%i\n", k);
+			ft_printf("%s\n", (*champ)->name);
 			//exit (0);
 			while (k < 136)
 			{
@@ -160,18 +192,18 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input, in
 			}
 			//ft_printf("%i\n", k);
 			//exit (0);
-			champ[i]->exec_cd_sz = 0;
+			(*champ)->exec_cd_sz = 0;
 			while (k < 140)
 			{
-				champ[i]->exec_cd_sz += input[i]->t_script[k];
+				(*champ)->exec_cd_sz += input[i]->t_script[k];
 				++k;
 			}
-			//ft_printf("exec %i\n", champ[i]->exec_cd_sz);
+			//ft_printf("exec %i\n", (*champ)->exec_cd_sz);
 			//exit (0);
 			j = 0;
 			while (j < COMMENT_LENGTH)
 			{
-				champ[i]->comment[j] = input[i]->t_script[k + j];
+				(*champ)->comment[j] = input[i]->t_script[k + j];
 				j++;
 			}
 			k += j;
@@ -187,62 +219,69 @@ static t_profile **store_champs(t_profile **champ, int argc, t_input **input, in
 			}
 			++i;
 		}
-	}
-	return (champ);
+	//}
+	return (*champ);
 }
 
-int	read_init(int argc, char **argv, int i, t_profile **champ)
+t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 {
 	t_input		**input;
 	u_int8_t	buff[BUFF_SIZE];
 	int			fd;
 	int			ret;
 	int			origin_i;
-	//size_t		i;
-	//t_profile	**champ;
+	int			j;
 
-	//i = 1;
 	input = NULL;
-	// if (usage_champs_count(argc) == -1)
-	// 	return (-1);
 	input = create_buf(input, argc);
 	if (!input)
 	{
-		return (-1);
+		return (NULL);
 	}
 	origin_i = i;
+	j = 0;
 	while (i < argc)
 	{
 		//file passed ends with .cor
 		//add check got max size of file
+		if (j != 0)
+			close(fd);
 		fd = open(argv[i], O_RDONLY | 0);
 		if (fd == -1)
 		{
 			ft_printf("Can't read file %s\n", argv[i]);
-			return (-1);
+			return (NULL);
 		}
 		ret = read(fd, buff, BUFF_SIZE);
 		if (ret == -1)
 		{
 			//clean out
-			return (-1);
+			return (NULL);
 		}
 		while (ret)
 		{
-			if (store_buf(input[i - 1], buff, ret) == -1)
+			ft_printf("j === %i\n", j);
+			if (store_buf(input[j], buff, ret) == -1)
 			{
 				//free(input[i]->t_script); all
 				//free(input[i]); all
 				//free(input);
-				return (-1);
+				return (NULL);
 			}
 			ret = read(fd, buff, BUFF_SIZE);
 		}
 		//collect and store information
+		++j;
 		++i;
 	}
-	champ = NULL;
-	champ = store_champs(champ, argc, input, origin_i);
+		ft_printf("HERE\n");
+
+	*champ = store_champs(champ, argc, input, origin_i);
+	ft_printf("i: %d\n", champ[1]->i);
+	ft_printf("name: %s\n", champ[1]->name);
+	ft_printf("comment: %s\n", champ[0]->comment);
+	ft_printf("exec code: %d\n", champ[0]->exec_cd_sz);
+	ft_printf("%x\n", input[0]->t_script[champ[0]->exec_cd_sz]);
 	// i = 0;
 	// while (i < input->current)
 	// {
@@ -251,5 +290,5 @@ int	read_init(int argc, char **argv, int i, t_profile **champ)
 	// 	i++;
 	// }
 
-	return (0);
+	return (input);
 }
