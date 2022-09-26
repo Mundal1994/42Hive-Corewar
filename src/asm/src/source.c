@@ -26,6 +26,7 @@ void	source_init(t_source *source)
 	source->pos = (t_pos){1, 0};
 	source->curr = NULL;
 	source->next = NULL;
+	source->buffer.memory = NULL;
 }
 
 char	*source_peek(t_source *source)

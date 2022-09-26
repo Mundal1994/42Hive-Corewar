@@ -43,7 +43,7 @@ typedef struct s_lexer
 	t_source	source;
 }			t_lexer;
 
-void	lexer(t_lexer *lexer);
+void	lexer_init(t_lexer *lexer, const char *filename);
 void	lexer_free(t_lexer *lexer);
 
 /* Returns next symbol on the current source line. Sets errors if necessary

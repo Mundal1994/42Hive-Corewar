@@ -16,6 +16,5 @@
 void	exit_error(void);
 void	exit_error_str(char *str);
 int		error(char *msg);
-int		syntax_error(char *msg, char *token, t_lexer lexer);
 
 #endif
