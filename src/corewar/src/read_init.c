@@ -221,8 +221,6 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		if (j != 0)
 			close(fd);
 		fd = open(argv[i], O_RDONLY | 0);
-		if (j)
-			close(fd);
 		if (fd == -1)
 		{
 			ft_printf("Can't read file %s\n", argv[i]);
@@ -236,7 +234,6 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		}
 		while (ret)
 		{
-			ft_printf("%i\n", j);
 			if (store_buf(input[j], buff, ret) == -1)
 			{
 				//free(input[i]->t_script); all
@@ -249,7 +246,6 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		//collect and store information
 		++j;
 		++i;
-		++j;
 	}
 	champ = NULL;
 	champ = store_champs(champ, argc, input, origin_i);
@@ -257,7 +253,7 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 	ft_printf("name: %s\n", champ[1]->name);
 	ft_printf("comment: %s\n", champ[0]->comment);
 	ft_printf("exec code: %d\n", champ[0]->exec_cd_sz);
-	ft_printf("%x\n", input[0]->t_script[champ[0]->exec_cd_sz]);
+	ft_printf("%d\n", input[0]->t_script[2192]);
 	// i = 0;
 	// while (i < input->current)
 	// {
@@ -265,6 +261,5 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 	// 		ft_printf("%c", input->t_script[i]);
 	// 	i++;
 	// }
-
 	return (input);
 }

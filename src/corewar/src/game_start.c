@@ -17,7 +17,7 @@ static int	one_carriage_left(t_info *info)
 	t_carriage	*carriage;
 	int			count;
 
-	carriage = info->head;
+	carriage = info->head_carriage;
 	count = 0;
 	while (carriage)
 	{
@@ -57,30 +57,26 @@ static void	check(t_info *info)
 	info->live_statement = 0;
 }
 
-/*
-Introducing contestants...
-* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
-* Player 2, weighing 394 bytes, "turtle" ("TURTLE FFS U LAMA") !
-*/
-
-static void	introduce_contestants(t_profile **champ, int total)//add player struct
+static void	introduce_contestants(t_profile **champ)//add player struct
 {
-	int	i;
+	t_profile *head;
 
 	ft_printf("Introducing contestants...\n");
-	i = 0;
-	while (i < total)
+	head = *champ;
+	while (*champ)
 	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", champ[i]->i, 23, champ[i]->name, champ[i]->comment);
-		++i;
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", (*champ)->i, (*champ)->exec_cd_sz, (*champ)->name, (*champ)->comment);
+		*champ = (*champ)->next;
 	}
+	*champ = head;
 }
 
-int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ, int total)//add player struct
+int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ)//add player struct
 {
 	int	i;
 
-	introduce_contestants(champ, total);//add player struct
+	//declare operation tabs if malloc error return ERROR
+	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
 		if (update_carriages(info) == ERROR)
@@ -89,13 +85,14 @@ int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ, int tot
 	}
 	//print_core(core);
 	i = 0;
-	while (i < total)
+	while (*champ)
 	{
-		if (info->winner == champ[i]->i)
+		if (info->winner == (*champ)->i + 1)
 		{
-			ft_printf("Contestant %d, \"name of winner\", has won !\n", info->winner);
+			ft_printf("Contestant %d, \"%s\", has won !\n", info->winner, (*champ)->name);
+			break ;
 		}
-		++i;
+		(*champ)->next;
 	}
 	if (core)
 		i++;
