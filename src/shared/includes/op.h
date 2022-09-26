@@ -47,6 +47,7 @@
 # define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
 
 /* Champion name and description */
+# define CMD_CHAR			'.'
 # define NAME_CMD_STRING	".name"
 # define COMMENT_CMD_STRING	".comment"
 
