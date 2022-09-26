@@ -74,39 +74,39 @@ static int	store_buf(t_input *input, u_int8_t *buff, size_t size)
 	return (0);
 }
 
-static int	usage_champs_count(int argc)
-{
-	if (argc == 1 || argc > 5)
-	{
-		if (argc > 5)
-			ft_printf("Too many champions\n");
-		else
-		//if (argc == 1)
-			ft_printf("Usage: ./corewar [-d N -s N -v N \
-			| -b --stealth | -n --stealth] [-a] <champion1.cor> \
-			<...>\n    -a        : Prints output from \"aff\" \
-			(Default is to hide it)\n#### TEXT OUTPUT MODE \
-			##########################################################\n \
-			-d N      : Dumps memory after N cycles then exits\n    -s N \
-					: Runs N cycles, dumps memory, pauses, then repeats\n    \
-			-v N      : Verbosity levels, can be added together to enable \
-			several\n                - 0 : Show only essentials\n  \
-						- 1 : Show lives\n               \
-			- 2 : Show cycles\n                - 4 : \
-			Show operations (Params are NOT litteral ...)\n \
-							- 8 : Show deaths\n                \
-			- 16 : Show PC movements (Except \
-			for jumps)\n#### BINARY OUTPUT MODE \
-			########################################################\n    \
-			-b        : Binary output mode for corewar.42.fr\n    --stealth \
-			: Hides the real contents of the memory\n#### NCURSES OUTPUT MODE \
-			#######################################################\n    -n    \
-				: Ncurses output mode\n    --stealth : Hides the real contents of \
-				the memory\n################################################################################");
-		return (-1);
-	}
-	return (0);
-}
+// static int	usage_champs_count(int argc)
+// {
+// 	if (argc == 1 || argc > 5)
+// 	{
+// 		if (argc > 5)
+// 			ft_printf("Too many champions\n");
+// 		else
+// 		//if (argc == 1)
+// 			ft_printf("Usage: ./corewar [-d N -s N -v N \
+// 			| -b --stealth | -n --stealth] [-a] <champion1.cor> \
+// 			<...>\n    -a        : Prints output from \"aff\" \
+// 			(Default is to hide it)\n#### TEXT OUTPUT MODE \
+// 			##########################################################\n \
+// 			-d N      : Dumps memory after N cycles then exits\n    -s N \
+// 					: Runs N cycles, dumps memory, pauses, then repeats\n    \
+// 			-v N      : Verbosity levels, can be added together to enable \
+// 			several\n                - 0 : Show only essentials\n  \
+// 						- 1 : Show lives\n               \
+// 			- 2 : Show cycles\n                - 4 : \
+// 			Show operations (Params are NOT litteral ...)\n \
+// 							- 8 : Show deaths\n                \
+// 			- 16 : Show PC movements (Except \
+// 			for jumps)\n#### BINARY OUTPUT MODE \
+// 			########################################################\n    \
+// 			-b        : Binary output mode for corewar.42.fr\n    --stealth \
+// 			: Hides the real contents of the memory\n#### NCURSES OUTPUT MODE \
+// 			#######################################################\n    -n    \
+// 				: Ncurses output mode\n    --stealth : Hides the real contents of \
+// 				the memory\n################################################################################");
+// 		return (-1);
+// 	}
+// 	return (0);
+// }
 
 static t_profile **store_champs(t_profile **champ, int argc, t_input **input)
 {
@@ -201,8 +201,8 @@ int	main (int argc, char *argv[])
 
 	i = 1;
 	input = NULL;
-	if (usage_champs_count(argc) == -1)
-		return (-1);
+	//if (usage_champs_count(argc) == -1)
+	//	return (-1);
 	input = create_buf(input, argc);
 	if (!input)
 	{
