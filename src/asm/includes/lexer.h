@@ -24,7 +24,8 @@ typedef enum s_symtypes
 	LA_id,
 	LA_num,
 	LA_cmd,
-	LA_com,
+	LA_cmdstr,
+	LA_comment,
 	LA_comma,
 	LA_plus,
 	LA_minus
@@ -32,7 +33,7 @@ typedef enum s_symtypes
 
 typedef struct s_symbols
 {
-	bool		is_label;
+	bool		islabel;
 	t_symtypes	type;
 	t_string	str;
 	int			num;
@@ -50,5 +51,7 @@ void	lexer_free(t_lexer *lexer);
    and returns sym = sym.type = unknowwn if no valid symbol can be
    recognised */
 void	lexer_getsym(t_lexer *lexer, t_symbols *sym);
+
+void	_lexer_getcmd(t_source *source, t_symbols *sym);
 
 #endif
