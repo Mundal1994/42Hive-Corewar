@@ -51,8 +51,8 @@ static int	init_info(t_info **info, t_profile **champ)
 		return (ERROR);
 	(*info)->total_cycles = 0;
 	(*info)->live_statement = 0;
-	(*info)->cycle_of_death = CYCLE_TO_DIE;
-	(*info)->death_count = CYCLE_TO_DIE;
+	(*info)->cycles_to_die = CYCLE_TO_DIE;
+	(*info)->cycle_count = CYCLE_TO_DIE;
 	(*info)->checks_count = 0;
 	(*info)->head_carriage = NULL;
 	if (init_carriage(info, champ) == ERROR)
@@ -142,6 +142,7 @@ int	init(int argc, char **argv, int i)
 	add_players_to_core(core, &champ, input, argc - i);//need to modify and return champ
 	// doens't use input anymore after this point
 	print_core(core);
+	exit(0);
 	//place players
 	if (init_info(&info, &champ) == ERROR)//don't have to return modification of champ
 		return (ERROR);//free info and champ here before exiting

@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 16:05:22 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/09/27 11:38:11 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_info
 	int			winner;//initialized to player with highest identification number
 	int			total_cycles;//initialized to 0
 	int			live_statement;//initialized to 0
-	int			cycle_of_death;// initialized with macro CYCLES_TO_DIE
-	int			death_count;
+	int			cycles_to_die;// initialized with macro CYCLES_TO_DIE
+	int			cycle_count;
 	int			checks_count;// initialized to 0
 	int			carriage_count;
 	t_carriage	*head_carriage;
