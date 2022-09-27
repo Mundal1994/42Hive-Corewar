@@ -10,23 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-bool	is_wordch(char c)
-{
-	return (ft_islower(c) || ft_isdigit(c) || c == '_');
-}
-
-void	lexer_getcmd(t_source *source, t_symbols *sym)
-{
-	size_t	len;
-	char	*start;
-
-	sym.type = LA_cmd;
-	start = source->curr;
-	len = 1;
-	while (ft_isalnum(*source_next(source)))
-		++len;
-	string_replace_n(&sym->str, start, len);
-}
+#include "asm.h"
 
 static int	set_label(t_source *source, t_symbols *sym, char *start,
 		size_t len)
@@ -37,13 +21,12 @@ static int	set_label(t_source *source, t_symbols *sym, char *start,
 	return (OK);
 }
 
-static int	set_num(t_symbols *sym)
+static int	set_register(t_symbols *sym)
 {
-	sym->type = LA_num;
-	sym->num = ft_atoi(sym->str.buffer);
-	if (sym->num < 0)
+	sym->num = ft_atoi(sym->str.memory);
+	if (sym->num < 1 || sym->num > REG_NUMBER)
 		return (ERROR);
-	return (OK);
+	return (sym->type = LA_reg, OK);
 }
 
 int	lexer_getword(t_source *source, t_symbols *sym)
@@ -51,9 +34,8 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 	size_t	len;	
 	char	*curr;
 	char	*start;
-	bool	isnumber;
 
-	isnumber = true;
+	sym->type = LA_instr;
 	curr = source->curr;
 	start = source->curr;
 	len = 0;
@@ -63,16 +45,14 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 			return (set_label(source, sym, start, len));
 		if ((*curr == LABEL_CHAR || *curr == '_') && !sym->islabel)
 			sym->type = LA_unknown;
-		if (!ft_isdigit(*curr))
-			isnumber = false;
-		curr = source_next(source); 
+		curr = source_next(source);
 		++len;
 	}
 	sym->islabel = false;
 	string_replace_n(&sym->str, start, len);
+	if (is_register(sym->str.memory))
+		return (set_register(sym));
 	if (sym->type == LA_unknown)
 		return (ERROR);
-	if (isnumber)
-		return (set_num(sym));
-	return (sym->type = LA_id, OK);
+	return (OK);
 }

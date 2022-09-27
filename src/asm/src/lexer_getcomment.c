@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_getcomment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 08:52:44 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 08:52:45 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	lexer_init(t_lexer *lexer, const char *filename)
+int	lexer_getcomment(t_source *source, t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-}
+	size_t	len;
+	char	*start;
 
-void	lexer_free(t_lexer *lexer)
-{
-	source_free(&lexer->source);
+	start = source->curr;
+	len = 1;
+	while (source_next(source) && !source_at_lineend(*source))
+		++len;
+	if (string_replace_n(&sym->str, start, len))
+		return (OK);
+	return (ERROR);
 }

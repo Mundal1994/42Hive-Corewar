@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_bools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 08:50:46 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 08:50:47 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
-
-void	lexer_init(t_lexer *lexer, const char *filename)
+bool	is_wordch(char c)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
+	return (ft_islower(c) || ft_isdigit(c) || c == '_');
 }
 
-void	lexer_free(t_lexer *lexer)
+bool	is_register(const char *str)
 {
-	source_free(&lexer->source);
+	return (*str == 'r' && ft_isnumber(str + 1));
 }

@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_getcmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 08:51:54 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 08:51:55 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	lexer_init(t_lexer *lexer, const char *filename)
+int	lexer_getcmd(t_source *source, t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-}
+	size_t	len;
+	char	*start;
 
-void	lexer_free(t_lexer *lexer)
-{
-	source_free(&lexer->source);
+	start = source->curr;
+	len = 1;
+	while (ft_isalnum(*source_next(source)))
+		++len;
+	if (string_replace_n(&sym->str, start, len))
+		return (OK);
+	return (ERROR);
 }

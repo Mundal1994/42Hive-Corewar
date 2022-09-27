@@ -14,7 +14,7 @@
 
 bool	source_at_lineend(t_source source)
 {
-	return (source.curr == '\n' || source.curr = '\0');
+	return (!source.curr || *source.curr == '\n' || *source.curr == '\0');
 }
 
 bool	source_at_linestart(t_source source)
@@ -35,7 +35,7 @@ char	*source_seekstart(t_source *source)
 {
 	if (!source->curr)
 		source_next(source);
-	while (ft_strchr(TABSPACE, *(source->curr)), && !source_at_endline(*source))
+	while (ft_strchr(TABSPACE, *(source->curr)) && !source_at_endline(*source))
 		source_next(source);
 	return (source->curr);
 }

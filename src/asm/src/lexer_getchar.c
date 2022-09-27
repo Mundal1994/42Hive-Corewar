@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_getchar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 11:10:59 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 11:11:00 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
-
-void	lexer_init(t_lexer *lexer, const char *filename)
+int	lexer_getchar(t_source *source, t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-}
+	char	*curr;
 
-void	lexer_free(t_lexer *lexer)
-{
-	source_free(&lexer->source);
+	curr = source->curr;
+	source_next(source);
+	if (!string_replace_n(&sym->str, curr, 1))
+		return (ERROR);
+	return (OK);
 }

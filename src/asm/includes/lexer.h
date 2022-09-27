@@ -21,7 +21,9 @@ typedef enum s_symtypes
 	LA_unknown,
 	LA_eof,
 	LA_eol,
-	LA_id,
+	LA_instr,
+	LA_reg,
+	LA_ref,
 	LA_num,
 	LA_cmd,
 	LA_cmdstr,
@@ -34,6 +36,7 @@ typedef enum s_symtypes
 typedef struct s_symbols
 {
 	bool		islabel;
+	bool		isdirect;
 	t_symtypes	type;
 	t_string	str;
 	int			num;
@@ -50,10 +53,17 @@ void	lexer_free(t_lexer *lexer);
 /* Returns next symbol on the current source line. Sets errors if necessary
    and returns sym = sym.type = unknowwn if no valid symbol can be
    recognised */
-void	lexer_getsym(t_lexer *lexer, t_symbols *sym);
+int		lexer_getsym(t_lexer *lexer, t_symbols *sym);
+int		lexer_getword(t_source *source, t_symbols *sym);
+int		lexer_getcmd(t_source *source, t_symbols *sym);
+int		lexer_getcomment(t_source *source, t_symbols *sym);
+int		lexer_getdirect(t_source *source, t_symbols *sym);
+int		lexer_getnumber(t_source *source, t_symbols *sym);
+int		lexer_getreference(t_source *source, t_symbols *sym);
+int		lexer_getquote(t_source *source, t_symbols *sym);
+int		lexer_getchar(t_source *source, t_symbols *sym);
 
-void	lexer_getcmd(t_source *source, t_symbols *sym);
-
-bool	is_labelch(char c);
+bool	is_wordch(char c);
+bool	is_register(const char *str);
 
 #endif

@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_getdirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 09:50:14 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 09:50:15 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	lexer_init(t_lexer *lexer, const char *filename)
+int	lexer_getdirect(t_source *source, t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-}
+	char	*next;
 
-void	lexer_free(t_lexer *lexer)
-{
-	source_free(&lexer->source);
+	next = source_next(source);
+	if (next && next == LABEL_CHAR)
+		return (sym->type = LA_ref, lexer_getreference(source, sym));
+	if (next && ft_isdigit(*next))
+		return (sym->type = LA_num, lexer_getnumber(source, sym));
+	lexer_getcomment(source, sym);
+	return (ERROR);
 }

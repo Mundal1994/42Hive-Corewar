@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_getnumber.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 10:10:08 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 10:10:10 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	lexer_init(t_lexer *lexer, const char *filename)
+int	lexer_getnumber(t_source *source, t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-}
+	size_t	len;
+	char	*start;
 
-void	lexer_free(t_lexer *lexer)
-{
-	source_free(&lexer->source);
+	start = source->curr;
+	len = 1;
+	while (source_next(source) && ft_isdigit(*(source->curr)))
+		++len;
+	if (!string_replace_n(&sym->str, start, len))
+		return (ERROR);
+	return (sym->num = ft_atoi(sym->str.memory), OK);
 }
