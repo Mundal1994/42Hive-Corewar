@@ -76,15 +76,6 @@ static void	check(t_info *info)
 	info->live_statement = 0;
 }
 
-static void	introduce_contestants(t_profile **champ)//add player struct
-{
-	ft_printf("Introducing contestants...\n");
-	while (*champ)
-	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", (*champ)->i, (*champ)->exec_cd_sz, (*champ)->name, (*champ)->comment);
-		*champ = (*champ)->next;
-	}
-}
 
 // static void	declare_operations(t_op *op[17][8])
 // {
@@ -115,13 +106,14 @@ static void	introduce_contestants(t_profile **champ)//add player struct
 // 	};
 // }
 
-int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ)//add player struct
+int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
 	// t_op	op[17][8];
 
 	// //declare operation tabs if malloc error return ERROR
 	// declare_operations(&op);
 	// ft_printf("op %s\n", op[0][0]);
+	print_core(core);
 	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
@@ -130,16 +122,6 @@ int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ)//add pl
 		check(info);
 	}
 	// print winner
-	while (*champ)
-	{
-		if (info->winner == (*champ)->i + 1)
-		{
-			ft_printf("Contestant %d, \"%s\", has won !\n", info->winner, (*champ)->name);
-			break ;
-		}
-		*champ = (*champ)->next;
-	}
-	if (core)
-		print_core(core);
+	announce_winner(champ, info->winner);
 	return (0);
 }

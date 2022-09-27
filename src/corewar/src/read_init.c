@@ -280,13 +280,13 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 	}
 	if (store_champs(champ, argc, input, origin_i) == -1)//PROBLEM
 		return (NULL);
-	while ((*champ))
-	{
-		ft_printf("i: %d\n", (*champ)->i);
-		ft_printf("name: %s\n", (*champ)->name);
-		ft_printf("comment: %s\n", (*champ)->comment);
-		ft_printf("exec code: %d\n", (*champ)->exec_cd_sz);
-		(*champ) = (*champ)->next;
-	}
+	// while ((*champ))
+	// {
+	// 	ft_printf("i: %d\n", (*champ)->i);
+	// 	ft_printf("name: %s\n", (*champ)->name);
+	// 	ft_printf("comment: %s\n", (*champ)->comment);
+	// 	ft_printf("exec code: %d\n", (*champ)->exec_cd_sz);
+	// 	(*champ) = (*champ)->next;
+	// }
 	return (input);
 }

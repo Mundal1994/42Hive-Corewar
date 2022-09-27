@@ -68,8 +68,12 @@ typedef struct s_info
 
 int		init(int argc, char **argv, int i);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
-int		game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ);
+int		game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(t_info *info);
+
+//print functions
 void	print_core(uint32_t core[MEM_SIZE]);
+void	introduce_contestants(t_profile *champ);
+void	announce_winner(t_profile *champ, int winner);
 
 #endif
