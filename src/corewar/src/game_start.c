@@ -76,7 +76,6 @@ static void	check(t_info *info)
 	info->live_statement = 0;
 }
 
-
 // static void	declare_operations(t_op *op[17][8])
 // {
 // 	*op = {
@@ -121,7 +120,6 @@ int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ)//add pla
 			return (ERROR);
 		check(info);
 	}
-	// print winner
 	announce_winner(champ, info->winner);
 	return (0);
 }

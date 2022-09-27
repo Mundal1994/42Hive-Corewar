@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static int	init_carriage(t_info **info, t_profile *champ)
+static int	init_carriage(uint32_t core[MEM_SIZE], t_info **info, t_profile *champ)
 {
 	t_carriage	*new;
 	int			i;
@@ -28,9 +28,16 @@ static int	init_carriage(t_info **info, t_profile *champ)
 		new->last_live_call = 0;
 		new->delay = 0;
 		new->pos = champ->pos;
+		new->home = core[0];
+		new->current = core[new->pos];
 		new->skip = 0;
 		i = 0;
+		new->registry[i++] = champ->i * -1;
 		// reg_1 = - player_id	NEEDS TO STILL FIX LOGIC OF THE REGISTRYS
+		/*
+		r1 == registry[0]
+		r2 == registry[1]
+		*/
 		while (i < REG_NUMBER)
 			new->registry[i++] = 0;
 		new->next = (*info)->head_carriage;
@@ -40,7 +47,7 @@ static int	init_carriage(t_info **info, t_profile *champ)
 	return (0);
 }
 
-static int	init_info(t_info **info, t_profile *champ)
+static int	init_info(uint32_t core[MEM_SIZE], t_info **info, t_profile *champ)
 {
 	int	i;
 
@@ -102,7 +109,7 @@ int	init(int argc, char **argv, int i)
 		return (ERROR);
 	add_players_to_core(core, &champ, input, argc - i);
 	// doens't use input anymore after this point
-	if (init_info(&info, champ) == ERROR)
+	if (init_info(core, &info, champ) == ERROR)
 		return (ERROR);//free info and champ here before exiting
 	if (game_start(core, info, champ) == ERROR)
 		return (ERROR);//free info and champ here before exiting

@@ -49,6 +49,8 @@ typedef struct s_carriage
 	int32_t				last_live_call;//initialized to 0? cycle in which the statement live performed last
 	int32_t				delay;//initialized to 0
 	int32_t				pos;//current carriage position
+	void				*home;
+	void				*current;
 	int32_t				skip;//nbr of bytes that needs to be skipped to go to next statement
 	int32_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
 	struct s_carriage	*next;

@@ -37,12 +37,14 @@ int	update_carriages(t_info *info)
 	{
 		if (carriage->delay == 0)//means it moved last cycle or just been initiated
 		{
+			//JEFF----------------
 			//set_statement_code(&carriage);
 		}
 		if (carriage->delay > 0)
 			carriage->delay -= 1;
 		if (carriage->delay == 0)
 		{
+			//JEFF----------------
 			//perform_statement_code() and move carriage
 			// if cannot perform statement code move to next byte.
 		}
@@ -50,3 +52,20 @@ int	update_carriages(t_info *info)
 	}
 	return (0);
 }
+
+/*
+
+Page Virtual machine
+Paragraf inside the cycle
+
+Set statement code function:
+- Read byte on which the carriage is located
+- If number corresponds to operation code
+	store operation code in the variable carriage->statement_code
+	set carriage->delay == to number of cycles it would take to execute the statement_code
+
+Perform statement code function:
+- read and calculate pcb
+- 
+
+*/
