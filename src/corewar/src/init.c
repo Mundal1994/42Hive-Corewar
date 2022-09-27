@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molesen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 17:20:09 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/22 17:20:10 by molesen          ###   ########.fr       */
+/*   Updated: 2022/09/27 11:35:07 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,15 @@ static void	add_players_to_core(uint32_t core[MEM_SIZE], t_profile **champ, t_in
 int	init(int argc, char **argv, int i)
 {
 	t_info		*info;
-	t_profile	**champ;
+	t_profile	*champ;
 	t_input		**input;
 	uint32_t	core[MEM_SIZE];
 
 	info = NULL;
 	champ = NULL;
-	input = read_init(argc, argv, i, champ);//free champ and input from inside this function
+	//read from files - if error exit
+	// loop through core and set everything to 0
+	input = read_init(argc, argv, i, &champ);
 	if (!input)
 		return (ERROR);
 	// if (champ[0])
@@ -137,13 +139,13 @@ int	init(int argc, char **argv, int i)
 	//ft_printf("comment: %s\n", champ[0]->comment);
 	//ft_printf("exec code: %d\n", champ[0]->exec_cd_sz);
 	//ft_printf("%s\n", input[0]->t_script[champ[0]->exec_cd_sz]);
-	add_players_to_core(core, champ, input, argc - i);//need to modify and return champ
+	add_players_to_core(core, &champ, input, argc - i);//need to modify and return champ
 	// doens't use input anymore after this point
 	print_core(core);
 	//place players
-	if (init_info(&info, champ) == ERROR)//don't have to return modification of champ
+	if (init_info(&info, &champ) == ERROR)//don't have to return modification of champ
 		return (ERROR);//free info and champ here before exiting
-	if (game_start(core, info, champ) == ERROR)//don't have to return modification of champ
+	if (game_start(core, info, &champ) == ERROR)//don't have to return modification of champ
 		return (ERROR);//free info and champ here before exiting
 	return (0);
 }

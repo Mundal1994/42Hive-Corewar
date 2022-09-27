@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/15 09:07:44 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/26 16:05:22 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@
 
 typedef struct s_profile
 {
-	int		i;
-	char	name[PROG_NAME_LENGTH + 1];
-	char	comment[COMMENT_LENGTH + 1];
-	int		exec_cd_sz;
-	int		pos;
+	int			i;
+	char		name[PROG_NAME_LENGTH + 1];
+	char		comment[COMMENT_LENGTH + 1];
+	int			exec_cd_sz;
+	int			pos;
+	struct s_profile	*next;
+	struct s_profile	*head;
 }			t_profile;
 
 typedef struct s_input

@@ -54,142 +54,178 @@ static int	store_buf(t_input *input, u_int8_t *buff, size_t size)
 		input->t_script = temp;
 		input->capacity = input->capacity * 2;
 	}
-	//ft_printf("current %i\n", input->current);
 	while (i < size)
 	{
 		input->t_script[input->current] = buff[i];
-		//ft_printf("%c", buff[i]);//input->t_script[input->current]);
 		input->current++;
 		++i;
 	}
-	//ft_printf("size %i\n", input->current);
-	// if (input->current > 682) //MEM_SIZE / 6
-	// {
-	// 	ft_printf("HERE LIES\n");
-	// 	return (-1);
-	// }
-	//ft_printf("\n");
 	return (0);
 }
 
-// static int	usage_champs_count(int argc)
-// {
-// 	if (argc == 1 || argc > 5)
-// 	{
-// 		if (argc > 5)
-// 			ft_printf("Too many champions\n");
-// 		else
-// 		//if (argc == 1)
-// 			ft_printf("Usage: ./corewar [-d N -s N -v N \
-// 			| -b --stealth | -n --stealth] [-a] <champion1.cor> \
-// 			<...>\n    -a        : Prints output from \"aff\" \
-// 			(Default is to hide it)\n#### TEXT OUTPUT MODE \
-// 			##########################################################\n \
-// 			-d N      : Dumps memory after N cycles then exits\n    -s N \
-// 					: Runs N cycles, dumps memory, pauses, then repeats\n    \
-// 			-v N      : Verbosity levels, can be added together to enable \
-// 			several\n                - 0 : Show only essentials\n  \
-// 						- 1 : Show lives\n               \
-// 			- 2 : Show cycles\n                - 4 : \
-// 			Show operations (Params are NOT litteral ...)\n \
-// 							- 8 : Show deaths\n                \
-// 			- 16 : Show PC movements (Except \
-// 			for jumps)\n#### BINARY OUTPUT MODE \
-// 			########################################################\n    \
-// 			-b        : Binary output mode for corewar.42.fr\n    --stealth \
-// 			: Hides the real contents of the memory\n#### NCURSES OUTPUT MODE \
-// 			#######################################################\n    -n    \
-// 				: Ncurses output mode\n    --stealth : Hides the real contents of \
-// 				the memory\n################################################################################");
-// 		return (-1);
-// 	}
-// 	return (0);
-// }
-
-static t_profile **store_champs(t_profile **champ, int argc, t_input **input, int c)
+static int	create_champ(t_profile	**champ)
 {
-	int i;
+	if (!(*champ))
+	{
+		(*champ) = (t_profile *) malloc (sizeof(t_profile));
+		(*champ)->head = (*champ);
+		if (!(*champ))
+		{
+			//free everything
+			return (-1);
+		}
+		(*champ)->i = 1;
+	}
+	else
+	{
+		(*champ)->next = (t_profile *) malloc (sizeof(t_profile));
+		if (!(*champ)->next)
+		{
+			//free head
+			return (-1);
+		}
+		(*champ)->next->head = (*champ)->head;
+		(*champ)->next->i = (*champ)->i + 1;
+		(*champ) = (*champ)->next;
+	}
+	(*champ)->exec_cd_sz = 0;
+	(*champ)->next = NULL;
+	return (0);
+}
+
+static int	champ_stats(t_profile **champ, t_input **input, int i)
+{
 	int	j;
 	int	k;
 
-	i = 0;
-	if (!champ)
+	j = 0;
+	k = 4;
+	while (j < PROG_NAME_LENGTH)
 	{
-		champ = (t_profile **) malloc ((argc - c) * sizeof(t_profile));
-		if (!champ)
+		(*champ)->name[j] = input[i]->t_script[k + j];
+		++j;
+	}
+	k += j;
+	while (k < 136)
+	{
+		if (input[i]->t_script[k] != 0)
+			return (-1);
+		k++;
+	}
+	while (k < 140)
+	{
+		(*champ)->exec_cd_sz += input[i]->t_script[k];
+		++k;
+	}
+	j = 0;
+	while (j < COMMENT_LENGTH)
+	{
+		(*champ)->comment[j] = input[i]->t_script[k + j];
+		j++;
+	}
+	k += j;
+	while (k < 2192)
+	{
+		if (input[i]->t_script[k] != 0)
+			return (-1);
+		k++;
+	}
+	return (0);
+}
+
+int	error_clean(t_input **input, t_profile **champ, int c)
+{
+	t_profile	*temp;
+	int			i;
+
+	i = 0;
+	while ((*champ) && (*champ)->head)
+	{
+		if ((*champ) == (*champ)->head)
+			(*champ) = NULL;
+		temp = (*champ)->head;
+		(*champ)->head = (*champ)->head->next;
+		free(temp);
+	}
+	if (input)
+	{
+		while (i < c)
 		{
-			//free everything
-			return (NULL);
-		}
-		while (i < (argc - c))
-		{
-			
-			if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
-				!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
-				!= 243)
-			{
-				ft_printf("i = %i\nHere[%s]\n", i, input[i]->t_script);
-				exit (1);
-			}
-			champ[i] = (t_profile *) malloc (sizeof(t_profile));
-			if (!champ[i])
-			{
-				//free all 
-				return (NULL);
-			}
-			ft_bzero(champ[i]->name, 129); //(PROG_NAME_LENGTH + 1)
-			ft_bzero(champ[i]->comment, 2049); //(COMMENT_LENGTH + 1)what checks unprintable chars?
-			j = 0;
-			k = 4;
-			while (j < PROG_NAME_LENGTH) //PROG_NAME_LENGTH
-			{
-				champ[i]->name[j] = input[i]->t_script[k + j];
-				++j;
-			}
-			k += j;
-			ft_printf("%s\n", champ[i]->name);
-			//exit (0);
-			while (k < 136)
-			{
-				if (input[i]->t_script[k] != 0)
-				{
-					ft_printf("PROBLEM\n");
-					//if next four bytes arent NULL
-					exit (1);
-				}
-				k++;
-			}
-			//ft_printf("%i\n", k);
-			//exit (0);
-			champ[i]->exec_cd_sz = 0;
-			while (k < 140)
-			{
-				champ[i]->exec_cd_sz += input[i]->t_script[k];
-				++k;
-			}
-			//ft_printf("exec %i\n", champ[i]->exec_cd_sz);
-			//exit (0);
-			j = 0;
-			while (j < COMMENT_LENGTH)
-			{
-				champ[i]->comment[j] = input[i]->t_script[k + j];
-				j++;
-			}
-			k += j;
-			while (k < 2192)
-			{
-				if (input[i]->t_script[k] != 0)
-				{
-					ft_printf("PROBLEM\n");
-					//if next four bytes arent NULL
-					exit (1);
-				}
-				k++;
-			}
+			free(input[i]->t_script);
+			free(input[i]);
 			++i;
 		}
+		free(input);
+		input = NULL;
 	}
-	return (champ);
+	return (-1);
+}
+
+static int	store_champs(t_profile **champ, int argc, t_input **input, int c)
+{
+	int i;
+	//int	j;
+	//int	k;
+
+	i = 0;
+	while (i < (argc - c))
+	{
+		if (create_champ(champ) == -1)
+			return (error_clean(input, champ, c));
+		if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
+			!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
+			!= 243)
+		{
+			exit (1);
+		}
+		ft_bzero((*champ)->name, (PROG_NAME_LENGTH + 1)); //(PROG_NAME_LENGTH + 1)
+		ft_bzero((*champ)->comment, (COMMENT_LENGTH + 1)); //(COMMENT_LENGTH + 1)what checks unprintable chars?
+		if (champ_stats(champ, input, i) == -1)
+			return (error_clean(input, champ, c));
+		// j = 0;
+		// k = 4;
+		// while (j < PROG_NAME_LENGTH)
+		// {
+		// 	(*champ)->name[j] = input[i]->t_script[k + j];
+		// 	++j;
+		// }
+		// k += j;
+		// while (k < 136)
+		// {
+		// 	if (input[i]->t_script[k] != 0)
+		// 	{
+		// 		ft_printf("PROBLEM\n");
+		// 		//if next four bytes arent NULL
+		// 		exit (1);
+		// 	}
+		// 	k++;
+		// }
+		// while (k < 140)
+		// {
+		// 	(*champ)->exec_cd_sz += input[i]->t_script[k];
+		// 	++k;
+		// }
+		// j = 0;
+		// while (j < COMMENT_LENGTH)
+		// {
+		// 	(*champ)->comment[j] = input[i]->t_script[k + j];
+		// 	j++;
+		// }
+		// k += j;
+		// while (k < 2192)
+		// {
+		// 	if (input[i]->t_script[k] != 0)
+		// 	{
+		// 		ft_printf("PROBLEM\n");
+		// 		//if next four bytes arent NULL
+		// 		exit (1);
+		// 	}
+		// 	k++;
+		// }
+		++i;
+	}
+	(*champ) = (*champ)->head;
+	return (0);
 }
 
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
@@ -200,13 +236,8 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 	int			ret;
 	int			origin_i;
 	int			j;
-	//size_t		i;
-	//t_profile	**champ;
 
-	//i = 1;
 	input = NULL;
-	// if (usage_champs_count(argc) == -1)
-	// 	return (-1);
 	input = create_buf(input, argc);
 	if (!input)
 	{
@@ -247,19 +278,15 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		++j;
 		++i;
 	}
-	champ = NULL;
-	champ = store_champs(champ, argc, input, origin_i);
-	ft_printf("i: %d\n", champ[1]->i);
-	ft_printf("name: %s\n", champ[1]->name);
-	ft_printf("comment: %s\n", champ[0]->comment);
-	ft_printf("exec code: %d\n", champ[0]->exec_cd_sz);
-	ft_printf("%d\n", input[0]->t_script[2192]);
-	// i = 0;
-	// while (i < input->current)
-	// {
-	// 	if ((input->t_script[i] >= 'a' && input->t_script[i] <= 'z') || (input->t_script[i] >= 'A' && input->t_script[i] <= 'Z'))
-	// 		ft_printf("%c", input->t_script[i]);
-	// 	i++;
-	// }
+	if (store_champs(champ, argc, input, origin_i) == -1)//PROBLEM
+		return (NULL);
+	while ((*champ))
+	{
+		ft_printf("i: %d\n", (*champ)->i);
+		ft_printf("name: %s\n", (*champ)->name);
+		ft_printf("comment: %s\n", (*champ)->comment);
+		ft_printf("exec code: %d\n", (*champ)->exec_cd_sz);
+		(*champ) = (*champ)->next;
+	}
 	return (input);
 }
