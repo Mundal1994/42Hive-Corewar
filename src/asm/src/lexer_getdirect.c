@@ -17,7 +17,7 @@ int	lexer_getdirect(t_source *source, t_symbols *sym)
 	char	*next;
 
 	next = source_next(source);
-	if (next && next == LABEL_CHAR)
+	if (next && *next == LABEL_CHAR)
 		return (sym->type = LA_ref, lexer_getreference(source, sym));
 	if (next && ft_isdigit(*next))
 		return (sym->type = LA_num, lexer_getnumber(source, sym));

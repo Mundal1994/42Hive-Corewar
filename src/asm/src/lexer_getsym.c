@@ -14,7 +14,6 @@
 
 static void	init(t_symbols *sym)
 {
-	sym->islabel = false;
 	sym->isdirect = false;
 	sym->type = LA_unknown;
 	sym->num = 0;
@@ -26,7 +25,7 @@ static int	lexer_getstart(t_source *source, t_symbols *sym)
 
 	curr = source->curr;
 	if (is_wordch(*curr))
-		return (sym->islabel = true, lexer_getword(source, sym));
+		return (sym->type = LA_label, lexer_getword(source, sym));
 	if (*curr == CMD_CHAR)
 		return (sym->type = LA_cmd, lexer_getcmd(source, sym));
 	sym->type = LA_unknown;
@@ -54,7 +53,7 @@ int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 	if (ft_isdigit(*curr))
 		return (sym->type = LA_num, lexer_getnumber(source, sym));
 	if (is_wordch(*curr))
-		return (lexer_getword(source, sym));
+		return (sym->type = LA_instr, lexer_getword(source, sym));
 	if (*curr == LABEL_CHAR)
 		return (sym->type = LA_ref, lexer_getreference(source, sym));
 	if (*curr == DIRECT_CHAR)
@@ -68,7 +67,7 @@ int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 	if (*curr == '-')
 		return (sym->type = LA_minus, lexer_getchar(source, sym));
 	if (*curr == '"')
-		return (sym->tpe = LA_cmdstr, lexer_getquote(source, sym));
+		return (sym->type = LA_cmdstr, lexer_getquote(source, sym));
 	lexer_getcomment(source, sym);
 	return (ERROR);
 }

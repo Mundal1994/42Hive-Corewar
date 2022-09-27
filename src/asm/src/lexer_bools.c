@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_ctype.h"
+#include <stdbool.h>
+
 bool	is_wordch(char c)
 {
 	return (ft_islower(c) || ft_isdigit(c) || c == '_');

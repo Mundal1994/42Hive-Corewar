@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "asm.h"
+
 int	lexer_getchar(t_source *source, t_symbols *sym)
 {
 	char	*curr;

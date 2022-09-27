@@ -15,12 +15,17 @@
 
 # include <stdbool.h>
 # include "Strings.h"
+# include "source.h"
+# include "op.h"
+# include "definitions.h"
+# include "libft.h"
 
 typedef enum s_symtypes
 {
 	LA_unknown,
 	LA_eof,
 	LA_eol,
+	LA_label,
 	LA_instr,
 	LA_reg,
 	LA_ref,
@@ -35,7 +40,6 @@ typedef enum s_symtypes
 
 typedef struct s_symbols
 {
-	bool		islabel;
 	bool		isdirect;
 	t_symtypes	type;
 	t_string	str;

@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 17:08:03 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/23 22:41:06 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/27 11:33:37 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*source_seekstart(t_source *source)
 {
 	if (!source->curr)
 		source_next(source);
-	while (ft_strchr(TABSPACE, *(source->curr)) && !source_at_endline(*source))
+	while (ft_strchr(TABSPACE, *(source->curr)) && !source_at_lineend(*source))
 		source_next(source);
 	return (source->curr);
 }

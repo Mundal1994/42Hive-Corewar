@@ -20,7 +20,7 @@ int	lexer_getquote(t_source *source, t_symbols *sym)
 	start = source_next(source);
 	if (!start)
 		return (ERROR);
-	if (start == '"')
+	if (*start == '"')
 		return (string_clear(&sym->str), OK);
 	len = 1;
 	while (source_next(source) && *(source->curr) != '"')

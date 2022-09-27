@@ -23,7 +23,7 @@ int	lexer_getreference(t_source *source, t_symbols *sym)
 	len = 1;
 	while (source_next(source) && is_wordch(*(source->curr)))
 		++len;
-	if (!string_replace_n(source, start, len))
+	if (!string_replace_n(&sym->str, start, len))
 		return (ERROR);
 	if (sym->type == LA_unknown)
 		return (ERROR);

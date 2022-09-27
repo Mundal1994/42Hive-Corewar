@@ -16,7 +16,6 @@ static int	set_label(t_source *source, t_symbols *sym, char *start,
 		size_t len)
 {
 	string_replace_n(&sym->str, start, len);
-	sym->type = LA_id;
 	source_next(source);
 	return (OK);
 }
@@ -35,20 +34,18 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 	char	*curr;
 	char	*start;
 
-	sym->type = LA_instr;
 	curr = source->curr;
 	start = source->curr;
 	len = 0;
 	while (curr && (is_wordch(*curr) || *curr == LABEL_CHAR))
 	{
-		if (*curr == LABEL_CHAR && sym->islabel)
+		if (*curr == LABEL_CHAR && sym->type == LA_label)
 			return (set_label(source, sym, start, len));
-		if ((*curr == LABEL_CHAR || *curr == '_') && !sym->islabel)
+		if ((*curr == LABEL_CHAR || *curr == '_') && sym->type != LA_label)
 			sym->type = LA_unknown;
 		curr = source_next(source);
 		++len;
 	}
-	sym->islabel = false;
 	string_replace_n(&sym->str, start, len);
 	if (is_register(sym->str.memory))
 		return (set_register(sym));

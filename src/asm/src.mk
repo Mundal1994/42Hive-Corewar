@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 17:20:05 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/27 11:31:28 by cchen            ###   ########.fr        #
+#    Updated: 2022/09/27 11:33:57 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS += $(SRC_DIR)/source.c
 SRCS += $(SRC_DIR)/source_line.c
 SRCS += $(SRC_DIR)/source_read.c
 SRCS += $(SRC_DIR)/lexer.c
-SRCS += $(SRC_DIR)/lexer_bool.c
+SRCS += $(SRC_DIR)/lexer_bools.c
 SRCS += $(SRC_DIR)/lexer_getchar.c
 SRCS += $(SRC_DIR)/lexer_getcmd.c
 SRCS += $(SRC_DIR)/lexer_getcomment.c
