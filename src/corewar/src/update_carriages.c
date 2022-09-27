@@ -32,7 +32,7 @@ int	update_carriages(t_info *info)
 {
 	t_carriage	*carriage;
 
-	carriage = info->head;
+	carriage = info->head_carriage;
 	while (carriage)
 	{
 		if (carriage->delay == 0)//means it moved last cycle or just been initiated

@@ -30,6 +30,7 @@ typedef struct s_profile
 	char	comment[COMMENT_LENGTH + 1];
 	int		exec_cd_sz;
 	int		pos;
+	struct s_profile	*next;
 }			t_profile;
 
 typedef struct s_input
@@ -57,8 +58,8 @@ typedef struct s_info
 	int			winner;//initialized to player with highest identification number
 	int			total_cycles;//initialized to 0
 	int			live_statement;//initialized to 0
-	int			cycle_of_death;// initialized with macro CYCLES_TO_DIE
-	int			death_count;
+	int			cycles_to_die;// initialized with macro CYCLES_TO_DIE
+	int			cycle_count;
 	int			checks_count;// initialized to 0
 	int			carriage_count;
 	t_carriage	*head_carriage;
