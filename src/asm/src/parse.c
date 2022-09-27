@@ -25,7 +25,7 @@ int	parse(t_lexer *lexer)
 	t_symbols	sym;
 
 	parse_init(lexer, &sym);
-	while (lexer_getsym(lexer, &sym) == OK)
+	while (lexer_next(lexer, &sym) == OK)
 	{
 		ft_printf("type: %d, id_direct: %d, num: %d, str: %s\n",
 			sym.type, sym.isdirect, sym.num, sym.str.memory);

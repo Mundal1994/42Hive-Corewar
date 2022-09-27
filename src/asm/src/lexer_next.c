@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_getsym.c                                     :+:      :+:    :+:   */
+/*   lexer_next.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 11:08:01 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 23:12:37 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/27 15:52:18 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 15:52:23 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	getter_index(const char *curr)
 	return (*curr - ' ');
 }
 
-int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
+int	lexer_next(t_lexer *lexer, t_symbols *sym)
 {
 	t_source		*source;
 	t_lexer_getter	getter;

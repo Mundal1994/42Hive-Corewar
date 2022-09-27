@@ -29,7 +29,7 @@ void	lexer_free(t_lexer *lexer);
 /* Returns next symbol on the current source line. Sets errors if necessary
    and returns sym = sym.type = unknowwn if no valid symbol can be
    recognised */
-int		lexer_getsym(t_lexer *lexer, t_symbols *sym);
+int		lexer_next(t_lexer *lexer, t_symbols *sym);
 int		lexer_getword(t_source *source, t_symbols *sym);
 int		lexer_getcmd(t_source *source, t_symbols *sym);
 int		lexer_getcomment(t_source *source, t_symbols *sym);
