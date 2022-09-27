@@ -47,6 +47,8 @@ int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 	curr = source->curr;
 	if (source_at_lineend(*source))
 		return (lexer_end(source, sym));
+	if (*curr == COMMENT_CHAR || *curr == ALT_COMMENT_CHAR)
+		return (sym->type = LA_com, lexer_getcomment(source, sym));
 	if (source_at_linestart(*source))
 		return (lexer_getstart(source, sym));
 	if (ft_isdigit(*curr))
@@ -57,8 +59,6 @@ int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 		return (sym->type = LA_ref, lexer_getreference(source, sym));
 	if (*curr == DIRECT_CHAR)
 		return (sym->isdirect = true, lexer_getdirect(source, sym));
-	if (*curr == COMMENT_CHAR || *curr == ALT_COMMENT_CHAR)
-		return (sym->type = LA_com, lexer_getcomment(source, sym));
 	if (*curr == SEPARATOR_CHAR)
 		return (sym->type = LA_comma, lexer_getchar(source, sym));
 	if (*curr == '+')
