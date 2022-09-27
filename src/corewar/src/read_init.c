@@ -1,18 +1,19 @@
 #include "vm.h"
 
-t_input **create_buf(t_input **input, int argc)
+t_input **create_buf(t_input **input, int argc, int c)
 {
 	int	i;
 
 	i = 0;
 	if (!input)
 	{
-		input = (t_input **)malloc((argc - 1) * sizeof(t_input *));
+		//ft_printf("plus %d\n", argc - c);
+		input = (t_input **)malloc((argc - c) * sizeof(t_input *));
 		if (!input)
 		{
 			return (NULL);
 		}
-		while (i < (argc - 1))
+		while (i < (argc - c))
 		{
 			input[i] = (t_input *)malloc(sizeof(t_input));
 			if (!input[i])
@@ -42,7 +43,7 @@ static int	store_buf(t_input *input, u_int8_t *buff, size_t size)
 
 	i = 0;
 	temp = NULL;
-	if (input->current + size >= input->capacity)
+	if (input->current + size >= input->capacity - 1)
 	{
 		temp = (u_int8_t *) malloc(sizeof(u_int8_t) * (input->capacity * 2));
 		if (!temp)
@@ -164,14 +165,12 @@ int	error_clean(t_input **input, t_profile **champ, int c)
 static int	store_champs(t_profile **champ, int argc, t_input **input, int c)
 {
 	int i;
-	//int	j;
-	//int	k;
 
 	i = 0;
 	while (i < (argc - c))
 	{
 		if (create_champ(champ) == -1)
-			return (error_clean(input, champ, c));
+			return (error_clean(input, champ, (argc - c)));
 		if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
 			!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
 			!= 243)
@@ -181,47 +180,7 @@ static int	store_champs(t_profile **champ, int argc, t_input **input, int c)
 		ft_bzero((*champ)->name, (PROG_NAME_LENGTH + 1)); //(PROG_NAME_LENGTH + 1)
 		ft_bzero((*champ)->comment, (COMMENT_LENGTH + 1)); //(COMMENT_LENGTH + 1)what checks unprintable chars?
 		if (champ_stats(champ, input, i) == -1)
-			return (error_clean(input, champ, c));
-		// j = 0;
-		// k = 4;
-		// while (j < PROG_NAME_LENGTH)
-		// {
-		// 	(*champ)->name[j] = input[i]->t_script[k + j];
-		// 	++j;
-		// }
-		// k += j;
-		// while (k < 136)
-		// {
-		// 	if (input[i]->t_script[k] != 0)
-		// 	{
-		// 		ft_printf("PROBLEM\n");
-		// 		//if next four bytes arent NULL
-		// 		exit (1);
-		// 	}
-		// 	k++;
-		// }
-		// while (k < 140)
-		// {
-		// 	(*champ)->exec_cd_sz += input[i]->t_script[k];
-		// 	++k;
-		// }
-		// j = 0;
-		// while (j < COMMENT_LENGTH)
-		// {
-		// 	(*champ)->comment[j] = input[i]->t_script[k + j];
-		// 	j++;
-		// }
-		// k += j;
-		// while (k < 2192)
-		// {
-		// 	if (input[i]->t_script[k] != 0)
-		// 	{
-		// 		ft_printf("PROBLEM\n");
-		// 		//if next four bytes arent NULL
-		// 		exit (1);
-		// 	}
-		// 	k++;
-		// }
+			return (error_clean(input, champ, (argc - c)));
 		++i;
 	}
 	(*champ) = (*champ)->head;
@@ -238,7 +197,7 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 	int			j;
 
 	input = NULL;
-	input = create_buf(input, argc);
+	input = create_buf(input, argc, i);
 	if (!input)
 	{
 		return (NULL);
@@ -255,13 +214,15 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		if (fd == -1)
 		{
 			ft_printf("Can't read file %s\n", argv[i]);
-			return (NULL);
+			error_clean(input, champ, (argc - origin_i));
+			return (NULL); //make sure origin_i is correction distance to free
 		}
 		ret = read(fd, buff, BUFF_SIZE);
 		if (ret == -1)
 		{
 			//clean out
-			return (NULL);
+			error_clean(input, champ, (argc - origin_i));
+			return (NULL); //make sure origin_i is correction distance to free
 		}
 		while (ret)
 		{
@@ -278,8 +239,11 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		++j;
 		++i;
 	}
-	if (store_champs(champ, argc, input, origin_i) == -1)//PROBLEM
-		return (NULL);
+	if (store_champs(champ, argc, input, origin_i) == -1)
+	{
+		error_clean(input, champ, (argc - origin_i));
+		return (NULL); //make sure origin_i is correction distance to free
+	}
 	while ((*champ))
 	{
 		ft_printf("i: %d\n", (*champ)->i);
