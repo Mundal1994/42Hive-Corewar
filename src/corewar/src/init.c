@@ -28,8 +28,8 @@ static int	init_carriage(uint32_t core[MEM_SIZE], t_info **info, t_profile *cham
 		new->last_live_call = 0;
 		new->delay = 0;
 		new->pos = champ->pos;
-		new->home = core[0];
-		new->current = core[new->pos];
+		new->home = &core[0];
+		new->current = &core[new->pos];
 		new->skip = 0;
 		i = 0;
 		new->registry[i++] = champ->i * -1;
@@ -61,7 +61,7 @@ static int	init_info(uint32_t core[MEM_SIZE], t_info **info, t_profile *champ)
 	(*info)->cycle_count = CYCLE_TO_DIE;
 	(*info)->checks_count = 0;
 	(*info)->head_carriage = NULL;
-	if (init_carriage(info, champ) == ERROR)
+	if (init_carriage(core, info, champ) == ERROR)
 		return (ERROR);
 	(*info)->winner = (*info)->head_carriage->id;
 	(*info)->carriage_count = (*info)->head_carriage->id;

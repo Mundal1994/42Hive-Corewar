@@ -29,29 +29,57 @@ static int	one_carriage_left(t_info *info)
 	return (FALSE);
 }
 
-static void	kill_carriages(t_info *info)
+static void	delete_carriage(t_info *info, int id)
 {
 	t_carriage	*carriage;
+	t_carriage	*prev;
+
+	carriage = info->head_carriage;
+	prev = NULL;
+	while (carriage)
+	{
+		if (carriage->id == id)
+		{
+			if (!carriage->next && !prev)
+				info->head_carriage = NULL;
+			else if (!carriage->next)
+				prev->next = NULL;
+			else if (!prev)
+				info->head_carriage = carriage->next;
+			else
+				prev->next = carriage->next;
+			free(carriage);
+			return ;
+		}
+		prev = carriage;
+		carriage = carriage->next;
+	}
+}
+
+static void	check_carriage_live_call(t_info *info)
+{
+	t_carriage	*carriage;
+	t_carriage	*next;
 	int			limit;
-	//FUNCTION
-	//function that checks all of the carriages and when their last live_call was and if it is within the limit
+	
 	carriage = info->head_carriage;
 	limit = info->total_cycles - info->cycles_to_die;
 	while (carriage)
 	{
-		if (carriage->last_live_call <= limit)//equal to or just smaller than
+		if (carriage->last_live_call <= limit)
 		{
-			//if smaller we need to delete carriage from struct
-			// need to flexible enough to handle deletion of first and last struct.
-			// last struct is easy but middle and first is harder
-			// make carriage have a prev to easier reset pointers correctly?
-			/*
-			can also loop through the whole thing again while keeping track of the previous to better reset stuff
-			if this has to happen a lot maybe better to have prev stored?
-			*/
+			next = carriage->next;
+			delete_carriage(info, carriage->id);
+			carriage = next;
 		}
-		carriage = carriage->next;
+		else
+			carriage = carriage->next;
 	}
+}
+
+static void	kill_carriages(t_info *info)
+{
+	check_carriage_live_call(info);
 	if (info->live_statement >= NBR_LIVE)
 	{
 		info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
@@ -76,42 +104,40 @@ static void	check(t_info *info)
 	info->live_statement = 0;
 }
 
-// static void	declare_operations(t_op *op[17][8])
+// static int	copy_carriage(t_info **info, t_carriage *carriage)
 // {
-// 	*op = {
-// 	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
-// 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
-// 	{"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 0},
-// 	{"add", 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 0},
-// 	{"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 0},
-// 	{"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
-// 		"et (and  r1, r2, r3   r1&r2 -> r3", 1, 0},
-// 	{"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
-// 		"ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 0},
-// 	{"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
-// 		"ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0},
-// 	{"zjmp", 1, {T_DIR}, 9, 20, "jump if zero", 0, 1},
-// 	{"ldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 10, 25,
-// 		"load index", 1, 1},
-// 	{"sti", 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 11, 25,
-// 		"store index", 1, 1},
-// 	{"fork", 1, {T_DIR}, 12, 800, "fork", 0, 1},
-// 	{"lld", 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 0},
-// 	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
-// 		"long load index", 1, 1},
-// 	{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 1},
-// 	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0},
-// 	{0, 0, {0}, 0, 0, 0, 0, 0}
-// 	};
+// 	t_carriage	*new;
+// 	int			i;
+
+// 	new = (t_carriage *)malloc(sizeof(t_carriage));
+// 	if (!new)
+// 		return (ERROR);
+// 	(*info)->carriage_count++;
+// 	new->id = (*info)->carriage_count;
+// 	new->carry = carriage->carry;
+// 	new->statement_code = carriage->statement_code;
+// 	new->last_live_call = carriage->last_live_call;
+// 	new->delay = carriage->delay;//does this also have to be copied or should it be 0?
+// 	new->pos = carriage->pos;//this should probably be different
+// 	new->home = carriage->home;//this should probably be different
+// 	new->current = carriage->current;//this should probably be different
+// 	new->skip = carriage->skip;//this should probably be different
+// 	i = 0;
+// 	new->registry[i] = carriage->registry[i];
+// 	// reg_1 = - player_id	NEEDS TO STILL FIX LOGIC OF THE REGISTRYS
+// 	/*
+// 	r1 == registry[0]
+// 	r2 == registry[1]
+// 	*/
+// 	while (++i < REG_NUMBER)
+// 		new->registry[i] = carriage->registry[i];
+// 	new->next = (*info)->head_carriage;
+// 	(*info)->head_carriage = new;
+// 	return (0);
 // }
 
 int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
-	// t_op	op[17][8];
-
-	// //declare operation tabs if malloc error return ERROR
-	// declare_operations(&op);
-	// ft_printf("op %s\n", op[0][0]);
 	print_core(core);
 	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
@@ -120,6 +146,12 @@ int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ)//add pla
 			return (ERROR);
 		check(info);
 	}
+	// TESTING FUNCTION TO BE ABLE TO COPY CARRIAGES and printing them
+	// t_carriage *carriage;
+	// carriage = info->head_carriage;
+	// if (copy_carriage(&info, carriage) == ERROR)
+	// 	return (ERROR);
+	// print_carriages(info);
 	announce_winner(champ, info->winner);
 	return (0);
 }

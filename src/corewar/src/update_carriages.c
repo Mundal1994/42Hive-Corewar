@@ -55,6 +55,8 @@ int	update_carriages(t_info *info)
 
 /*
 
+Couldn't get the void pointer thing to work so i changed it to uint32_t pointer instead.. if you can get the void pointer to work you can change it back if you want to
+
 Page Virtual machine
 Paragraf inside the cycle
 
@@ -65,7 +67,6 @@ Set statement code function:
 	set carriage->delay == to number of cycles it would take to execute the statement_code
 
 Perform statement code function:
-- read and calculate pcb
-- 
+- read and calculate pcb (binary stuff...) [https://glo.bi/corewar/]
 
 */

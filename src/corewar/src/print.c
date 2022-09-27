@@ -1,5 +1,27 @@
 #include "vm.h"
 
+void	print_carriages(t_info *info)
+{
+	t_carriage	*carriage;
+	int			i;
+
+	carriage = info->head_carriage;
+	while (carriage)
+	{
+		ft_printf("\nCARRIAGE ID %d\ncarry: %d	statement_code: %d	last_live_call: %d\ndelay: %d	pos: %d	skip: %d\n", carriage->id, carriage->carry, carriage->statement_code, carriage->last_live_call, carriage->delay, carriage->pos, carriage->skip);
+		i = 0;
+		ft_printf("REGISTRY\n");
+		while (i < REG_NUMBER)
+		{
+			ft_printf("reg%d : %d	", i, carriage->registry[i]);
+			++i;
+			if (i % 4 == 0)
+				ft_printf("\n");
+		}
+		carriage = carriage->next;
+	}
+}
+
 void	print_core(uint32_t core[MEM_SIZE])
 {
 	int	i;
