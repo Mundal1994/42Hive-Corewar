@@ -51,5 +51,5 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 		return (set_register(sym));
 	if (sym->type == LA_unknown)
 		return (ERROR);
-	return (OK);
+	return (sym->type = LA_instr, OK);
 }
