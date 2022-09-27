@@ -17,3 +17,4 @@ SRCS += $(SRC_DIR)/init.c
 SRCS += $(SRC_DIR)/read_init.c
 SRCS += $(SRC_DIR)/game_start.c
 SRCS += $(SRC_DIR)/update_carriages.c
+SRCS += $(SRC_DIR)/print.c
