@@ -43,8 +43,10 @@ typedef t_vec	t_symtable;
 void	_symtable_findentry(t_symtable *symtable, char *name, bool *found);
 void	symtable_print(t_symtable symtable);
 void	symtable_enter(t_symtable *symtable, char *name, uint32_t value);
+/*
 void	symtable_valueof(t_symtable *symtable, char *name, uint32_t loc,
 			uint32_t *value, t_actions action, bool *undefined);
+			*/
 void	symtable_outstandingrefs(t_symtable *symtable,
 			uint32_t *mem, t_patch fix);
 

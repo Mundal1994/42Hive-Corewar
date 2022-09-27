@@ -17,6 +17,7 @@ int	lexer_getreference(t_source *source, t_symbols *sym)
 	size_t	len;
 	char	*start;
 
+	sym->type = LA_ref;
 	start = source_next(source);
 	if (!start || !is_wordch(*start))
 		sym->type = LA_unknown;

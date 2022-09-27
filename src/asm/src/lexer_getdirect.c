@@ -16,11 +16,11 @@ int	lexer_getdirect(t_source *source, t_symbols *sym)
 {
 	char	*next;
 
+	sym->isdirect = true;
 	next = source_next(source);
 	if (next && *next == LABEL_CHAR)
-		return (sym->type = LA_ref, lexer_getreference(source, sym));
+		return (lexer_getreference(source, sym));
 	if (next && ft_isdigit(*next))
-		return (sym->type = LA_num, lexer_getnumber(source, sym));
-	lexer_getcomment(source, sym);
-	return (ERROR);
+		return (lexer_getnumber(source, sym));
+	return (lexer_getcomment(source, sym));
 }

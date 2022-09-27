@@ -42,4 +42,42 @@ int		lexer_getchar(t_source *source, t_symbols *sym);
 bool	is_wordch(char c);
 bool	is_register(const char *str);
 
+typedef int					(*t_lexer_getter)(t_source *, t_symbols *);
+
+static const t_lexer_getter	g_lexer_getter[33] = {
+	NULL,
+	NULL,
+	lexer_getquote,
+	lexer_getcomment,
+	NULL,
+	lexer_getdirect,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	lexer_getchar,
+	lexer_getchar,
+	lexer_getchar,
+	lexer_getcmd,
+	NULL,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getnumber,
+	lexer_getreference,
+	lexer_getcomment,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
+
 #endif

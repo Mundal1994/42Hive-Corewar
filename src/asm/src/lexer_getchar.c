@@ -17,6 +17,8 @@ int	lexer_getchar(t_source *source, t_symbols *sym)
 	char	*curr;
 
 	curr = source->curr;
+	if (*curr >= '+' && *curr <= '-')
+		sym->type = LA_plus + (*curr - '+');
 	source_next(source);
 	if (!string_replace_n(&sym->str, curr, 1))
 		return (ERROR);

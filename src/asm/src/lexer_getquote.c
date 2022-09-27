@@ -17,6 +17,7 @@ int	lexer_getquote(t_source *source, t_symbols *sym)
 	size_t	len;
 	char	*start;
 
+	sym->type = LA_cmdstr;
 	start = source_next(source);
 	if (!start)
 		return (ERROR);

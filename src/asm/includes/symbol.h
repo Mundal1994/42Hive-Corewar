@@ -32,8 +32,8 @@ typedef enum s_symtypes
 	LA_cmd,
 	LA_cmdstr,
 	LA_com,
-	LA_comma,
 	LA_plus,
+	LA_comma,
 	LA_minus
 }		t_symtypes;
 

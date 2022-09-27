@@ -17,6 +17,7 @@ int	lexer_getnumber(t_source *source, t_symbols *sym)
 	size_t	len;
 	char	*start;
 
+	sym->type = LA_num;
 	start = source->curr;
 	len = 1;
 	while (source_next(source) && ft_isdigit(*(source->curr)))

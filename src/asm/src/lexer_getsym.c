@@ -21,8 +21,7 @@ static int	lexer_getstart(t_source *source, t_symbols *sym)
 		return (sym->type = LA_label, lexer_getword(source, sym));
 	if (*curr == CMD_CHAR)
 		return (sym->type = LA_cmd, lexer_getcmd(source, sym));
-	sym->type = LA_unknown;
-	return (lexer_getcomment(source, sym), ERROR);
+	return (lexer_getcomment(source, sym));
 }
 
 static int	lexer_end(t_source *source, t_symbols *sym)
@@ -36,10 +35,18 @@ static int	lexer_end(t_source *source, t_symbols *sym)
 	return (sym->type = LA_eol, OK);
 }
 
+static int	getter_index(const char *curr)
+{
+	if (!curr || *curr < ' ' || *curr > '@')
+		return (0);
+	return (*curr - ' ');
+}
+
 int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 {
-	t_source	*source;
-	char		*curr;
+	t_source		*source;
+	t_lexer_getter	getter;
+	char			*curr;
 
 	symbol_reset(sym);
 	source = &lexer->source;
@@ -47,26 +54,12 @@ int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 	curr = source->curr;
 	if (source_at_lineend(*source))
 		return (lexer_end(source, sym));
-	if (*curr == COMMENT_CHAR || *curr == ALT_COMMENT_CHAR)
-		return (sym->type = LA_com, lexer_getcomment(source, sym));
 	if (source_at_linestart(*source))
 		return (lexer_getstart(source, sym));
-	if (ft_isdigit(*curr))
-		return (sym->type = LA_num, lexer_getnumber(source, sym));
+	getter = g_lexer_getter[getter_index(curr)];
+	if (getter)
+		return (getter(source, sym));
 	if (is_wordch(*curr))
 		return (sym->type = LA_instr, lexer_getword(source, sym));
-	if (*curr == LABEL_CHAR)
-		return (sym->type = LA_ref, lexer_getreference(source, sym));
-	if (*curr == DIRECT_CHAR)
-		return (sym->isdirect = true, lexer_getdirect(source, sym));
-	if (*curr == SEPARATOR_CHAR)
-		return (sym->type = LA_comma, lexer_getchar(source, sym));
-	if (*curr == '+')
-		return (sym->type = LA_plus, lexer_getchar(source, sym));
-	if (*curr == '-')
-		return (sym->type = LA_minus, lexer_getchar(source, sym));
-	if (*curr == '"')
-		return (sym->type = LA_cmdstr, lexer_getquote(source, sym));
-	lexer_getcomment(source, sym);
-	return (ERROR);
+	return (lexer_getcomment(source, sym));
 }

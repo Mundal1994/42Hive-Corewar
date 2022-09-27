@@ -32,7 +32,7 @@ typedef struct s_terms
 {
 	t_termkinds	kind;
 	int			number;
-	t_string		name;
+	t_string	name;
 }		t_terms;
 
 /* Entries are stored in a dynamic array, allowing for varying number */
@@ -42,8 +42,8 @@ typedef t_vec	t_addresses;
 typedef struct s_unpackedlines
 {
 	bool		labelled;
-	t_string		labfield;
-	t_string		mnemonic;
+	t_string	labfield;
+	t_string	mnemonic;
 	t_addresses	address;
 	t_string	comment;
 }		t_unpackedlines;
