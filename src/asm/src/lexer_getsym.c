@@ -12,13 +12,6 @@
 
 #include "lexer.h"
 
-static void	init(t_symbols *sym)
-{
-	sym->isdirect = false;
-	sym->type = LA_unknown;
-	sym->num = 0;
-}
-
 static int	lexer_getstart(t_source *source, t_symbols *sym)
 {
 	char	*curr;
@@ -32,22 +25,28 @@ static int	lexer_getstart(t_source *source, t_symbols *sym)
 	return (lexer_getcomment(source, sym), ERROR);
 }
 
+static int	lexer_end(t_source *source, t_symbols *sym)
+{
+	char	*curr;
+
+	curr = source->curr;
+	if (!curr)
+		return (sym->type = LA_eof, DONE);
+	source_next(source);
+	return (sym->type = LA_eol, OK);
+}
+
 int	lexer_getsym(t_lexer *lexer, t_symbols *sym)
 {
 	t_source	*source;
 	char		*curr;
 
-	init(sym);
+	symbol_reset(sym);
 	source = &lexer->source;
 	source_seekstart(source);
 	curr = source->curr;
-	if (!curr)
-		return (sym->type = LA_eof, OK);
 	if (source_at_lineend(*source))
-	{
-		source_next(source);
-		return (sym->type = LA_eol, OK);
-	}
+		return (lexer_end(source, sym));
 	if (source_at_linestart(*source))
 		return (lexer_getstart(source, sym));
 	if (ft_isdigit(*curr))

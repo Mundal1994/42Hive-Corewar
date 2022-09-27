@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 12:58:54 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "parse.h"
 
-void	lexer_init(t_lexer *lexer, const char *filename)
+static void	parse_init(t_lexer *lexer, t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-	source_next(&lexer->source);
+	if (symbol_init(sym) == OK)
+		return ;
+	lexer_free(lexer);
+	exit_error();
 }
 
-void	lexer_free(t_lexer *lexer)
+int	parse(t_lexer *lexer)
 {
-	source_free(&lexer->source);
+	t_symbols	sym;
+
+	parse_init(lexer, &sym);
+	while (lexer_getsym(lexer, &sym) == OK)
+	{
+		ft_printf("type: %d, id_direct: %d, num: %d, str: %s\n",
+				sym.type, sym.isdirect, sym.num, sym.str.memory);
+	}
+	symbol_free(&sym);
+	return (OK);
 }

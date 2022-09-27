@@ -27,5 +27,7 @@ int	lexer_getquote(t_source *source, t_symbols *sym)
 		++len;
 	if (!source->curr)
 		return (ERROR);
+	if (!string_replace_n(&sym->str, start, len))
+		return (ERROR);
 	return (source_next(source), OK);
 }

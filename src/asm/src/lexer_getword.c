@@ -22,7 +22,7 @@ static int	set_label(t_source *source, t_symbols *sym, char *start,
 
 static int	set_register(t_symbols *sym)
 {
-	sym->num = ft_atoi(sym->str.memory);
+	sym->num = ft_atoi(sym->str.memory + 1);
 	if (sym->num < 1 || sym->num > REG_NUMBER)
 		return (ERROR);
 	return (sym->type = LA_reg, OK);

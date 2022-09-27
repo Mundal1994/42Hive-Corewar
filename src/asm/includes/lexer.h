@@ -13,38 +13,10 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <stdbool.h>
-# include "Strings.h"
+# include "symbol.h"
 # include "source.h"
 # include "op.h"
-# include "definitions.h"
 # include "libft.h"
-
-typedef enum s_symtypes
-{
-	LA_unknown,
-	LA_eof,
-	LA_eol,
-	LA_label,
-	LA_instr,
-	LA_reg,
-	LA_ref,
-	LA_num,
-	LA_cmd,
-	LA_cmdstr,
-	LA_com,
-	LA_comma,
-	LA_plus,
-	LA_minus
-}		t_symtypes;
-
-typedef struct s_symbols
-{
-	bool		isdirect;
-	t_symtypes	type;
-	t_string	str;
-	int			num;
-}		t_symbols;
 
 typedef struct s_lexer
 {

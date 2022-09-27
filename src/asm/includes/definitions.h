@@ -20,6 +20,7 @@
 /* Return Values */
 # define ERROR	-1
 # define OK		1
+# define DONE	0
 # define TRUE	1
 # define FALSE	0
 

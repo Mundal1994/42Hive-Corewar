@@ -34,7 +34,7 @@ bool	source_at_linestart(t_source source)
 char	*source_seekstart(t_source *source)
 {
 	if (!source->curr)
-		source_next(source);
+		return (NULL);
 	while (ft_strchr(TABSPACE, *(source->curr)) && !source_at_lineend(*source))
 		source_next(source);
 	return (source->curr);

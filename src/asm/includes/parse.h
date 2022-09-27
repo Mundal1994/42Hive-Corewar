@@ -14,7 +14,8 @@
 # define PARSE_H
 
 # include <stdbool.h>
-# include "vec.h"
+# include "lexer.h"
+# include "errors.h"
 
 typedef enum s_termkinds
 {
@@ -31,7 +32,7 @@ typedef struct s_terms
 {
 	t_termkinds	kind;
 	int			number;
-	t_alfa		name;
+	t_string		name;
 }		t_terms;
 
 /* Entries are stored in a dynamic array, allowing for varying number */
@@ -41,11 +42,12 @@ typedef t_vec	t_addresses;
 typedef struct s_unpackedlines
 {
 	bool		labelled;
-	t_alfa		labfield;
-	t_alfa		mnemonic;
+	t_string		labfield;
+	t_string		mnemonic;
 	t_addresses	address;
 	t_string	comment;
-
 }		t_unpackedlines;
+
+int	parse(t_lexer *lexer);
 
 #endif

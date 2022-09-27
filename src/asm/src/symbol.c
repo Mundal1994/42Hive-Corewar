@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   symbol.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 12:50:38 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/27 12:50:39 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "symbol.h"
 
-void	lexer_init(t_lexer *lexer, const char *filename)
+int	symbol_init(t_symbols *sym)
 {
-	source_init(&lexer->source);
-	source_read(&lexer->source, filename);
-	source_next(&lexer->source);
+	sym->isdirect = false;
+	sym->type = LA_unknown;
+	sym->num = 0;
+	if (!string_new(&sym->str, DEFAULT_SYMBOL_LEN))
+		return (ERROR);
+	return (OK);
 }
 
-void	lexer_free(t_lexer *lexer)
+void	symbol_reset(t_symbols *sym)
 {
-	source_free(&lexer->source);
+	sym->isdirect = false;
+	sym->type = LA_unknown;
+	sym->num = 0;
+}
+
+void	symbol_free(t_symbols *sym)
+{
+	symbol_reset(sym);
+	string_free(&sym->str);
 }
