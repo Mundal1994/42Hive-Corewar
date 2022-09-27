@@ -69,4 +69,6 @@ Set statement code function:
 Perform statement code function:
 - read and calculate pcb (binary stuff...) [https://glo.bi/corewar/]
 
+update_carriages is called inside the file game_start.c
+
 */
