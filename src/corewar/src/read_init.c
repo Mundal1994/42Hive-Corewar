@@ -98,6 +98,7 @@ static int	champ_stats(t_profile **champ, t_input **input, int i)
 {
 	int	j;
 	int	k;
+	int	hold;
 
 	j = 0;
 	k = 4;
@@ -113,9 +114,14 @@ static int	champ_stats(t_profile **champ, t_input **input, int i)
 			return (-1);
 		k++;
 	}
+	j = 7;
 	while (k < 140)
 	{
-		(*champ)->exec_cd_sz += input[i]->t_script[k];
+		hold = input[i]->t_script[k];
+		(*champ)->exec_cd_sz += (hold / 16) * ft_pow(16, j--);
+		hold %= 16;
+		(*champ)->exec_cd_sz += (hold % 16) * ft_pow(16, j--);
+		//might need to be in a while loop till hold % 16 is 0
 		++k;
 	}
 	j = 0;

@@ -17,7 +17,7 @@ static int	one_carriage_left(t_info *info)
 	t_carriage	*carriage;
 	int			count;
 
-	carriage = info->head;
+	carriage = info->head_carriage;
 	count = 0;
 	while (carriage)
 	{
@@ -29,13 +29,60 @@ static int	one_carriage_left(t_info *info)
 	return (FALSE);
 }
 
+static void	delete_carriage(t_info *info, int id)
+{
+	t_carriage	*carriage;
+	t_carriage	*prev;
+
+	carriage = info->head_carriage;
+	prev = NULL;
+	while (carriage)
+	{
+		if (carriage->id == id)
+		{
+			if (!carriage->next && !prev)
+				info->head_carriage = NULL;
+			else if (!carriage->next)
+				prev->next = NULL;
+			else if (!prev)
+				info->head_carriage = carriage->next;
+			else
+				prev->next = carriage->next;
+			free(carriage);
+			return ;
+		}
+		prev = carriage;
+		carriage = carriage->next;
+	}
+}
+
+static void	check_carriage_live_call(t_info *info)
+{
+	t_carriage	*carriage;
+	t_carriage	*next;
+	int			limit;
+	
+	carriage = info->head_carriage;
+	limit = info->total_cycles - info->cycles_to_die;
+	while (carriage)
+	{
+		if (carriage->last_live_call <= limit)
+		{
+			next = carriage->next;
+			delete_carriage(info, carriage->id);
+			carriage = next;
+		}
+		else
+			carriage = carriage->next;
+	}
+}
+
 static void	kill_carriages(t_info *info)
 {
-	//FUNCTION
-	//function that checks all of the carriages and when their last live_call was and if it is within the limit
+	check_carriage_live_call(info);
 	if (info->live_statement >= NBR_LIVE)
 	{
-		info->cycle_of_death = info->cycle_of_death - CYCLE_DELTA;
+		info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 		info->checks_count = 1;//unsure about corellation of max_checks and checks_count....
 	}
 	else
@@ -43,61 +90,68 @@ static void	kill_carriages(t_info *info)
 		//unsure if this is how it is supposed to be
 		info->checks_count += 1;//unsure about corellation of max_checks and checks_count....
 		if (info->checks_count >= MAX_CHECKS)
-			info->cycle_of_death = info->cycle_of_death - CYCLE_DELTA;
+			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 	}
-	info->death_count = info->cycle_of_death;
+	info->cycle_count = info->cycles_to_die;
 }
 
 static void	check(t_info *info)
 {
-	info->death_count -= 1;
-	if (info->death_count <= 0)
-		kill_carriages(info);
+	info->cycle_count -= 1;
 	info->total_cycles += 1;
+	if (info->cycle_count <= 0)
+		kill_carriages(info);
 	info->live_statement = 0;
 }
 
-/*
-Introducing contestants...
-* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
-* Player 2, weighing 394 bytes, "turtle" ("TURTLE FFS U LAMA") !
-*/
+// static int	copy_carriage(t_info **info, t_carriage *carriage)
+// {
+// 	t_carriage	*new;
+// 	int			i;
 
-static void	introduce_contestants(t_profile **champ, int total)//add player struct
+// 	new = (t_carriage *)malloc(sizeof(t_carriage));
+// 	if (!new)
+// 		return (ERROR);
+// 	(*info)->carriage_count++;
+// 	new->id = (*info)->carriage_count;
+// 	new->carry = carriage->carry;
+// 	new->statement_code = carriage->statement_code;
+// 	new->last_live_call = carriage->last_live_call;
+// 	new->delay = carriage->delay;//does this also have to be copied or should it be 0?
+// 	new->pos = carriage->pos;//this should probably be different
+// 	new->home = carriage->home;//this should probably be different
+// 	new->current = carriage->current;//this should probably be different
+// 	new->skip = carriage->skip;//this should probably be different
+// 	i = 0;
+// 	new->registry[i] = carriage->registry[i];
+// 	// reg_1 = - player_id	NEEDS TO STILL FIX LOGIC OF THE REGISTRYS
+// 	/*
+// 	r1 == registry[0]
+// 	r2 == registry[1]
+// 	*/
+// 	while (++i < REG_NUMBER)
+// 		new->registry[i] = carriage->registry[i];
+// 	new->next = (*info)->head_carriage;
+// 	(*info)->head_carriage = new;
+// 	return (0);
+// }
+
+int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
-	int	i;
-
-	ft_printf("Introducing contestants...\n");
-	i = 0;
-	while (i < total)
-	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", champ[i]->i, 23, champ[i]->name, champ[i]->comment);
-		++i;
-	}
-}
-
-int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile **champ, int total)//add player struct
-{
-	int	i;
-
-	introduce_contestants(champ, total);//add player struct
+	print_core(core);
+	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
 		if (update_carriages(info) == ERROR)
 			return (ERROR);
 		check(info);
 	}
-	//print_core(core);
-	i = 0;
-	while (i < total)
-	{
-		if (info->winner == champ[i]->i)
-		{
-			ft_printf("Contestant %d, \"name of winner\", has won !\n", info->winner);
-		}
-		++i;
-	}
-	if (core)
-		i++;
+	// TESTING FUNCTION TO BE ABLE TO COPY CARRIAGES and printing them
+	// t_carriage *carriage;
+	// carriage = info->head_carriage;
+	// if (copy_carriage(&info, carriage) == ERROR)
+	// 	return (ERROR);
+	// print_carriages(info);
+	announce_winner(champ, info->winner);
 	return (0);
 }
