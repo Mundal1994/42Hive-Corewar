@@ -6,24 +6,18 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:33:19 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/25 22:23:50 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/28 17:08:18 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOURCE_H
 # define SOURCE_H
 
-# include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
 # include "Strings.h"
-
-typedef struct s_pos
-{
-	size_t	r;
-	size_t	c;
-}		t_pos;
+# include "definitions.h"
 
 typedef struct s_source
 {

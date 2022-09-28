@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_private.c                                    :+:      :+:    :+:   */
+/*   lexer_getword.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:38:47 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 23:06:10 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/28 17:05:46 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	set_label(t_source *source, t_symbols *sym, char *start,
 	return (OK);
 }
 
-static int	set_register(t_symbols *sym)
+static int	set_register(t_source source, t_symbols *sym)
 {
 	sym->num = ft_atoi(sym->str.memory + 1);
 	if (sym->num < 1 || sym->num > REG_NUMBER)
-		return (ERROR);
+		return (warning(errorset(source.pos, sym->str), REG_WARNING));
 	return (sym->type = LA_reg, OK);
 }
 
@@ -48,7 +48,7 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 	}
 	string_replace_n(&sym->str, start, len);
 	if (is_register(sym->str.memory))
-		return (set_register(sym));
+		return (set_register(*source, sym));
 	if (sym->type == LA_unknown)
 		return (ERROR);
 	return (sym->type = LA_instr, OK);
