@@ -139,9 +139,17 @@ static void	check(t_info *info)
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
 	print_core(core);
+	print_carriages(info);
+	print_info(info);
+	live(-2, core, &info->head_carriage->next, info);
+	ft_printf("--------SEE CHANGE---------\n");
+	print_core(core);
+	print_carriages(info);
+	print_info(info);
 	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
+		break ;
 		if (update_carriages(core, info) == ERROR)
 			return (ERROR);
 		check(info);

@@ -1,5 +1,40 @@
 #include "vm.h"
 
+void	print_info(t_info *info)
+{
+	int	i;
+	int	j;
+
+	ft_printf("\nPRINT INFO\n");
+	ft_printf("winner: %d	total_cycles: %d	live_statement: %d\n", info->winner, info->total_cycles, info->live_statement);
+	ft_printf("cycles_to_die: %d	cycle_count: %d	checks_count: %d\n", info->cycles_to_die, info->cycle_count, info->checks_count);
+	ft_printf("carriage_count: %d\nOPERATIONS\n", info->carriage_count);
+	j = 0;
+	while (j < 6)
+	{
+		i = 0;
+		if (j == ARG1)
+			ft_printf("ARG1	: ");
+		else if (j == ARG2)
+			ft_printf("ARG2	: ");
+		else if (j == ARG3)
+			ft_printf("ARG3	: ");
+		else if (j == DELAY)
+			ft_printf("DELAY	: ");
+		else if (j == SIZE)
+			ft_printf("SIZE	: ");
+		else if (j == PCB)
+			ft_printf("PCB	: ");
+		while (i < STATE)
+		{
+			ft_printf("%d	", info->operations[j][i]);
+			++i;
+		}
+		ft_printf("\n");
+		++j;
+	}
+}
+
 void	print_carriages(t_info *info)
 {
 	t_carriage	*carriage;

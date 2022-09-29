@@ -102,5 +102,9 @@ void	print_core(uint8_t core[MEM_SIZE]);
 void	introduce_contestants(t_profile *champ);
 void	announce_winner(t_profile *champ, int winner);
 void	print_carriages(t_info *info);
+void	print_info(t_info *info);
+
+//statement functions
+void	live(int arg, uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 #endif

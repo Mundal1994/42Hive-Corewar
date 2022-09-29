@@ -157,6 +157,17 @@ update_carriages is called inside the file game_start.c
 /*
 
 
+Operant function checks if it uses PCB
+	if yes
+		Function that checks PCB IF they are valid or not
+			checks ARG1, ARG2, ARG3 if they are true
+				if true collect ARG(function)
+					collect and use (function specific to operand)
+				else
+					return error and skip specific amount (skip function)
+
+
+
 
 
 */
