@@ -138,10 +138,30 @@ static void	check(t_info *info)
 
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
+	int	args[ARGS];
 	print_core(core);
 	print_carriages(info);
 	print_info(info);
-	live(-2, core, &info->head_carriage->next, info);
+	args[0] = -1;
+	live(args,  &info->head_carriage->next, info);
+	args[0] = 2;
+	args[1] = 5;
+	info->head_carriage->arg_types[1] = R;
+	ld(args, core, &info->head_carriage, info);
+	args[0] = 0;
+	info->head_carriage->next->arg_types[1] = I;
+	ld(args, core, &info->head_carriage->next, info);
+	args[0] = 5;
+	args[1] = 50;
+	info->head_carriage->arg_types[1] = I;
+	st(args, core, &info->head_carriage, info);
+	args[0] = 4;
+	info->head_carriage->next->registry[4] = 4;
+	info->head_carriage->next->registry[3] = 3;
+	info->head_carriage->next->registry[5] = 5;
+	args[1] = 5;
+	info->head_carriage->next->arg_types[1] = R;
+	st(args, core, &info->head_carriage->next, info);
 	ft_printf("--------SEE CHANGE---------\n");
 	print_core(core);
 	print_carriages(info);

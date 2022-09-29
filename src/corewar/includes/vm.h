@@ -23,6 +23,7 @@
 # define FALSE	0
 # define ERROR	-1
 # define STATE	16
+# define ARGS	3
 
 typedef enum e_arg
 {
@@ -76,6 +77,7 @@ typedef struct s_carriage
 	uint8_t				*current;
 	int32_t				skip;//nbr of bytes that needs to be skipped to go to next statement
 	int32_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
+	int32_t				arg_types[ARGS];
 	struct s_carriage	*next;
 }						t_carriage;
 
@@ -105,6 +107,15 @@ void	print_carriages(t_info *info);
 void	print_info(t_info *info);
 
 //statement functions
-void	live(int arg, uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	update_carry(int nbr, t_carriage **carriage);
+void	zjmp(int arg[ARGS], t_carriage **carriage);
+void	live(int arg[ARGS], t_carriage **carriage, t_info *info);
+void	ld(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	st(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	add(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	sub(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	and(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	or(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	xor(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 #endif
