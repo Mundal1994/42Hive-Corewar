@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:37:43 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/29 18:56:12 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,26 @@
 # include "lexer.h"
 # include "errors.h"
 
-typedef enum s_termkinds
+typedef union s_arg
 {
-	SA_absent,
-	SA_numeric,
-	SA_alphameric,
-	SA_comma,
-	SA_plus,
-	SA_minus,
-}		t_termkinds;
+	uint8_t		reg;
+	uint16_t	ind;
+	uint32_t	dir;	
+}		t_arg;
 
-typedef struct s_terms
+typedef struct s_statement
 {
-	t_termkinds	kind;
-	int			number;
-	t_string	name;
-}		t_terms;
+	t_op	op;
+	uint8_t	acb;
+	t_arg	arguments[3];
+}		t_statement;
 
-/* Entries are stored in a dynamic array, allowing for varying number */
-typedef t_vec	t_addresses;
-
-/* Source text, unpacked into field */
-typedef struct s_unpackedlines
+typedef struct s_parser
 {
-	bool		labelled;
-	t_string	labfield;
-	t_string	mnemonic;
-	t_addresses	address;
-	t_string	comment;
-}		t_unpackedlines;
+	uint32_t	bytes;
+	t_header	header;
+	t_vec		body;
+}		t_parser;
 
 int	parse(t_lexer *lexer);
 
