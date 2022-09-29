@@ -23,6 +23,7 @@
 # define LEXER_BAD_REF "Illegal or empty label reference"
 # define LEXER_BAD_QUOTE "Quote string incomplete, please close end \
 of quote string"
+# define LEXER_UNKNOWN "Encountered an unknown token. pls fix :("
 # define REG_WARNING "Register number out of bounds, may lead to\
  Virtual Machine memory errors"
 

@@ -27,5 +27,5 @@ int	lexer_getcomment(t_source *source, t_symbols *sym)
 		return (ERROR);
 	if (sym->type == LA_com)
 		return (OK);
-	return (ERROR);
+	return (error(errorset(source->pos, sym->str), LEXER_UNKNOWN));
 }
