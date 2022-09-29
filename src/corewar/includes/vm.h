@@ -22,6 +22,29 @@
 # define TRUE	1
 # define FALSE	0
 # define ERROR	-1
+# define STATE	16
+
+typedef enum e_arg
+{
+	NON,//0
+	R,//1
+	D,//2
+	I,//3
+	RD,//4
+	RI,//5
+	DI,//6
+	RDI,//7
+}			t_arg;
+
+typedef enum e_ops
+{
+	ARG1,
+	ARG2,
+	ARG3,
+	DELAY,
+	SIZE,
+	PCB,
+}			t_ops;
 
 typedef struct s_profile
 {
@@ -66,7 +89,7 @@ typedef struct s_info
 	int			checks_count;// initialized to 0
 	int			carriage_count;
 	t_carriage	*head_carriage;
-	int		delay[5][16];
+	int			operations[6][STATE];
 }				t_info;
 
 int		init(int argc, char **argv, int i);

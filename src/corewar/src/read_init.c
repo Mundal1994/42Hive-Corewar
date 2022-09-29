@@ -250,18 +250,18 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		error_clean(input, champ, (argc - origin_i));
 		return (NULL); //make sure origin_i is correction distance to free
 	}
-	u_int8_t test = 192;
-	test = test << 1;
-	test = test >> 7;
-	ft_printf("%i\n", test);
-	exit (0);
-	while ((*champ))
-	{
-		ft_printf("i: %d\n", (*champ)->i);
-		ft_printf("name: %s\n", (*champ)->name);
-		ft_printf("comment: %s\n", (*champ)->comment);
-		ft_printf("exec code: %d\n", (*champ)->exec_cd_sz);
-		(*champ) = (*champ)->next;
-	}
+	// u_int8_t test = 192;
+	// test = test << 1;
+	// test = test >> 7;
+	// ft_printf("%i\n", test);
+	// exit (0);
+	// while ((*champ))
+	// {
+	// 	ft_printf("i: %d\n", (*champ)->i);
+	// 	ft_printf("name: %s\n", (*champ)->name);
+	// 	ft_printf("comment: %s\n", (*champ)->comment);
+	// 	ft_printf("exec code: %d\n", (*champ)->exec_cd_sz);
+	// 	(*champ) = (*champ)->next;
+	// }
 	return (input);
 }

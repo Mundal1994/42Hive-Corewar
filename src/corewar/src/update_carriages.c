@@ -18,7 +18,7 @@ static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		(*carriage)->statement_code = core[(*carriage)->pos];
-		(*carriage)->delay = (u_int32_t)info->delay[core[(*carriage)->pos]];
+		(*carriage)->delay = (u_int32_t)info->operations[DELAY][core[(*carriage)->pos]];
 	}
 	else
 	{
@@ -60,7 +60,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	{
 		//not sure if can just compare value of typecode element
 		//is arguments arent valid or registry isnt valid, skip all of those bytes
-		if (info->delay[1][core[(*carriage)->pos]] == 1) //statements using typecode
+		if (info->operations[PCB][core[(*carriage)->pos]] == 1) //statements using typecode
 		{
 			if ((*carriage)->pos + 1 <= MEM_SIZE - 1)
 				tmp_pos = (*carriage)->pos + 1;
@@ -148,5 +148,15 @@ Perform statement code function:
 - read and calculate pcb (binary stuff...) [https://glo.bi/corewar/]
 
 update_carriages is called inside the file game_start.c
+
+*/
+
+
+
+
+/*
+
+
+
 
 */

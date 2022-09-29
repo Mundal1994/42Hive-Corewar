@@ -48,48 +48,61 @@ static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ
 }
 static void type_code(t_info **info)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*dir;
+	char	*pcb;
+	char	*arg1;
 
 	i = 0;
-	(*info)->delay[1][i++] = 0;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 0;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 0;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 1;
-	(*info)->delay[1][i++] = 0;
-	(*info)->delay[1][i++] = 1;
+	j = 0;
+	dir = "2 2 2 2 2 2 2 2 1 1 1 1 2 1 1 2";
+	pcb = "0 1 1 1 1 1 1 1 0 1 1 0 1 1 0 1";
+	arg1 = "2 6 1 1 1 7 7 7 2 7 1 2 6 7 2 1";
+	while (i < STATE)
+	{
+		(*info)->operations[SIZE][i] = dir[j] - '0';
+		(*info)->operations[PCB][i] = pcb[j] - '0';
+		(*info)->operations[ARG1][i] = arg1[j] - '0';
+		++i;
+		j += 2;
+	}
 }
 
 static void	statment_delay(t_info **info)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*arg2;
+	char	*arg3;
 
 	i = 0;
-	(*info)->delay[0][i++] = 10;
-	(*info)->delay[0][i++] = 5;
-	(*info)->delay[0][i++] = 5;
-	(*info)->delay[0][i++] = 10;
-	(*info)->delay[0][i++] = 10;
-	(*info)->delay[0][i++] = 6;
-	(*info)->delay[0][i++] = 6;
-	(*info)->delay[0][i++] = 6;
-	(*info)->delay[0][i++] = 20;
-	(*info)->delay[0][i++] = 25;
-	(*info)->delay[0][i++] = 25;
-	(*info)->delay[0][i++] = 800;
-	(*info)->delay[0][i++] = 10;
-	(*info)->delay[0][i++] = 50;
-	(*info)->delay[0][i++] = 1000;
-	(*info)->delay[0][i++] = 2;
+	j = 0;
+	arg2 = "0 1 5 1 1 7 7 7 0 4 7 0 1 4 0 0";
+	arg3 = "0 0 0 1 1 1 1 1 0 1 4 0 0 1 0 0";
+	while (i < STATE)
+	{
+		(*info)->operations[ARG2][i] = arg2[j] - '0';
+		(*info)->operations[ARG3][i] = arg3[j] - '0';
+		++i;
+		j += 2;
+	}
+	(*info)->operations[DELAY][i++] = 10;
+	(*info)->operations[DELAY][i++] = 5;
+	(*info)->operations[DELAY][i++] = 5;
+	(*info)->operations[DELAY][i++] = 10;
+	(*info)->operations[DELAY][i++] = 10;
+	(*info)->operations[DELAY][i++] = 6;
+	(*info)->operations[DELAY][i++] = 6;
+	(*info)->operations[DELAY][i++] = 6;
+	(*info)->operations[DELAY][i++] = 20;
+	(*info)->operations[DELAY][i++] = 25;
+	(*info)->operations[DELAY][i++] = 25;
+	(*info)->operations[DELAY][i++] = 800;
+	(*info)->operations[DELAY][i++] = 10;
+	(*info)->operations[DELAY][i++] = 50;
+	(*info)->operations[DELAY][i++] = 1000;
+	(*info)->operations[DELAY][i++] = 2;
 	type_code(info);
 }
 
