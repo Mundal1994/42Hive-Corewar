@@ -22,7 +22,7 @@ static int	set_label(t_source *source, t_symbols *sym, char *start,
 
 static int	set_register(t_source source, t_symbols *sym)
 {
-	sym->num = ft_atoi(sym->str.memory + 1);
+	sym->num = ft_atoi(symbol_str(sym) + 1);
 	if (sym->num < 1 || sym->num > REG_NUMBER)
 		return (warning(errorset(source.pos, sym->str), REG_WARNING));
 	return (sym->type = LA_reg, OK);
@@ -47,7 +47,7 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 		++len;
 	}
 	string_replace_n(&sym->str, start, len);
-	if (is_register(sym->str.memory))
+	if (is_register(symbol_str(sym)))
 		return (set_register(*source, sym));
 	if (sym->type == LA_unknown)
 		return (error(errorset(source->pos, sym->str), LEXER_BAD_INSTR));

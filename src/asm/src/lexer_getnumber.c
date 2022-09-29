@@ -24,5 +24,5 @@ int	lexer_getnumber(t_source *source, t_symbols *sym)
 		++len;
 	if (!string_replace_n(&sym->str, start, len))
 		return (ERROR);
-	return (sym->num = ft_atoi(sym->str.memory), OK);
+	return (sym->num = ft_atoi(symbol_str(sym)), OK);
 }

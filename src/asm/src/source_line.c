@@ -39,3 +39,8 @@ char	*source_seekstart(t_source *source)
 		source_next(source);
 	return (source->curr);
 }
+
+char	*source_buffer(t_source *source)
+{
+	return (source->buffer.memory);
+}

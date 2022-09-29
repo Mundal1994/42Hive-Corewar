@@ -34,3 +34,8 @@ void	symbol_free(t_symbols *sym)
 	symbol_reset(sym);
 	string_free(&sym->str);
 }
+
+char	*symbol_str(t_symbols *sym)
+{
+	return (sym->str.memory);
+}

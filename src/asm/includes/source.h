@@ -36,5 +36,6 @@ void	source_free(t_source *source);
 bool	source_at_lineend(t_source source);
 bool	source_at_linestart(t_source source);
 char	*source_seekstart(t_source *source);
+char	*source_buffer(t_source *source);
 
 #endif

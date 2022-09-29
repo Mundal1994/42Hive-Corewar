@@ -17,7 +17,7 @@ static void	reset(t_source *source)
 	source->index = 0;
 	source->pos = (t_pos){1, 0};
 	source->curr = NULL;
-	source->next = source->buffer.memory;
+	source->next = source_buffer(source);
 }
 
 void	source_init(t_source *source)
@@ -63,7 +63,7 @@ char	*source_next(t_source *source)
 
 void	source_free(t_source *source)
 {
-	if (source->buffer.memory)
+	if (source_buffer(source))
 		string_free(&source->buffer);
 	ft_bzero(source, sizeof(*source));
 }

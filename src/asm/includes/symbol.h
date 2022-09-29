@@ -48,5 +48,6 @@ typedef struct s_symbols
 int		symbol_init(t_symbols *sym);
 void	symbol_reset(t_symbols *sym);
 void	symbol_free(t_symbols *sym);
+char	*symbol_str(t_symbols *sym);
 
 #endif
