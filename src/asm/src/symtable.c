@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:09:54 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 15:19:27 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 15:58:03 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	symtable_freerefs(t_forwardrefs **link)
 
 void	symtable_free(t_symtable *symtable)
 {
-	size_t	index;
-	t_vec	*entries;
+	size_t		index;
+	t_vec		*entries;
 	t_symentry	*entry;
 
 	hashmap_free(&symtable->map);

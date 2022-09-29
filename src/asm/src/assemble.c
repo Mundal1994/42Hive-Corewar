@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:53:37 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 12:53:38 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/29 16:00:52 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	assemble(t_lexer *lexer)
 {
-	while(parse_line(t_lexer *lexer))
+	while (parse_line(lexer))
 	{
-		assemble_line
+		ft_printf("");
 	}
 }

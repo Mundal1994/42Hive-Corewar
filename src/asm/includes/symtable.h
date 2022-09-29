@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:02:10 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 15:47:28 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 15:57:26 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,16 @@ typedef struct s_symentry
 	t_forwardrefs		*flink;
 }				t_symentry;
 
-typedef struct	s_symtable
+typedef struct s_symtable
 {
 	t_hashmap	map;
 	t_vec		entries;
 }			t_symtable;
 
-int	symtable_init(t_symtable *symtable);
-void	symtable_free(t_symtable *symtable);
+int			symtable_init(t_symtable *symtable);
+void		symtable_free(t_symtable *symtable);
 t_symentry	*symtable_find(t_symtable *symtable, const char *name);
 t_symentry	*symtable_enter(t_symtable *symtable, const char *name,
-		t_symentry newentry);
-
-/*
-void	_symtable_findentry(t_symtable *symtable, char *name, bool *found);
-void	symtable_print(t_symtable symtable);
-void	symtable_enter(t_symtable *symtable, char *name, uint32_t value);
-void	symtable_outstandingrefs(t_symtable *symtable,
-			uint32_t *mem, t_patch fix);
-			*/
+				t_symentry newentry);
 
 #endif

@@ -6,17 +6,17 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:19:12 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 15:54:06 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 15:59:51 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static t_symentry *enter_new(t_symtable *symtable, const char *name,
+static t_symentry	*enter_new(t_symtable *symtable, const char *name,
 		t_symentry entry)
 {
 	t_vec	*entries;
-	int	value;
+	int		value;
 
 	entries = &symtable->entries;
 	value = entries->len;
@@ -64,13 +64,13 @@ static t_symentry	*complete_entry(t_symentry *entry, t_symentry newentry)
 t_symentry	*symtable_enter(t_symtable *symtable, const char *name,
 		t_symentry newentry)
 {
-	t_vec	*entries;
+	t_vec		*entries;
 	t_symentry	*entry;
-	
+
 	entries = &symtable->entries;
 	entry = symtable_find(symtable, name);
 	if (!entry)
-		return (enter_new(symtable, name, newentry);
+		return (enter_new(symtable, name, newentry));
 	if (entry.defined)
 		return (entry);
 	if (!newentry.defined)
