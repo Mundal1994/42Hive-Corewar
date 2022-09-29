@@ -22,7 +22,7 @@ void	print_carriages(t_info *info)
 	}
 }
 
-void	print_core(uint32_t core[MEM_SIZE])
+void	print_core(uint8_t core[MEM_SIZE])
 {
 	int	i;
 	int	line;

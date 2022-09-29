@@ -250,6 +250,11 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		error_clean(input, champ, (argc - origin_i));
 		return (NULL); //make sure origin_i is correction distance to free
 	}
+	u_int8_t test = 192;
+	test = test << 1;
+	test = test >> 7;
+	ft_printf("%i\n", test);
+	exit (0);
 	while ((*champ))
 	{
 		ft_printf("i: %d\n", (*champ)->i);

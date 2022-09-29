@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molesen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:40:48 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/23 12:33:18 by molesen          ###   ########.fr       */
+/*   Updated: 2022/09/28 17:38:24 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ static void	check(t_info *info)
 // 	return (0);
 // }
 
-int	game_start(uint32_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
+int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
 	print_core(core);
 	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
-		if (update_carriages(info) == ERROR)
+		if (update_carriages(core, info) == ERROR)
 			return (ERROR);
 		check(info);
 	}

@@ -6,13 +6,13 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 17:20:09 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/27 11:35:07 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/09/28 17:36:45 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int	init_carriage(uint32_t core[MEM_SIZE], t_info **info, t_profile *champ)
+static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
 {
 	t_carriage	*new;
 	int			i;
@@ -46,8 +46,54 @@ static int	init_carriage(uint32_t core[MEM_SIZE], t_info **info, t_profile *cham
 	}
 	return (0);
 }
+static void type_code(t_info **info)
+{
+	int	i;
 
-static int	init_info(uint32_t core[MEM_SIZE], t_info **info, t_profile *champ)
+	i = 0;
+	(*info)->delay[1][i++] = 0;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 0;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 0;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 1;
+	(*info)->delay[1][i++] = 0;
+	(*info)->delay[1][i++] = 1;
+}
+
+static void	statment_delay(t_info **info)
+{
+	int	i;
+
+	i = 0;
+	(*info)->delay[0][i++] = 10;
+	(*info)->delay[0][i++] = 5;
+	(*info)->delay[0][i++] = 5;
+	(*info)->delay[0][i++] = 10;
+	(*info)->delay[0][i++] = 10;
+	(*info)->delay[0][i++] = 6;
+	(*info)->delay[0][i++] = 6;
+	(*info)->delay[0][i++] = 6;
+	(*info)->delay[0][i++] = 20;
+	(*info)->delay[0][i++] = 25;
+	(*info)->delay[0][i++] = 25;
+	(*info)->delay[0][i++] = 800;
+	(*info)->delay[0][i++] = 10;
+	(*info)->delay[0][i++] = 50;
+	(*info)->delay[0][i++] = 1000;
+	(*info)->delay[0][i++] = 2;
+	type_code(info);
+}
+
+static int	init_info(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
 {
 	int	i;
 
@@ -65,10 +111,11 @@ static int	init_info(uint32_t core[MEM_SIZE], t_info **info, t_profile *champ)
 		return (ERROR);
 	(*info)->winner = (*info)->head_carriage->id;
 	(*info)->carriage_count = (*info)->head_carriage->id;
+	statment_delay(info); //coud be a double array to store delays as well as effect on carry
 	return (0);
 }
 
-static void	add_players_to_core(uint32_t core[MEM_SIZE], t_profile **champ, t_input **input, int count)
+static void	add_players_to_core(uint8_t core[MEM_SIZE], t_profile **champ, t_input **input, int count)
 {
 	t_profile *head;
 	int			i;
@@ -100,7 +147,7 @@ int	init(int argc, char **argv, int i)
 	t_info		*info;
 	t_profile	*champ;
 	t_input		**input;
-	uint32_t	core[MEM_SIZE];
+	uint8_t	core[MEM_SIZE];
 
 	info = NULL;
 	champ = NULL;
