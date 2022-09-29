@@ -12,18 +12,6 @@
 
 #include "asm.h"
 
-void	exit_error(void)
-{
-	perror("ERROR");
-	exit(EXIT_FAILURE);
-}
-
-void	exit_error_str(char *str)
-{
-	ft_putendl_fd(str, 2);
-	exit(EXIT_FAILURE);
-}
-
 t_errorset	errorset(t_pos pos, t_string str)
 {
 	t_errorset	error;

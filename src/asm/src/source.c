@@ -50,7 +50,7 @@ char	*source_next(t_source *source)
 		reset(source);
 	if (!source->next)
 		return (source->curr = NULL);
-	is_newline = source->curr && *(source->curr) == NEWLINE_C;
+	is_newline = (source->curr && *(source->curr) == NEWLINE_C);
 	source->pos.r += is_newline;
 	source->pos.c = source->pos.c * !is_newline + 1;
 	source->curr = source->next;
