@@ -6,11 +6,11 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:09:54 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 15:58:03 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 17:48:10 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "symtable.h"
 
 int	symtable_init(t_symtable *symtable)
 {
@@ -28,7 +28,7 @@ static void	symtable_freerefs(t_forwardrefs **link)
 {
 	if (!*link)
 		return ;
-	symtable_symentry_free(&(*link)->nlink);
+	symtable_freerefs(&(*link)->nlink);
 	free(*link);
 	*link = NULL;
 }
@@ -59,5 +59,5 @@ t_symentry	*symtable_find(t_symtable *symtable, const char *name)
 	if (!entry || entry->value < 0)
 		return (NULL);
 	value = (size_t) entry->value;
-	return ((t_symentry *) vec_get(entries, value));
+	return ((t_symentry *) vec_get(&symtable->entries, value));
 }

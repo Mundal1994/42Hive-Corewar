@@ -6,14 +6,18 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:02:10 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 15:57:26 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 17:46:46 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SYMTABLE_H
 # define SYMTABLE_H
 
+# include "libft.h"
+# include "definitions.h"
+# include "errors.h"
 # include <stdbool.h>
+# include <stdint.h>
 
 typedef struct s_forwardrefs
 {

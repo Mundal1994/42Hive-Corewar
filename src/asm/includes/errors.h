@@ -6,14 +6,16 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:01:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 12:49:39 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/29 17:47:09 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
+# include <stdio.h>
 # include "definitions.h"
+# include "Strings.h"
 
 # define MSG_USAGE "Usage: ./asm <sourcefile.s>"
 # define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
