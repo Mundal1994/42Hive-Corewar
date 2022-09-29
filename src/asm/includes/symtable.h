@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:02:10 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/26 09:06:33 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 15:47:28 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,30 @@
 
 # include <stdbool.h>
 
-# define HASH_INIT_SIZE 128
-
-typedef enum s_actions
-{
-	ST_add,
-	ST_subtract
-}		t_actions;
-
 typedef struct s_forwardrefs
 {
-	uint32_t				byte;
-	t_actions				action;
+	uint32_t				location;
 	struct s_forwardrefs	*nlink;
 }				t_forwardrefs;
 
-typedef struct s_entry
+typedef struct s_symentry
 {
 	bool				defined;
 	uint32_t			location;
 	t_forwardrefs		*flink;
-}				t_entry;
-
+}				t_symentry;
 
 typedef struct	s_symtable
 {
 	t_hashmap	map;
 	t_vec		entries;
-	t_vec		forwardrefs;
-}
+}			t_symtable;
+
+int	symtable_init(t_symtable *symtable);
+void	symtable_free(t_symtable *symtable);
+t_symentry	*symtable_find(t_symtable *symtable, const char *name);
+t_symentry	*symtable_enter(t_symtable *symtable, const char *name,
+		t_symentry newentry);
 
 /*
 void	_symtable_findentry(t_symtable *symtable, char *name, bool *found);

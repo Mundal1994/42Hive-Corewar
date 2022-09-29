@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 17:20:05 by caruychen         #+#    #+#              #
-#    Updated: 2022/09/29 11:07:30 by cchen            ###   ########.fr        #
+#    Updated: 2022/09/29 15:54:56 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRCS += $(SRC_DIR)/lexer_getquote.c
 SRCS += $(SRC_DIR)/lexer_getreference.c
 SRCS += $(SRC_DIR)/lexer_getword.c
 SRCS += $(SRC_DIR)/lexer_next.c
+SRCS += $(SRC_DIR)/symtable.c
+SRCS += $(SRC_DIR)/symtable_enter.c
 SRCS += $(SRC_DIR)/parse.c
 SRCS += $(SRC_DIR)/opmap.c
 SRCS += $(SRC_DIR)/errors.c
