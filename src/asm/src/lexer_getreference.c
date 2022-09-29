@@ -19,7 +19,7 @@ int	lexer_getreference(t_source *source, t_symbols *sym)
 
 	sym->type = LA_ref;
 	start = source_next(source);
-	if (!start || !is_wordch(*start))
+	if (source_at_lineend(*source)|| !is_wordch(*start))
 		sym->type = LA_unknown;
 	len = 1;
 	while (source_next(source) && is_wordch(*(source->curr)))
@@ -27,6 +27,6 @@ int	lexer_getreference(t_source *source, t_symbols *sym)
 	if (!string_replace_n(&sym->str, start, len))
 		return (ERROR);
 	if (sym->type == LA_unknown)
-		return (ERROR);
+		return (error(errorset(source->pos, sym->str), LEXER_BAD_REF));
 	return (OK);
 }

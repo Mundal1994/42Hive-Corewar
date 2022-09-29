@@ -50,6 +50,6 @@ int	lexer_getword(t_source *source, t_symbols *sym)
 	if (is_register(sym->str.memory))
 		return (set_register(*source, sym));
 	if (sym->type == LA_unknown)
-		return (ERROR);
+		return (error(errorset(source->pos, sym->str), LEXER_BAD_INSTR));
 	return (sym->type = LA_instr, OK);
 }

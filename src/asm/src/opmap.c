@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 10:08:24 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 10:08:28 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/29 09:40:30 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ t_op	*opmap_get(t_hashmap *opmap, const char *key)
 
 	index = hashmap_get(opmap, key);
 	if (!index)
-		return (error(ERR_MSG_NO_OP), NULL);
+		return (exit_error_str(ERR_MSG_NO_OP), NULL);
 	if (*index < 0 || *index >= OP_NUMBER)
-		return (error(ERR_MSG_BAD_OP_IDX), NULL);
+		return (exit_error_str(ERR_MSG_BAD_OP_IDX), NULL);
 	return (&g_op_tab[*index]);
 }
 
