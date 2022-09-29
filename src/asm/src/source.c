@@ -42,19 +42,22 @@ char	*source_peek(t_source *source)
 
 char	*source_next(t_source *source)
 {
+	int	is_newline;
+
 	if (!source)
 		return (NULL);
 	if (!source->curr)
 		reset(source);
 	if (!source->next)
 		return (source->curr = NULL);
+	is_newline = source->curr && *(source->curr) == NEWLINE_C;
+	source->pos.r += is_newline;
+	source->pos.c = source->pos.c * !is_newline + 1;
 	source->curr = source->next;
 	if (++source->index >= source->buffer.length)
 		source->next = NULL;
 	else
 		source->next++;
-	source->pos.r += *(source->curr) == NEWLINE_C;
-	source->pos.c = (source->pos.c + 1) * (*(source->curr) != NEWLINE_C);
 	return (source->curr);
 }
 
