@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/28 17:39:58 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/09/29 17:22:59 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define FALSE	0
 # define ERROR	-1
 # define STATE	16
+# define ARGS	3
 
 typedef enum e_arg
 {
@@ -72,10 +73,13 @@ typedef struct s_carriage
 	int32_t				last_live_call;//initialized to 0? cycle in which the statement live performed last
 	int32_t				delay;//initialized to 0
 	int32_t				pos;//current carriage position
+	int32_t				tmp_pos;
 	uint8_t				*home;
 	uint8_t				*current;
 	int32_t				skip;//nbr of bytes that needs to be skipped to go to next statement
 	int32_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
+	int32_t				arg_types[ARGS];
+	int32_t				args_found[ARGS];
 	struct s_carriage	*next;
 }						t_carriage;
 

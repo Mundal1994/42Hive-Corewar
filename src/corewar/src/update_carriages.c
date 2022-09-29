@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/29 11:25:56 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/09/29 18:03:10 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,42 +46,228 @@ static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_
 
 // 	}
 // }
+static u_int8_t	first_arg(u_int32_t first, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
+{
+	int	hold;
+	int	i;
+	int	j;
+	int	type;
+
+	if (first == 1 && (info->operations[ARG1][carriage->statement_code - 1] == 1 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 4 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 5 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 7))
+	{
+
+		if (core[carriage->tmp_pos + 1] < 1 || core[carriage->tmp_pos + 1] > 16)
+			return (-1);
+		return (core[++carriage->tmp_pos]);
+	}
+	else if ((first == 2 && (info->operations[ARG1][carriage->statement_code - 1] == 2 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 4 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 6 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 7)) \
+	|| (first == 3 && (info->operations[ARG1][carriage->statement_code - 1] == 3 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 5 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 6 \
+	|| info->operations[ARG1][carriage->statement_code - 1] == 7)))
+	{
+		i = 0;
+		if (first == 2)
+		{
+			type = info->operations[SIZE][carriage->statement_code - 1];
+			j = (info->operations[SIZE][carriage->statement_code - 1] * 2) - 1;
+		}
+		else
+		{
+			type = 2;
+			j = 3;
+		}
+		++carriage->tmp_pos;
+		first = 0;
+		while (i < type)// info->operations[SIZE][carriage->statement_code - 1])
+		{
+			hold = core[carriage->tmp_pos + i];
+			first += (hold / 16) * ft_pow(16, j--);
+			hold %= 16;
+			first += (hold / 16) * ft_pow(16, j--);
+			++i;
+		}
+		carriage->tmp_pos += i;
+		return (first);
+	}
+	return (-1);
+}
+
+static u_int8_t	second_arg(u_int32_t second, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
+{
+	int	i;
+	int	j;
+	int	hold;
+	int	type;
+
+	if (info->operations[ARG2][carriage->statement_code - 1] == 0)
+	{
+		return (0);
+	}
+	else if (second == 1 && (info->operations[ARG2][carriage->statement_code - 1] == 1 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 4 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 5 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 7))
+	{
+
+		if (core[carriage->tmp_pos + 1] < 1 || core[carriage->tmp_pos + 1] > 16)
+			return (-1);
+		return (core[++carriage->tmp_pos]);
+	}
+	else if ((second == 2 && (info->operations[ARG2][carriage->statement_code - 1] == 2 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 4 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 6 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 7)) \
+	|| (second == 3 && (info->operations[ARG2][carriage->statement_code - 1] == 3 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 5 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 6 \
+	|| info->operations[ARG2][carriage->statement_code - 1] == 7)))
+	{
+		i = 0;
+		if (second == 2)
+		{
+			type = info->operations[SIZE][carriage->statement_code - 1];
+			j = (info->operations[SIZE][carriage->statement_code - 1] * 2) - 1;
+		}
+		else
+		{
+			type = 2;
+			j = 3;
+		}
+		++carriage->tmp_pos;
+		second = 0;
+		while (i < type)//info->operations[SIZE][carriage->statement_code - 1])
+		{
+			hold = core[carriage->tmp_pos + i];
+			second += (hold / 16) * ft_pow(16, j--);
+			hold %= 16;
+			second += (hold / 16) * ft_pow(16, j--);
+			++i;
+		}
+		carriage->tmp_pos += i;
+		return (second);
+	}
+	return (-1);
+}
+
+static u_int8_t	third_arg(u_int32_t third, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
+{
+	int	i;
+	int	j;
+	int	hold;
+	int	type;
+
+	if (info->operations[ARG3][carriage->statement_code - 1] == 0)
+	{
+		return (0);
+	}
+	else if (third == 1 && (info->operations[ARG3][carriage->statement_code - 1] == 1 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 4 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 5 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 7))
+	{
+		//ft_printf("HERE\n");
+		if (core[carriage->tmp_pos + 1] < 1 || core[carriage->tmp_pos + 1] > 16)
+			return (-1);
+		return (core[++carriage->tmp_pos]);
+	}
+	else if ((third == 2 && (info->operations[ARG3][carriage->statement_code - 1] == 2 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 4 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 6 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 7)) \
+	|| (third == 3 && (info->operations[ARG3][carriage->statement_code - 1] == 3 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 5 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 6 \
+	|| info->operations[ARG3][carriage->statement_code - 1] == 7)))
+	{
+		i = 0;
+		if (third == 2)
+		{
+			type = info->operations[SIZE][carriage->statement_code - 1];
+			j = (info->operations[SIZE][carriage->statement_code - 1] * 2) - 1;
+		}
+		else
+		{
+			type = 2;
+			j = 3;
+		}
+		++carriage->tmp_pos;
+		third = 0;
+		while (i < type)//info->operations[SIZE][carriage->statement_code - 1])
+		{
+			hold = core[carriage->tmp_pos + i];
+			third += (hold / 16) * ft_pow(16, j--);
+			hold %= 16;
+			third += (hold / 16) * ft_pow(16, j--);
+			++i;
+		}
+		carriage->tmp_pos += i;
+		return (third);
+	}
+	return (-1);
+}
 
 void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	u_int8_t	compare;
-	int			first;
-	int			second;
-	int			third;
-	int			forth;
-	int			tmp_pos;
+	//u_int8_t	compare;
+	//u_int8_t			first;
+	u_int8_t			arg_found[ARGS];
+	//u_int8_t		third;
+	//u_int8_t			forth;
+	int					i;
+	//int			tmp_pos;
 
+	ft_printf(" statement code   %i\n", core[(*carriage)->pos]);
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		//not sure if can just compare value of typecode element
 		//is arguments arent valid or registry isnt valid, skip all of those bytes
-		if (info->operations[PCB][core[(*carriage)->pos]] == 1) //statements using typecode
+		(*carriage)->statement_code = core[(*carriage)->pos];
+		ft_printf("typecode %i   pcb %i\n", core[(*carriage)->pos + 1], info->operations[PCB][core[(*carriage)->pos] - 1]);
+		if (info->operations[PCB][core[(*carriage)->pos] - 1] == 1) //statements using typecode
 		{
+			//exit (0);
 			if ((*carriage)->pos + 1 <= MEM_SIZE - 1)
-				tmp_pos = (*carriage)->pos + 1;
+				(*carriage)->tmp_pos = (*carriage)->pos + 1;
 			else
-				tmp_pos = 0;
-			compare = core[(tmp_pos)];
-			while (tmp_pos <= MEM_SIZE - 1)
-			{
-				third = compare << 6; 
-				second = (compare >> 4) << 6;
-				first = (compare >> 6) << 6;
-				forth = compare << 6;
-				//T_DIR = 128
-				//T_IND = 192
-				//T_REG = 64
+				(*carriage)->tmp_pos = 0;
+			i = 0;
+			while (i < ARGS)
+				arg_found[i++] = core[((*carriage)->tmp_pos)];
+			//third = core[((*carriage)->tmp_pos)];
+			//first = core[((*carriage)->tmp_pos)];
+			//second = core[((*carriage)->tmp_pos)];
+			//forth = core[((*carriage)->tmp_pos)];
+			arg_found[ARG3] = arg_found[ARG3] >> 6; 
+			arg_found[ARG2] = arg_found[ARG2] << 4;
+			arg_found[ARG2] = arg_found[ARG2] >> 6;
+			arg_found[ARG1] = arg_found[ARG1] >> 6;
+			ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			(*carriage)->arg_types[ARG1] = arg_found[ARG1];
+			(*carriage)->arg_types[ARG2] = arg_found[ARG2];
+			(*carriage)->arg_types[ARG3] = arg_found[ARG3];
+			(*carriage)->args_found[ARG1] = first_arg((u_int32_t)arg_found[ARG1], *carriage, info, core);
+			(*carriage)->args_found[ARG2] = second_arg((u_int32_t)arg_found[ARG2], *carriage, info, core);
+			(*carriage)->args_found[ARG2] = third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core);
+			ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
+			exit (0);
+			//ft_printf("1st %i  2nd %i  3rd %i    4th %i\n", first, second, third, forth);
+			//exit (0);
+				//T_DIR = 2
+				//T_IND = 3
+				//T_REG = 1
 				//forth should always be 00
 				//function to check arguments are valid in relation to statecode
 				//and collect the values, making sure they are valid
 				//collect_arg(1, &core[(*carriage)->pos], *carriage, 0);
-				++tmp_pos;
-			}
+			//	++tmp_pos;
+			//}
 		}
 		else
 		{}
