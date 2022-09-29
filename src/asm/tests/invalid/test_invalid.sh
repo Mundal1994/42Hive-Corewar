@@ -19,7 +19,7 @@ LEAKS () {
 TEST_INVALID () {
 	echo $1
 	../../asm $1 &> res
-	if grep 'ERROR' res; then
+	if grep 'Error' res; then
 		echo "${GREEN}ERROR reported${NC}"
 	else
 		echo "${RED}No ERROR reported${NC}"
