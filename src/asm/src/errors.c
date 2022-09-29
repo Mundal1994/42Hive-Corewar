@@ -37,7 +37,7 @@ t_errorset	errorset(t_pos pos, t_string str)
 int	error_no_str(t_errorset error, char *msg)
 {
 	ft_dprintf(2, "%sError: %s", RED, NOCOLOR);
-	ft_dprintf(2, "At [%ld:%ld]\n\t%s\n", error.pos.r, error.pos.c, msg);
+	ft_dprintf(2, "At line %ld\n\t%s\n", error.pos.r, msg);
 	return (ERROR);
 }
 
