@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:01:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 09:39:45 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/29 12:49:39 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define ERRORS_H
 
 # include "definitions.h"
+
+# define MSG_USAGE "Usage: ./asm <sourcefile.s>"
+# define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
+# define ERR_MSG_EMPTY_FILE "ERROR: empty file"
+# define ERR_MSG_NO_SOURCE "ERROR: Source memory not initialized"
 
 # define RED "\033[0;31m"
 # define YELLOW "\033[0;33m"
@@ -26,6 +31,9 @@ of quote string"
 # define LEXER_UNKNOWN "Encountered an unknown token. pls fix :("
 # define REG_WARNING "Register number out of bounds, may lead to\
  Virtual Machine memory errors"
+
+# define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
+# define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
 typedef enum s_errors
 {

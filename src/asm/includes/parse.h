@@ -25,7 +25,6 @@ typedef enum s_termkinds
 	SA_comma,
 	SA_plus,
 	SA_minus,
-	SA_star
 }		t_termkinds;
 
 typedef struct s_terms
