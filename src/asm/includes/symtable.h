@@ -15,13 +15,13 @@
 
 # include <stdbool.h>
 
+# define HASH_INIT_SIZE 128
+
 typedef enum s_actions
 {
 	ST_add,
 	ST_subtract
 }		t_actions;
-
-typedef void	(*t_patch)(uint32_t mem[], uint32_t b, uint32_t v, t_actions a);
 
 typedef struct s_forwardrefs
 {
@@ -32,22 +32,25 @@ typedef struct s_forwardrefs
 
 typedef struct s_entry
 {
-	t_alfa				name;
-	uint32_t			value;
 	bool				defined;
+	uint32_t			location;
 	t_forwardrefs		*flink;
 }				t_entry;
 
-typedef t_vec	t_symtable;
 
+typedef struct	s_symtable
+{
+	t_hashmap	map;
+	t_vec		entries;
+	t_vec		forwardrefs;
+}
+
+/*
 void	_symtable_findentry(t_symtable *symtable, char *name, bool *found);
 void	symtable_print(t_symtable symtable);
 void	symtable_enter(t_symtable *symtable, char *name, uint32_t value);
-/*
-void	symtable_valueof(t_symtable *symtable, char *name, uint32_t loc,
-			uint32_t *value, t_actions action, bool *undefined);
-			*/
 void	symtable_outstandingrefs(t_symtable *symtable,
 			uint32_t *mem, t_patch fix);
+			*/
 
 #endif
