@@ -20,7 +20,7 @@ int	lexer_getdirect(t_source *source, t_symbols *sym)
 	next = source_next(source);
 	if (next && *next == LABEL_CHAR)
 		return (lexer_getreference(source, sym));
-	if (next && ft_isdigit(*next))
+	if (next && (ft_isdigit(*next) || is_operator(*next)))
 		return (lexer_getnumber(source, sym));
 	return (lexer_getcomment(source, sym));
 }

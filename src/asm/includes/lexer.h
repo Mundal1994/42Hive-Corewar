@@ -41,6 +41,7 @@ int		lexer_getchar(t_source *source, t_symbols *sym);
 
 bool	is_wordch(char c);
 bool	is_register(const char *str);
+bool	is_operator(char c);
 
 typedef int					(*t_lexer_getter)(t_source *, t_symbols *);
 

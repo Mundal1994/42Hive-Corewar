@@ -19,6 +19,8 @@ int	lexer_getnumber(t_source *source, t_symbols *sym)
 
 	sym->type = LA_num;
 	start = source->curr;
+	if (is_operator(*start) && !ft_isdigit(*source_peek(source)))
+		return (error_no_str(errorset(source->pos, sym->str), LEXER_MISSING_NUM));
 	len = 1;
 	while (source_next(source) && ft_isdigit(*(source->curr)))
 		++len;

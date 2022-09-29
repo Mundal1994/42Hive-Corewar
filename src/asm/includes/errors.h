@@ -29,6 +29,7 @@
 # define LEXER_BAD_QUOTE "Quote string incomplete, please close end \
 of quote string"
 # define LEXER_UNKNOWN "Encountered an unknown token. pls fix :("
+# define LEXER_MISSING_NUM "Missing number from direct reference"
 # define REG_WARNING "Register number out of bounds, may lead to\
  Virtual Machine memory errors"
 

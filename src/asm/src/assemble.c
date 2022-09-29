@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_bools.c                                      :+:      :+:    :+:   */
+/*   assemble.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 08:50:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/28 16:20:12 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/29 12:53:37 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/29 12:53:38 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ctype.h"
-#include <stdbool.h>
+#include "asm.h"
 
-bool	is_wordch(char c)
+int	assemble(t_lexer *lexer)
 {
-	return (ft_islower(c) || ft_isdigit(c) || c == '_');
-}
-
-bool	is_register(const char *str)
-{
-	return (*str == 'r' && ft_isnumber(str + 1));
-}
-
-bool	is_operator(char c)
-{
-	return (c == '+' || c == '-');
+	while(parse_line(t_lexer *lexer))
+	{
+		assemble_line
+	}
 }
