@@ -35,6 +35,14 @@ of quote string"
 # define REG_WARNING "Register number out of bounds, may lead to\
  Virtual Machine memory errors"
 
+/* Parser */
+# define PARSER_EXPECT_CMD "Syntax error: Expected a command, found something\
+ else instead"
+# define PARSER_UNKNOWN_CMD "Syntax error: Unrecognised command. Allowed\
+ commands are: .name, .comment"
+# define NAME_EXISTS "Syntax error: Name already given once"
+# define COMMENT_EXISTS "Syntax error: Comment already given once"
+
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
