@@ -26,6 +26,8 @@ static int	parse_str(t_lexer *lexer, t_symbols *sym, char *dst, size_t size)
 	ft_memcpy(dst, symbol_str(sym), sym->str.length);
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);
+	if (sym->type == LA_com && lexer_next(lexer, sym) == ERROR)
+		return (ERROR);
 	error_set = errorset(lexer->source.pos, sym->str);
 	if (sym->type != LA_eol)
 		return (error(error_set, PARSER_NO_EOL));
