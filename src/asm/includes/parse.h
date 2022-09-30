@@ -16,8 +16,7 @@
 # include <stdbool.h>
 # include "lexer.h"
 # include "errors.h"
-
-# define HEADER_TOKENS 3
+# include "opmap.h"
 
 typedef enum s_start
 {
@@ -48,7 +47,6 @@ typedef struct s_statement
 
 typedef struct s_syntax
 {
-	t_symtypes		header[HEADER_TOKENS];
 	t_start			instr: 2;
 }		t_syntax;
 
@@ -61,5 +59,6 @@ typedef struct s_parser
 }		t_parser;
 
 int	parse(t_lexer *lexer);
+int	parse_header(t_parser *parser, t_lexer *lexer);
 
 #endif

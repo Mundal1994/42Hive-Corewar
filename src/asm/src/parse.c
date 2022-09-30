@@ -21,7 +21,6 @@ static void	parse_init(t_parser *parser, t_lexer *lexer)
 	header->prog_size = 0;
 	ft_bzero(header->prog_name, PROG_NAME_LENGTH + 1);
 	ft_bzero(header->comment, COMMENT_LENGTH + 1);
-	parser->rules.header = {LA_cmd, LA_cmdstr, LA_eol};
 	if (symbol_init(&parser->sym) == OK)
 		return ;
 	lexer_free(lexer);
@@ -34,6 +33,6 @@ int	parse(t_lexer *lexer)
 
 	parse_init(&parser, lexer);
 	parse_header(&parser, lexer);
-	symbol_free(&sym);
+	symbol_free(&parser.sym);
 	return (OK);
 }
