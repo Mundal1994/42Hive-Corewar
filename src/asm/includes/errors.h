@@ -18,7 +18,7 @@
 # include "Strings.h"
 
 # define MSG_USAGE "Usage: ./asm <sourcefile.s>"
-# define ERR_MSG_INVALID_EXT "ERROR: Unrecognised file type"
+# define ARG_INVALID_EXT "Unrecognised file type"
 # define ERR_MSG_EMPTY_FILE "ERROR: empty file"
 # define ERR_MSG_NO_SOURCE "ERROR: Source memory not initialized"
 
@@ -74,6 +74,7 @@ typedef struct s_errorset
 
 void		exit_error(void);
 void		exit_error_str(char *str);
+int			error_ret(char *msg);
 int			error_no_str(t_errorset error, char *msg);
 int			error(t_errorset error, char *msg);
 t_errorset	errorset(t_pos pos, t_string str);
