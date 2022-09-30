@@ -56,7 +56,7 @@ static void type_code(t_info **info)
 
 	i = 0;
 	j = 0;
-	dir = "2 2 2 2 2 2 2 2 1 1 1 1 2 1 1 2";
+	dir = "4 4 4 4 4 4 4 4 2 2 2 2 4 2 2 4";
 	pcb = "0 1 1 1 1 1 1 1 0 1 1 0 1 1 0 1";
 	arg1 = "2 6 1 1 1 7 7 7 2 7 1 2 6 7 2 1";
 	while (i < STATE)

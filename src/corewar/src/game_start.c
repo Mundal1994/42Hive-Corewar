@@ -185,7 +185,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add play
 	info->head_carriage->arg_types[1] = R;
 	info->head_carriage->args_found[0] = 10;
 	info->head_carriage->args_found[1] = 4;
-	//info->head_carriage->pos +=
+	info->head_carriage->pos = MEM_SIZE - 2;
 	op_table[1](core, &info->head_carriage, info);
 	print_core(core);
 	print_carriages(info);
@@ -193,7 +193,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add play
 	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
-		//break ;
+		break ;
 		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
 		check(info);

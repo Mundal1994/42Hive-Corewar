@@ -67,7 +67,8 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 	{
 		ft_printf("%i < %d\n", i, type);
 		if ((pos + i) >= MEM_SIZE)
-			pos = 0 - i;
+			pos = (pos % MEM_SIZE) - i;
+		ft_printf("pos: %d\n", pos);
 		hold = core[pos + i];
 		third += (hold / 16) * ft_pow(16, j--);
 		hold %= 16;
@@ -93,7 +94,8 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 					if it is outside of range move the cursor to zero and move it the remaining amounts before step 2
 				2. read four bytes from obtainedd address
 		*/
-		info->operations[SIZE][(*carriage)->statement_code] = 1;
+		(*carriage)->statement_code = 1 + 1;
+		ft_printf("size: %d\n", info->operations[SIZE][(*carriage)->statement_code - 1]);
 		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
 		if (core || info)
 			ft_printf("is arg type I\n");
