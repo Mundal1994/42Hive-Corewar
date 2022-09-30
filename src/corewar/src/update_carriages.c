@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/29 18:03:10 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/09/30 11:20:27 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_
 
 // 	}
 // }
-static u_int8_t	first_arg(u_int32_t first, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
+static int64_t	first_arg(u_int32_t first, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
 {
 	int	hold;
 	int	i;
@@ -99,7 +99,7 @@ static u_int8_t	first_arg(u_int32_t first, t_carriage *carriage, t_info *info, u
 	return (-1);
 }
 
-static u_int8_t	second_arg(u_int32_t second, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
+static int64_t	second_arg(u_int32_t second, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
 {
 	int	i;
 	int	j;
@@ -117,7 +117,9 @@ static u_int8_t	second_arg(u_int32_t second, t_carriage *carriage, t_info *info,
 	{
 
 		if (core[carriage->tmp_pos + 1] < 1 || core[carriage->tmp_pos + 1] > 16)
+		{
 			return (-1);
+		}
 		return (core[++carriage->tmp_pos]);
 	}
 	else if ((second == 2 && (info->operations[ARG2][carriage->statement_code - 1] == 2 \
@@ -147,7 +149,7 @@ static u_int8_t	second_arg(u_int32_t second, t_carriage *carriage, t_info *info,
 			hold = core[carriage->tmp_pos + i];
 			second += (hold / 16) * ft_pow(16, j--);
 			hold %= 16;
-			second += (hold / 16) * ft_pow(16, j--);
+			second += (hold % 16) * ft_pow(16, j--);
 			++i;
 		}
 		carriage->tmp_pos += i;
@@ -156,7 +158,7 @@ static u_int8_t	second_arg(u_int32_t second, t_carriage *carriage, t_info *info,
 	return (-1);
 }
 
-static u_int8_t	third_arg(u_int32_t third, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
+static int64_t	third_arg(u_int32_t third, t_carriage *carriage, t_info *info, u_int8_t core[MEM_SIZE])
 {
 	int	i;
 	int	j;
@@ -174,7 +176,10 @@ static u_int8_t	third_arg(u_int32_t third, t_carriage *carriage, t_info *info, u
 	{
 		//ft_printf("HERE\n");
 		if (core[carriage->tmp_pos + 1] < 1 || core[carriage->tmp_pos + 1] > 16)
+		{
+			ft_printf("HERETOO\n");
 			return (-1);
+		}
 		return (core[++carriage->tmp_pos]);
 	}
 	else if ((third == 2 && (info->operations[ARG3][carriage->statement_code - 1] == 2 \
@@ -254,7 +259,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			(*carriage)->arg_types[ARG3] = arg_found[ARG3];
 			(*carriage)->args_found[ARG1] = first_arg((u_int32_t)arg_found[ARG1], *carriage, info, core);
 			(*carriage)->args_found[ARG2] = second_arg((u_int32_t)arg_found[ARG2], *carriage, info, core);
-			(*carriage)->args_found[ARG2] = third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core);
+			(*carriage)->args_found[ARG3] = third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core);
+			//ft_printf("wait %i %lli\n", third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core), (*carriage)->args_found[ARG3]);
 			ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
 			exit (0);
 			//ft_printf("1st %i  2nd %i  3rd %i    4th %i\n", first, second, third, forth);
