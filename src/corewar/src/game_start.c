@@ -138,39 +138,63 @@ static void	check(t_info *info)
 
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
-	int	args[ARGS];
-	print_core(core);
-	print_carriages(info);
-	print_info(info);
-	args[0] = -1;
-	live(args,  &info->head_carriage->next, info);
-	args[0] = 2;
-	args[1] = 5;
+	op_table *op_table[STATE] = {
+		live,
+		ld,
+		st,
+		add,
+		sub,
+		and,
+		or,
+		xor,
+		zjmp,
+		// ldi,
+		// sti,
+		// fork,
+		// lld,
+		// lldi,
+		// lfork,
+		// aff,
+	};
+	// int	args[ARGS];
+	// print_core(core);
+	// print_carriages(info);
+	// print_info(info);
+	// args[0] = -1;
+	// live(&info->head_carriage->next, info);
+	// args[0] = 2;
+	// args[1] = 5;
+	// info->head_carriage->arg_types[1] = R;
+	// ld(core, &info->head_carriage, info);
+	// args[0] = 0;
+	// info->head_carriage->next->arg_types[1] = I;
+	// ld(core, &info->head_carriage->next, info);
+	// args[0] = 5;
+	// args[1] = 50;
+	// info->head_carriage->arg_types[1] = I;
+	// st(core, &info->head_carriage, info);
+	// args[0] = 4;
+	// info->head_carriage->next->registry[4] = 4;
+	// info->head_carriage->next->registry[3] = 3;
+	// info->head_carriage->next->registry[5] = 5;
+	// args[1] = 5;
+	// info->head_carriage->next->arg_types[1] = R;
+	// //st(args, core, &info->head_carriage->next, info);
+	// ft_printf("--------SEE CHANGE---------\n");
+	info->head_carriage->arg_types[0] = I;
 	info->head_carriage->arg_types[1] = R;
-	ld(args, core, &info->head_carriage, info);
-	args[0] = 0;
-	info->head_carriage->next->arg_types[1] = I;
-	ld(args, core, &info->head_carriage->next, info);
-	args[0] = 5;
-	args[1] = 50;
-	info->head_carriage->arg_types[1] = I;
-	st(args, core, &info->head_carriage, info);
-	args[0] = 4;
-	info->head_carriage->next->registry[4] = 4;
-	info->head_carriage->next->registry[3] = 3;
-	info->head_carriage->next->registry[5] = 5;
-	args[1] = 5;
-	info->head_carriage->next->arg_types[1] = R;
-	st(args, core, &info->head_carriage->next, info);
-	ft_printf("--------SEE CHANGE---------\n");
+	info->head_carriage->args_found[0] = 10;
+	info->head_carriage->args_found[1] = 4;
+	//info->head_carriage->pos +=
+	op_table[1](core, &info->head_carriage, info);
 	print_core(core);
 	print_carriages(info);
 	print_info(info);
 	introduce_contestants(champ);//add player struct
 	while (!one_carriage_left(info))
 	{
-		break ;
-		if (update_carriages(core, info) == ERROR)
+		//break ;
+		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
 		check(info);
 	}

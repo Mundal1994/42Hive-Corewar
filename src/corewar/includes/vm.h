@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/28 17:39:58 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/09/29 17:22:59 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,13 @@ typedef struct s_carriage
 	int32_t				last_live_call;//initialized to 0? cycle in which the statement live performed last
 	int32_t				delay;//initialized to 0
 	int32_t				pos;//current carriage position
+	int32_t				tmp_pos;
 	uint8_t				*home;
 	uint8_t				*current;
 	int32_t				skip;//nbr of bytes that needs to be skipped to go to next statement
 	int32_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
 	int32_t				arg_types[ARGS];
+	int32_t				args_found[ARGS];
 	struct s_carriage	*next;
 }						t_carriage;
 
@@ -94,10 +96,12 @@ typedef struct s_info
 	int			operations[6][STATE];
 }				t_info;
 
+typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+
 int		init(int argc, char **argv, int i);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
-int		update_carriages(uint8_t core[MEM_SIZE], t_info *info);
+int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE]);
@@ -108,14 +112,14 @@ void	print_info(t_info *info);
 
 //statement functions
 void	update_carry(int nbr, t_carriage **carriage);
-void	zjmp(int arg[ARGS], t_carriage **carriage);
-void	live(int arg[ARGS], t_carriage **carriage, t_info *info);
-void	ld(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	st(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	add(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	sub(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	and(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	or(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	xor(int arg[ARGS], uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 #endif
