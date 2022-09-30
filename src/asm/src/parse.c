@@ -28,13 +28,6 @@ static void	parse_init(t_parser *parser, t_lexer *lexer)
 	exit_error();
 }
 
-int	parse_line(t_lexer *lexer, t_symbols *sym)
-{
-	while (lexer_next(lexer, sym) == OK && sym->type > LA_eol)
-	{
-	}
-}
-
 int	parse(t_lexer *lexer)
 {
 	t_parser	parser;
