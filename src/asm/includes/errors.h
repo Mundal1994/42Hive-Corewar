@@ -45,6 +45,8 @@ of quote string"
 # define PARSER_NO_QUOTE "Syntax error: Did not find a command string"
 # define PARSER_STR_TOO_LONG "Syntax error: Command quote string too long"
 # define PARSER_NO_EOL "Syntax error: Command should end with new line"
+# define PARSER_EXPECT_START "Syntax error: Expected a label or instruction"
+# define PARSER_EXPECT_INSTR "Syntax error: Expected an operation instruction"
 
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
