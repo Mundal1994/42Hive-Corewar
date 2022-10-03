@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 18:07:09 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/30 18:29:36 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 21:45:44 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	parse_comment(t_lexer *lexer, t_symbols *sym, char *dst)
 	static bool	exists;
 
 	if (exists)
-		return (error(errorset(lexer->source.pos, sym->str), NAME_EXISTS));
+		return (error(errorset(lexer->source.pos, sym->str), COMMENT_EXISTS));
 	exists = 1;
 	return (parse_str(lexer, sym, dst, COMMENT_LENGTH));
 }
