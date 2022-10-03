@@ -51,6 +51,6 @@ typedef struct s_op
 
 int		opmap_new(t_hashmap *opmap);
 t_op	*opmap_get(t_hashmap *opmap, const char *key);
-void	opmap_free(t_hashmap **opmap);
+void	opmap_free(t_hashmap *opmap);
 
 #endif

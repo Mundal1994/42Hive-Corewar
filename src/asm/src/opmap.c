@@ -59,7 +59,7 @@ t_op	*opmap_get(t_hashmap *opmap, const char *key)
 	return (&g_op_tab[*index]);
 }
 
-void	opmap_free(t_hashmap **opmap)
+void	opmap_free(t_hashmap *opmap)
 {
 	hashmap_free(*opmap);
 	*opmap = NULL;
