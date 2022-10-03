@@ -25,12 +25,6 @@ typedef enum s_start
 	ST_all
 }			t_start;
 
-typedef enum s_headerflag
-{
-	H_name = 1,
-	H_comment = 2
-}			t_headerflag;
-
 typedef union s_arg
 {
 	uint8_t		reg;
@@ -56,9 +50,12 @@ typedef struct s_parser
 	t_syntax	syntax;
 	t_header	header;
 	t_vec		body;
+	t_hashmap	opmap;
 }		t_parser;
 
-int	parse(t_lexer *lexer);
-int	parse_header(t_parser *parser, t_lexer *lexer);
+void	parse_init(t_parser *parser, t_lexer *lexer);
+void	parse_free(t_parser *parser);
+int		parse(t_parser *parser, t_lexer *lexer);
+int		parse_header(t_parser *parser, t_lexer *lexer);
 
 #endif

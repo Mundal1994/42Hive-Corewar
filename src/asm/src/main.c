@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 
 	validate_arguments(argc, argv);
 	lexer_init(&lexer, argv[1]);
-	parse(&lexer);
+	assemble(&lexer);
 	lexer_free(&lexer);
 	return (EXIT_SUCCESS);
 }

@@ -14,8 +14,10 @@
 
 int	assemble(t_lexer *lexer)
 {
-	while (parse_line(lexer))
-	{
-		ft_printf("");
-	}
+	t_parser	parser;
+
+	parse_init(&parser, lexer);
+	parse(&parser, lexer);
+	parse_free(&parser);
+	return (OK);
 }

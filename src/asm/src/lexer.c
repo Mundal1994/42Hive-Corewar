@@ -28,7 +28,7 @@ int	lexer_nextline(t_lexer *lexer, t_symbols *sym)
 {
 	int	res;
 
-	res = lexer_next(lexer, sym);
+	res = OK;
 	while (res == OK)
 	{
 		if (sym->type != LA_eol && sym->type != LA_com)
