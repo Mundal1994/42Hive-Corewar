@@ -21,5 +21,6 @@
 # include "opmap.h"
 # include "validator.h"
 # include "parse.h"
+# include "assemble.h"
 
 #endif
