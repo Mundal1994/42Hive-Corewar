@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 22:34:33 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/09/29 18:37:05 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	parse_line(t_lexer *lexer, t_symbols *sym)
 {
 	while (lexer_next(lexer, sym) == OK && sym->type > LA_eol)
 	{
-		
 	}
 }
 
@@ -34,7 +33,6 @@ int	parse(t_lexer *lexer)
 
 	parse_init(lexer, &sym);
 	parse_header(lexer, &sym);
-	parse_body(lexer &sym);
 	symbol_free(&sym);
 	return (OK);
 }
