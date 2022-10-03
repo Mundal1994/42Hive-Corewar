@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/30 11:20:27 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:41:44 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,40 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 	int	i;
 	int	j;
 	int	type;
-	//int	temp;
+	int	temp;
+	//int	move;
 
-	if (first == 1 && (info->operations[ARG1][(*carriage)->statement_code - 1] == 1 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 4 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 5 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 7))
+	if (info->operations[first][(*carriage)->statement_code - 1] == 0)
 	{
-		ft_printf("B   %d----------%d\n", core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
-		ft_printf("A %d----------%d\n", core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		ft_printf("BE   ZEROO\n");
+		return (0);
+	}
+	if ((*carriage)->arg_types[first] == 1 && (info->operations[first][(*carriage)->statement_code - 1] == 1 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 4 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 5 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 7))
+	{
+		//ft_printf("B   %d----------%d\n", core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		ft_printf("BE %i   %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		if (core[(*carriage)->tmp_pos] < 1 || core[(*carriage)->tmp_pos] > 16)
 			return (-1);
-		//make_move_tmp(carriage, 1);
-		return (core[(*carriage)->tmp_pos]);
+		//make_move_tmp(carriage, 1);//moving and saving values before moves
+		temp = core[(*carriage)->tmp_pos];
+		make_move_tmp(carriage, 1);
+		ft_printf("AF %i   %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		return (temp);
 	}
-	else if ((first == 2 && (info->operations[ARG1][(*carriage)->statement_code - 1] == 2 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 4 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 6 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 7)) \
-	|| (first == 3 && (info->operations[ARG1][(*carriage)->statement_code - 1] == 3 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 5 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 6 \
-	|| info->operations[ARG1][(*carriage)->statement_code - 1] == 7)))
+	else if (((*carriage)->arg_types[first] == 2 && (info->operations[first][(*carriage)->statement_code - 1] == 2 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 4 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 6 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 7)) \
+	|| ((*carriage)->arg_types[first] == 3 && (info->operations[first][(*carriage)->statement_code - 1] == 3 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 5 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 6 \
+	|| info->operations[first][(*carriage)->statement_code - 1] == 7)))
 	{
 		i = 0;
-		if (first == 2)
+		if ((*carriage)->arg_types[first] == 2)
 		{
 			type = info->operations[SIZE][(*carriage)->statement_code - 1];
 			j = (info->operations[SIZE][(*carriage)->statement_code - 1] * 2) - 1;
@@ -95,142 +104,30 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 			type = 2;
 			j = 3;
 		}
-		++(*carriage)->tmp_pos;
+		//++(*carriage)->tmp_pos;
+		ft_printf("BE  %i    %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		first = 0;
 		while (i < type)// info->operations[SIZE][(*carriage)->statement_code - 1])
 		{
-			hold = core[(*carriage)->tmp_pos + i];
+			if ((*carriage)->tmp_pos + i < MEM_SIZE)
+				hold = (*carriage)->tmp_pos + i;
+			else
+				hold = ((*carriage)->tmp_pos + i) % (MEM_SIZE - 1);
+			hold = core[hold];
+			//ft_printf("hold = %i\n", (hold / 16) * ft_pow(16, j));
 			first += (hold / 16) * ft_pow(16, j--);
 			hold %= 16;
-			first += (hold / 16) * ft_pow(16, j--);
+			//ft_printf("hold = %i\n", (hold % 16) * ft_pow(16, j));
+			first += (hold % 16) * ft_pow(16, j--);
 			++i;
 		}
-		(*carriage)->tmp_pos += i;
+		make_move_tmp(carriage, i);
+		ft_printf("AF  %i %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		return (first);
 	}
 	return (-1);
 }
 
-static int64_t	second_arg(u_int32_t second, t_carriage **carriage, t_info *info, u_int8_t core[MEM_SIZE])
-{
-	int	i;
-	int	j;
-	int	hold;
-	int	type;
-
-	if (info->operations[ARG2][(*carriage)->statement_code - 1] == 0)
-	{
-		return (0);
-	}
-	else if (second == 1 && (info->operations[ARG2][(*carriage)->statement_code - 1] == 1 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 4 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 5 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 7))
-	{
-		ft_printf("%d----------%d\n", core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
-		if (core[(*carriage)->tmp_pos] < 1 || core[(*carriage)->tmp_pos] > 16)
-		{
-			return (-1);
-		}
-		++(*carriage)->tmp_pos;
-		return (core[(*carriage)->tmp_pos]);
-	}
-	else if ((second == 2 && (info->operations[ARG2][(*carriage)->statement_code - 1] == 2 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 4 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 6 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 7)) \
-	|| (second == 3 && (info->operations[ARG2][(*carriage)->statement_code - 1] == 3 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 5 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 6 \
-	|| info->operations[ARG2][(*carriage)->statement_code - 1] == 7)))
-	{
-		i = 0;
-		if (second == 2)
-		{
-			type = info->operations[SIZE][(*carriage)->statement_code - 1];
-			j = (info->operations[SIZE][(*carriage)->statement_code - 1] * 2) - 1;
-		}
-		else
-		{
-			type = 2;
-			j = 3;
-		}
-		++(*carriage)->tmp_pos;
-		second = 0;
-		while (i < type)//info->operations[SIZE][(*carriage)->statement_code - 1])
-		{
-			hold = core[(*carriage)->tmp_pos + i];
-			second += (hold / 16) * ft_pow(16, j--);
-			hold %= 16;
-			second += (hold % 16) * ft_pow(16, j--);
-			++i;
-		}
-		(*carriage)->tmp_pos += i;
-		return (second);
-	}
-	return (-1);
-}
-
-static int64_t	third_arg(u_int32_t third, t_carriage **carriage, t_info *info, u_int8_t core[MEM_SIZE])
-{
-	int	i;
-	int	j;
-	int	hold;
-	int	type;
-
-	if (info->operations[ARG3][(*carriage)->statement_code - 1] == 0)
-	{
-		return (0);
-	}
-	else if (third == 1 && (info->operations[ARG3][(*carriage)->statement_code - 1] == 1 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 4 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 5 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 7))
-	{
-		//ft_printf("HERE\n");
-		make_move_tmp(carriage, 1);
-		if (core[(*carriage)->tmp_pos] < 1 || core[(*carriage)->tmp_pos] > 16)
-		{
-			ft_printf("HERETOO\n");
-			return (-1);
-		}
-		return (core[++(*carriage)->tmp_pos]);
-	}
-	else if ((third == 2 && (info->operations[ARG3][(*carriage)->statement_code - 1] == 2 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 4 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 6 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 7)) \
-	|| (third == 3 && (info->operations[ARG3][(*carriage)->statement_code - 1] == 3 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 5 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 6 \
-	|| info->operations[ARG3][(*carriage)->statement_code - 1] == 7)))
-	{
-		i = 0;
-		if (third == 2)
-		{
-			type = info->operations[SIZE][(*carriage)->statement_code - 1];
-			j = (info->operations[SIZE][(*carriage)->statement_code - 1] * 2) - 1;
-		}
-		else
-		{
-			type = 2;
-			j = 3;
-		}
-		++(*carriage)->tmp_pos;
-		third = 0;
-		while (i < type)//info->operations[SIZE][(*carriage)->statement_code - 1])
-		{
-			hold = core[(*carriage)->tmp_pos + i];
-			third += (hold / 16) * ft_pow(16, j--);
-			hold %= 16;
-			third += (hold % 16) * ft_pow(16, j--);
-			++i;
-		}
-		(*carriage)->tmp_pos += i;
-		return (third);
-	}
-	return (-1);
-}
 
 static void	make_move(t_carriage **carriage, int move)
 {
@@ -287,13 +184,11 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		//not sure if can just compare value of typecode element
 		//is arguments arent valid or registry isnt valid, skip all of those bytes
 		(*carriage)->statement_code = core[(*carriage)->pos];
+		(*carriage)->tmp_pos = (*carriage)->pos;
+		make_move_tmp(carriage, 1);
 		ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
 		if (info->operations[PCB][(*carriage)->statement_code - 1] == 1) //statements using typecode
 		{
-			if ((*carriage)->pos + 1 < MEM_SIZE - 1)
-				(*carriage)->tmp_pos = (*carriage)->pos + 1;
-			else//if ((*carriage)->pos == MEM_SIZE - 1)
-				(*carriage)->tmp_pos = 0;
 			i = 0;
 			while (i < ARGS)
 				arg_found[i++] = core[((*carriage)->tmp_pos)];
@@ -303,38 +198,51 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			arg_found[ARG3] = arg_found[ARG3] << 4;
 			arg_found[ARG3] = arg_found[ARG3] >> 6;
 			//ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
-			ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
 			(*carriage)->arg_types[ARG1] = arg_found[ARG1];
 			(*carriage)->arg_types[ARG2] = arg_found[ARG2];
 			(*carriage)->arg_types[ARG3] = arg_found[ARG3];
-			(*carriage)->args_found[ARG1] = first_arg((u_int32_t)arg_found[ARG1], carriage, info, core);
-			(*carriage)->args_found[ARG2] = second_arg((u_int32_t)arg_found[ARG2], carriage, info, core);
-			(*carriage)->args_found[ARG3] = third_arg((u_int32_t)arg_found[ARG3], carriage, info, core);
+			make_move_tmp(carriage, 1);
+			(*carriage)->args_found[ARG1] = first_arg(ARG1, carriage, info, core);
+			(*carriage)->args_found[ARG2] = first_arg(ARG2, carriage, info, core);
+			(*carriage)->args_found[ARG3] = first_arg(ARG3, carriage, info, core);
 			//ft_printf("wait %i %lli\n", third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core), (*carriage)->args_found[ARG3]);
 			ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
-			if (args_found_error(info, carriage) == FALSE)
-			{
-				op_table[(*carriage)->statement_code - 1](core, carriage, info);
-				move_carriage(info, carriage);
-			}
-			//exit (0);
+			if (args_found_error(info, carriage) == TRUE)
+				return ;
 		}
 		else
-		{}
+		{
+			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+			(*carriage)->args_found[ARG2] = 0;
+			(*carriage)->args_found[ARG3] = 0;
+		}
+		op_table[(*carriage)->statement_code - 1](core, carriage, info);
+		//ft_printf("SEGCHECK\n");
+		move_carriage(info, carriage);
+		//print_carriages(info);
+		//print_core(core);
+		//exit (0);
+		// }
+		// else
+		// {
+		// 	(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+		// }
 	}
 	else
-	{
-		if ((*carriage)->pos  == MEM_SIZE - 1)
-		{
-			(*carriage)->pos = 0;
-			(*carriage)->current  = &core[0];
-		}
-		else
-		{
-			(*carriage)->pos++;
-			(*carriage)->current++;
-		}
-	}
+		make_move(carriage, 1);
+	// {
+	// 	if ((*carriage)->pos  == MEM_SIZE - 1)
+	// 	{
+	// 		(*carriage)->pos = 0;
+	// 		(*carriage)->current  = &core[0];
+	// 	}
+	// 	else
+	// 	{
+	// 		(*carriage)->pos++;
+	// 		(*carriage)->current++;
+	// 	}
+	// }
 }
 
 // static void	perform_statement_code(t_info *info)

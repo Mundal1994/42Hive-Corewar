@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 17:22:59 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:12:26 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 
 #endif
