@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 11:10:02 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 21:57:10 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 22:53:45 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	load_statement(t_parser *parser, const char *name)
 	statement.op = *op;
 	statement.acb = 0;
 	ft_bzero(statement.arguments, sizeof(t_arg) * 3);
+	statement.pos = parser->size;
 	if (vec_push(&parser->body, &statement) == ERROR)
 		return (ERROR);
 	return (OK);
@@ -42,11 +43,11 @@ static int	next_argument(t_parser *parser, t_lexer *lexer, uint8_t index)
 		return (error(errorset(lexer->source.pos, sym->str),
 			PARSER_WRONG_ARG));
 	if (sym->argtype & T_REG)
-		return (parse_register(statement, lexer, sym, index));
+		return (parse_register(parser, lexer, statement, index));
 	if (sym->argtype & T_DIR)
-		return (parse_direct(statement, lexer, sym, index));
+		return (parse_direct(parser, lexer, statement, index));
 	if (sym->argtype & T_IND)
-		return (parse_indirect(statement, lexer, sym, index));
+		return (parse_indirect(parser, lexer, statement, index));
 	return (error(errorset(lexer->source.pos, sym->str), PARSER_UNKNOWN_ARG));
 }
 
@@ -58,6 +59,7 @@ static int	parse_arguments(t_parser *parser, t_lexer *lexer)
 
 	sym = &parser->sym;
 	statement = (t_statement *)vec_get(&parser->body, parser->body.len - 1);
+	parser->size += statement->op.acb;
 	index = 0;
 	while (index < statement->op.argc)
 	{
@@ -79,5 +81,5 @@ int	parse_operation(t_parser *parser, t_lexer *lexer)
 	name = symbol_str(sym);
 	if (load_statement(parser, name) == ERROR)
 		return (ERROR);
-	return (parse_arguments(parser, lexer));
+	return (++parser->size, parse_arguments(parser, lexer));
 }

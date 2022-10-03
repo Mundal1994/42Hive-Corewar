@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:05:33 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/21 11:05:38 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 22:35:23 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_op
 	uint8_t		argc;
 	t_arg_type	arg_types[MAX_ARGS];
 	uint8_t		opcode;
-	bool		no_acb;
+	bool		acb;
 	bool		label;
 }				t_op;
 

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 21:47:01 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 22:07:39 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	parse_init(t_parser *parser, t_lexer *lexer)
 	header->prog_size = 0;
 	ft_bzero(header->prog_name, PROG_NAME_LENGTH + 1);
 	ft_bzero(header->comment, COMMENT_LENGTH + 1);
+	parser->size = 0;
 	if (symbol_init(&parser->sym) != ERROR
 		&& vec_new(&parser->body, 1, sizeof(t_statement)) != ERROR
 		&& opmap_new(&parser->opmap) != ERROR)

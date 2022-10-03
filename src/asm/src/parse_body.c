@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 10:16:40 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 10:16:44 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 22:54:29 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	parse_label(t_parser *parser, t_lexer *lexer)
 	t_symbols	*sym;
 
 	sym = &parser->sym;
-	ft_printf("%s\n", symbol_str(sym));
+	ft_printf("%s %d\n", symbol_str(sym), parser->size);
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);
 	if (sym->type == LA_eol)

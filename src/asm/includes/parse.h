@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:04:16 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 22:44:53 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ typedef union s_arg
 
 typedef struct s_statement
 {
-	t_op	op;
-	uint8_t	acb;
-	t_arg	arguments[3];
+	t_op		op;
+	uint8_t		acb;
+	t_arg		arguments[3];
+	uint32_t	pos;
 }		t_statement;
 
 typedef struct s_parser
@@ -45,6 +46,7 @@ typedef struct s_parser
 	t_header	header;
 	t_vec		body;
 	t_hashmap	opmap;
+	uint32_t	size;
 }		t_parser;
 
 void	parse_init(t_parser *parser, t_lexer *lexer);
@@ -53,12 +55,12 @@ int		parse(t_parser *parser, t_lexer *lexer);
 int		parse_header(t_parser *parser, t_lexer *lexer);
 int		parse_body(t_parser *parser, t_lexer *lexer);
 int		parse_operation(t_parser *parser, t_lexer *lexer);
-int		parse_register(t_statement *statement, t_lexer *lexer,
-		t_symbols *sym, uint8_t index);
-int		parse_direct(t_statement *statement, t_lexer *lexer,
-		t_symbols *sym, uint8_t index);
-int		parse_indirect(t_statement *statement, t_lexer *lexer,
-		t_symbols *sym, uint8_t index);
+int		parse_register(t_parser *parser, t_lexer *lexer,
+		t_statement *statement, uint8_t index);
+int		parse_direct(t_parser *parser, t_lexer *lexer,
+		t_statement *statement, uint8_t index);
+int		parse_indirect(t_parser *parser, t_lexer *lexer,
+		t_statement *statement, uint8_t index);
 int		parse_reference(t_statement *statement, t_lexer *lexer,
 		t_symbols *sym, uint8_t index);
 int		parse_numeric(t_statement *statement, t_lexer *lexer,
