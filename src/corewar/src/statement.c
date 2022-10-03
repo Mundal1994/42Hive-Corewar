@@ -81,6 +81,7 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 
 void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	ft_printf("LD LOCATED-------------------\n");
 	if ((*carriage)->arg_types[0] == I)
 	{
 		// READ BYTE IN OTHER POSITION OF THE MEM_SIZE to calculate new (*carriage)->args_found[0]
@@ -94,7 +95,7 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 					if it is outside of range move the cursor to zero and move it the remaining amounts before step 2
 				2. read four bytes from obtainedd address
 		*/
-		(*carriage)->statement_code = 1 + 1;
+		(*carriage)->statement_code = 1 + 1;//delete this after testing is done
 		ft_printf("size: %d\n", info->operations[SIZE][(*carriage)->statement_code - 1]);
 		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
 		if (core || info)
