@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 17:11:53 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 17:17:19 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void parse_free(t_parser *parser)
 
 int	parse(t_parser *parser, t_lexer *lexer)
 {
-	if (lexer_next(lexer, &parser->sym) == ERROR)
-		return (ERROR);
 	parse_header(parser, lexer);
 	parse_body(parser, lexer);
 	return (OK);

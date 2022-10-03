@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/30 18:18:18 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 17:17:07 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	lexer_nextline(t_lexer *lexer, t_symbols *sym)
 {
 	int	res;
 
-	res = OK;
+	res = lexer_next(lexer, sym);
 	while (res == OK)
 	{
 		if (sym->type != LA_eol && sym->type != LA_com)
