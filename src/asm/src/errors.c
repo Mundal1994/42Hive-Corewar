@@ -22,12 +22,6 @@ t_errorset	errorset(t_pos pos, t_string str)
 	return (error);
 }
 
-int	error_ret(char *msg)
-{
-	ft_dprintf(2, "%sError: %s%s", RED, NOCOLOR, msg);
-	return (ERROR);
-}
-
 int	error_no_str(t_errorset error, char *msg)
 {
 	ft_dprintf(2, "%sError: %s", RED, NOCOLOR);

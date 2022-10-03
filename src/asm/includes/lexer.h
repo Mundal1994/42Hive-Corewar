@@ -30,7 +30,6 @@ void	lexer_free(t_lexer *lexer);
    and returns sym = sym.type = unknowwn if no valid symbol can be
    recognised */
 int		lexer_next(t_lexer *lexer, t_symbols *sym);
-int		lexer_nextline(t_lexer *lexer, t_symbols *sym);
 int		lexer_getword(t_source *source, t_symbols *sym);
 int		lexer_getcmd(t_source *source, t_symbols *sym);
 int		lexer_getcomment(t_source *source, t_symbols *sym);
