@@ -69,7 +69,10 @@ static int	valid_flags(int argc, char **argv, t_info *info)
 	else if (check_int_flag(argv[1], info))
 	{
 		if (argc > 3 && str_digit(argv[2]))
+		{
+			info->flag[D_FLAG] = ft_atoi(argv[2]);
 			return (2);//figure out how strict to be with this flag
+		}
 		else
 			return (ERROR);
 	}

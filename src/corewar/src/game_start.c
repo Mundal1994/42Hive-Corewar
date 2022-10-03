@@ -58,18 +58,11 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 
 	init_op_table(op_table);
 	introduce_contestants(champ);//add player struct
-	int i = 0;
 	while (!one_carriage_left(info))
 	{
 		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
-		ft_printf("INSIDE LOOP--------------------\n");
-		print_core(core);
-		print_carriages(info);
-		print_info(info);
-		if (i++ > 51)
-			break ;
-		check(info);
+		check(core, info);
 	}
 	announce_winner(champ, info->winner);
 	return (0);

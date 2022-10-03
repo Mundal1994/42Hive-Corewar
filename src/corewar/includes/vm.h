@@ -112,7 +112,7 @@ int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
-void	check(t_info *info);
+void	check(uint8_t core[MEM_SIZE], t_info *info);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE]);
@@ -123,6 +123,7 @@ void	print_info(t_info *info);
 
 //statement functions
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr);
 void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
 void	update_carry(int nbr, t_carriage **carriage);
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
