@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/03 16:41:44 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:50:16 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,13 @@ static void	move_carriage(t_info *info, t_carriage **carriage)
 		++i;
 	}
 	(*carriage)->statement_code = 0;
+	i = 0;
+	while (i < 3)
+	{
+		(*carriage)->arg_types[i] = 0;
+		(*carriage)->args_found[i] = 0;
+		++i;
+	}
 }
 
 static int	args_found_error(t_info *info, t_carriage **carriage)
@@ -178,7 +185,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	u_int8_t			arg_found[ARGS];
 	int					i;
 
-	ft_printf(" statement code   %i\n", core[(*carriage)->pos]);
+	ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		//not sure if can just compare value of typecode element
@@ -260,7 +267,6 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[ST
 		if (carriage->delay == 0)//means it moved last cycle or just been initiated
 		{
 			set_statement_code(core, &carriage, info);
-			ft_printf("STATEMENT CODE-------------------\n");
 		}
 		if (carriage->delay > 0)
 			carriage->delay -= 1;

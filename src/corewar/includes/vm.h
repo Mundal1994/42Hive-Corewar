@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 16:12:26 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:45:49 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 # define ERROR	-1
 # define STATE	16
 # define ARGS	3
+
+typedef enum e_flag
+{
+	A_FLAG,
+	D_FLAG,
+	S_FLAG,
+	V_FLAG,
+	I_FLAG,
+}	t_flag;
 
 typedef enum e_arg
 {
@@ -92,16 +101,18 @@ typedef struct s_info
 	int			cycle_count;
 	int			checks_count;// initialized to 0
 	int			carriage_count;
+	int			flag[5];
 	t_carriage	*head_carriage;
 	int			operations[6][STATE];
 }				t_info;
 
 typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
-int		init(int argc, char **argv, int i);
+int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
+void	check(t_info *info);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE]);
@@ -111,6 +122,8 @@ void	print_carriages(t_info *info);
 void	print_info(t_info *info);
 
 //statement functions
+int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
 void	update_carry(int nbr, t_carriage **carriage);
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
@@ -121,6 +134,13 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+//int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 #endif
