@@ -17,6 +17,7 @@ int	lexer_getdirect(t_source *source, t_symbols *sym)
 	char	*next;
 
 	sym->isdirect = true;
+	sym->argtype |= T_DIR;
 	next = source_next(source);
 	if (next && *next == LABEL_CHAR)
 		return (lexer_getreference(source, sym));

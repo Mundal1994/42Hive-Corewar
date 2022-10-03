@@ -25,6 +25,7 @@ static int	set_register(t_source source, t_symbols *sym)
 	sym->num = ft_atoi(symbol_str(sym) + 1);
 	if (sym->num < 1 || sym->num > REG_NUMBER)
 		return (warning(errorset(source.pos, sym->str), REG_WARNING));
+	sym->argtype = T_REG;
 	return (sym->type = LA_reg, OK);
 }
 

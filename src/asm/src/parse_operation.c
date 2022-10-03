@@ -36,6 +36,9 @@ static int	parse_arguments(t_statement *statement, t_lexer *lexer)
 
 	index = 0;
 
+	while (index < statement->op.argc)
+	{
+	}
 }
 
 int	parse_operation(t_parser *parser, t_lexer *lexer)

@@ -18,6 +18,8 @@ int	lexer_getreference(t_source *source, t_symbols *sym)
 	char	*start;
 
 	sym->type = LA_ref;
+	sym->argtype |= T_LAB;
+	sym->argtype |= T_IND * !(sym->argtype & T_DIR)
 	start = source_next(source);
 	if (source_at_lineend(*source) || !is_wordch(*start))
 		sym->type = LA_unknown;

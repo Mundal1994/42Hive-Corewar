@@ -43,6 +43,7 @@ typedef struct s_symbols
 	t_symtypes	type;
 	t_string	str;
 	int			num;
+	t_arg_type	argtype;
 }		t_symbols;
 
 int		symbol_init(t_symbols *sym);

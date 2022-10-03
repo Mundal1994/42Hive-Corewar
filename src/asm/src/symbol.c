@@ -17,6 +17,7 @@ int	symbol_init(t_symbols *sym)
 	sym->isdirect = false;
 	sym->type = LA_unknown;
 	sym->num = 0;
+	sym->argtype = 0;
 	if (!string_new(&sym->str, DEFAULT_SYMBOL_LEN))
 		return (ERROR);
 	return (OK);
@@ -27,6 +28,7 @@ void	symbol_reset(t_symbols *sym)
 	sym->isdirect = false;
 	sym->type = LA_unknown;
 	sym->num = 0;
+	sym->argtype = 0;
 }
 
 void	symbol_free(t_symbols *sym)
