@@ -52,6 +52,8 @@ of quote string"
 # define PARSER_UNKNOWN_ARG "Syntax error: Unknown argument type"
 # define PARSER_EXPECT_EOL "Syntax error: Expected end of line"
 # define PARSER_EXPECT_SEP "Syntax error: Expected argument separator"
+# define PARSER_EXPECT_MATH_OP "Syntax error: Expected mathematical operator"
+# define PARSER_EXPECT_NUM "Syntax error: Expected number"
 
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"

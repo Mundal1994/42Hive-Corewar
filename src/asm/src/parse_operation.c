@@ -18,12 +18,12 @@ static int	load_statement(t_parser *parser, const char *name)
 	t_statement	statement;
 	size_t		index;
 
-	op = opmap_get(opmap, name);
+	op = opmap_get(&parser->opmap, name);
 	if (!op)
 		return (ERROR);
 	statement.op = *op;
 	statement.acb = 0;
-	statement.arguments = {0};
+	ft_bzero(statement.arguments, sizeof(t_arg) * 3);
 	index = parser->body.len;
 	if (vec_push(&parser->body, &statement) == ERROR)
 		return (ERROR);
@@ -49,7 +49,7 @@ static int	next_argument(t_parser *parser, t_lexer *lexer, uint8_t index)
 		return (parse_direct(statement, lexer, sym, index));
 	if (sym->argtype & T_IND)
 		return (parse_indirect(statement, lexer, sym, index));
-	return (error(errorset(lexer->source.pos, sym), PARSER_UNKNOWN_ARG));
+	return (error(errorset(lexer->source.pos, sym->str), PARSER_UNKNOWN_ARG));
 }
 
 static int	parse_arguments(t_parser *parser, t_lexer *lexer)
@@ -67,6 +67,7 @@ static int	parse_arguments(t_parser *parser, t_lexer *lexer)
 			return (ERROR);
 		if (next_argument(parser, lexer, index) == ERROR)
 			return (ERROR);
+		++index;
 	}
 	return (OK);
 }
@@ -75,12 +76,11 @@ int	parse_operation(t_parser *parser, t_lexer *lexer)
 {
 	t_symbols	*sym;
 	char		*name;
-	t_statement	*statement;
 
 	sym = &parser->sym;
 	name = symbol_str(sym);
 	ft_printf("%s\n", name);
 	if (load_statement(parser, name) == ERROR)
 		return (ERROR);
-	parse_arguments();
+	return (parse_arguments(parser, lexer));
 }

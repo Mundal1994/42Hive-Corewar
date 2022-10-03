@@ -51,9 +51,17 @@ void	parse_init(t_parser *parser, t_lexer *lexer);
 void	parse_free(t_parser *parser);
 int		parse(t_parser *parser, t_lexer *lexer);
 int		parse_header(t_parser *parser, t_lexer *lexer);
+int		parse_body(t_parser *parser, t_lexer *lexer);
+int		parse_operation(t_parser *parser, t_lexer *lexer);
 int		parse_register(t_statement *statement, t_lexer *lexer,
 		t_symbols *sym, uint8_t index);
 int		parse_direct(t_statement *statement, t_lexer *lexer,
 		t_symbols *sym, uint8_t index);
+int		parse_indirect(t_statement *statement, t_lexer *lexer,
+		t_symbols *sym, uint8_t index);
+int		parse_numeric(t_statement *statement, t_lexer *lexer,
+		t_symbols *sym, uint8_t index);
+int		parse_arg_end(t_lexer *lexer, t_symbols *sym,
+		t_statement *statement, uint8_t index);
 
 #endif

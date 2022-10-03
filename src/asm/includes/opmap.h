@@ -14,7 +14,9 @@
 # define OPMAP_H
 
 # include <stdbool.h>
+# include <stdint.h>
 # include "op.h"
+# include "hashmap.h"
 
 # define MAX_ARGS 3
 

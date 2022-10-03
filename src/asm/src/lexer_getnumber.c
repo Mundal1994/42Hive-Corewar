@@ -18,7 +18,7 @@ int	lexer_getnumber(t_source *source, t_symbols *sym)
 	char	*start;
 
 	sym->type = LA_num;
-	sym->argtype |= T_IND * !(sym->argtype & T_DIR)
+	sym->argtype |= T_IND * !(sym->argtype & T_DIR);
 	start = source->curr;
 	if (is_operator(*start) && !ft_isdigit(*source_peek(source)))
 		return (error_no_str(errorset(source->pos, sym->str),

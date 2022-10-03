@@ -35,6 +35,8 @@ static int	parse_line(t_parser *parser, t_lexer *lexer)
 	sym = &parser->sym;
 	if (lexer_nextline(lexer, sym) == ERROR)
 		return (ERROR);
+	if (sym->type == LA_eof)
+		return (DONE);
 	if (sym->type == LA_label)
 		return (parse_label(parser, lexer));
 	if (sym->type == LA_instr)
@@ -45,4 +47,10 @@ static int	parse_line(t_parser *parser, t_lexer *lexer)
 
 int	parse_body(t_parser *parser, t_lexer *lexer)
 {
+	int	res;
+
+	res = OK;
+	while (res == OK)
+		res = parse_line(parser, lexer);
+	return (res);
 }

@@ -61,6 +61,6 @@ t_op	*opmap_get(t_hashmap *opmap, const char *key)
 
 void	opmap_free(t_hashmap *opmap)
 {
-	hashmap_free(*opmap);
-	*opmap = NULL;
+	hashmap_free(opmap);
+	opmap = NULL;
 }

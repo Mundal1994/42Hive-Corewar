@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 18:37:05 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 17:11:53 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	parse_init(t_parser *parser, t_lexer *lexer)
 		&& vec_new(&parser->body, 1, sizeof(t_statement)) != ERROR
 		&& opmap_new(&parser->opmap) != ERROR)
 		return ;
-	parse_free(parser)
+	parse_free(parser);
 	lexer_free(lexer);
 	exit_error();
 }
@@ -42,6 +42,8 @@ void parse_free(t_parser *parser)
 
 int	parse(t_parser *parser, t_lexer *lexer)
 {
+	if (lexer_next(lexer, &parser->sym) == ERROR)
+		return (ERROR);
 	parse_header(parser, lexer);
 	parse_body(parser, lexer);
 	return (OK);

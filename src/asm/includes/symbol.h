@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include "Strings.h"
 # include "definitions.h"
+# include "opmap.h"
 
 # define DEFAULT_SYMBOL_LEN 128
 
