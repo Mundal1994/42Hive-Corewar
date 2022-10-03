@@ -73,6 +73,7 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 		if (core[(*carriage)->tmp_pos] < 1 || core[(*carriage)->tmp_pos] > 16)
 			return (-1);
 		//make_move_tmp(carriage, 1);
+		++(*carriage)->tmp_pos;
 		return (core[(*carriage)->tmp_pos]);
 	}
 	else if ((first == 2 && (info->operations[ARG1][(*carriage)->statement_code - 1] == 2 \
@@ -257,6 +258,13 @@ static void	move_carriage(t_info *info, t_carriage **carriage)
 		++i;
 	}
 	(*carriage)->statement_code = 0;
+	i = 0;
+	while (i < 3)
+	{
+		(*carriage)->arg_types[i] = 0;
+		(*carriage)->args_found[i] = 0;
+		++i;
+	}
 }
 
 static int	args_found_error(t_info *info, t_carriage **carriage)
@@ -352,7 +360,6 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[ST
 		if (carriage->delay == 0)//means it moved last cycle or just been initiated
 		{
 			set_statement_code(core, &carriage, info);
-			ft_printf("STATEMENT CODE-------------------\n");
 		}
 		if (carriage->delay > 0)
 			carriage->delay -= 1;

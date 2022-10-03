@@ -20,3 +20,5 @@ SRCS += $(SRC_DIR)/update_carriages.c
 SRCS += $(SRC_DIR)/print.c
 SRCS += $(SRC_DIR)/statement.c
 SRCS += $(SRC_DIR)/statement_bit.c
+SRCS += $(SRC_DIR)/statement_more.c
+SRCS += $(SRC_DIR)/statement_no_truncate.c

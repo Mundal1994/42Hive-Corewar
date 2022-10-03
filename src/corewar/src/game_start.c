@@ -104,38 +104,6 @@ static void	check(t_info *info)
 	info->live_statement = 0;
 }
 
-// static int	copy_carriage(t_info **info, t_carriage *carriage)
-// {
-// 	t_carriage	*new;
-// 	int			i;
-
-// 	new = (t_carriage *)malloc(sizeof(t_carriage));
-// 	if (!new)
-// 		return (ERROR);
-// 	(*info)->carriage_count++;
-// 	new->id = (*info)->carriage_count;
-// 	new->carry = carriage->carry;
-// 	new->statement_code = carriage->statement_code;
-// 	new->last_live_call = carriage->last_live_call;
-// 	new->delay = carriage->delay;//does this also have to be copied or should it be 0?
-// 	new->pos = carriage->pos;//this should probably be different
-// 	new->home = carriage->home;//this should probably be different
-// 	new->current = carriage->current;//this should probably be different
-// 	new->skip = carriage->skip;//this should probably be different
-// 	i = 0;
-// 	new->registry[i] = carriage->registry[i];
-// 	// reg_1 = - player_id	NEEDS TO STILL FIX LOGIC OF THE REGISTRYS
-// 	/*
-// 	r1 == registry[0]
-// 	r2 == registry[1]
-// 	*/
-// 	while (++i < REG_NUMBER)
-// 		new->registry[i] = carriage->registry[i];
-// 	new->next = (*info)->head_carriage;
-// 	(*info)->head_carriage = new;
-// 	return (0);
-// }
-
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
 {
 	op_table *op_table[STATE] = {
@@ -148,13 +116,13 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add play
 		or,
 		xor,
 		zjmp,
-		// ldi,
-		// sti,
-		// fork,
-		// lld,
-		// lldi,
-		// lfork,
-		// aff,
+		ldi,
+		sti,
+		fork_op,
+		lld,
+		lldi,
+		lfork,
+		aff,
 	};
 	// int	args[ARGS];
 	// print_core(core);
@@ -203,7 +171,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add play
 		print_core(core);
 		print_carriages(info);
 		print_info(info);
-		if (i++ > 5)
+		if (i++ > 1)
 			break ;
 		check(info);
 	}

@@ -111,6 +111,8 @@ void	print_carriages(t_info *info);
 void	print_info(t_info *info);
 
 //statement functions
+int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
 void	update_carry(int nbr, t_carriage **carriage);
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
@@ -121,5 +123,12 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 #endif
