@@ -6,7 +6,7 @@
 #    By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 17:20:05 by caruychen         #+#    #+#              #
-#    Updated: 2022/10/03 10:13:50 by cchen            ###   ########.fr        #
+#    Updated: 2022/10/03 22:04:39 by caruychen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS += $(SRC_DIR)/parse_operation.c
 SRCS += $(SRC_DIR)/parse_register.c
 SRCS += $(SRC_DIR)/parse_direct.c
 SRCS += $(SRC_DIR)/parse_indirect.c
+SRCS += $(SRC_DIR)/parse_reference.c
 SRCS += $(SRC_DIR)/parse_numeric.c
 SRCS += $(SRC_DIR)/parse_arg_end.c
 SRCS += $(SRC_DIR)/opmap.c

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 11:10:02 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 11:10:03 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 21:57:10 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	load_statement(t_parser *parser, const char *name)
 {
 	t_op		*op;
 	t_statement	statement;
-	size_t		index;
 
 	op = opmap_get(&parser->opmap, name);
 	if (!op)
@@ -24,7 +23,6 @@ static int	load_statement(t_parser *parser, const char *name)
 	statement.op = *op;
 	statement.acb = 0;
 	ft_bzero(statement.arguments, sizeof(t_arg) * 3);
-	index = parser->body.len;
 	if (vec_push(&parser->body, &statement) == ERROR)
 		return (ERROR);
 	return (OK);
@@ -79,7 +77,6 @@ int	parse_operation(t_parser *parser, t_lexer *lexer)
 
 	sym = &parser->sym;
 	name = symbol_str(sym);
-	ft_printf("%s\n", name);
 	if (load_statement(parser, name) == ERROR)
 		return (ERROR);
 	return (parse_arguments(parser, lexer));
