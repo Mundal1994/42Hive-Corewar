@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:26:55 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 16:26:56 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/03 22:56:39 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static int	get_number(t_arg *arg, t_lexer *lexer, t_symbols *sym, int *action)
 	if (sym->type != LA_num || sym->argtype & (T_DIR | T_REG | T_LAB))
 		return (error(error_set, PARSER_EXPECT_NUM));
 	if (sym->argtype & T_DIR)
-		arg->dir += (uint32_t) (*action * sym->num);
+		arg->dir += (uint32_t)(*action * sym->num);
 	if (sym->argtype & T_IND)
-		arg->ind += (uint16_t) (*action * sym->num);
+		arg->ind += (uint16_t)(*action * sym->num);
 	*action = 0;
 	return (OK);
 }

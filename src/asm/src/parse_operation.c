@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 11:10:02 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:53:45 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 22:56:14 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	next_argument(t_parser *parser, t_lexer *lexer, uint8_t index)
 	sym = &parser->sym;
 	if (sym->type == LA_eol || sym->type == LA_com)
 		return (error(errorset(lexer->source.pos, sym->str),
-			PARSER_INSUF_ARG));
+				PARSER_INSUF_ARG));
 	if (!(statement->op.arg_types[index] & sym->argtype))
 		return (error(errorset(lexer->source.pos, sym->str),
-			PARSER_WRONG_ARG));
+				PARSER_WRONG_ARG));
 	if (sym->argtype & T_REG)
 		return (parse_register(parser, lexer, statement, index));
 	if (sym->argtype & T_DIR)

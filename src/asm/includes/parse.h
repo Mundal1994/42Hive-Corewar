@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:44:53 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 22:57:22 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ int		parse_header(t_parser *parser, t_lexer *lexer);
 int		parse_body(t_parser *parser, t_lexer *lexer);
 int		parse_operation(t_parser *parser, t_lexer *lexer);
 int		parse_register(t_parser *parser, t_lexer *lexer,
-		t_statement *statement, uint8_t index);
+			t_statement *statement, uint8_t index);
 int		parse_direct(t_parser *parser, t_lexer *lexer,
-		t_statement *statement, uint8_t index);
+			t_statement *statement, uint8_t index);
 int		parse_indirect(t_parser *parser, t_lexer *lexer,
-		t_statement *statement, uint8_t index);
+			t_statement *statement, uint8_t index);
 int		parse_reference(t_statement *statement, t_lexer *lexer,
-		t_symbols *sym, uint8_t index);
+			t_symbols *sym, uint8_t index);
 int		parse_numeric(t_statement *statement, t_lexer *lexer,
-		t_symbols *sym, uint8_t index);
+			t_symbols *sym, uint8_t index);
 int		parse_arg_end(t_lexer *lexer, t_symbols *sym,
-		t_statement *statement, uint8_t index);
+			t_statement *statement, uint8_t index);
 
 #endif

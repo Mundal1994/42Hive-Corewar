@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:07:39 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/03 22:55:43 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	parse_init(t_parser *parser, t_lexer *lexer)
 	exit_error();
 }
 
-void parse_free(t_parser *parser)
+void	parse_free(t_parser *parser)
 {
 	if (parser->sym.str.memory)
 		symbol_free(&parser->sym);
