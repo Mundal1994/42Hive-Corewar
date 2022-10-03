@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:25:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/26 10:53:46 by cchen            ###   ########.fr       */
+/*   Updated: 2022/09/30 18:18:18 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,18 @@ void	lexer_init(t_lexer *lexer, const char *filename)
 void	lexer_free(t_lexer *lexer)
 {
 	source_free(&lexer->source);
+}
+
+int	lexer_nextline(t_lexer *lexer, t_symbols *sym)
+{
+	int	res;
+
+	res = lexer_next(lexer, sym);
+	while (res == OK)
+	{
+		if (sym->type != LA_eol && sym->type != LA_com)
+			break ;
+		res = lexer_next(lexer, sym);
+	}
+	return (res);
 }

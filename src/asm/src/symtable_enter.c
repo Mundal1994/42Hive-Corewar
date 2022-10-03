@@ -50,7 +50,7 @@ static t_symentry	*add_reference(t_symentry *entry, t_symentry newentry)
 
 static t_symentry	*complete_entry(t_symentry *entry, t_symentry newentry)
 {
-	t_forwardrefs *link;
+	t_forwardrefs	*link;
 
 	entry->defined = newentry.defined;
 	entry->location = newentry.location;
