@@ -14,7 +14,6 @@
 
 int	symbol_init(t_symbols *sym)
 {
-	sym->isdirect = false;
 	sym->type = LA_unknown;
 	sym->num = 0;
 	sym->argtype = 0;
@@ -25,7 +24,6 @@ int	symbol_init(t_symbols *sym)
 
 void	symbol_reset(t_symbols *sym)
 {
-	sym->isdirect = false;
 	sym->type = LA_unknown;
 	sym->num = 0;
 	sym->argtype = 0;

@@ -12,7 +12,7 @@
 
 #include "asm.h"
 
-static t_statement	*load_statement(t_parser *parser, const char *name)
+static int	load_statement(t_parser *parser, const char *name)
 {
 	t_op		*op;
 	t_statement	statement;
@@ -20,25 +20,55 @@ static t_statement	*load_statement(t_parser *parser, const char *name)
 
 	op = opmap_get(opmap, name);
 	if (!op)
-		return (NULL);
+		return (ERROR);
 	statement.op = *op;
 	statement.acb = 0;
 	statement.arguments = {0};
 	index = parser->body.len;
 	if (vec_push(&parser->body, &statement) == ERROR)
-		return (NULL);
-	return ((t_statement *) vec_get(&parser->body, index));
+		return (ERROR);
+	return (OK);
 }
 
-static int	parse_arguments(t_statement *statement, t_lexer *lexer)
+static int	next_argument(t_parser *parser, t_lexer *lexer, uint8_t index)
 {
-	uint8_t	index;
+	t_statement	*statement;
+	t_symbols	*sym;
 
+	statement = (t_statement *)vec_get(&parser->body, parser->body.len - 1);
+	sym = &parser->sym;
+	if (sym->type == LA_eol || sym->type == LA_com)
+		return (error(errorset(lexer->source.pos, sym->str),
+			PARSER_INSUF_ARG));
+	if (!(statement->op.arg_types[index] & sym->argtype))
+		return (error(errorset(lexer->source.pos, sym->str),
+			PARSER_WRONG_ARG));
+	if (sym->argtype & T_REG)
+		return (parse_register(statement, lexer, sym, index));
+	if (sym->argtype & T_DIR)
+		return (parse_direct(statement, lexer, sym, index));
+	if (sym->argtype & T_IND)
+		return (parse_indirect(statement, lexer, sym, index));
+	return (error(errorset(lexer->source.pos, sym), PARSER_UNKNOWN_ARG));
+}
+
+static int	parse_arguments(t_parser *parser, t_lexer *lexer)
+{
+	uint8_t		index;
+	t_statement	*statement;
+	t_symbols	*sym;
+
+	sym = &parser->sym;
+	statement = (t_statement *)vec_get(&parser->body, parser->body.len - 1);
 	index = 0;
-
 	while (index < statement->op.argc)
 	{
+		if (lexer_next(lexer, sym) == ERROR)
+			return (ERROR);
+		if (next_argument(parser, lexer, index) == ERROR)
+			return (ERROR);
 	}
+	return (OK);
 }
 
 int	parse_operation(t_parser *parser, t_lexer *lexer)
@@ -50,8 +80,7 @@ int	parse_operation(t_parser *parser, t_lexer *lexer)
 	sym = &parser->sym;
 	name = symbol_str(sym);
 	ft_printf("%s\n", name);
-	statement = load_statement(parser, name);
-	if (!statement)
+	if (load_statement(parser, name) == ERROR)
 		return (ERROR);
 	parse_arguments();
 }

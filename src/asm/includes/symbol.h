@@ -39,7 +39,6 @@ typedef enum s_symtypes
 
 typedef struct s_symbols
 {
-	bool		isdirect;
 	t_symtypes	type;
 	t_string	str;
 	int			num;

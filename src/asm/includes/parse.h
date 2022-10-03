@@ -39,15 +39,9 @@ typedef struct s_statement
 	t_arg	arguments[3];
 }		t_statement;
 
-typedef struct s_syntax
-{
-	t_start			instr: 2;
-}		t_syntax;
-
 typedef struct s_parser
 {
 	t_symbols	sym;
-	t_syntax	syntax;
 	t_header	header;
 	t_vec		body;
 	t_hashmap	opmap;
@@ -57,5 +51,9 @@ void	parse_init(t_parser *parser, t_lexer *lexer);
 void	parse_free(t_parser *parser);
 int		parse(t_parser *parser, t_lexer *lexer);
 int		parse_header(t_parser *parser, t_lexer *lexer);
+int		parse_register(t_statement *statement, t_lexer *lexer,
+		t_symbols *sym, uint8_t index);
+int		parse_direct(t_statement *statement, t_lexer *lexer,
+		t_symbols *sym, uint8_t index);
 
 #endif
