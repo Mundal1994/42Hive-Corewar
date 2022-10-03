@@ -29,138 +29,34 @@ static int	one_carriage_left(t_info *info)
 	return (FALSE);
 }
 
-static void	delete_carriage(t_info *info, int id)
+static void	init_op_table(op_table *op_table[STATE])
 {
-	t_carriage	*carriage;
-	t_carriage	*prev;
+	int	i;
 
-	carriage = info->head_carriage;
-	prev = NULL;
-	while (carriage)
-	{
-		if (carriage->id == id)
-		{
-			if (!carriage->next && !prev)
-				info->head_carriage = NULL;
-			else if (!carriage->next)
-				prev->next = NULL;
-			else if (!prev)
-				info->head_carriage = carriage->next;
-			else
-				prev->next = carriage->next;
-			free(carriage);
-			return ;
-		}
-		prev = carriage;
-		carriage = carriage->next;
-	}
+	i = 0;
+	op_table[i++] = live;
+	op_table[i++] = ld;
+	op_table[i++] = st;
+	op_table[i++] = add;
+	op_table[i++] = sub;
+	op_table[i++] = and;
+	op_table[i++] = or;
+	op_table[i++] = xor;
+	op_table[i++] = zjmp;
+	op_table[i++] = ldi;
+	op_table[i++] = sti;
+	op_table[i++] = fork_op;
+	op_table[i++] = lld;
+	op_table[i++] = lldi;
+	op_table[i++] = lfork;
+	op_table[i++] = aff;
 }
 
-static void	check_carriage_live_call(t_info *info)
+int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 {
-	t_carriage	*carriage;
-	t_carriage	*next;
-	int			limit;
-	
-	carriage = info->head_carriage;
-	limit = info->total_cycles - info->cycles_to_die;
-	while (carriage)
-	{
-		if (carriage->last_live_call <= limit)
-		{
-			next = carriage->next;
-			delete_carriage(info, carriage->id);
-			carriage = next;
-		}
-		else
-			carriage = carriage->next;
-	}
-}
+	op_table	*op_table[STATE];// = {live, ld, st, add, sub, and, or, xor, zjmp, ldi, sti, fork_op, lld, lldi, lfork, aff,};
 
-static void	kill_carriages(t_info *info)
-{
-	check_carriage_live_call(info);
-	if (info->live_statement >= NBR_LIVE)
-	{
-		info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
-		info->checks_count = 1;//unsure about corellation of max_checks and checks_count....
-	}
-	else
-	{
-		//unsure if this is how it is supposed to be
-		info->checks_count += 1;//unsure about corellation of max_checks and checks_count....
-		if (info->checks_count >= MAX_CHECKS)
-			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
-	}
-	info->cycle_count = info->cycles_to_die;
-}
-
-static void	check(t_info *info)
-{
-	info->cycle_count -= 1;
-	info->total_cycles += 1;
-	if (info->cycle_count <= 0)
-		kill_carriages(info);
-	info->live_statement = 0;
-}
-
-int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add player struct
-{
-	op_table *op_table[STATE] = {
-		live,
-		ld,
-		st,
-		add,
-		sub,
-		and,
-		or,
-		xor,
-		zjmp,
-		ldi,
-		sti,
-		fork_op,
-		lld,
-		lldi,
-		lfork,
-		aff,
-	};
-	// int	args[ARGS];
-	// print_core(core);
-	// print_carriages(info);
-	// print_info(info);
-	// args[0] = -1;
-	// live(&info->head_carriage->next, info);
-	// args[0] = 2;
-	// args[1] = 5;
-	// info->head_carriage->arg_types[1] = R;
-	// ld(core, &info->head_carriage, info);
-	// args[0] = 0;
-	// info->head_carriage->next->arg_types[1] = I;
-	// ld(core, &info->head_carriage->next, info);
-	// args[0] = 5;
-	// args[1] = 50;
-	// info->head_carriage->arg_types[1] = I;
-	// st(core, &info->head_carriage, info);
-	// args[0] = 4;
-	// info->head_carriage->next->registry[4] = 4;
-	// info->head_carriage->next->registry[3] = 3;
-	// info->head_carriage->next->registry[5] = 5;
-	// args[1] = 5;
-	// info->head_carriage->next->arg_types[1] = R;
-	// //st(args, core, &info->head_carriage->next, info);
-	// ft_printf("--------SEE CHANGE---------\n");
-	/*
-	info->head_carriage->arg_types[0] = I;
-	info->head_carriage->arg_types[1] = R;
-	info->head_carriage->args_found[0] = 10;
-	info->head_carriage->args_found[1] = 4;
-	info->head_carriage->pos = MEM_SIZE - 2;
-	op_table[1](core, &info->head_carriage, info);
-	*/
-	ft_printf("BEFORE LOOP--------------------\n");
-	print_core(core);
-	print_carriages(info);
-	print_info(info);
+	init_op_table(op_table);
 	introduce_contestants(champ);//add player struct
 	int i = 0;
 	while (!one_carriage_left(info))
@@ -171,16 +67,11 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)//add play
 		print_core(core);
 		print_carriages(info);
 		print_info(info);
-		if (i++ > 1)
+		++i;
+		if (i > 24)
 			break ;
 		check(info);
 	}
-	// TESTING FUNCTION TO BE ABLE TO COPY CARRIAGES and printing them
-	// t_carriage *carriage;
-	// carriage = info->head_carriage;
-	// if (copy_carriage(&info, carriage) == ERROR)
-	// 	return (ERROR);
-	// print_carriages(info);
 	announce_winner(champ, info->winner);
 	return (0);
 }

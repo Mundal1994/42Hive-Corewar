@@ -25,6 +25,15 @@
 # define STATE	16
 # define ARGS	3
 
+typedef enum e_flag
+{
+	A_FLAG,
+	D_FLAG,
+	S_FLAG,
+	V_FLAG,
+	I_FLAG,
+}	t_flag;
+
 typedef enum e_arg
 {
 	NON,//0
@@ -92,16 +101,18 @@ typedef struct s_info
 	int			cycle_count;
 	int			checks_count;// initialized to 0
 	int			carriage_count;
+	int			flag[5];
 	t_carriage	*head_carriage;
 	int			operations[6][STATE];
 }				t_info;
 
 typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
-int		init(int argc, char **argv, int i);
+int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
+void	check(t_info *info);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE]);

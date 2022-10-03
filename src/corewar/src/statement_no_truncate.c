@@ -18,6 +18,8 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	if (core || carriage || info)
-		ft_printf("aff\n");
+	if (info->flag[A_FLAG] && core && info)
+		ft_printf("%c\n", (char)(*carriage)->args_found[0]);
+	else
+		ft_printf("AFF FLAG NOT ON\n");
 }

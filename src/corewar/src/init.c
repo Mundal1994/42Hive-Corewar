@@ -112,9 +112,6 @@ static int	init_info(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
 	int	i;
 
 	i = 0;
-	*info = (t_info *)malloc(sizeof(t_info));
-	if (!(*info))
-		return (ERROR);
 	(*info)->total_cycles = 0;
 	(*info)->live_statement = 0;
 	(*info)->cycles_to_die = CYCLE_TO_DIE;
@@ -156,14 +153,12 @@ static void	add_players_to_core(uint8_t core[MEM_SIZE], t_profile **champ, t_inp
 	*champ = head;
 }
 
-int	init(int argc, char **argv, int i)
+int	init(int argc, char **argv, int i, t_info *info)
 {
-	t_info		*info;
 	t_profile	*champ;
 	t_input		**input;
 	uint8_t	core[MEM_SIZE];
 
-	info = NULL;
 	champ = NULL;
 	input = read_init(argc, argv, i, &champ);
 	if (!input)
