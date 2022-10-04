@@ -76,8 +76,8 @@ void	check(uint8_t core[MEM_SIZE], t_info *info)
 	if (info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
 	{
 		ft_printf("info->flag[D_FLAG]: %d	info->total_cycles: %d\n", info->flag[D_FLAG], info->total_cycles);
-		print_core(core);
-		print_carriages(info);
+		print_core(core, info);
+		//print_carriages(info);
 		//print_info(info);
 		exit(0);
 	}

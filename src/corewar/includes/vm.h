@@ -24,6 +24,8 @@
 # define ERROR	-1
 # define STATE	16
 # define ARGS	3
+# define RESET   "\033[0m"
+# define GREEN   "\033[32m"
 
 typedef enum e_flag
 {
@@ -115,7 +117,7 @@ int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[S
 void	check(uint8_t core[MEM_SIZE], t_info *info);
 
 //print functions
-void	print_core(uint8_t core[MEM_SIZE]);
+void	print_core(uint8_t core[MEM_SIZE], t_info *info);
 void	introduce_contestants(t_profile *champ);
 void	announce_winner(t_profile *champ, int winner);
 void	print_carriages(t_info *info);

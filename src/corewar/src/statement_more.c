@@ -9,8 +9,6 @@ void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
 	value = read_bytes(0, (*carriage)->pos + ((*carriage)->args_found[0] + (*carriage)->args_found[1]) % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = value;
-	if (core || carriage || info)
-		ft_printf("ldi rocks\n");
 }
 
 void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -21,8 +19,6 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
 	value = read_bytes(0, (*carriage)->pos + ((*carriage)->args_found[0] + (*carriage)->args_found[1]), core, info->operations[SIZE][(*carriage)->statement_code - 1]);
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = value;
-	if (core || carriage || info)
-		ft_printf("ldi rocks\n");
 }
 
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -73,13 +69,20 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
-	pos =  (*carriage)->args_found[0] % IDX_MOD;
+	//pos = (*carriage)->args_found[0] % IDX_MOD;
+	//ft_printf("Created new CARRIAGE\n");
+	pos = ((*carriage)->pos + (*carriage)->args_found[0]) % MEM_SIZE;
+	if (pos - (*carriage)->pos > 512)
+		pos = (*carriage)->pos - 512;
+	else if (pos - (*carriage)->pos < -512)
+		pos = (*carriage)->pos + 512;
+	//ft_printf("value: %d	pos: %d\n", (*carriage)->args_found[0], pos);
 	if (pos >= MEM_SIZE)
 		pos -= MEM_SIZE;
 	//make sure position is possible
 	copy_carriage(&info, *carriage, pos);
-	if (core)
-		ft_printf("fork \n");
+	if (!core)
+		ft_printf("no fork \n");
 }
 
 void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -90,6 +93,6 @@ void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if (pos >= MEM_SIZE)
 		pos -= MEM_SIZE;
 	copy_carriage(&info, *carriage, pos);
-	if (core)
-		ft_printf("fork \n");
+	if (!core)
+		ft_printf("no fork \n");
 }

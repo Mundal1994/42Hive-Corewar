@@ -57,20 +57,31 @@ void	print_carriages(t_info *info)
 	}
 }
 
-void	print_core(uint8_t core[MEM_SIZE])
+void	print_core(uint8_t core[MEM_SIZE], t_info *info)
 {
 	int	i;
 	int	line;
+	t_carriage *carriage;
 
 	i = 0;
 	line = 0;
 	ft_printf("0x0000 : ");
 	while (i < MEM_SIZE)
 	{
+		carriage = info->head_carriage;
+		while (carriage)
+		{
+			if (carriage->pos == i)
+			{
+				ft_printf(GREEN);
+			}
+			carriage = carriage->next;
+		}
 		if (core[i] < 16)
 			ft_printf("0%x", core[i]);
 		else
 			ft_printf("%x", core[i]);
+		ft_printf(RESET);
 		++line;
 		++i;
 		if (line >= 64)
