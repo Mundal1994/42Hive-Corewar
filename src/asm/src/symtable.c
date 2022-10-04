@@ -61,14 +61,3 @@ t_symentry	*symtable_find(t_symtable *symtable, const char *name)
 	value = (size_t) entry->value;
 	return ((t_symentry *) vec_get(&symtable->entries, value));
 }
-
-t_symentry	symtable_newentry(bool defined, t_arg *arg, uint32_t location)
-{
-	t_symentry	newentry;
-
-	newentry.defined = defined;
-	newentry.arg = arg;
-	newentry.location = location;
-	newentry.flink = NULL;
-	return (newentry);
-}

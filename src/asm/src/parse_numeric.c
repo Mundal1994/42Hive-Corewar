@@ -33,7 +33,7 @@ static int	get_number(t_arg *arg, t_lexer *lexer, t_symbols *sym, int *action)
 	t_errorset	error_set;
 
 	error_set = errorset(lexer->source.pos, sym->str);
-	if (sym->type != LA_num || sym->argtype & (T_DIR | T_REG | T_LAB))
+	if (sym->type != LA_num || !(sym->argtype & (T_DIR | T_REG | T_LAB)))
 		return (error(error_set, PARSER_EXPECT_NUM));
 	if (sym->argtype & T_DIR)
 		arg->dir += (uint32_t)(*action * sym->num);
@@ -50,7 +50,7 @@ int	parse_numeric(t_statement *statement, t_lexer *lexer, t_symbols *sym,
 	t_arg	*arg;
 
 	arg = statement->arguments + index;
-	action = 0;
+	action = 1;
 	while (!is_endof_arg(sym->type, statement->op.argc, index))
 	{
 		if (action == 0)

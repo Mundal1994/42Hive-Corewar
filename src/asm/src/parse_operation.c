@@ -29,12 +29,11 @@ static int	load_statement(t_parser *parser, const char *name)
 	return (OK);
 }
 
-static int	next_argument(t_parser *parser, t_lexer *lexer, uint8_t index)
+static int	next_argument(t_parser *parser, t_lexer *lexer,
+		t_statement *statement, uint8_t index)
 {
-	t_statement	*statement;
 	t_symbols	*sym;
 
-	statement = (t_statement *)vec_get(&parser->body, parser->body.len - 1);
 	sym = &parser->sym;
 	if (sym->type == LA_eol || sym->type == LA_com)
 		return (error(errorset(lexer->source.pos, sym->str),
@@ -65,7 +64,7 @@ static int	parse_arguments(t_parser *parser, t_lexer *lexer)
 	{
 		if (lexer_next(lexer, sym) == ERROR)
 			return (ERROR);
-		if (next_argument(parser, lexer, index) == ERROR)
+		if (next_argument(parser, lexer, statement, index) == ERROR)
 			return (ERROR);
 		++index;
 	}

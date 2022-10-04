@@ -18,8 +18,8 @@ static int	parse_label(t_parser *parser, t_lexer *lexer)
 	t_symentry	newentry;
 
 	sym = &parser->sym;
-	newentry = symtable_newentry(true, NULL, parser->size);
-	if (symtable_enter(&parser->symtable, symbol_str(sym), newentry) == ERROR)
+	newentry = parse_newsym(parser, 0);
+	if (parse_update_symtable(parser, symbol_str(sym), newentry) == ERROR)
 		return (ERROR);
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);

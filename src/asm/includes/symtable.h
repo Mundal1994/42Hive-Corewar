@@ -18,17 +18,20 @@
 # include "errors.h"
 # include <stdbool.h>
 # include <stdint.h>
+# define SYMENTRY_FOUND 2
 
 typedef struct s_forwardrefs
 {
-	t_arg			*arg;
+	size_t			statement_id;
+	uint8_t			arg;
 	struct s_forwardrefs	*nlink;
 }				t_forwardrefs;
 
 typedef struct s_symentry
 {
 	bool				defined;
-	t_arg				*arg;
+	size_t				statement_id;
+	uint8_t				arg;
 	uint32_t			location;
 	t_forwardrefs		*flink;
 }				t_symentry;
@@ -42,8 +45,5 @@ typedef struct s_symtable
 int			symtable_init(t_symtable *symtable);
 void		symtable_free(t_symtable *symtable);
 t_symentry	*symtable_find(t_symtable *symtable, const char *name);
-t_symentry	symtable_newentry(bool defined, t_arg *arg, uint32_t location);
-int		symtable_enter(t_symtable *symtable, const char *name,
-				t_symentry newentry);
 
 #endif

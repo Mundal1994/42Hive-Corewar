@@ -18,11 +18,8 @@ int	parse_indirect(t_parser *parser, t_lexer *lexer, t_statement *statement,
 	t_symbols	*sym;
 
 	sym = &parser->sym;
-	statement->arguments[index].ind = (uint16_t) sym->num;
 	parser->size += 2;
 	if (sym->argtype & T_LAB)
 		return (parse_reference(parser, lexer, statement, index));
-	if (lexer_next(lexer, sym) == ERROR)
-		return (ERROR);
 	return (parse_numeric(statement, lexer, sym, index));
 }
