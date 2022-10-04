@@ -43,40 +43,34 @@ void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info 
 // 	return ((*carriage)->args_found[1]);
 // }
 
-//core is needed in the read function - i know they are identical
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
 	check_first_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
 	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
-	//(*carriage)->args_found[1] = check_arg_type_second(core, carriage, info);
 	sum = (*carriage)->args_found[0] ^ (*carriage)->args_found[1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);
 }
 
-//core is needed in the read function - i know they are identical
 void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
 	check_first_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
 	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
-	//(*carriage)->args_found[1] = check_arg_type_second(core, carriage, info);
 	sum = (*carriage)->args_found[0] | (*carriage)->args_found[1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);
 }
 
-//core is needed in the read function
 void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
 	check_first_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
 	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
-	//(*carriage)->args_found[1] = check_arg_type_second(core, carriage, info);
 	sum = (*carriage)->args_found[0] & (*carriage)->args_found[1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);

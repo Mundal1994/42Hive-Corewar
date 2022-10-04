@@ -25,26 +25,16 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		ft_printf("ldi rocks\n");
 }
 
-/*
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-error with this function - example can be found with this command!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	./corewar -d 100 champs/examples/bigzork.cor champs/examples/zork.cor
-*/
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
-	ft_printf("args_found[1] before: %d type: %d\n", (*carriage)->args_found[1], (*carriage)->arg_types[1]);
 	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
-	ft_printf("args_found[1] after: %d\n", (*carriage)->args_found[1]);
-	ft_printf("args_found[2] before: %d type: %d\n", (*carriage)->args_found[2], (*carriage)->arg_types[2]);
 	check_third_arg_type(core, carriage, info, &(*carriage)->args_found[2]);
-	ft_printf("args_found[2] after: %d\n", (*carriage)->args_found[2]);
 	pos = (*carriage)->pos + ((*carriage)->args_found[1] + (*carriage)->args_found[2]) % IDX_MOD;
 	if (pos >= MEM_SIZE)
 		pos -= MEM_SIZE;
 	put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
-	//core[pos] = (*carriage)->registry[(*carriage)->args_found[0] - 1];
 }
 
 static int	copy_carriage(t_info **info, t_carriage *carriage, int new_pos)

@@ -138,7 +138,6 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-//int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);

@@ -77,7 +77,7 @@ void	check(uint8_t core[MEM_SIZE], t_info *info)
 	{
 		ft_printf("info->flag[D_FLAG]: %d	info->total_cycles: %d\n", info->flag[D_FLAG], info->total_cycles);
 		print_core(core);
-		//print_carriages(info);
+		print_carriages(info);
 		//print_info(info);
 		exit(0);
 	}

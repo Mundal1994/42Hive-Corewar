@@ -88,35 +88,36 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 {
 	uint32_t	value;
-	int count;
+	//int count;
 	uint32_t	result;
 	int	j;
 
-	count = 0;
+	//count = 0;
+	// value = nbr;
+	// result = 0;
+	// j = -1;
+	// while (value != 0)
+	// {
+	// 	value /= 16;
+	// 	++j;
+	// }
 	value = nbr;
-	result = 0;
-	j = -1;
-	while (value != 0)
-	{
-		value /= 16;
-		++j;
-	}
-	value = nbr;
+	j = 3;
 	ft_printf("VALUE---%llu\n", nbr);
 	ft_printf("BEFORE WHILE LOOP OF PUT NBR\n");
-	while (j > 0)
+	while (j >= 0)
 	{
 		ft_printf("PUT NBR\n");
 		// add logic so this doesn't go out of bounds
-		count = 0;
-		ft_printf("val %i\n", (value % 16) * ft_pow(16, count));
-		result = (value % 16) * ft_pow(16, count++);
+		//count = 0;
+		ft_printf("val %i\n", (value % 16) * ft_pow(16, 0));
+		result = (value % 16) * ft_pow(16, 0);
 		value /= 16;
-		ft_printf("val %i\n", (value % 16) * ft_pow(16, count));
-		result += (value % 16) * ft_pow(16, count++);
-		core[pos + (j / 2)] = result;
-		ft_printf("CHECK------ %i   pso %d    orig %i\n", core[pos + (j / 2)], pos + (j / 2), pos);
-		j -= 2;
+		ft_printf("val %i\n", (value % 16) * ft_pow(16, 1));
+		result += (value % 16) * ft_pow(16,1);
+		core[pos + j] = result;
+		ft_printf("CHECK------ %i   pso %d    orig %i\n", core[pos + j], pos + j, pos);
+		j--;
 	}
 	ft_printf("AFTER PUTTING NBR\n");
 }
@@ -132,10 +133,15 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	else if ((*carriage)->arg_types[1] == I)
 	{
-		ft_printf("found: %d-----\n",  (*carriage)->registry[(*carriage)->args_found[0] - 1]);
-		pos = (*carriage)->pos + (*carriage)->args_found[1] % IDX_MOD;
+		//(*carriage)->args_found[1] = (*carriage)->args_found[1] % IDX_MOD;
+		ft_printf("found: %d-----(*carriage)->pos: %d\n",  (*carriage)->args_found[1], (*carriage)->pos);
+		//pos = (*carriage)->pos + (*carriage)->args_found[1] % IDX_MOD;
+		(*carriage)->args_found[1] %= IDX_MOD;
+		ft_printf("found: %d-----(*carriage)->pos: %d\n",  (*carriage)->args_found[1], (*carriage)->pos);
+		pos = (*carriage)->pos + ((*carriage)->args_found[1] % IDX_MOD);
+		ft_printf("pos: %d\n", pos);
 		if (pos >= MEM_SIZE)
-			pos -= MEM_SIZE;
+			pos %= MEM_SIZE - 1;
 		ft_printf("pos: %d\n", pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
 		//core[pos] = (*carriage)->args_found[0];
