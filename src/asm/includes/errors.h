@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:01:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 17:47:09 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 10:15:06 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ of quote string"
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
+# define SYMTABLE_DUP "Duplicate label declaration found, may lead to unexpected\
+ outcomes"
+
 typedef enum s_errors
 {
 	ASM_invalidcode,
@@ -88,5 +91,6 @@ int			error_no_str(t_errorset error, char *msg);
 int			error(t_errorset error, char *msg);
 t_errorset	errorset(t_pos pos, t_string str);
 int			warning(t_errorset error, char *msg);
+int			warning_ret(char *msg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:02:52 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/28 17:17:08 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 10:15:32 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,11 @@ int	warning(t_errorset error, char *msg)
 	ft_dprintf(2, "%sWarning: %s", YELLOW, NOCOLOR);
 	ft_dprintf(2, "Found \"%s\" at [%ld:%ld]\n\t%s\n", error.str.memory,
 		error.pos.r, error.pos.c, msg);
+	return (OK);
+}
+
+int	warning_ret(char *msg)
+{
+	ft_dprintf(2, "%sWarning: %s%s\n", YELLOW, NOCOLOR, msg);
 	return (OK);
 }

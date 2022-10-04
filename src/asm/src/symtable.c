@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:09:54 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 17:48:10 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 10:59:45 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,15 @@ t_symentry	*symtable_find(t_symtable *symtable, const char *name)
 		return (NULL);
 	value = (size_t) entry->value;
 	return ((t_symentry *) vec_get(&symtable->entries, value));
+}
+
+t_symentry	symtable_newentry(bool defined, t_arg *arg, uint32_t location)
+{
+	t_symentry	newentry;
+
+	newentry.defined = defined;
+	newentry.arg = arg;
+	newentry.location = location;
+	newentry.flink = NULL;
+	return (newentry);
 }

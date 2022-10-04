@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 14:18:35 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:48:16 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 11:03:56 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_direct(t_parser *parser, t_lexer *lexer, t_statement *statement,
 	statement->arguments[index].dir = (uint32_t) sym->num;
 	parser->size += 2 + 2 * !statement->op.label;
 	if (sym->argtype & T_LAB)
-		return (parse_reference(statement, lexer, sym, index));
+		return (parse_reference(parser, lexer, statement, index));
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);
 	return (parse_numeric(statement, lexer, sym, index));

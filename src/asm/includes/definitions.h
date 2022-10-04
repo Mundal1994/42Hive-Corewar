@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 11:36:40 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/28 17:18:44 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 10:58:34 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DEFINITIONS_H
 
 # include <stddef.h>
+# include <stdint.h>
 
 /* ****************************************************************************
    SHARED DEFINITIONS
@@ -40,5 +41,12 @@ typedef struct s_pos
 	size_t	r;
 	size_t	c;
 }		t_pos;
+
+typedef union s_arg
+{
+	uint8_t		reg;
+	uint16_t	ind;
+	uint32_t	dir;	
+}		t_arg;
 
 #endif

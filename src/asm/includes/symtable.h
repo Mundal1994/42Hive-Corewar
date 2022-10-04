@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:02:10 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 17:46:46 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 10:59:21 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@
 
 typedef struct s_forwardrefs
 {
-	uint32_t				location;
+	t_arg			*arg;
 	struct s_forwardrefs	*nlink;
 }				t_forwardrefs;
 
 typedef struct s_symentry
 {
 	bool				defined;
+	t_arg				*arg;
 	uint32_t			location;
 	t_forwardrefs		*flink;
 }				t_symentry;
@@ -41,7 +42,8 @@ typedef struct s_symtable
 int			symtable_init(t_symtable *symtable);
 void		symtable_free(t_symtable *symtable);
 t_symentry	*symtable_find(t_symtable *symtable, const char *name);
-t_symentry	*symtable_enter(t_symtable *symtable, const char *name,
+t_symentry	symtable_newentry(bool defined, t_arg *arg, uint32_t location);
+int		symtable_enter(t_symtable *symtable, const char *name,
 				t_symentry newentry);
 
 #endif

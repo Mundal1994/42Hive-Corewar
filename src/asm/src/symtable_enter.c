@@ -6,13 +6,13 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:19:12 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/29 17:54:49 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 11:02:00 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "symtable.h"
 
-static t_symentry	*enter_new(t_symtable *symtable, const char *name,
+static int	enter_new(t_symtable *symtable, const char *name,
 		t_symentry entry)
 {
 	t_vec	*entries;
@@ -22,33 +22,33 @@ static t_symentry	*enter_new(t_symtable *symtable, const char *name,
 	value = entries->len;
 	if (!hashmap_try_insert(&symtable->map, name, value)
 		|| vec_push(entries, &entry) == ERROR)
-		return (NULL);
-	return ((t_symentry *)vec_get(entries, value));
+		return (ERROR);
+	return (OK);
 }
 
-static t_forwardrefs	*new_reference(t_symentry newentry)
+static int	new_reference(t_forwardrefs **newref, t_symentry newentry)
 {
-	t_forwardrefs	*newref;
-
-	newref = (t_forwardrefs *) ft_memalloc(sizeof(*newref));
-	newref->location = newentry.location;
-	newref->nlink = NULL;
-	return (newref);
+	*newref = (t_forwardrefs *) ft_memalloc(sizeof(**newref));
+	if (!*newref)
+		return (ERROR);
+	(*newref)->arg = newentry.arg;
+	(*newref)->nlink = NULL;
+	return (OK);
 }
 
-static t_symentry	*add_reference(t_symentry *entry, t_symentry newentry)
+static int	add_reference(t_symentry *entry, t_symentry newentry)
 {
 	t_forwardrefs	*link;
 
 	if (!entry->flink)
-		return (entry->flink = new_reference(newentry), entry);
+		return (new_reference(&entry->flink, newentry));
 	link = entry->flink;
 	while (link->nlink)
 		link = link->nlink;
-	return (link->nlink = new_reference(newentry), entry);
+	return (new_reference(&link->nlink, newentry));
 }
 
-static t_symentry	*complete_entry(t_symentry *entry, t_symentry newentry)
+static int	complete_entry(t_symentry *entry, t_symentry newentry)
 {
 	t_forwardrefs	*link;
 
@@ -57,13 +57,13 @@ static t_symentry	*complete_entry(t_symentry *entry, t_symentry newentry)
 	link = entry->flink;
 	while (link)
 	{
-		ft_printf("label %ld referred at %ld\n", entry->location, link->location);
+		link->arg->dir = newentry.location - link->arg->dir;
 		link = link->nlink;
 	}
-	return (entry);
+	return (OK);
 }
 
-t_symentry	*symtable_enter(t_symtable *symtable, const char *name,
+int	symtable_enter(t_symtable *symtable, const char *name,
 		t_symentry newentry)
 {
 	t_symentry	*entry;
@@ -72,7 +72,11 @@ t_symentry	*symtable_enter(t_symtable *symtable, const char *name,
 	if (!entry)
 		return (enter_new(symtable, name, newentry));
 	if (entry->defined)
-		return (entry);
+	{
+		if (newentry.arg)
+			return (newentry.arg->dir = entry->location - newentry.arg->dir, OK);
+		return (warning_ret(SYMTABLE_DUP));
+	}
 	if (!newentry.defined)
 		return (add_reference(entry, newentry));
 	return (complete_entry(entry, newentry));
