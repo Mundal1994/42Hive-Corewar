@@ -5,8 +5,8 @@ void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	value;
 
-	check_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
-	check_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
+	check_first_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
+	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
 	value = read_bytes(0, (*carriage)->pos + ((*carriage)->args_found[0] + (*carriage)->args_found[1]) % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = value;
 	if (core || carriage || info)
@@ -17,8 +17,8 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	value;
 
-	check_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
-	check_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
+	check_first_arg_type(core, carriage, info, &(*carriage)->args_found[0]);
+	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
 	value = read_bytes(0, (*carriage)->pos + ((*carriage)->args_found[0] + (*carriage)->args_found[1]), core, info->operations[SIZE][(*carriage)->statement_code - 1]);
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = value;
 	if (core || carriage || info)
@@ -34,8 +34,12 @@ void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
-	check_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
-	check_arg_type(core, carriage, info, &(*carriage)->args_found[2]);
+	ft_printf("args_found[1] before: %d type: %d\n", (*carriage)->args_found[1], (*carriage)->arg_types[1]);
+	check_second_arg_type(core, carriage, info, &(*carriage)->args_found[1]);
+	ft_printf("args_found[1] after: %d\n", (*carriage)->args_found[1]);
+	ft_printf("args_found[2] before: %d type: %d\n", (*carriage)->args_found[2], (*carriage)->arg_types[2]);
+	check_third_arg_type(core, carriage, info, &(*carriage)->args_found[2]);
+	ft_printf("args_found[2] after: %d\n", (*carriage)->args_found[2]);
 	pos = (*carriage)->pos + ((*carriage)->args_found[1] + (*carriage)->args_found[2]) % IDX_MOD;
 	if (pos >= MEM_SIZE)
 		pos -= MEM_SIZE;

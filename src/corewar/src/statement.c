@@ -103,8 +103,10 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 	}
 	value = nbr;
 	ft_printf("VALUE---%llu\n", nbr);
+	ft_printf("BEFORE WHILE LOOP OF PUT NBR\n");
 	while (j > 0)
 	{
+		ft_printf("PUT NBR\n");
 		// add logic so this doesn't go out of bounds
 		count = 0;
 		ft_printf("val %i\n", (value % 16) * ft_pow(16, count));
@@ -116,6 +118,7 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 		ft_printf("CHECK------ %i   pso %d    orig %i\n", core[pos + (j / 2)], pos + (j / 2), pos);
 		j -= 2;
 	}
+	ft_printf("AFTER PUTTING NBR\n");
 }
 
 void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -133,6 +136,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		pos = (*carriage)->pos + (*carriage)->args_found[1] % IDX_MOD;
 		if (pos >= MEM_SIZE)
 			pos -= MEM_SIZE;
+		ft_printf("pos: %d\n", pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
 		//core[pos] = (*carriage)->args_found[0];
 	}
