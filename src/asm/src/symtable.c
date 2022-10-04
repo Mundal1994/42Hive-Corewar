@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:09:54 by caruychen         #+#    #+#             */
-/*   Updated: 2022/10/04 10:59:45 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:46:45 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,18 @@ t_symentry	*symtable_find(t_symtable *symtable, const char *name)
 		return (NULL);
 	value = (size_t) entry->value;
 	return ((t_symentry *) vec_get(&symtable->entries, value));
+}
+
+int	symtable_add(t_symtable *symtable, const char *name,
+		t_symentry newentry)
+{
+	t_vec	*entries;
+	int		value;
+
+	entries = &symtable->entries;
+	value = entries->len;
+	if (!hashmap_try_insert(&symtable->map, name, value)
+		|| vec_push(entries, &newentry) == ERROR)
+		return (ERROR);
+	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:02:10 by caruychen         #+#    #+#             */
-/*   Updated: 2022/10/04 10:59:21 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:47:43 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ typedef struct s_symtable
 int			symtable_init(t_symtable *symtable);
 void		symtable_free(t_symtable *symtable);
 t_symentry	*symtable_find(t_symtable *symtable, const char *name);
+int		symtable_add(t_symtable *symtable, const char *name, t_symentry newentry);
 
 #endif

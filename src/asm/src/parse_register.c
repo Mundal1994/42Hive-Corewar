@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 13:56:33 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:24:50 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:40:35 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	parse_register(t_parser *parser, t_lexer *lexer, t_statement *statement,
 	t_symbols	*sym;
 
 	sym = &parser->sym;
+	statement->acb |= REG_CODE << (3 - index) * 2;
 	statement->arguments[index].reg = (uint8_t) sym->num;
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);

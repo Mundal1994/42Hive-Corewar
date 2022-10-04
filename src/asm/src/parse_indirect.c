@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 14:18:46 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 11:04:13 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:41:57 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	parse_indirect(t_parser *parser, t_lexer *lexer, t_statement *statement,
 	t_symbols	*sym;
 
 	sym = &parser->sym;
+	statement->acb |= IND_CODE << (3 - index) * 2;
 	parser->size += 2;
 	if (sym->argtype & T_LAB)
 		return (parse_reference(parser, lexer, statement, index));

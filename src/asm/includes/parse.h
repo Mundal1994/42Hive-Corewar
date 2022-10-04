@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:06 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 16:49:02 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/04 22:53:15 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int		parse_numeric(t_statement *statement, t_lexer *lexer,
 int		parse_arg_end(t_lexer *lexer, t_symbols *sym,
 			t_statement *statement, uint8_t index);
 
-t_symentry	parse_newsym(t_parser *parser, uint8_t arg);
 int			parse_update_symtable(t_parser *parser,
-			const char *name, t_symentry newentry);
+			const char *name, uint8_t arg);
 
 #endif

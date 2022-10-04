@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 08:55:47 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:54:35 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,6 @@ void	parse_free(t_parser *parser)
 	if (parser->opmap.entries)
 		opmap_free(&parser->opmap);
 	symtable_free(&parser->symtable);
-}
-
-t_symentry	parse_newsym(t_parser *parser, uint8_t arg)
-{
-	t_symbols	sym;
-	t_symentry	newentry;
-
-	sym = parser->sym;
-	newentry.defined = sym.type == LA_label;
-	newentry.statement_id = parser->body.len - 1 * (sym.type == LA_ref);
-	newentry.arg = arg;
-	newentry.location = parser->size;
-	newentry.flink = NULL;
-	return (newentry);
 }
 
 int	parse(t_parser *parser, t_lexer *lexer)

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:47:18 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 19:46:13 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:52:53 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ static int	new_reference(t_forwardrefs **newref, t_symentry newentry)
 		return (OK);
 	}
 	return (new_reference(&(*newref)->nlink, newentry));
-}
-
-static int	enter_new(t_symtable *symtable, const char *name,
-		t_symentry newentry)
-{
-	t_vec	*entries;
-	int		value;
-
-	entries = &symtable->entries;
-	value = entries->len;
-	if (!hashmap_try_insert(&symtable->map, name, value)
-		|| vec_push(entries, &newentry) == ERROR)
-		return (ERROR);
-	return (OK);
 }
 
 static void	update_argument(t_parser *parser, size_t index, uint8_t arg_n, size_t location)
@@ -67,17 +53,32 @@ static int	complete_references(t_symentry *entry, t_parser *parser, t_symentry n
 	return (OK);
 }
 
+static t_symentry	symentry_new(t_parser *parser, uint8_t arg)
+{
+	t_symbols	sym;
+	t_symentry	newentry;
+
+	sym = parser->sym;
+	newentry.defined = sym.type == LA_label;
+	newentry.statement_id = parser->body.len - 1 * (sym.type == LA_ref);
+	newentry.arg = arg;
+	newentry.location = parser->size;
+	newentry.flink = NULL;
+	return (newentry);
+}
 
 int	parse_update_symtable(t_parser *parser, const char *name,
-		t_symentry newentry)
+		uint8_t arg)
 {
 	t_symtable	*symtable;
 	t_symentry	*entry;
+	t_symentry	newentry;
 
 	symtable = &parser->symtable;
+	newentry = symentry_new(parser, arg);
 	entry = symtable_find(symtable, name);
 	if (!entry)
-		return (enter_new(symtable, name, newentry));
+		return (symtable_add(symtable, name, newentry));
 	if (entry->defined)
 	{
 		if (!newentry.defined)

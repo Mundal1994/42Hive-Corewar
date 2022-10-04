@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 21:58:37 by caruychen         #+#    #+#             */
-/*   Updated: 2022/10/04 10:56:16 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/04 22:55:14 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ int	parse_reference(t_parser *parser, t_lexer *lexer, t_statement *statement,
 		uint8_t index)
 {
 	t_symbols	*sym;
-	t_symentry	newentry;
 
 	sym = &parser->sym;
 	populate_arg(statement, sym, index);
-	newentry = parse_newsym(parser, index);
-	if (parse_update_symtable(parser, symbol_str(sym), newentry) == ERROR)
+	if (parse_update_symtable(parser, symbol_str(sym), index) == ERROR)
 		return (ERROR);
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);
