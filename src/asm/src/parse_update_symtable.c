@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:47:18 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 16:47:19 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/04 19:46:13 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,38 @@ static int	enter_new(t_symtable *symtable, const char *name,
 	return (OK);
 }
 
+static void	update_argument(t_parser *parser, size_t index, uint8_t arg_n, size_t location)
+{
+	t_statement	*statement;
+	t_arg		*arg;
+
+	statement = (t_statement *) vec_get(&parser->body, index);
+	arg = &statement->arguments[arg_n];
+	arg->dir = location - arg->dir;
+}
+
 static int	complete_references(t_symentry *entry, t_parser *parser, t_symentry newentry)
 {
 	t_forwardrefs	*link;
-	t_statement		*statement;
-	t_arg			*arg;
 
 	entry->defined = newentry.defined;
 	entry->location = newentry.location;
-	statement = (t_statement *) vec_get(&parser->body, entry->statement_id);
-	arg = &statement->arguments[entry->arg];
-	arg->dir = newentry.location - arg->dir;
+	update_argument(parser, entry->statement_id, entry->arg, newentry.location);
 	link = entry->flink;
 	while (link)
 	{
-		statement = (t_statement *) vec_get(&parser->body, link->statement_id);
-		arg = &statement->arguments[link->arg];
-		arg->dir = newentry.location - arg->dir;
+		update_argument(parser, link->statement_id, link->arg, newentry.location);
 		link = link->nlink;
 	}
 	return (OK);
 }
+
 
 int	parse_update_symtable(t_parser *parser, const char *name,
 		t_symentry newentry)
 {
 	t_symtable	*symtable;
 	t_symentry	*entry;
-	t_statement	*statement;
-	t_arg		*arg;
 
 	symtable = &parser->symtable;
 	entry = symtable_find(symtable, name);
@@ -79,9 +82,7 @@ int	parse_update_symtable(t_parser *parser, const char *name,
 	{
 		if (!newentry.defined)
 		{
-			statement = (t_statement *) vec_get(&parser->body, newentry.statement_id);
-			arg = &statement->arguments[newentry.arg];
-			arg->dir = entry->location - arg->dir;
+			update_argument(parser, newentry.statement_id, newentry.arg, entry->location);
 			return (OK);
 		}
 		return (warning_ret(SYMTABLE_DUP));
