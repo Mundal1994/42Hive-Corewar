@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:40:48 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/03 16:53:08 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:57:59 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 		print_core(core);
 		print_carriages(info);
 		print_info(info);
-		if (i++ > 51)
+		if (i++ > 200)
 			break ;
 		check(info);
 	}
