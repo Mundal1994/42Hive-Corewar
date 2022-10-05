@@ -184,8 +184,10 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	u_int8_t			arg_found[ARGS];
 	int					i;
 
+	//ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
 	//ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
-	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
+	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
+		 && core[(*carriage)->pos] == (*carriage)->statement_code)
 	{
 		//not sure if can just compare value of typecode element
 		//is arguments arent valid or registry isnt valid, skip all of those bytes
@@ -237,7 +239,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			(*carriage)->args_found[ARG3] = 0;
 		}
 		op_table[(*carriage)->statement_code - 1](core, carriage, info);
-		if ((*carriage)->statement_code != 9)
+		if ((*carriage)->statement_code != 9 || ((*carriage)->statement_code == 9 && !(*carriage)->carry))// added this statement
 			move_carriage(info, carriage);
 		(*carriage)->statement_code = 0;
 		i = 0;
@@ -250,6 +252,13 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	}
 	else
 		make_move(carriage, 1);
+	// if ((*carriage)->pos < 2000 && (*carriage)->registry[0] == 0)
+	// {
+	// 	print_core(core, info);
+	// 	print_carriages(info);
+	// 	print_info(info);
+	// 	exit(0);
+	// }
 }
 
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE])

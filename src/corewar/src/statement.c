@@ -29,12 +29,38 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 }
 
+static void v_flag4_print(t_carriage **carriage, char *command)
+{
+	int	i;
+	int8_t temp;
+
+	i = 0;
+	ft_printf("P	%d | %s ", (*carriage)->id, command);
+	while (i < ARGS)
+	{
+		if ((*carriage)->arg_types[i] == R)
+			ft_printf("r%d ", (*carriage)->args_found[i]);
+		else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
+		{
+			temp = (int8_t)(*carriage)->args_found[i];
+			ft_printf("%d ", temp);
+		}
+		++i;
+	}
+	ft_putchar('\n');
+}
+
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_print(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles + 1;
+	info->live_statement += 1;
 	if ((*carriage)->args_found[0] == (*carriage)->registry[0] && core && info)
 	{
 		info->winner = (*carriage)->args_found[0] * -1;
+		if (info->flag[V_FLAG] == 1)
+			ft_printf("Player %d is said to be alive\n", info->winner);// decide if we want to print name of the player as well
 		//ft_printf("winner updated: %d\n", info->winner);
 	}
 	//ft_printf("LIVE EXECUTED\n");
@@ -59,6 +85,7 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 		j = 3;
 	}
 	third = 0;
+	//ft_printf("pos: %d size: %d\n", pos, size);
 	while (i < type)
 	{
 		if ((pos + i) >= MEM_SIZE)
@@ -69,14 +96,15 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 		third += (hold % 16) * ft_pow(16, j--);
 		++i;
 	}
+	//ft_printf("VALUE %d\n", third);
 	return (third);
 }
 
 void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	//ft_printf("LD LOCATED-------------------\n");
-	if ((*carriage)->arg_types[0] == I)
-		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+	if ((*carriage)->arg_types[0] == I && info)
+		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, SIZE);
 	(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->args_found[0];
 	update_carry((*carriage)->args_found[0], carriage);
 }
@@ -111,6 +139,8 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_print(carriage, "st");
 	if ((*carriage)->arg_types[1] == R)
 	{
 		(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->registry[(*carriage)->args_found[0] - 1];
@@ -118,8 +148,13 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	else if ((*carriage)->arg_types[1] == I)
 	{
 		pos = ((*carriage)->pos + (*carriage)->args_found[1]) % MEM_SIZE;
-		if (pos >= MEM_SIZE)
-			pos %= MEM_SIZE;
+		// if (pos - (*carriage)->pos > 512)
+		// 	pos = (*carriage)->pos - 512;
+		// else if (pos - (*carriage)->pos < -512)
+		// 	pos = (*carriage)->pos + 512;
+		// if (pos >= MEM_SIZE)
+		// 	pos %= MEM_SIZE;
+		limit_jump(carriage, &pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
 		//core[pos] = (*carriage)->args_found[0];
 	}

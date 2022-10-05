@@ -55,30 +55,31 @@ static void	kill_carriages(t_info *info)
 	{
 		info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 		info->checks_count = 1;//unsure about corellation of max_checks and checks_count....
+		if (info->flag[V_FLAG] == 2)
+			ft_printf("Cycle to die is now %d\n", info->cycles_to_die);
 	}
 	else
 	{
 		//unsure if this is how it is supposed to be
 		info->checks_count += 1;//unsure about corellation of max_checks and checks_count....
 		if (info->checks_count >= MAX_CHECKS)
+		{
 			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
+			if (info->flag[V_FLAG] == 2)
+				ft_printf("Cycle to die is now %d\n", info->cycles_to_die);
+		}
 	}
 	info->cycle_count = info->cycles_to_die;
+	//ft_printf("live statement: %d\n", info->live_statement);
+	info->live_statement = 0;
 }
 
-void	check(uint8_t core[MEM_SIZE], t_info *info)
+void	check(t_info *info)
 {
 	info->cycle_count -= 1;
 	info->total_cycles += 1;
+	if (info->flag[V_FLAG] == 2)
+		ft_printf("It is now cycle %d\n", info->total_cycles);
 	if (info->cycle_count <= 0)
 		kill_carriages(info);
-	info->live_statement = 0;
-	if (info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
-	{
-		ft_printf("info->flag[D_FLAG]: %d	info->total_cycles: %d\n", info->flag[D_FLAG], info->total_cycles);
-		print_core(core, info);
-		//print_carriages(info);
-		//print_info(info);
-		exit(0);
-	}
 }

@@ -57,16 +57,11 @@ void	print_carriages(t_info *info)
 	}
 }
 
-void	print_core(uint8_t core[MEM_SIZE], t_info *info)
+static void	print_color(t_info *info, int i)
 {
-	int	i;
-	int	line;
 	t_carriage *carriage;
 
-	i = 0;
-	line = 0;
-	ft_printf("0x0000 : ");
-	while (i < MEM_SIZE)
+	if (info->flag[DC_FLAG] || info->flag[DI_FLAG] || info->flag[C_FLAG])
 	{
 		carriage = info->head_carriage;
 		while (carriage)
@@ -77,6 +72,34 @@ void	print_core(uint8_t core[MEM_SIZE], t_info *info)
 			}
 			carriage = carriage->next;
 		}
+	}
+}
+
+static void	print_newline_or_space(int *line, int i)
+{
+	if (*line >= 64)
+	{
+		ft_printf("\n");
+		*line = 0;
+		if (i >= MEM_SIZE)
+			return ;
+		ft_printf("%#0.4x : ", i);
+	}
+	else
+		ft_printf(" ");
+}
+
+void	print_core(uint8_t core[MEM_SIZE], t_info *info)
+{
+	int	i;
+	int	line;
+
+	i = 0;
+	line = 0;
+	ft_printf("0x0000 : ");
+	while (i < MEM_SIZE)
+	{
+		print_color(info, i);
 		if (core[i] < 16)
 			ft_printf("0%x", core[i]);
 		else
@@ -84,16 +107,17 @@ void	print_core(uint8_t core[MEM_SIZE], t_info *info)
 		ft_printf(RESET);
 		++line;
 		++i;
-		if (line >= 64)
-		{
-			ft_printf("\n");
-			line = 0;
-			if (i >= MEM_SIZE)
-				break ;
-			ft_printf("%#0.4x : ", i);
-		}
-		else
-			ft_printf(" ");
+		print_newline_or_space(&line, i);
+		// if (line >= 64)
+		// {
+		// 	ft_printf("\n");
+		// 	line = 0;
+		// 	if (i >= MEM_SIZE)
+		// 		break ;
+		// 	ft_printf("%#0.4x : ", i);
+		// }
+		// else
+		// 	ft_printf(" ");
 	}
 }
 

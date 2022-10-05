@@ -24,6 +24,8 @@
 # define ERROR	-1
 # define STATE	16
 # define ARGS	3
+# define FLAG_COUNT	9
+# define OPS_COUNT	6
 # define RESET   "\033[0m"
 # define GREEN   "\033[32m"
 
@@ -34,6 +36,10 @@ typedef enum e_flag
 	S_FLAG,
 	V_FLAG,
 	I_FLAG,
+	DC_FLAG,//prints colorod version of -d flag
+	DI_FLAG,//prints colored -d with info
+	C_FLAG,//prints carriages
+	VIS_FLAG,
 }	t_flag;
 
 typedef enum e_arg
@@ -54,7 +60,7 @@ typedef enum e_ops
 	ARG2,
 	ARG3,
 	DELAY,
-	SIZE,
+	SIZE = 4,//DON'T CHANGE THIS POS WE NEED IT TO BE FOUR
 	PCB,
 }			t_ops;
 
@@ -103,9 +109,9 @@ typedef struct s_info
 	int			cycle_count;
 	int			checks_count;// initialized to 0
 	int			carriage_count;
-	int			flag[5];
+	int			flag[FLAG_COUNT];
 	t_carriage	*head_carriage;
-	int			operations[6][STATE];
+	int			operations[OPS_COUNT][STATE];
 }				t_info;
 
 typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
@@ -114,7 +120,7 @@ int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
-void	check(uint8_t core[MEM_SIZE], t_info *info);
+void	check(t_info *info);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE], t_info *info);
@@ -126,10 +132,11 @@ void	print_info(t_info *info);
 //statement functions
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr);
+void	limit_jump(t_carriage **carriage, int *pos);
 //void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
-void	check_first_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
-void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
-void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
+void	check_first_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg);
+void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg);
+void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg);
 void	update_carry(int nbr, t_carriage **carriage);
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
