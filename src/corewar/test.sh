@@ -31,7 +31,7 @@ do
 	$MY_VM -d $COUNT $CHAMP1 $CHAMP2 > vm_dump$COUNT.txt
 	while read line
 	do
-		cat given_vm_dump$COUNT.txt
+		cat vm_dump$COUNT.txt
 		while read line2
 		do
 			DOWN=1
