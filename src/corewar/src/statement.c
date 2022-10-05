@@ -54,7 +54,7 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_print(carriage, "live");
-	(*carriage)->last_live_call = info->total_cycles + 1;
+	(*carriage)->last_live_call = info->total_cycles;//removed +1
 	info->live_statement += 1;
 	if ((*carriage)->args_found[0] == (*carriage)->registry[0] && core && info)
 	{
