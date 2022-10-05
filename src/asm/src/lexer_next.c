@@ -31,7 +31,9 @@ static int	lexer_end(t_source *source, t_symbols *sym)
 	curr = source->curr;
 	if (!curr)
 		return (sym->type = LA_eof, DONE);
-	source_next(source);
+	if (!source_next(source))
+		curr = "\0";
+	string_replace_n(&sym->str, curr, 1);
 	return (sym->type = LA_eol, OK);
 }
 

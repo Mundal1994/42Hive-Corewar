@@ -16,7 +16,7 @@ t_errorset	errorset(t_pos pos, t_string str)
 {
 	t_errorset	error;
 
-	error.pos.r = pos.r;
+	error.pos.r = pos.r - (*str.memory == '\n');
 	error.pos.c = pos.c - str.length;
 	error.str = str;
 	return (error);
