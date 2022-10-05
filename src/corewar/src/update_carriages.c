@@ -50,7 +50,9 @@ static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_
 static void	make_move_tmp(t_carriage **carriage, int move)
 {
 	if ((*carriage)->tmp_pos + move >= MEM_SIZE)
-		(*carriage)->tmp_pos = ((*carriage)->tmp_pos + move) % (MEM_SIZE - 1);
+	{
+		(*carriage)->tmp_pos = ((*carriage)->tmp_pos + move) % MEM_SIZE;
+	}
 	else
 		(*carriage)->tmp_pos += move;
 }
@@ -66,7 +68,7 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 
 	if (info->operations[first][(*carriage)->statement_code - 1] == 0)
 	{
-		ft_printf("BE   ZEROO\n");
+		//ft_printf("BE   ZEROO\n");
 		return (0);
 	}
 	if ((*carriage)->arg_types[first] == 1 && (info->operations[first][(*carriage)->statement_code - 1] == 1 \
@@ -75,13 +77,13 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 	|| info->operations[first][(*carriage)->statement_code - 1] == 7))
 	{
 		//ft_printf("B   %d----------%d\n", core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
-		ft_printf("BE %i   %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		//ft_printf("BE %i   %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		if (core[(*carriage)->tmp_pos] < 1 || core[(*carriage)->tmp_pos] > 16)
 			return (-1);
 		//make_move_tmp(carriage, 1);//moving and saving values before moves
 		temp = core[(*carriage)->tmp_pos];
 		make_move_tmp(carriage, 1);
-		ft_printf("AF %i   %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		//ft_printf("AF %i   %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		return (temp);
 	}
 	else if (((*carriage)->arg_types[first] == 2 && (info->operations[first][(*carriage)->statement_code - 1] == 2 \
@@ -105,14 +107,14 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 			j = 3;
 		}
 		//++(*carriage)->tmp_pos;
-		ft_printf("BE  %i    %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		//ft_printf("BE  %i    %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		first = 0;
 		while (i < type)// info->operations[SIZE][(*carriage)->statement_code - 1])
 		{
 			if ((*carriage)->tmp_pos + i < MEM_SIZE)
 				hold = (*carriage)->tmp_pos + i;
 			else
-				hold = ((*carriage)->tmp_pos + i) % (MEM_SIZE - 1);
+				hold = ((*carriage)->tmp_pos + i) % MEM_SIZE;
 			hold = core[hold];
 			//ft_printf("hold = %i\n", (hold / 16) * ft_pow(16, j));
 			first += (hold / 16) * ft_pow(16, j--);
@@ -122,7 +124,7 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 			++i;
 		}
 		make_move_tmp(carriage, i);
-		ft_printf("AF  %i %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		//ft_printf("AF  %i %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		return (first);
 	}
 	return (-1);
@@ -131,8 +133,9 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 
 static void	make_move(t_carriage **carriage, int move)
 {
+	//ft_printf("pos %i    moves %i\n", (*carriage)->pos, move);
 	if ((*carriage)->pos + move >= MEM_SIZE)
-		(*carriage)->pos = ((*carriage)->pos + move) % (MEM_SIZE - 1);
+		(*carriage)->pos = ((*carriage)->pos + move) % MEM_SIZE;
 	else
 		(*carriage)->pos += move;
 }
@@ -142,23 +145,19 @@ static void	move_carriage(t_info *info, t_carriage **carriage)
 	int	i;
 
 	i = 0;
-	make_move(carriage, 2);
+	if (info->operations[PCB][(*carriage)->statement_code - 1] == TRUE)
+		make_move(carriage, 2);
+	else
+		make_move(carriage, 1);
 	while (i < 3)
 	{
+		//ft_printf("%d	", (*carriage)->arg_types[i]);
 		if ((*carriage)->arg_types[i] == 1)
 			make_move(carriage, 1);
 		else if ((*carriage)->arg_types[i] == 3)
 			make_move(carriage, 2);
 		else if ((*carriage)->arg_types[i] == 2)
 			make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1]);
-		++i;
-	}
-	(*carriage)->statement_code = 0;
-	i = 0;
-	while (i < 3)
-	{
-		(*carriage)->arg_types[i] = 0;
-		(*carriage)->args_found[i] = 0;
 		++i;
 	}
 }
@@ -185,7 +184,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	u_int8_t			arg_found[ARGS];
 	int					i;
 
-	ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
+	//ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		//not sure if can just compare value of typecode element
@@ -193,7 +192,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		(*carriage)->statement_code = core[(*carriage)->pos];
 		(*carriage)->tmp_pos = (*carriage)->pos;
 		make_move_tmp(carriage, 1);
-		ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
+		//ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
 		if (info->operations[PCB][(*carriage)->statement_code - 1] == 1) //statements using typecode
 		{
 			i = 0;
@@ -205,7 +204,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			arg_found[ARG3] = arg_found[ARG3] << 4;
 			arg_found[ARG3] = arg_found[ARG3] >> 6;
 			//ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
-			ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			//ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
 			(*carriage)->arg_types[ARG1] = arg_found[ARG1];
 			(*carriage)->arg_types[ARG2] = arg_found[ARG2];
 			(*carriage)->arg_types[ARG3] = arg_found[ARG3];
@@ -214,48 +213,44 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			(*carriage)->args_found[ARG2] = first_arg(ARG2, carriage, info, core);
 			(*carriage)->args_found[ARG3] = first_arg(ARG3, carriage, info, core);
 			//ft_printf("wait %i %lli\n", third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core), (*carriage)->args_found[ARG3]);
-			ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
+			//ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
 			if (args_found_error(info, carriage) == TRUE)
 				return ;
 		}
 		else
 		{
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+			if ((*carriage)->statement_code == 16)
+			{
+				(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, 1);
+				(*carriage)->arg_types[ARG1] = R;
+				if ((*carriage)->statement_code == 16 && ((*carriage)->args_found[ARG1] < 1 || (*carriage)->args_found[ARG1] > 16))
+				{
+					(*carriage)->args_found[ARG1] = -1;
+				}
+			}
+			else
+			{
+				(*carriage)->arg_types[ARG1] = D;
+				(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+			}
 			(*carriage)->args_found[ARG2] = 0;
 			(*carriage)->args_found[ARG3] = 0;
 		}
 		op_table[(*carriage)->statement_code - 1](core, carriage, info);
-		//ft_printf("SEGCHECK\n");
-		move_carriage(info, carriage);
-		//print_carriages(info);
-		//print_core(core);
-		//exit (0);
-		// }
-		// else
-		// {
-		// 	(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
-		// }
+		if ((*carriage)->statement_code != 9)
+			move_carriage(info, carriage);
+		(*carriage)->statement_code = 0;
+		i = 0;
+		while (i < 3)
+		{
+			(*carriage)->arg_types[i] = 0;
+			(*carriage)->args_found[i] = 0;
+			++i;
+		}
 	}
 	else
 		make_move(carriage, 1);
-	// {
-	// 	if ((*carriage)->pos  == MEM_SIZE - 1)
-	// 	{
-	// 		(*carriage)->pos = 0;
-	// 		(*carriage)->current  = &core[0];
-	// 	}
-	// 	else
-	// 	{
-	// 		(*carriage)->pos++;
-	// 		(*carriage)->current++;
-	// 	}
-	// }
 }
-
-// static void	perform_statement_code(t_info *info)
-// {
-// 	perform_statement_code() and move carriage
-// }
 
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE])
 {
@@ -264,61 +259,15 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[ST
 	carriage = info->head_carriage;
 	while (carriage)
 	{
-		if (carriage->delay == 0)//means it moved last cycle or just been initiated
+		if (carriage->delay == 0)
 		{
 			set_statement_code(core, &carriage, info);
 		}
 		if (carriage->delay > 0)
 			carriage->delay -= 1;
 		if (carriage->delay == 0)
-		{
-			//JEFF----------------
-			//perform_statement_code() and move carriage
-			// if cannot perform statement code move to next byte.
 			perform_statement_code(core, &carriage, info, op_table);
-		}
 		carriage = carriage->next;
 	}
 	return (0);
 }
-
-/*
-
-Couldn't get the void pointer thing to work so i changed it to uint32_t pointer instead.. if you can get the void pointer to work you can change it back if you want to
-
-Page Virtual machine
-Paragraf inside the cycle
-
-Set statement code function:
-- Read byte on which the carriage is located
-- If number corresponds to operation code
-	store operation code in the variable carriage->statement_code
-	set carriage->delay == to number of cycles it would take to execute the statement_code
-
-Perform statement code function:
-- read and calculate pcb (binary stuff...) [https://glo.bi/corewar/]
-
-update_carriages is called inside the file game_start.c
-
-*/
-
-
-
-
-/*
-
-
-Operant function checks if it uses PCB
-	if yes
-		Function that checks PCB IF they are valid or not
-			checks ARG1, ARG2, ARG3 if they are true
-				if true collect ARG(function)
-					collect and use (function specific to operand)
-				else
-					return error and skip specific amount (skip function)
-
-
-
-
-
-*/

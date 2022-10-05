@@ -24,6 +24,8 @@
 # define ERROR	-1
 # define STATE	16
 # define ARGS	3
+# define RESET   "\033[0m"
+# define GREEN   "\033[32m"
 
 typedef enum e_flag
 {
@@ -112,10 +114,10 @@ int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
-void	check(t_info *info);
+void	check(uint8_t core[MEM_SIZE], t_info *info);
 
 //print functions
-void	print_core(uint8_t core[MEM_SIZE]);
+void	print_core(uint8_t core[MEM_SIZE], t_info *info);
 void	introduce_contestants(t_profile *champ);
 void	announce_winner(t_profile *champ, int winner);
 void	print_carriages(t_info *info);
@@ -123,7 +125,11 @@ void	print_info(t_info *info);
 
 //statement functions
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
-void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
+void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr);
+//void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
+void	check_first_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
+void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
+void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
 void	update_carry(int nbr, t_carriage **carriage);
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
@@ -134,7 +140,6 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-//int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
