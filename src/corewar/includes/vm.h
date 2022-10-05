@@ -126,6 +126,7 @@ void	print_info(t_info *info);
 //statement functions
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr);
+void	limit_jump(t_carriage **carriage, int *pos);
 //void	check_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
 void	check_first_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);
 void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info, int64_t *arg);

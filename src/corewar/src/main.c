@@ -106,3 +106,18 @@ int	main(int argc, char **argv)
 		return (ft_putendl(TOO_MANY_CHAMPS), 1);
 	return (0);
 }
+
+/*
+
+testcase
+
+./corewar -d 10000 champs/examples/bigzork.cor champs/examples/helltrain.cor
+./corewar -d 100000 champs/examples/bigzork.cor champs/examples/helltrain.cor
+
+
+Last print
+./corewar -d 24366 champs/examples/bigzork.cor champs/examples/helltrain.cor
+helltrain wins
+./corewar -d 24367 champs/examples/bigzork.cor champs/examples/helltrain.cor
+
+*/

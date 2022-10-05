@@ -32,6 +32,7 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	(*carriage)->last_live_call = info->total_cycles + 1;
+	info->live_statement += 1;
 	if ((*carriage)->args_found[0] == (*carriage)->registry[0] && core && info)
 	{
 		info->winner = (*carriage)->args_found[0] * -1;
@@ -59,6 +60,7 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 		j = 3;
 	}
 	third = 0;
+	ft_printf("pos: %d size: %d\n", pos, size);
 	while (i < type)
 	{
 		if ((pos + i) >= MEM_SIZE)
@@ -69,6 +71,7 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 		third += (hold % 16) * ft_pow(16, j--);
 		++i;
 	}
+	ft_printf("VALUE %d\n", third);
 	return (third);
 }
 
@@ -89,7 +92,7 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 
 	value = nbr;
 	j = 3;
-	//ft_printf("VALUE---%llu\n", nbr);
+	ft_printf("VALUE---%llu\n", nbr);
 	while (j >= 0)
 	{
 		//ft_printf("result %i\n", (value % 16) * ft_pow(16, 0));
@@ -118,8 +121,13 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	else if ((*carriage)->arg_types[1] == I)
 	{
 		pos = ((*carriage)->pos + (*carriage)->args_found[1]) % MEM_SIZE;
-		if (pos >= MEM_SIZE)
-			pos %= MEM_SIZE;
+		// if (pos - (*carriage)->pos > 512)
+		// 	pos = (*carriage)->pos - 512;
+		// else if (pos - (*carriage)->pos < -512)
+		// 	pos = (*carriage)->pos + 512;
+		// if (pos >= MEM_SIZE)
+		// 	pos %= MEM_SIZE;
+		limit_jump(carriage, &pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
 		//core[pos] = (*carriage)->args_found[0];
 	}

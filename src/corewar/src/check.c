@@ -64,6 +64,8 @@ static void	kill_carriages(t_info *info)
 			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 	}
 	info->cycle_count = info->cycles_to_die;
+	ft_printf("live statement: %d\n", info->live_statement);
+	info->live_statement = 0;
 }
 
 void	check(uint8_t core[MEM_SIZE], t_info *info)
@@ -72,13 +74,12 @@ void	check(uint8_t core[MEM_SIZE], t_info *info)
 	info->total_cycles += 1;
 	if (info->cycle_count <= 0)
 		kill_carriages(info);
-	info->live_statement = 0;
 	if (info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
 	{
 		ft_printf("info->flag[D_FLAG]: %d	info->total_cycles: %d\n", info->flag[D_FLAG], info->total_cycles);
 		print_core(core, info);
-		//print_carriages(info);
-		//print_info(info);
+		print_carriages(info);
+		print_info(info);
 		exit(0);
 	}
 }

@@ -12,22 +12,22 @@
 
 #include "vm.h"
 
-static int	one_carriage_left(t_info *info)
-{
-	t_carriage	*carriage;
-	int			count;
+// static int	one_carriage_left(t_info *info)
+// {
+// 	t_carriage	*carriage;
+// 	int			count;
 
-	carriage = info->head_carriage;
-	count = 0;
-	while (carriage)
-	{
-		++count;
-		carriage = carriage->next;
-	}
-	if (count == 1)
-		return (TRUE);
-	return (FALSE);
-}
+// 	carriage = info->head_carriage;
+// 	count = 0;
+// 	while (carriage)
+// 	{
+// 		++count;
+// 		carriage = carriage->next;
+// 	}
+// 	if (count == 1)
+// 		return (TRUE);
+// 	return (FALSE);
+// }
 
 static void	init_op_table(op_table *op_table[STATE])
 {
@@ -58,7 +58,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 
 	init_op_table(op_table);
 	introduce_contestants(champ);//add player struct
-	while (!one_carriage_left(info))
+	while (1)//!one_carriage_left(info))
 	{
 		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
