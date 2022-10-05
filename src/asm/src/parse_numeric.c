@@ -23,7 +23,7 @@ static int	get_action(t_lexer *lexer, int *action, t_symbols *sym)
 		return (error(errorset(lexer->source.pos, sym->str),
 				PARSER_EXPECT_MATH_OP));
 	*action = 1 * (sym->type == LA_plus) - 1 * (sym->type == LA_minus);
-	return (OK);
+	return (lexer_next(lexer, sym));
 }
 
 static int	get_number(t_arg *arg, t_lexer *lexer, t_symbols *sym, int *action)
@@ -31,14 +31,23 @@ static int	get_number(t_arg *arg, t_lexer *lexer, t_symbols *sym, int *action)
 	t_errorset	error_set;
 
 	error_set = errorset(lexer->source.pos, sym->str);
-	if (sym->type != LA_num || !(sym->argtype & (T_DIR | T_REG | T_LAB)))
+	if (sym->type != LA_num)
 		return (error(error_set, PARSER_EXPECT_NUM));
+	if (sym->argtype & (T_REG | T_LAB))
+		return (error(error_set, PARSER_WRONG_ARG));
 	if (sym->argtype & T_DIR)
 		arg->dir += (uint32_t)(*action * sym->num);
 	if (sym->argtype & T_IND)
 		arg->ind += (uint16_t)(*action * sym->num);
 	*action = 0;
-	return (OK);
+	return (lexer_next(lexer, sym));
+}
+
+static int	get_next_op(t_arg *arg, t_lexer *lexer, t_symbols *sym, int *action)
+{
+	if (*action == 0)
+		return (get_action(lexer, action, sym));
+	return (get_number(arg, lexer, sym, action));
 }
 
 int	parse_numeric(t_statement *statement, t_lexer *lexer, t_symbols *sym,
@@ -51,17 +60,7 @@ int	parse_numeric(t_statement *statement, t_lexer *lexer, t_symbols *sym,
 	action = 1;
 	while (!is_endof_arg(sym->type))
 	{
-		if (action == 0)
-		{
-			if (get_action(lexer, &action, sym) == ERROR)
-				return (ERROR);
-		}
-		else
-		{
-			if (get_number(arg, lexer, sym, &action) == ERROR)
-				return (ERROR);
-		}
-		if (lexer_next(lexer, sym) == ERROR)
+		if (get_next_op(arg, lexer, sym, &action) == ERROR)
 			return (ERROR);
 	}
 	if (action != 0)
