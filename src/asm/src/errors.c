@@ -24,7 +24,7 @@ t_errorset	errorset(t_pos pos, t_string str)
 
 int	error_ret(char *msg)
 {
-	ft_dprintf(2, "%sError: %s%s", RED, NOCOLOR, msg);
+	ft_dprintf(2, "%sError: %s%s\n", RED, NOCOLOR, msg);
 	return (ERROR);
 }
 

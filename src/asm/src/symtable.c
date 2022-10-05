@@ -49,29 +49,3 @@ void	symtable_free(t_symtable *symtable)
 	}
 	vec_free(entries);
 }
-
-t_symentry	*symtable_find(t_symtable *symtable, const char *name)
-{
-	t_entry	*entry;
-	size_t	value;
-
-	entry = hashmap_entry(&symtable->map, name);
-	if (!entry || entry->value < 0)
-		return (NULL);
-	value = (size_t) entry->value;
-	return ((t_symentry *) vec_get(&symtable->entries, value));
-}
-
-int	symtable_add(t_symtable *symtable, const char *name,
-		t_symentry newentry)
-{
-	t_vec	*entries;
-	int		value;
-
-	entries = &symtable->entries;
-	value = entries->len;
-	if (!hashmap_try_insert(&symtable->map, name, value)
-		|| vec_push(entries, &newentry) == ERROR)
-		return (ERROR);
-	return (OK);
-}

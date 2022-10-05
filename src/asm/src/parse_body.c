@@ -53,5 +53,5 @@ int	parse_body(t_parser *parser, t_lexer *lexer)
 	res = OK;
 	while (res == OK)
 		res = parse_line(parser, lexer);
-	return (res);
+	return (symtable_outstanding(&parser->symtable));
 }
