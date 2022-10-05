@@ -64,7 +64,7 @@ int		parse_numeric(t_statement *statement, t_lexer *lexer,
 int		parse_arg_end(t_lexer *lexer, t_symbols *sym,
 			t_statement *statement, uint8_t index);
 
-int			parse_update_symtable(t_parser *parser,
+int		parse_update_symtable(t_parser *parser,
 			const char *name, uint8_t arg);
 
 #endif

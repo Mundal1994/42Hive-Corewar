@@ -22,8 +22,8 @@
 
 typedef struct s_forwardrefs
 {
-	size_t			statement_id;
-	uint8_t			arg;
+	size_t					statement_id;
+	uint8_t					arg;
 	struct s_forwardrefs	*nlink;
 }				t_forwardrefs;
 
@@ -45,6 +45,7 @@ typedef struct s_symtable
 int			symtable_init(t_symtable *symtable);
 void		symtable_free(t_symtable *symtable);
 t_symentry	*symtable_find(t_symtable *symtable, const char *name);
-int		symtable_add(t_symtable *symtable, const char *name, t_symentry newentry);
+int			symtable_add(t_symtable *symtable, const char *name,
+				t_symentry newentry);
 
 #endif
