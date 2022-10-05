@@ -24,6 +24,8 @@
 # define ERROR	-1
 # define STATE	16
 # define ARGS	3
+# define FLAG_COUNT	9
+# define OPS_COUNT	6
 # define RESET   "\033[0m"
 # define GREEN   "\033[32m"
 
@@ -34,6 +36,10 @@ typedef enum e_flag
 	S_FLAG,
 	V_FLAG,
 	I_FLAG,
+	DC_FLAG,//prints colorod version of -d flag
+	DI_FLAG,//prints colored -d with info
+	C_FLAG,//prints carriages
+	VIS_FLAG,
 }	t_flag;
 
 typedef enum e_arg
@@ -103,9 +109,9 @@ typedef struct s_info
 	int			cycle_count;
 	int			checks_count;// initialized to 0
 	int			carriage_count;
-	int			flag[5];
+	int			flag[FLAG_COUNT];
 	t_carriage	*head_carriage;
-	int			operations[6][STATE];
+	int			operations[OPS_COUNT][STATE];
 }				t_info;
 
 typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);

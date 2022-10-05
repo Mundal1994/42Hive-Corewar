@@ -29,13 +29,38 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 }
 
+static void v_flag4_print(t_carriage **carriage, char *command)
+{
+	int	i;
+	int8_t temp;
+
+	i = 0;
+	ft_printf("P	%d | %s ", (*carriage)->id, command);
+	while (i < ARGS)
+	{
+		if ((*carriage)->arg_types[i] == R)
+			ft_printf("r%d ", (*carriage)->args_found[i]);
+		else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
+		{
+			temp = (int8_t)(*carriage)->args_found[i];
+			ft_printf("%d ", temp);
+		}
+		++i;
+	}
+	ft_putchar('\n');
+}
+
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_print(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles + 1;
 	info->live_statement += 1;
 	if ((*carriage)->args_found[0] == (*carriage)->registry[0] && core && info)
 	{
 		info->winner = (*carriage)->args_found[0] * -1;
+		if (info->flag[V_FLAG] == 1)
+			ft_printf("Player %d is said to be alive\n", info->winner);// decide if we want to print name of the player as well
 		//ft_printf("winner updated: %d\n", info->winner);
 	}
 	//ft_printf("LIVE EXECUTED\n");
@@ -114,6 +139,8 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_print(carriage, "st");
 	if ((*carriage)->arg_types[1] == R)
 	{
 		(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->registry[(*carriage)->args_found[0] - 1];

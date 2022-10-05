@@ -52,21 +52,40 @@ static void	init_op_table(op_table *op_table[STATE])
 	op_table[i++] = aff;
 }
 
+static int	flag_check(t_info *info)
+{
+	int	i;
+
+	i = 5;
+	if (info->flag[1])
+		return (info->flag[1]);
+	while (i < FLAG_COUNT)
+	{
+		if (info->flag[i])
+			return (info->flag[i]);
+		++i;
+	}
+	return (-1);
+}
+
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 {
 	op_table	*op_table[STATE];// = {live, ld, st, add, sub, and, or, xor, zjmp, ldi, sti, fork_op, lld, lldi, lfork, aff,};
+	int			dump;
 
 	init_op_table(op_table);
 	introduce_contestants(champ);//add player struct
+	dump = flag_check(info);
 	while (!one_carriage_left(info))
 	{
-		if (info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
+		if (info->total_cycles == dump)//info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
 		{
-			ft_printf("info->flag[D_FLAG]: %d	info->total_cycles: %d\n", info->flag[D_FLAG], info->total_cycles);
 			print_core(core, info);
-			print_carriages(info);
-			print_info(info);
-			exit(0);
+			if (info->flag[DI_FLAG])
+				print_info(info);
+			if (info->flag[C_FLAG])
+				print_carriages(info);
+			exit(0);//need to make better exit code with freeing everything
 		}
 		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
