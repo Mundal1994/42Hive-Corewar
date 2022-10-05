@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:01:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 10:15:06 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/05 09:39:16 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define LEXER_BAD_REF "Illegal or empty label reference"
 # define LEXER_BAD_QUOTE "Quote string incomplete, please close end \
 of quote string"
-# define LEXER_UNKNOWN "Encountered an unknown token. pls fix :("
+# define LEXER_UNKNOWN "Encountered an unknown token."
 # define LEXER_MISSING_NUM "Missing number from direct reference"
 # define REG_WARNING "Register number out of bounds, may lead to\
  Virtual Machine memory errors"
@@ -60,6 +60,8 @@ of quote string"
 
 # define SYMTABLE_DUP "Duplicate label declaration found, may lead to unexpected\
  outcomes"
+# define SYMTABLE_OUTSTANDING "Outstanding reference found, missing a label"
+# define SYMTABLE_MULT_OUT "Multiple outstanding references to labels"
 
 typedef enum s_errors
 {
