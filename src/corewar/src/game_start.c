@@ -12,22 +12,22 @@
 
 #include "vm.h"
 
-// static int	one_carriage_left(t_info *info)
-// {
-// 	t_carriage	*carriage;
-// 	int			count;
+static int	one_carriage_left(t_info *info)
+{
+	t_carriage	*carriage;
+	int			count;
 
-// 	carriage = info->head_carriage;
-// 	count = 0;
-// 	while (carriage)
-// 	{
-// 		++count;
-// 		carriage = carriage->next;
-// 	}
-// 	if (count == 1)
-// 		return (TRUE);
-// 	return (FALSE);
-// }
+	carriage = info->head_carriage;
+	count = 0;
+	while (carriage)
+	{
+		++count;
+		carriage = carriage->next;
+	}
+	if (count <= 1)
+		return (TRUE);
+	return (FALSE);
+}
 
 static void	init_op_table(op_table *op_table[STATE])
 {
@@ -58,11 +58,19 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 
 	init_op_table(op_table);
 	introduce_contestants(champ);//add player struct
-	while (1)//!one_carriage_left(info))
+	while (!one_carriage_left(info))
 	{
+		if (info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
+		{
+			ft_printf("info->flag[D_FLAG]: %d	info->total_cycles: %d\n", info->flag[D_FLAG], info->total_cycles);
+			print_core(core, info);
+			print_carriages(info);
+			print_info(info);
+			exit(0);
+		}
 		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
-		check(core, info);
+		check(info);
 	}
 	announce_winner(champ, info->winner);
 	return (0);

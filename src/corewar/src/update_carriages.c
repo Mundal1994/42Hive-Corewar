@@ -124,7 +124,7 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 			++i;
 		}
 		make_move_tmp(carriage, i);
-		ft_printf("AF  %i %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
+		//ft_printf("AF  %i %d----------%d\n", first, core[(*carriage)->tmp_pos], (*carriage)->tmp_pos);
 		return (first);
 	}
 	return (-1);
@@ -133,7 +133,7 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 
 static void	make_move(t_carriage **carriage, int move)
 {
-	ft_printf("pos %i    moves %i\n", (*carriage)->pos, move);
+	//ft_printf("pos %i    moves %i\n", (*carriage)->pos, move);
 	if ((*carriage)->pos + move >= MEM_SIZE)
 		(*carriage)->pos = ((*carriage)->pos + move) % MEM_SIZE;
 	else
@@ -184,8 +184,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	u_int8_t			arg_found[ARGS];
 	int					i;
 
-	ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
-	ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
+	//ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
+	//ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
 		 && core[(*carriage)->pos] == (*carriage)->statement_code)
 	{
@@ -194,7 +194,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		(*carriage)->statement_code = core[(*carriage)->pos];
 		(*carriage)->tmp_pos = (*carriage)->pos;
 		make_move_tmp(carriage, 1);
-		ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
+		//ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
 		if (info->operations[PCB][(*carriage)->statement_code - 1] == 1) //statements using typecode
 		{
 			i = 0;
@@ -205,8 +205,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			arg_found[ARG2] = arg_found[ARG2] >> 6;
 			arg_found[ARG3] = arg_found[ARG3] << 4;
 			arg_found[ARG3] = arg_found[ARG3] >> 6;
-			ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
-			ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			//ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			//ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
 			(*carriage)->arg_types[ARG1] = arg_found[ARG1];
 			(*carriage)->arg_types[ARG2] = arg_found[ARG2];
 			(*carriage)->arg_types[ARG3] = arg_found[ARG3];
@@ -215,7 +215,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			(*carriage)->args_found[ARG2] = first_arg(ARG2, carriage, info, core);
 			(*carriage)->args_found[ARG3] = first_arg(ARG3, carriage, info, core);
 			//ft_printf("wait %i %lli\n", third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core), (*carriage)->args_found[ARG3]);
-			ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
+			//ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
 			if (args_found_error(info, carriage) == TRUE)
 				return ;
 		}

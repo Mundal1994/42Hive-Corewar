@@ -49,7 +49,7 @@ void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
 	check_third_arg_type(core, carriage, &(*carriage)->args_found[2]);
 	pos = ((*carriage)->pos + ((*carriage)->args_found[1] + (*carriage)->args_found[2])) % MEM_SIZE;
-	ft_printf("pos : %d\n", pos);
+	//ft_printf("pos : %d\n", pos);
 	limit_jump(carriage, &pos);
 	// if (pos - (*carriage)->pos > 512)
 	// 	pos = (*carriage)->pos - 512;
@@ -60,8 +60,8 @@ void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	// 	pos -= MEM_SIZE;
 	// else if (pos < 0)
 	// 	pos = MEM_SIZE - (pos * -1);
-	ft_printf("pos : %d\n", pos);
-	ft_printf("value outside putn br: %d reg: %d\n", (*carriage)->registry[(*carriage)->args_found[0] - 1], (*carriage)->args_found[0]);
+	//ft_printf("pos : %d\n", pos);
+	//ft_printf("value outside putn br: %d reg: %d\n", (*carriage)->registry[(*carriage)->args_found[0] - 1], (*carriage)->args_found[0]);
 	put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
 	if (!info)
 		ft_printf("no\n");

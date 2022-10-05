@@ -114,7 +114,7 @@ int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
-void	check(uint8_t core[MEM_SIZE], t_info *info);
+void	check(t_info *info);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE], t_info *info);

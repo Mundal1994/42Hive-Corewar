@@ -60,7 +60,7 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 		j = 3;
 	}
 	third = 0;
-	ft_printf("pos: %d size: %d\n", pos, size);
+	//ft_printf("pos: %d size: %d\n", pos, size);
 	while (i < type)
 	{
 		if ((pos + i) >= MEM_SIZE)
@@ -71,7 +71,7 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 		third += (hold % 16) * ft_pow(16, j--);
 		++i;
 	}
-	ft_printf("VALUE %d\n", third);
+	//ft_printf("VALUE %d\n", third);
 	return (third);
 }
 
@@ -92,7 +92,7 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 
 	value = nbr;
 	j = 3;
-	ft_printf("VALUE---%llu\n", nbr);
+	//ft_printf("VALUE---%llu\n", nbr);
 	while (j >= 0)
 	{
 		//ft_printf("result %i\n", (value % 16) * ft_pow(16, 0));
