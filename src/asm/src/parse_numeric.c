@@ -14,7 +14,7 @@
 
 static bool	is_endof_arg(t_symtypes type)
 {
-	return (type == LA_comma ||type == LA_eol || type == LA_com);
+	return (type == LA_comma || type == LA_eol || type == LA_com);
 }
 
 static int	get_action(t_lexer *lexer, int *action, t_symbols *sym)

@@ -13,6 +13,16 @@
 #ifndef ASSEMBLE_H
 # define ASSEMBLE_H
 
-int	assemble(t_lexer *lexer);
+# define BITS	8
+
+typedef struct	s_assembler
+{
+	t_string	filename;	
+	t_string	buffer;
+}				t_assembler;
+
+void	assemble_free(t_assembler *assembler, t_parser *parser);
+void	assemble(const char *arg);
+void	assemble_buffer(t_assembler *assembler, t_parser *parser);
 
 #endif

@@ -47,7 +47,7 @@ typedef struct s_parser
 
 void	parse_init(t_parser *parser, t_lexer *lexer);
 void	parse_free(t_parser *parser);
-int		parse(t_parser *parser, t_lexer *lexer);
+void	parse(t_parser *parser, t_lexer *lexer);
 int		parse_header(t_parser *parser, t_lexer *lexer);
 int		parse_body(t_parser *parser, t_lexer *lexer);
 int		parse_operation(t_parser *parser, t_lexer *lexer);
@@ -63,7 +63,6 @@ int		parse_numeric(t_statement *statement, t_lexer *lexer,
 			t_symbols *sym, uint8_t index);
 int		parse_arg_end(t_lexer *lexer, t_symbols *sym,
 			t_statement *statement, uint8_t index);
-
 int		parse_update_symtable(t_parser *parser,
 			const char *name, uint8_t arg);
 

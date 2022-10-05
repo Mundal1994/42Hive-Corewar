@@ -43,10 +43,12 @@ void	parse_free(t_parser *parser)
 	symtable_free(&parser->symtable);
 }
 
-int	parse(t_parser *parser, t_lexer *lexer)
+void	parse(t_parser *parser, t_lexer *lexer)
 {
-	if (parse_header(parser, lexer) == ERROR)
-		return (ERROR);
-	parse_body(parser, lexer);
-	return (OK);
+	if (parse_header(parser, lexer) == OK
+		&& parse_body(parser, lexer) == OK)
+		return ;
+	parse_free(parser);
+	lexer_free(lexer);
+	exit(EXIT_FAILURE);
 }
