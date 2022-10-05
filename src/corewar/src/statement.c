@@ -78,8 +78,8 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	//ft_printf("LD LOCATED-------------------\n");
-	if ((*carriage)->arg_types[0] == I)
-		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+	if ((*carriage)->arg_types[0] == I && info)
+		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, SIZE);
 	(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->args_found[0];
 	update_carry((*carriage)->args_found[0], carriage);
 }
