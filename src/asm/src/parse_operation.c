@@ -36,7 +36,7 @@ static int	next_argument(t_parser *parser, t_lexer *lexer,
 
 	sym = &parser->sym;
 	if (sym->type == LA_eol || sym->type == LA_com)
-		return (error(errorset(lexer->source.pos, sym->str),
+		return (error_no_str(errorset(lexer->source.pos, sym->str),
 				PARSER_INSUF_ARG));
 	if (!(statement->op.arg_types[index] & sym->argtype))
 		return (error(errorset(lexer->source.pos, sym->str),

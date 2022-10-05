@@ -12,11 +12,9 @@
 
 #include "asm.h"
 
-static bool	is_endof_arg(t_symtypes type, uint8_t argc, uint8_t index)
+static bool	is_endof_arg(t_symtypes type)
 {
-	if (index < argc - 1)
-		return (type == LA_comma);
-	return (type == LA_eol || type == LA_com);
+	return (type == LA_comma ||type == LA_eol || type == LA_com);
 }
 
 static int	get_action(t_lexer *lexer, int *action, t_symbols *sym)
@@ -51,7 +49,7 @@ int	parse_numeric(t_statement *statement, t_lexer *lexer, t_symbols *sym,
 
 	arg = statement->arguments + index;
 	action = 1;
-	while (!is_endof_arg(sym->type, statement->op.argc, index))
+	while (!is_endof_arg(sym->type))
 	{
 		if (action == 0)
 		{

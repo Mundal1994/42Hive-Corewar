@@ -54,6 +54,7 @@ of quote string"
 # define PARSER_EXPECT_SEP "Syntax error: Expected argument separator"
 # define PARSER_EXPECT_MATH_OP "Syntax error: Expected mathematical operator"
 # define PARSER_EXPECT_NUM "Syntax error: Expected number"
+# define PARSER_TOO_MANY_ARGS "Syntax error: Too many argument separators"
 
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
