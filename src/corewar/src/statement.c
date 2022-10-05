@@ -148,6 +148,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	else if ((*carriage)->arg_types[1] == I)
 	{
 		pos = ((*carriage)->pos + (*carriage)->args_found[1]) % MEM_SIZE;
+		//pos = (*carriage)->pos + ((*carriage)->args_found[1] % IDX_MOD);
 		// if (pos - (*carriage)->pos > 512)
 		// 	pos = (*carriage)->pos - 512;
 		// else if (pos - (*carriage)->pos < -512)

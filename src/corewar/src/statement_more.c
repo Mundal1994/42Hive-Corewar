@@ -32,16 +32,49 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	limit_jump(t_carriage **carriage, int *pos)
 {
+	ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
+	ft_printf("pos: %d\n", *pos);
 	if (*pos - (*carriage)->pos > 512 && *pos < (*carriage)->pos)
 		*pos = (*carriage)->pos - 512;
 	else if (*pos - (*carriage)->pos < -512 && *pos > (*carriage)->pos)
 		*pos = (*carriage)->pos + 512;
+	else if (*pos - (*carriage)->pos == -512 || *pos - (*carriage)->pos == 512)
+		*pos = (*carriage)->pos;
+	ft_printf("pos: %d\n", *pos);
 	if (*pos >= MEM_SIZE)
 		*pos %= MEM_SIZE;
+	ft_printf("pos: %d\n", *pos);
 	// else if (*pos < 0)
 	// 	*pos = MEM_SIZE - (*pos * -1);
 }
+/*
+change between outputs
+./corewar -di 8345 champs/examples/helltrain.cor champs/examples/jinx.cor champs/examples/turtle.cor
 
+
+IN THIS CASE IT DOESN"T WORK WITH THE ABOVE CALCULATION
+because dif is positive and carriage pos is smaller than position calculated
+./corewar -di 8170 champs/examples/helltrain.cor champs/examples/jinx.cor champs/examples/turtle.cor
+./corewar -c 8169 champs/examples/helltrain.cor champs/examples/jinx.cor champs/examples/turtle.cor
+
+2182 + 65535 % 512 == 2693
+
+
+2182 + 65535 % 4096 == 6277
+6277 - 2182 == 4095
+4095 % 512 = 511
+2182 + 511 = 2693
+
+
+CARRIAGE ID 59
+carry: 1	statement_code: 3	last_live_call: 8159
+delay: 1	pos: 2182	skip: 0
+REGISTRY
+reg0 : -1	reg1 : 57672192	reg2 : 318992387	reg3 : 0
+reg4 : 0	reg5 : 0	reg6 : 0	reg7 : 0
+reg8 : 0	reg9 : 0	reg10 : 0	reg11 : 0
+reg12 : 0	reg13 : 0	reg14 : 0	reg15 : 0
+*/
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
