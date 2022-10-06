@@ -24,6 +24,7 @@ drop_down()
 		eof5=0
 		eof6=0
 		LINE_NBR=0
+		printf "$COUNT   $DOWN\n"
 		$GIVEN_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > given_vm_dump$((COUNT - DOWN)).txt
 		$MY_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > vm_dump$((COUNT - DOWN)).txt
 		exec 5<given_vm_dump$((COUNT - DOWN)).txt
@@ -134,6 +135,7 @@ checking_lines()
 {
 	if [[ "$line" == *"has won"* && "$line2" == *"has won"* ]]
 	then
+		#printf "HERE\n"
 		drop_down_2
 		printf "OK\n"
 		exit 0
@@ -149,6 +151,9 @@ checking_lines()
 	# 	exit 0
 	elif [[ "$line" != "$line2" ]]
 	then
+		echo $line
+		echo $line2
+		#printf "problem\n"
 		drop_down
 		exit 0
 	fi
@@ -164,6 +169,7 @@ do
 	eof4=0
 	exec 3<given_vm_dump$COUNT.txt
 	exec 4<vm_dump$COUNT.txt
+	#printf "$COUNT\n"
 	while [[ $eof3 -eq 0  ||  $eof4 -eq 0 ]]
 	do
 		YES=$((YES+1))
@@ -180,9 +186,10 @@ do
 			eof4=1
 		fi
 		# printf "BIG $COUNT\n"
-		# echo "$line"
-		# echo "$line2"
+		#echo $line
+		#echo $line2
 		checking_lines
+		#printf "here\n"
 	done
 	#echo "end"
 	rm vm_dump$COUNT.txt

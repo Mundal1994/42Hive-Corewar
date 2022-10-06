@@ -32,18 +32,18 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	limit_jump(t_carriage **carriage, int *pos)
 {
-	ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
-	ft_printf("pos: %d\n", *pos);
+	//ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
+	//ft_printf("pos: %d\n", *pos);
 	if (*pos - (*carriage)->pos > 512 && *pos < (*carriage)->pos)
 		*pos = (*carriage)->pos - 512;
 	else if (*pos - (*carriage)->pos < -512 && *pos > (*carriage)->pos)
 		*pos = (*carriage)->pos + 512;
 	else if (*pos - (*carriage)->pos == -512 || *pos - (*carriage)->pos == 512)
 		*pos = (*carriage)->pos;
-	ft_printf("pos: %d\n", *pos);
+	//ft_printf("pos: %d\n", *pos);
 	if (*pos >= MEM_SIZE)
 		*pos %= MEM_SIZE;
-	ft_printf("pos: %d\n", *pos);
+	//ft_printf("pos: %d\n", *pos);
 	// else if (*pos < 0)
 	// 	*pos = MEM_SIZE - (*pos * -1);
 }
