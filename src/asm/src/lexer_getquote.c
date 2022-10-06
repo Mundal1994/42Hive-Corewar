@@ -22,7 +22,10 @@ int	lexer_getquote(t_source *source, t_symbols *sym)
 	if (!start)
 		sym->type = LA_unknown;
 	if (*start == '"')
+	{
+		source_next(source);
 		return (string_clear(&sym->str), OK);
+	}
 	len = 1;
 	while (source_next(source) && *(source->curr) != '"')
 		++len;
