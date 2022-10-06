@@ -50,6 +50,7 @@ void	assemble_write(t_assembler *assembler)
 {
 	int	fd;
 
+	ft_printf("Writing output program to %s\n", assembler->filename.memory);
 	open_file(&fd, assembler);
 	write_file(fd, assembler);
 	close(fd);
