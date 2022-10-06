@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	//logic of how to check if it is a possible operation command? just check if it is less than 16
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
