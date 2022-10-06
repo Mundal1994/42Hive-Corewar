@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:52:13 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 15:56:02 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/06 10:55:07 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define BITS	8
 
-typedef struct	s_assembler
+typedef struct s_assembler
 {
 	t_string	filename;	
 	t_string	buffer;

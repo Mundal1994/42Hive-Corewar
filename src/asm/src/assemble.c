@@ -45,7 +45,6 @@ void	assemble(const char *arg)
 	t_lexer		lexer;
 	t_assembler	assembler;
 
-
 	lexer_init(&lexer, arg);
 	parse_init(&parser, &lexer);
 	parse(&parser, &lexer);

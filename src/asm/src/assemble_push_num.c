@@ -61,4 +61,3 @@ t_string	*assemble_push_int(t_string *buffer, uint32_t num)
 {
 	return (push_num(buffer, num, 4));
 }
-

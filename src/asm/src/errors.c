@@ -42,17 +42,3 @@ int	error(t_errorset error, char *msg)
 		error.pos.r, error.pos.c, msg);
 	return (ERROR);
 }
-
-int	warning(t_errorset error, char *msg)
-{
-	ft_dprintf(2, "%sWarning: %s", YELLOW, NOCOLOR);
-	ft_dprintf(2, "Found \"%s\" at [%ld:%ld]\n\t%s\n", error.str.memory,
-		error.pos.r, error.pos.c, msg);
-	return (OK);
-}
-
-int	warning_ret(char *msg)
-{
-	ft_dprintf(2, "%sWarning: %s%s\n", YELLOW, NOCOLOR, msg);
-	return (OK);
-}

@@ -41,7 +41,7 @@ static void	write_file(int fd, t_assembler *assembler)
 			exit_error();
 		}
 		if (!res)
-			break;
+			break ;
 		written += (size_t) res;
 	}
 }

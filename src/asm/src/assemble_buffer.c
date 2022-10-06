@@ -12,7 +12,7 @@
 
 #include "asm.h"
 
-static void buff_header(t_assembler *assembler)
+static void	buff_header(t_assembler *assembler)
 {
 	t_string	*buffer;
 	t_parser	*parser;
