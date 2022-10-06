@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:35:35 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/06 09:35:36 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/06 10:47:57 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	open_file(int *fd, t_assembler *assembler)
 	const char	*filename;
 
 	filename = assembler->filename.memory;
-	*fd = open(filename, O_WRONLY | O_TRUNC);
+	*fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0600);
 	if (*fd > ERROR)
 		return ;
 	assemble_free(assembler);
