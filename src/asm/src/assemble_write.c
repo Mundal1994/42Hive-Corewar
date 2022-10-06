@@ -24,15 +24,33 @@ static void	open_file(int *fd, t_assembler *assembler)
 	exit_error();
 }
 
-static void	write_fiile(int fd, t_assembler *assembler)
+static void	write_file(int fd, t_assembler *assembler)
 {
+	ssize_t		res;
+	t_string	buffer;
+	size_t		written;
 
+	buffer = assembler->buffer;
+	written = 0;
+	while (written < buffer.length)
+	{
+		res = write(fd, buffer.memory + written, buffer.length - written);
+		if (res == ERROR)
+		{
+			assemble_free(assembler);
+			exit_error();
+		}
+		if (!res)
+			break;
+		written += (size_t) res;
+	}
 }
 
-void	assemble_wrte(t_assembler *assembler)
+void	assemble_write(t_assembler *assembler)
 {
 	int	fd;
 
 	open_file(&fd, assembler);
 	write_file(fd, assembler);
+	close(fd);
 }

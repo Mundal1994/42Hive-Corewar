@@ -19,6 +19,7 @@ SRCS += $(SRC_DIR)/source_read.c
 SRCS += $(SRC_DIR)/symbol.c
 SRCS += $(SRC_DIR)/assemble.c
 SRCS += $(SRC_DIR)/assemble_buffer.c
+SRCS += $(SRC_DIR)/assemble_write.c
 SRCS += $(SRC_DIR)/assemble_push_num.c
 SRCS += $(SRC_DIR)/lexer.c
 SRCS += $(SRC_DIR)/lexer_bools.c

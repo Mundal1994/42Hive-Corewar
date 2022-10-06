@@ -25,7 +25,7 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 		|| !string_concat(&assembler->filename, "cor")
 		|| !string_new(&assembler->buffer, cor_size))
 	{
-		assemble_free(assembler, parser);
+		assemble_free(assembler);
 		exit_error();
 	}
 }
