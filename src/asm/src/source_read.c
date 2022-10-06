@@ -53,7 +53,8 @@ static void	read_file(const int fd, t_string *buffer)
 
 	while (buffer->length < buffer->capacity - 1)
 	{
-		res = read(fd, buffer->memory, buffer->capacity - 1);
+		res = read(fd, buffer->memory + buffer->length,
+				buffer->capacity - 1 - buffer->length);
 		if (res == ERROR)
 		{
 			string_free(buffer);
