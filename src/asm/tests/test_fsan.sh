@@ -7,6 +7,9 @@ DIR=$(dirname `which $0`)
 cd $DIR
 
 for f in $(find . -type f -name "*"); do
-	../../asm $f
+	echo "$f"
+	../asm $f
 	echo ""
 done
+
+rm valid/files/*.cor
