@@ -33,9 +33,9 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 void	assemble_free(t_assembler *assembler)
 {
 	parse_free(assembler->parser);
-	if (!assembler->filename.capacity)
+	if (assembler->filename.capacity)
 		string_free(&assembler->filename);
-	if (!assembler->buffer.capacity)
+	if (assembler->buffer.capacity)
 		string_free(&assembler->buffer);
 }
 
