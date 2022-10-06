@@ -19,11 +19,13 @@ typedef struct	s_assembler
 {
 	t_string	filename;	
 	t_string	buffer;
+	t_parser	*parser;
 }				t_assembler;
 
-void		assemble_free(t_assembler *assembler, t_parser *parser);
 void		assemble(const char *arg);
-void		assemble_buffer(t_assembler *assembler, t_parser *parser);
+void		assemble_buffer(t_assembler *assembler);
+void		assemble_write(t_assembler *assembler);
+void		assemble_free(t_assembler *assembler);
 t_string	*assemble_push_int(t_string *buffer, uint32_t num);
 t_string	*assemble_push_num(t_string *buffer, t_arg arg, uint8_t size);
 

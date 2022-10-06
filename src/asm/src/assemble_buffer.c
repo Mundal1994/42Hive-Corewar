@@ -12,11 +12,13 @@
 
 #include "asm.h"
 
-static void buff_header(t_assembler *assembler, t_parser *parser)
+static void buff_header(t_assembler *assembler)
 {
 	t_string	*buffer;
+	t_parser	*parser;
 
 	buffer = &assembler->buffer;
+	parser = assembler->parser;
 	if (assemble_push_int(buffer, (uint32_t) parser->header.magic)
 		&& string_concat_n(buffer, parser->header.prog_name, PROG_NAME_LENGTH)
 		&& assemble_push_int(buffer, (uint32_t) 0)
@@ -24,7 +26,7 @@ static void buff_header(t_assembler *assembler, t_parser *parser)
 		&& string_concat_n(buffer, parser->header.comment, COMMENT_LENGTH)
 		&& assemble_push_int(buffer, (uint32_t) 0))
 		return ;
-	assemble_free(assembler, parser);
+	assemble_free(assembler);
 	exit_error();
 }
 
@@ -61,36 +63,38 @@ static int	buff_statement(t_string *buffer, t_statement *statement)
 			size = 2;
 		if (acb_flag(acb, index) == REG_CODE)
 			size = 1;
-		if (!assemble_push_num(buffer, statement->arguments[index++], size));
+		if (!assemble_push_num(buffer, statement->arguments[index++], size))
 			return (ERROR);
 	}
 	return (OK);
 }
 
-static void	buff_body(t_assembler *assembler, t_parser *parser)
+static void	buff_body(t_assembler *assembler)
 {
 	t_string	*buffer;
 	t_vec		*code;
 	t_statement	*statement;
 	size_t		index;
+	t_parser	*parser;
 
+	parser = assembler->parser;
 	buffer = &assembler->buffer;
 	code = &parser->body;
 	index = 0;
 	while (index < code->len)
 	{
 		statement = (t_statement *) vec_get(&parser->body, index);
-		if (buff_statement(buffer, statement) == ERROR);
+		if (buff_statement(buffer, statement) == ERROR)
 		{
-			assemble_free(assembler, parser);
+			assemble_free(assembler);
 			exit_error();
 		}
 		++index;
 	}
 }
 
-void	assemble_buffer(t_assembler *assembler, t_parser *parser)
+void	assemble_buffer(t_assembler *assembler)
 {
-	buff_header(assembler, parser);
-	buff_body(assembler, parser);
+	buff_header(assembler);
+	buff_body(assembler);
 }

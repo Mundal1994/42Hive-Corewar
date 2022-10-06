@@ -18,6 +18,7 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 	size_t	len;
 	size_t	cor_size;
 
+	assembler->parser = parser;
 	len = ft_strchr(arg, '.') - arg + 1;
 	cor_size = 8 + PROG_NAME_LENGTH + COMMENT_LENGTH + parser->size;
 	if (!string_from_n(&assembler->filename, arg, len)
@@ -29,9 +30,9 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 	}
 }
 
-void	assemble_free(t_assembler *assembler, t_parser *parser)
+void	assemble_free(t_assembler *assembler)
 {
-	parse_free(parser);
+	parse_free(assembler->parser);
 	if (!assembler->filename.capacity)
 		string_free(&assembler->filename);
 	if (!assembler->buffer.capacity)
@@ -50,6 +51,7 @@ void	assemble(const char *arg)
 	parse(&parser, &lexer);
 	lexer_free(&lexer);
 	assemble_init(&assembler, &parser, arg);
-	assemble_buffer(&assembler, &parser);
-	assemble_free(&assembler, &parser);
+	assemble_buffer(&assembler);
+	assemble_write(&assembler);
+	assemble_free(&assembler);
 }
