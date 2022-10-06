@@ -180,8 +180,8 @@ do
 			eof4=1
 		fi
 		# printf "BIG $COUNT\n"
-		# echo "$line"
-		# echo "$line2"
+		echo "$line"
+		echo "$line2"
 		checking_lines
 	done
 	#echo "end"
