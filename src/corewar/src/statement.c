@@ -15,7 +15,7 @@ static void v_flag4_print(t_carriage **carriage, char *command)
 	int16_t temp;
 
 	i = 0;
-	ft_printf("P	%d | %s ", (*carriage)->id, command);
+	ft_printf("P %4d | %s ", (*carriage)->id, command);
 	if ((*carriage)->statement_code == 9)
 	{
 		temp = (int16_t)(*carriage)->args_found[i];
