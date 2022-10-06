@@ -7,6 +7,14 @@ YELLOW='\033[1;33m'
 DIR=$(dirname `which $0`)
 cd $DIR
 
+if [ $# -eq 0 ]
+then
+	echo "${RED}Hive asm executable required!${NC}"
+	exit 1
+fi
+
+HIVE_ASM=$1
+
 CHECK_LEAKS () {
 	echo -n "Leaks: "
 	leaks --atExit -- ../../asm $1 &> res
@@ -28,7 +36,7 @@ RUN_ASM () {
 
 RUN_HIVE_ASM () {
 	echo "Running school asm:"
-	./hive_asm $1
+	./$HIVE_ASM $1
 	echo "Renaming: $2 -> $3\n"
 	/bin/mv $2 $3
 }
@@ -52,7 +60,17 @@ COMPARE () {
 	/bin/rm dumpcor dumphive
 }
 
-echo "Testing valid maps..."
+if [[ -f "../../asm" ]]
+then
+	echo "${YELLOW}Testing valid maps...${NC}"
+else
+	echo "${RED}Missing asm executable!${NC}"
+	exit 1
+fi
+
+rm -f files/*.diff 2> /dev/null
+echo ""
+
 for f in $(find . -type f -name "*.s"); do
 	echo "${YELLOW}$f${NC}"
 	COR=$(echo $f | sed 's/\.s/\.cor/g')
