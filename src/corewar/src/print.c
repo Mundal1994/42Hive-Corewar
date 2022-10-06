@@ -104,7 +104,8 @@ void	print_core(uint8_t core[MEM_SIZE], t_info *info)
 			ft_printf("0%x", core[i]);
 		else
 			ft_printf("%x", core[i]);
-		ft_printf(RESET);
+		if (info->flag[DC_FLAG] || info->flag[DI_FLAG] || info->flag[C_FLAG])
+			ft_printf(RESET);
 		++line;
 		++i;
 		print_newline_or_space(&line, i);

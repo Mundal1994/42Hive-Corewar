@@ -24,7 +24,7 @@ drop_down()
 		eof5=0
 		eof6=0
 		LINE_NBR=0
-		printf "$COUNT   $DOWN\n"
+		#printf "$COUNT   $DOWN\n"
 		$GIVEN_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > given_vm_dump$((COUNT - DOWN)).txt
 		$MY_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > vm_dump$((COUNT - DOWN)).txt
 		exec 5<given_vm_dump$((COUNT - DOWN)).txt
@@ -186,8 +186,8 @@ do
 			eof4=1
 		fi
 		# printf "BIG $COUNT\n"
-		#echo $line
-		#echo $line2
+		#echo "$line"
+		#echo "$line2"
 		checking_lines
 		#printf "here\n"
 	done

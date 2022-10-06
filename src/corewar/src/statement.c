@@ -9,6 +9,39 @@ void	update_carry(int nbr, t_carriage **carriage)
 		(*carriage)->carry = FALSE;
 }
 
+static void v_flag4_print(t_carriage **carriage, char *command)
+{
+	int	i;
+	int16_t temp;
+
+	i = 0;
+	ft_printf("P	%d | %s ", (*carriage)->id, command);
+	if ((*carriage)->statement_code == 9)
+	{
+		temp = (int16_t)(*carriage)->args_found[i];
+		ft_printf("%d ", temp);
+		if ((*carriage)->carry)
+			ft_printf("OK");
+		else
+			ft_printf("FAILURE");
+	}
+	else
+	{
+		while (i < ARGS)
+		{
+			if ((*carriage)->arg_types[i] == R)
+				ft_printf("r%d ", (*carriage)->args_found[i]);
+			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
+			{
+				temp = (int16_t)(*carriage)->args_found[i];
+				ft_printf("%d ", temp);
+			}
+			++i;
+		}
+	}
+	ft_putchar('\n');
+}
+
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	new;
@@ -27,27 +60,7 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 			(*carriage)->pos = new;
 		//ft_printf("JUMPED EXECUTED\n");
 	}
-}
-
-static void v_flag4_print(t_carriage **carriage, char *command)
-{
-	int	i;
-	int8_t temp;
-
-	i = 0;
-	ft_printf("P	%d | %s ", (*carriage)->id, command);
-	while (i < ARGS)
-	{
-		if ((*carriage)->arg_types[i] == R)
-			ft_printf("r%d ", (*carriage)->args_found[i]);
-		else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
-		{
-			temp = (int8_t)(*carriage)->args_found[i];
-			ft_printf("%d ", temp);
-		}
-		++i;
-	}
-	ft_putchar('\n');
+	v_flag4_print(carriage, "zjmp");
 }
 
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -147,6 +160,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	else if ((*carriage)->arg_types[1] == I)
 	{
+		//ft_printf("FIND POS\n");
 		pos = ((*carriage)->pos + (*carriage)->args_found[1]) % MEM_SIZE;
 		//pos = (*carriage)->pos + ((*carriage)->args_found[1] % IDX_MOD);
 		// if (pos - (*carriage)->pos > 512)
@@ -155,7 +169,10 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		// 	pos = (*carriage)->pos + 512;
 		// if (pos >= MEM_SIZE)
 		// 	pos %= MEM_SIZE;
+		//ft_printf("pos: %d\n", pos);
 		limit_jump(carriage, &pos);
+		// if ((*carriage)->id == 13)
+		// 	ft_printf("pos: %d\n", pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
 		//core[pos] = (*carriage)->args_found[0];
 	}

@@ -43,11 +43,21 @@ void	limit_jump(t_carriage **carriage, int *pos)
 	//ft_printf("pos: %d\n", *pos);
 	if (*pos >= MEM_SIZE)
 		*pos %= MEM_SIZE;
+	else if (*pos < 0)
+		*pos = MEM_SIZE - (*pos * -1);
 	//ft_printf("pos: %d\n", *pos);
-	// else if (*pos < 0)
-	// 	*pos = MEM_SIZE - (*pos * -1);
 }
 /*
+
+
+Difference at -d 8198
+8198
+
+carriage seems to be off here: ./corewar -di 8012 champs/examples/helltrain.cor champs/examples/jinx.cor
+
+
+
+
 ---------
 
 ./corewar -d 7215 champs/examples/helltrain.cor champs/championships/2014/rabid-on/jinx.cor champs/examples/turtle.cor
@@ -295,6 +305,7 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
+	//ft_printf("fork---------\n");
 	//pos = (*carriage)->args_found[0] % IDX_MOD;
 	//ft_printf("Created new CARRIAGE\n");
 	pos = ((*carriage)->pos + (*carriage)->args_found[0]) % MEM_SIZE;
@@ -318,9 +329,10 @@ void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
+	//ft_printf("LLfork---------\n");
 	pos = (*carriage)->pos + (*carriage)->args_found[0];
 	if (pos >= MEM_SIZE)
-		pos -= MEM_SIZE;
+		pos %= MEM_SIZE;
 	copy_carriage(&info, *carriage, pos);
 	//set_statement_code(core, &info->head_carriage, info);
 	if (!core)
