@@ -1,4 +1,0 @@
-Introducing contestants...
-* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
-* Player 2, weighing 320 bytes, "Jinx" ("Stay still, I'm trying to shoot you..!") !
-Contestant 2, "Jinx", has won !
