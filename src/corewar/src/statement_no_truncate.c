@@ -11,11 +11,9 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, SIZE);
 	}
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
-	if (!info)
-		ft_printf("no\n");
 	//still update carry?
 	//update_carry((*carriage)->args_found[0], carriage);
 }

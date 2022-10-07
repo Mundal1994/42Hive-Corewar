@@ -36,7 +36,7 @@ void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_three_arg(carriage, "ldi", ARG3);
 	sum = (int16_t)(*carriage)->args_found[ARG1] + (int16_t)(*carriage)->args_found[ARG2];
 	if (sum < 0)
@@ -48,8 +48,6 @@ void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
 	if (info->flag[V_FLAG] == 4)
 		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[ARG1], (int16_t)(*carriage)->args_found[ARG2], sum, pos);
-	if (!info)
-		ft_printf("no\n");
 }
 
 void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -60,7 +58,7 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_three_arg(carriage, "lldi", ARG3);
 	sum = (int16_t)(*carriage)->args_found[ARG1] + (int16_t)(*carriage)->args_found[ARG2];
 	if (sum < 0)
@@ -71,8 +69,6 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
 	if (info->flag[V_FLAG] == 4)
 		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[ARG1], (int16_t)(*carriage)->args_found[ARG2], sum, pos);
-	if (!info)
-		ft_printf("no\n");
 }
 
 

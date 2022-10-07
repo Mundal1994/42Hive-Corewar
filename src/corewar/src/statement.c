@@ -168,7 +168,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_two_arg(carriage, "st", ARG1);
 	if ((*carriage)->arg_types[ARG2] == R)
 		(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1];
@@ -181,32 +181,26 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		limit_jump(&pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	}
-	if (!info)
-		ft_printf("no info\n");
 }
 
 void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && core && info)
 		v_flag4_two_arg(carriage, "add", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] + (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
-	if (!core && !info)
-		ft_printf("no core and no info\n");
 }
 
 void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && core && info)
 		v_flag4_two_arg(carriage, "sub", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] - (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
-	if (!core && !info)
-		ft_printf("no core and no info\n");
 }
