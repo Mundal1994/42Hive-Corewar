@@ -79,7 +79,8 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles + 1;//removed +1
 	info->live_statement += 1;
-	if ((*carriage)->args_found[ARG1] == (*carriage)->registry[0] && core && info)
+	if ((*carriage)->args_found[ARG1] == (*carriage)->registry[0] && core && info && \
+		(*carriage)->registry[0] >= -4 && (*carriage)->registry[0] <= -1)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
 		if (info->flag[V_FLAG] == 1)
