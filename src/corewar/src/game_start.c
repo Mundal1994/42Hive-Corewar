@@ -78,6 +78,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 	dump = flag_check(info);
 	while (!one_carriage_left(info))
 	{
+		//ft_printf("NEW CYCLE\n");
 		if (info->total_cycles == dump)//info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
 		{
 			print_core(core, info);

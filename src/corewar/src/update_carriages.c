@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	//logic of how to check if it is a possible operation command? just check if it is less than 16
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
@@ -133,7 +133,8 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 
 static void	make_move(t_carriage **carriage, int move)
 {
-	//ft_printf("pos %i    moves %i\n", (*carriage)->pos, move);
+	// if ((*carriage)->id == 13)
+	// 	ft_printf("pos %i    moves %i\n", (*carriage)->pos, move);
 	if ((*carriage)->pos + move >= MEM_SIZE)
 		(*carriage)->pos = ((*carriage)->pos + move) % MEM_SIZE;
 	else
@@ -145,6 +146,8 @@ static void	move_carriage(t_info *info, t_carriage **carriage)
 	int	i;
 
 	i = 0;
+	// if ((*carriage)->id == 13)
+	// ft_printf("Begin\n");
 	if (info->operations[PCB][(*carriage)->statement_code - 1] == TRUE)
 		make_move(carriage, 2);
 	else
@@ -160,6 +163,10 @@ static void	move_carriage(t_info *info, t_carriage **carriage)
 			make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1]);
 		++i;
 	}
+	// if ((*carriage)->id == 13)
+	// {
+	// 	ft_printf("End\n");
+	// }
 }
 
 static int	args_found_error(t_info *info, t_carriage **carriage)
@@ -189,12 +196,21 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
 		 && core[(*carriage)->pos] == (*carriage)->statement_code)
 	{
+		// if ((*carriage)->id == 13)
+		// {
+		// 	ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
+		// 	ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
+		// 	ft_printf("reg[%d]: %d\n", 2, (*carriage)->registry[2 - 1]);
+		// 	if ((*carriage)->registry[2 - 1] != 0)
+		// 		exit(0);
+		// }
 		//not sure if can just compare value of typecode element
 		//is arguments arent valid or registry isnt valid, skip all of those bytes
 		(*carriage)->statement_code = core[(*carriage)->pos];
 		(*carriage)->tmp_pos = (*carriage)->pos;
 		make_move_tmp(carriage, 1);
-		//ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
+		// if ((*carriage)->id == 13)
+		// 	ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
 		if (info->operations[PCB][(*carriage)->statement_code - 1] == 1) //statements using typecode
 		{
 			i = 0;
@@ -205,8 +221,11 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			arg_found[ARG2] = arg_found[ARG2] >> 6;
 			arg_found[ARG3] = arg_found[ARG3] << 4;
 			arg_found[ARG3] = arg_found[ARG3] >> 6;
-			//ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
-			//ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			// if ((*carriage)->id == 13)
+			// {
+			// 	ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			// 	ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			// }
 			(*carriage)->arg_types[ARG1] = arg_found[ARG1];
 			(*carriage)->arg_types[ARG2] = arg_found[ARG2];
 			(*carriage)->arg_types[ARG3] = arg_found[ARG3];
@@ -215,7 +234,12 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			(*carriage)->args_found[ARG2] = first_arg(ARG2, carriage, info, core);
 			(*carriage)->args_found[ARG3] = first_arg(ARG3, carriage, info, core);
 			//ft_printf("wait %i %lli\n", third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core), (*carriage)->args_found[ARG3]);
-			//ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
+			// if ((*carriage)->id == 13)
+			// {
+			// 	ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
+			// 	if ((*carriage)->arg_types[ARG1] == 1)
+			// 		ft_printf("reg[%d]: %d\n", (*carriage)->args_found[0], (*carriage)->registry[(*carriage)->args_found[0] - 1]);
+			// }
 			if (args_found_error(info, carriage) == TRUE)
 				return ;
 		}
@@ -241,6 +265,11 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		op_table[(*carriage)->statement_code - 1](core, carriage, info);
 		if ((*carriage)->statement_code != 9 || ((*carriage)->statement_code == 9 && !(*carriage)->carry))// added this statement
 			move_carriage(info, carriage);
+		// if ((*carriage)->id == 13)
+		// {
+		// 	ft_printf("core[%d]: %d\n", (*carriage)->pos, core[(*carriage)->pos]);
+		// 	print_core(core, info);
+		// }
 		(*carriage)->statement_code = 0;
 		i = 0;
 		while (i < 3)
