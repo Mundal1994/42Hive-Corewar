@@ -155,4 +155,9 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
+//print4 flag
+void	v_flag4_one_arg(t_carriage **carriage, char *command);
+void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg);
+void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
+
 #endif

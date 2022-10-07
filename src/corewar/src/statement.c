@@ -9,35 +9,60 @@ void	update_carry(int nbr, t_carriage **carriage)
 		(*carriage)->carry = FALSE;
 }
 
-static void v_flag4_print(t_carriage **carriage, char *command)
+
+void	v_flag4_one_arg(t_carriage **carriage, char *command)
+{
+	ft_printf("P %4d | %s ", (*carriage)->id, command);
+	if ((*carriage)->statement_code == 12)
+	{
+		ft_printf("%d ", (int16_t)(*carriage)->args_found[0]);
+	}
+	else if ((*carriage)->statement_code == 9)
+	{
+		ft_printf("%d ", (int16_t)(*carriage)->args_found[0]);
+		if ((*carriage)->carry)
+			ft_printf("OK\n");
+		else
+			ft_printf("FAILURE\n");
+	}
+	else if ((*carriage)->statement_code == 1)
+	{
+		ft_printf("%d\n", (int16_t)(*carriage)->args_found[0]);
+	}
+}
+
+void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 {
 	int	i;
 	int16_t temp;
 
 	i = 0;
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
-	if ((*carriage)->statement_code == 9)
+	while (i < ARGS)
 	{
-		temp = (int16_t)(*carriage)->args_found[i];
-		ft_printf("%d ", temp);
-		if ((*carriage)->carry)
-			ft_printf("OK");
-		else
-			ft_printf("FAILURE");
-	}
-	else
-	{
-		while (i < ARGS)
+		if (i != 0)
+			ft_putchar(' ');
+		if (reg == -1)
 		{
 			if ((*carriage)->arg_types[i] == R)
-				ft_printf("r%d ", (*carriage)->args_found[i]);
+				ft_printf("r%d", (*carriage)->args_found[i]);
 			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
 			{
 				temp = (int16_t)(*carriage)->args_found[i];
-				ft_printf("%d ", temp);
+				ft_printf("%d", temp);
 			}
-			++i;
 		}
+		else
+		{
+			if (i == reg)
+				ft_printf("r%d", (*carriage)->args_found[i]);
+			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
+			{
+				temp = (int16_t)(*carriage)->args_found[i];
+				ft_printf("%d", temp);
+			}
+		}
+		++i;
 	}
 	ft_putchar('\n');
 }
@@ -76,13 +101,13 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		// //ft_printf("JUMPED EXECUTED\n");
 	}
 	if (info->flag[V_FLAG] == 4)
-		v_flag4_print(carriage, "zjmp");
+		v_flag4_one_arg(carriage, "zjmp");
 }
 
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	if (info->flag[V_FLAG] == 4)
-		v_flag4_print(carriage, "live");
+		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;//removed +1
 	info->live_statement += 1;
 	if ((*carriage)->args_found[0] == (*carriage)->registry[0] && core && info)
@@ -140,6 +165,8 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + ((int16_t)(*carriage)->args_found[0] % IDX_MOD), core, SIZE);
 	}//(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0] % IDX_MOD, core, SIZE);
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_two_arg(carriage, "ld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->args_found[0];
 	update_carry((*carriage)->args_found[0], carriage);
 }
@@ -175,7 +202,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int	pos;
 
 	if (info->flag[V_FLAG] == 4)
-		v_flag4_print(carriage, "st");
+		v_flag4_two_arg(carriage, "st", ARG1);
 	if ((*carriage)->arg_types[1] == R)
 	{
 		(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->registry[(*carriage)->args_found[0] - 1];
@@ -222,6 +249,8 @@ void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_two_arg(carriage, "add", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[0] - 1] + (*carriage)->registry[(*carriage)->args_found[1] - 1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);
@@ -233,6 +262,8 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_two_arg(carriage, "sub", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[0] - 1] - (*carriage)->registry[(*carriage)->args_found[1] - 1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);

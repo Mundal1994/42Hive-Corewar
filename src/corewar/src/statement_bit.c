@@ -60,6 +60,8 @@ void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	check_first_arg_type(core, carriage, &(*carriage)->args_found[0]);
 	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_three_arg(carriage, "xor", ARG3);
 	sum = (*carriage)->args_found[0] ^ (*carriage)->args_found[1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);
@@ -73,6 +75,8 @@ void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	check_first_arg_type(core, carriage, &(*carriage)->args_found[0]);
 	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_three_arg(carriage, "or", ARG3);
 	sum = (*carriage)->args_found[0] | (*carriage)->args_found[1];
 	(*carriage)->registry[(*carriage)->args_found[2] - 1] = sum;
 	update_carry(sum, carriage);
@@ -86,6 +90,8 @@ void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	check_first_arg_type(core, carriage, &(*carriage)->args_found[0]);
 	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_three_arg(carriage, "and", ARG3);
 	//ft_printf("arg0: %d	arg1: %d	arg2: %d\n", (*carriage)->args_found[0], (*carriage)->args_found[1], (*carriage)->args_found[2]);
 	sum = (*carriage)->args_found[0] & (*carriage)->args_found[1];
 	//ft_printf("SUM: %d\n", sum);
