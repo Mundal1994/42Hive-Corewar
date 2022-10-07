@@ -16,7 +16,7 @@ void	limit_jump(t_carriage **carriage, int *pos)
 		*pos %= MEM_SIZE;
 	else if (*pos < 0)
 		*pos = MEM_SIZE - (*pos * -1);
-	if (!carriage)
+	if (!carriage && carriage)
 		ft_printf(" ");
 	//ft_printf("pos: %d\n", *pos);
 }
@@ -277,7 +277,7 @@ void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	else
 		pos = (*carriage)->pos + sum % IDX_MOD;
 	
-	ft_printf("first pos: %d\n", pos);
+	//ft_printf("first pos: %d\n", pos);
 	// if (pos >= MEM_SIZE)
 	// 	pos %= MEM_SIZE;
 	// else if (pos < 0)
@@ -351,7 +351,7 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	else
 		pos = (*carriage)->pos + sum % IDX_MOD;
 	
-	ft_printf("first pos: %d\n", pos);
+	//ft_printf("first pos: %d\n", pos);
 	// if (pos >= MEM_SIZE)
 	// 	pos %= MEM_SIZE;
 	// else if (pos < 0)

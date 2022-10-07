@@ -35,6 +35,7 @@ static void	check_carriage_live_call(t_info *info)
 	
 	carriage = info->head_carriage;
 	limit = info->total_cycles - info->cycles_to_die;
+	//ft_printf("limit %d == %d - %d\n", limit, info->total_cycles, info->cycles_to_die);
 	while (carriage)
 	{
 		if (carriage->last_live_call <= limit)
