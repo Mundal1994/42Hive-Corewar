@@ -1,30 +1,17 @@
 
 #include "vm.h"
 
-void	limit_jump(t_carriage **carriage, int *pos)
+void	limit_jump(int *pos)
 {
-	//ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
-	//ft_printf("pos: %d\n", *pos);
-	// if (*pos - (*carriage)->pos > 512 && *pos < (*carriage)->pos)
-	// 	*pos = (*carriage)->pos - 512;
-	// else if (*pos - (*carriage)->pos < -512 && *pos > (*carriage)->pos)
-	// 	*pos = (*carriage)->pos + 512;
-	// else if (*pos - (*carriage)->pos == -512 || *pos - (*carriage)->pos == 512)
-	// 	*pos = (*carriage)->pos;
-	//ft_printf("pos: %d\n", *pos);
 	if (*pos >= MEM_SIZE)
 		*pos %= MEM_SIZE;
 	else if (*pos < 0)
 		*pos = MEM_SIZE - (*pos * -1);
-	if (!carriage && carriage)
-		ft_printf(" ");
-	//ft_printf("pos: %d\n", *pos);
 }
 
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 {
 	int	i;
-	int16_t temp;
 
 	i = 0;
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
@@ -35,10 +22,7 @@ void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 		if (i == reg)
 			ft_printf("r%d", (*carriage)->args_found[i]);
 		else
-		{
-			temp = (int16_t)(*carriage)->args_found[i];
-			ft_printf("%d", temp);
-		}
+			ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 		++i;
 	}
 	ft_putchar('\n');
@@ -46,47 +30,47 @@ void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 
 void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	value;
-	int	pos;
+	int		value;
+	int		pos;
+	int16_t sum;
 
-	check_first_arg_type(core, carriage, &(*carriage)->args_found[0]);
-	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
+	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
+	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_three_arg(carriage, "ldi", ARG3);
-	int16_t sum = (int16_t)(*carriage)->args_found[0] + (int16_t)(*carriage)->args_found[1];
+	sum = (int16_t)(*carriage)->args_found[ARG1] + (int16_t)(*carriage)->args_found[ARG2];
 	if (sum < 0)
 		pos = (*carriage)->pos - (sum * -1) % IDX_MOD;
 	else
 		pos = (*carriage)->pos + sum % IDX_MOD;
-	// if (pos >= MEM_SIZE)
-	// 	pos %= MEM_SIZE;
-	// else if (pos < 0)
-	// 	pos = MEM_SIZE - (pos * -1);
-	
-
-	//pos = ((*carriage)->pos + ((*carriage)->args_found[0] + (*carriage)->args_found[1])) % MEM_SIZE;
-	limit_jump(carriage, &pos);
-	if (info->flag[V_FLAG] == 4)
-		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[0], (int16_t)(*carriage)->args_found[1], sum, pos);
+	limit_jump(&pos);
 	value = read_bytes(0, pos, core, SIZE);
-	//value = read_bytes(0, (*carriage)->pos + ((*carriage)->args_found[0] + (*carriage)->args_found[1]) % IDX_MOD, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
-	(*carriage)->registry[(*carriage)->args_found[2] - 1] = value;
+	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
+	if (info->flag[V_FLAG] == 4)
+		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[ARG1], (int16_t)(*carriage)->args_found[ARG2], sum, pos);
 	if (!info)
 		ft_printf("no\n");
 }
 
 void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	value;
+	int		value;
+	int		pos;
+	int16_t	sum;
 
-	check_first_arg_type(core, carriage, &(*carriage)->args_found[0]);
-	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
-	int16_t sum = (int16_t)(*carriage)->args_found[0] + (int16_t)(*carriage)->args_found[1];
+	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
+	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_three_arg(carriage, "lldi", ARG3);
+	sum = (int16_t)(*carriage)->args_found[ARG1] + (int16_t)(*carriage)->args_found[ARG2];
 	if (sum < 0)
-		value = read_bytes(0, (*carriage)->pos - (sum * -1), core, SIZE);
+		pos = (*carriage)->pos - (sum * -1);
 	else
-		value = read_bytes(0, (*carriage)->pos + sum, core, SIZE);
-	(*carriage)->registry[(*carriage)->args_found[2] - 1] = value;
+		pos = (*carriage)->pos + sum;
+	value = read_bytes(0, pos, core, SIZE);
+	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
+	if (info->flag[V_FLAG] == 4)
+		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[ARG1], (int16_t)(*carriage)->args_found[ARG2], sum, pos);
 	if (!info)
 		ft_printf("no\n");
 }
@@ -290,42 +274,22 @@ reg12 : 0	reg13 : 0	reg14 : 0	reg15 : 0
 */
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	pos;
+	int		pos;
+	int16_t	sum;
 
-	check_second_arg_type(core, carriage, &(*carriage)->args_found[1]);
-	check_third_arg_type(core, carriage, &(*carriage)->args_found[2]);
+	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
+	update_arg_values(core, carriage, &(*carriage)->args_found[ARG3], ARG3);
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_three_arg(carriage, "sti", ARG1);
-	int16_t sum = (int16_t)(*carriage)->args_found[1] + (int16_t)(*carriage)->args_found[2];
+	sum = (int16_t)(*carriage)->args_found[ARG2] + (int16_t)(*carriage)->args_found[ARG3];
 	if (sum < 0)
 		pos = (*carriage)->pos - (sum * -1) % IDX_MOD;
 	else
 		pos = (*carriage)->pos + sum % IDX_MOD;
-	
-	//ft_printf("first pos: %d\n", pos);
-	// if (pos >= MEM_SIZE)
-	// 	pos %= MEM_SIZE;
-	// else if (pos < 0)
-	// 	pos = MEM_SIZE - (pos * -1);
-
-
-	//pos = ((*carriage)->pos + ((*carriage)->args_found[1] + (*carriage)->args_found[2])) % MEM_SIZE;
-	//ft_printf("pos : %d\n", pos);
-	limit_jump(carriage, &pos);
-	// if (pos - (*carriage)->pos > 512)
-	// 	pos = (*carriage)->pos - 512;
-	// else if (pos - (*carriage)->pos < -512)
-	// 	pos = (*carriage)->pos + 512;
-	// ft_printf("pos : %d\n", pos);
-	// if (pos >= MEM_SIZE)
-	// 	pos -= MEM_SIZE;
-	// else if (pos < 0)
-	// 	pos = MEM_SIZE - (pos * -1);
-	//ft_printf("pos : %d\n", pos);
-	//ft_printf("value outside putn br: %d reg: %d\n", (*carriage)->registry[(*carriage)->args_found[0] - 1], (*carriage)->args_found[0]);
+	limit_jump(&pos);
 	if (info->flag[V_FLAG] == 4)
-		ft_printf("       | -> store to %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[1], (int16_t)(*carriage)->args_found[2], sum, pos);
-	put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[0] - 1]);
+		ft_printf("       | -> store to %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[ARG2], (int16_t)(*carriage)->args_found[ARG3], sum, pos);
+	put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	if (!info)
 		ft_printf("no\n");
 }
@@ -365,36 +329,17 @@ void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *i
 
 void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	pos;
+	int		pos;
+	int16_t	sum;
 
-	//ft_printf("fork---------\n");
-	//pos = (*carriage)->args_found[0] % IDX_MOD;
-	//ft_printf("Created new CARRIAGE\n");
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_one_arg(carriage, "fork");
-	int16_t sum = (int16_t)(*carriage)->args_found[0];
+	sum = (int16_t)(*carriage)->args_found[ARG1];
 	if (sum < 0)
 		pos = (*carriage)->pos - (sum * -1) % IDX_MOD;
 	else
 		pos = (*carriage)->pos + sum % IDX_MOD;
-	
-	//ft_printf("first pos: %d\n", pos);
-	// if (pos >= MEM_SIZE)
-	// 	pos %= MEM_SIZE;
-	// else if (pos < 0)
-	// 	pos = MEM_SIZE - (pos * -1);
-	
-	
-	//pos = ((*carriage)->pos + (*carriage)->args_found[0]) % MEM_SIZE;
-	// if (pos - (*carriage)->pos > 512)
-	// 	pos = (*carriage)->pos - 512;
-	// else if (pos - (*carriage)->pos < -512)
-	// 	pos = (*carriage)->pos + 512;
-	// //ft_printf("value: %d	pos: %d\n", (*carriage)->args_found[0], pos);
-	// if (pos >= MEM_SIZE)
-	// 	pos -= MEM_SIZE;
-	limit_jump(carriage, &pos);
-	//make sure position is possible
+	limit_jump(&pos);
 	copy_carriage(&info, *carriage, pos);
 	//set_statement_code(core, &info->head_carriage, info);
 	if (info->flag[V_FLAG] == 4)
@@ -407,19 +352,10 @@ void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
-	//ft_printf("LLfork---------\n");
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_one_arg(carriage, "lfork");
-	ft_printf("lfork executed!\n");
-	exit(0);
-	pos = (*carriage)->pos + (int16_t)(*carriage)->args_found[0];
-	// if (pos >= MEM_SIZE)
-	// 	pos %= MEM_SIZE;
-	// else if (pos < 0)
-	// 	pos = MEM_SIZE - (pos * -1);
-	limit_jump(carriage, &pos);
-	// if (pos >= MEM_SIZE)
-	// 	pos %= MEM_SIZE;
+	pos = (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1];
+	limit_jump(&pos);
 	copy_carriage(&info, *carriage, pos);
 	if (info->flag[V_FLAG] == 4)
 		ft_printf("(%d)\n", pos);
