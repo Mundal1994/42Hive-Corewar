@@ -24,7 +24,7 @@ void	v_flag4_one_arg(t_carriage **carriage, char *command)
 			ft_printf("FAILURE\n");
 	}
 	else if ((*carriage)->statement_code == 1)
-		ft_printf("%d\n", (int16_t)(*carriage)->args_found[ARG1]);
+		ft_printf("%d\n", (*carriage)->args_found[ARG1]);
 }
 
 void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
