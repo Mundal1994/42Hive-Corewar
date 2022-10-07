@@ -1,0 +1,4 @@
+Introducing contestants...
+* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
+* Player 2, weighing 394 bytes, "turtle" ("TURTLE FFS U LAMA") !
+Contestant 2, "turtle", has won !
