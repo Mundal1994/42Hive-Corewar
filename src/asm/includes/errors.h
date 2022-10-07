@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 11:01:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/05 09:39:16 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/07 09:33:50 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ of quote string"
 # define PARSER_EXPECT_MATH_OP "Syntax error: Expected mathematical operator"
 # define PARSER_EXPECT_NUM "Syntax error: Expected number"
 # define PARSER_TOO_MANY_ARGS "Syntax error: Too many argument separators"
+# define PARSER_UNKNOWN_ARGTYPE "Syntax error: Unidentifiable argument type"
 
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"

@@ -6,7 +6,7 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:02:10 by caruychen         #+#    #+#             */
-/*   Updated: 2022/10/05 09:32:12 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/07 11:09:45 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int			symtable_outstanding(t_symtable *symtable);
 t_symentry	*symtable_find(t_symtable *symtable, const char *name);
 int			symtable_add(t_symtable *symtable, const char *name,
 				t_symentry newentry);
+bool		symtable_is_defined(t_symtable *symtable, const char *name);
 
 #endif

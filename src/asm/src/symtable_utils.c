@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 09:11:44 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/05 09:11:45 by cchen            ###   ########.fr       */
+/*   Updated: 2022/10/07 11:39:39 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ int	symtable_add(t_symtable *symtable, const char *name,
 		|| vec_push(entries, &newentry) == ERROR)
 		return (ERROR);
 	return (OK);
+}
+
+bool	symtable_is_defined(t_symtable *symtable, const char *name)
+{
+	t_symentry	*entry;
+
+	entry = symtable_find(symtable, name);
+	return (entry && entry->defined);
 }
