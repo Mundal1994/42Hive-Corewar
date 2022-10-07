@@ -25,32 +25,31 @@ do
 	YES=$((YES+1))
 	if read line <&3
 	then
-		while [[ "$line" != *"P"* ]]
-		do
-			echo "3"
-			if read line <&3
-			then
-				YES=0
-			else
-				eof3=1
-			fi
-		done
+		# while [[ "$line" != *"P"* ]]
+		# do
+		# 	if read line <&3
+		# 	then
+		# 		YES=0
+		# 	else
+		# 		eof3=1
+		# 	fi
+		# done
 		YES=0
 	else
 		eof3=1
 	fi
 	if read line2 <&4
 	then
-		while [[ "$line2" != *"P"* ]]
-		do
-			echo "4"
-			if read line2 <&4
-			then
-				YES=0
-			else
-				eof3=1
-			fi
-		done
+		# while [[ "$line2" != *"P"* ]]
+		# do
+		# 	COUNT=$((COUNT+1))
+		# 	if read line2 <&4
+		# 	then
+		# 		YES=0
+		# 	else
+		# 		eof3=1
+		# 	fi
+		# done
 		YES=0
 	else
 		eof4=1
@@ -62,4 +61,5 @@ do
 		echo $line2
 		exit 0
 	fi
+	printf "OK\n"
 done
