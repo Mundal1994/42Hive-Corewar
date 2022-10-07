@@ -6,7 +6,10 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	if ((*carriage)->arg_types[0] == I)
 	{
-		(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (*carriage)->args_found[0], core, SIZE);
+		if ((int16_t)(*carriage)->args_found[0] < 0)
+			(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos - (int16_t)(*carriage)->args_found[0], core, SIZE);
+		else
+			(*carriage)->args_found[0] = read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[0], core, SIZE);
 	}
 	(*carriage)->registry[(*carriage)->args_found[1] - 1] = (*carriage)->args_found[0];
 	if (!info)

@@ -1,12 +1,29 @@
 
 #include "vm.h"
 
+static void	read_bytes_int16(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg)
+{
+	int16_t temp;
+
+	temp = (int16_t)(*arg);
+	if (temp < 0)
+		*arg = read_bytes(0, (*carriage)->pos - (temp * -1) % IDX_MOD, core, SIZE);
+	else
+		*arg = read_bytes(0, (*carriage)->pos + temp % IDX_MOD, core, SIZE);
+}
+
 void	check_first_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg)
 {
 	if ((*carriage)->arg_types[0] == R)
 		*arg = (*carriage)->registry[*arg - 1];
 	else if ((*carriage)->arg_types[0] == I)
-		*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+	{
+		read_bytes_int16(core, carriage, arg);
+		// if (*arg < 0)
+		// 	*arg = read_bytes(0, (*carriage)->pos - (*arg * -1) % IDX_MOD, core, SIZE);
+		// else
+		// 	*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+	}
 }
 
 void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg)
@@ -14,7 +31,13 @@ void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_
 	if ((*carriage)->arg_types[1] == R)
 		*arg = (*carriage)->registry[*arg - 1];
 	else if ((*carriage)->arg_types[1] == I)
-		*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+	{
+		read_bytes_int16(core, carriage, arg);
+		// if (*arg < 0)
+		// 	*arg = read_bytes(0, (*carriage)->pos - (*arg * -1) % IDX_MOD, core, SIZE);
+		// else
+		// 	*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+	}
 }
 
 void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg)
@@ -22,7 +45,13 @@ void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t
 	if ((*carriage)->arg_types[2] == R)
 		*arg = (*carriage)->registry[*arg - 1];
 	else if ((*carriage)->arg_types[2] == I)
-		*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+	{
+		read_bytes_int16(core, carriage, arg);
+		// if (*arg < 0)
+		// 	*arg = read_bytes(0, (*carriage)->pos - (*arg * -1) % IDX_MOD, core, SIZE);
+		// else
+		// 	*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+	}
 }
 
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)

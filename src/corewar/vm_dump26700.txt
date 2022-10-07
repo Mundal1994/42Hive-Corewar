@@ -1,0 +1,4 @@
+Introducing contestants...
+* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
+* Player 2, weighing 430 bytes, "bigzork" ("I know i cant win") !
+Contestant 2, "bigzork", has won !

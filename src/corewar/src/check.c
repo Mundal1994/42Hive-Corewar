@@ -35,6 +35,7 @@ static void	check_carriage_live_call(t_info *info)
 	
 	carriage = info->head_carriage;
 	limit = info->total_cycles - info->cycles_to_die;
+	//ft_printf("limit %d == %d - %d\n", limit, info->total_cycles, info->cycles_to_die);
 	while (carriage)
 	{
 		if (carriage->last_live_call <= limit)
@@ -54,7 +55,7 @@ static void	kill_carriages(t_info *info)
 	if (info->live_statement >= NBR_LIVE)
 	{
 		info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
-		info->checks_count = 1;//unsure about corellation of max_checks and checks_count....
+		info->checks_count = 0;//unsure about corellation of max_checks and checks_count....
 		if (info->flag[V_FLAG] == 2)
 			ft_printf("Cycle to die is now %d\n", info->cycles_to_die);
 	}
@@ -66,7 +67,10 @@ static void	kill_carriages(t_info *info)
 		{
 			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 			if (info->flag[V_FLAG] == 2)
+			{
 				ft_printf("Cycle to die is now %d\n", info->cycles_to_die);
+			}
+			info->checks_count = 0;
 		}
 	}
 	info->cycle_count = info->cycles_to_die;
