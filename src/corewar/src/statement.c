@@ -13,7 +13,7 @@ void	update_carry(int nbr, t_carriage **carriage)
 void	v_flag4_one_arg(t_carriage **carriage, char *command)
 {
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
-	if ((*carriage)->statement_code == 12)
+	if ((*carriage)->statement_code == 12 || (*carriage)->statement_code == 15)
 	{
 		ft_printf("%d ", (int16_t)(*carriage)->args_found[0]);
 	}

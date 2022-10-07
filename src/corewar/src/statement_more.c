@@ -394,12 +394,11 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	// if (pos >= MEM_SIZE)
 	// 	pos -= MEM_SIZE;
 	limit_jump(carriage, &pos);
-	if (info->flag[V_FLAG] == 4)
-		ft_printf("(%d)\n", pos);
 	//make sure position is possible
 	copy_carriage(&info, *carriage, pos);
 	//set_statement_code(core, &info->head_carriage, info);
-	
+	if (info->flag[V_FLAG] == 4)
+		ft_printf("(%d)\n", pos);
 	if (!core)
 		ft_printf("no fork \n");
 }
@@ -409,6 +408,10 @@ void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int	pos;
 
 	//ft_printf("LLfork---------\n");
+	if (info->flag[V_FLAG] == 4)
+		v_flag4_one_arg(carriage, "lfork");
+	ft_printf("lfork executed!\n");
+	exit(0);
 	pos = (*carriage)->pos + (int16_t)(*carriage)->args_found[0];
 	// if (pos >= MEM_SIZE)
 	// 	pos %= MEM_SIZE;
@@ -418,6 +421,8 @@ void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	// if (pos >= MEM_SIZE)
 	// 	pos %= MEM_SIZE;
 	copy_carriage(&info, *carriage, pos);
+	if (info->flag[V_FLAG] == 4)
+		ft_printf("(%d)\n", pos);
 	//set_statement_code(core, &info->head_carriage, info);
 	if (!core)
 		ft_printf("no fork \n");
