@@ -61,5 +61,5 @@ do
 		echo $line2
 		exit 0
 	fi
-	printf "OK\n"
 done
+printf "OK\n"
