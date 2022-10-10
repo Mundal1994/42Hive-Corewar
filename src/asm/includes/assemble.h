@@ -24,7 +24,7 @@ typedef struct s_assembler
 	t_parser	*parser;
 }				t_assembler;
 
-void		assemble(const char *arg);
+void		assemble(t_parser *parser, const char *arg);
 void		assemble_buffer(t_assembler *assembler);
 void		assemble_write(t_assembler *assembler);
 void		assemble_free(t_assembler *assembler);

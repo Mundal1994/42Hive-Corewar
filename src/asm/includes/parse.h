@@ -42,9 +42,8 @@ typedef struct s_parser
 	uint32_t	size;
 }		t_parser;
 
-void	parse_init(t_parser *parser, t_lexer *lexer);
 void	parse_free(t_parser *parser);
-void	parse(t_parser *parser, t_lexer *lexer);
+void	parse(t_parser *parser, const char *arg);
 int		parse_header(t_parser *parser, t_lexer *lexer);
 int		parse_body(t_parser *parser, t_lexer *lexer);
 int		parse_operation(t_parser *parser, t_lexer *lexer);

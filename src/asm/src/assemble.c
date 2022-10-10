@@ -40,17 +40,11 @@ void	assemble_free(t_assembler *assembler)
 		string_free(&assembler->buffer);
 }
 
-void	assemble(const char *arg)
+void	assemble(t_parser *parser, const char *arg)
 {
-	t_parser	parser;
-	t_lexer		lexer;
 	t_assembler	assembler;
 
-	lexer_init(&lexer, arg);
-	parse_init(&parser, &lexer);
-	parse(&parser, &lexer);
-	lexer_free(&lexer);
-	assemble_init(&assembler, &parser, arg);
+	assemble_init(&assembler, parser, arg);
 	assemble_buffer(&assembler);
 	assemble_write(&assembler);
 	assemble_free(&assembler);

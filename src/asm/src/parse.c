@@ -15,7 +15,18 @@
 #include "definitions.h"
 #include "parse.h"
 
-void	parse_init(t_parser *parser, t_lexer *lexer)
+void	parse_free(t_parser *parser)
+{
+	if (parser->sym.str.memory)
+		symbol_free(&parser->sym);
+	if (parser->body.memory)
+		vec_free(&parser->body);
+	if (parser->opmap.entries)
+		opmap_free(&parser->opmap);
+	symtable_free(&parser->symtable);
+}
+
+static void	parse_init(t_parser *parser, t_lexer *lexer)
 {
 	t_header	*header;
 
@@ -35,23 +46,18 @@ void	parse_init(t_parser *parser, t_lexer *lexer)
 	exit_error();
 }
 
-void	parse_free(t_parser *parser)
+void	parse(t_parser *parser, const char *arg)
 {
-	if (parser->sym.str.memory)
-		symbol_free(&parser->sym);
-	if (parser->body.memory)
-		vec_free(&parser->body);
-	if (parser->opmap.entries)
-		opmap_free(&parser->opmap);
-	symtable_free(&parser->symtable);
-}
+	t_lexer	lexer;
 
-void	parse(t_parser *parser, t_lexer *lexer)
-{
-	if (parse_header(parser, lexer) == OK
-		&& parse_body(parser, lexer) == OK)
-		return ;
-	parse_free(parser);
-	lexer_free(lexer);
-	exit(EXIT_FAILURE);
+	lexer_init(&lexer, arg);
+	parse_init(parser, &lexer);
+	if (parse_header(parser, &lexer) == ERROR
+		|| parse_body(parser, &lexer) == ERROR)
+	{
+		parse_free(parser);
+		lexer_free(&lexer);
+		exit(EXIT_FAILURE);
+	}
+	lexer_free(&lexer);
 }

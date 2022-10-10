@@ -16,7 +16,10 @@
 
 int	main(int argc, char **argv)
 {
+	t_parser	parser;
+
 	validate_arguments(argc, argv);
-	assemble(argv[1]);
+	parse(&parser, argv[1]);
+	assemble(&parser, argv[1]);
 	return (EXIT_SUCCESS);
 }
