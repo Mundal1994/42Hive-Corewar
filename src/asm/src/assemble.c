@@ -18,6 +18,8 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 	size_t	len;
 	size_t	cor_size;
 
+	if (parser->size == 0)
+		warning_ret(ASSEMBLE_EMPTY_CODE);
 	assembler->parser = parser;
 	len = ft_strrchr(arg, '.') - arg + 1;
 	cor_size = 8 + PROG_NAME_LENGTH + COMMENT_LENGTH + parser->size;
