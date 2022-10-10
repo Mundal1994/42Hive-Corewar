@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_ctype.h"
+#include "definitions.h"
+#include "lexer.h"
 
 int	lexer_getchar(t_source *source, t_symbols *sym)
 {

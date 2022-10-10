@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
+#include "definitions.h"
 #include "symtable.h"
 
 int	symtable_outstanding(t_symtable *symtable)

@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include <stdlib.h>
+#include "validator.h"
+#include "assemble.h"
 
 int	main(int argc, char **argv)
 {

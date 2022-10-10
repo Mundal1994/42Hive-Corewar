@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "definitions.h"
+#include "parse.h"
 
 static void	populate_arg(t_statement *statement, t_symbols *sym, uint8_t index)
 {

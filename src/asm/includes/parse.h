@@ -13,12 +13,16 @@
 #ifndef PARSE_H
 # define PARSE_H
 
-# include <stdbool.h>
-# include "definitions.h"
 # include "lexer.h"
-# include "errors.h"
 # include "opmap.h"
 # include "symtable.h"
+
+typedef union s_arg
+{
+	uint8_t		reg;
+	uint16_t	ind;
+	uint32_t	dir;	
+}		t_arg;
 
 typedef struct s_statement
 {

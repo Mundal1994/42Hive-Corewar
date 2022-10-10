@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include "errors.h"
+#include "definitions.h"
+#include "source.h"
 
 static void	open_file(int *fd, const char *filename)
 {

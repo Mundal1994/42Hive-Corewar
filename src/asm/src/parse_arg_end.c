@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "errors.h"
+#include "definitions.h"
+#include "parse.h"
 
 static int	middle_arguments(t_lexer *lexer, t_symbols *sym)
 {

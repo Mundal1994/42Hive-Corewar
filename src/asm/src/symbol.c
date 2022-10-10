@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "definitions.h"
 #include "symbol.h"
 
 int	symbol_init(t_symbols *sym)

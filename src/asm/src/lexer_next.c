@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "definitions.h"
 #include "lexer.h"
 
 static int	lexer_getstart(t_source *source, t_symbols *sym)

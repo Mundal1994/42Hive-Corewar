@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "definitions.h"
+#include "source.h"
 
 bool	source_at_lineend(t_source source)
 {

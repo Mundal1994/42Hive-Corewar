@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "errors.h"
+#include "definitions.h"
+#include "parse.h"
 
 static int	parse_label(t_parser *parser, t_lexer *lexer)
 {

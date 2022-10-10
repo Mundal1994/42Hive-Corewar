@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "parse.h"
 
 int	parse_indirect(t_parser *parser, t_lexer *lexer, t_statement *statement,
 		uint8_t index)

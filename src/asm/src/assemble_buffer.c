@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "errors.h"
+#include "definitions.h"
+#include "assemble.h"
 
 static void	buff_header(t_assembler *assembler)
 {

@@ -6,11 +6,14 @@
 /*   By: caruychen <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:09:54 by caruychen         #+#    #+#             */
-/*   Updated: 2022/10/04 22:46:45 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/10 14:17:57 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "definitions.h"
 #include "symtable.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int	symtable_init(t_symtable *symtable)
 {

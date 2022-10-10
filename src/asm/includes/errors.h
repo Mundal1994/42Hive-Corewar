@@ -13,8 +13,7 @@
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# include <stdio.h>
-# include "definitions.h"
+# include "source.h"
 # include "Strings.h"
 
 # define MSG_USAGE "Usage: ./asm <sourcefile.s>"

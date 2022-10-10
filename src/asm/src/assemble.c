@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "assemble.h"
+#include "errors.h"
 
 static void	assemble_init(t_assembler *assembler, t_parser *parser,
 		const char *arg)

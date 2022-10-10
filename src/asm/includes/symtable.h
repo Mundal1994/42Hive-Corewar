@@ -13,9 +13,8 @@
 #ifndef SYMTABLE_H
 # define SYMTABLE_H
 
-# include "libft.h"
-# include "definitions.h"
-# include "errors.h"
+# include "vec.h"
+# include "hashmap.h"
 # include <stdbool.h>
 # include <stdint.h>
 

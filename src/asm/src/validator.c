@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_string.h"
+#include "validator.h"
+#include "errors.h"
 
 static int	is_valid_extension(char *arg)
 {

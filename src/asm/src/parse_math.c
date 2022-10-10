@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "errors.h"
+#include "definitions.h"
+#include "parse.h"
 
 static bool	is_endof_arg(t_symtypes type)
 {

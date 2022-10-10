@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "errors.h"
+#include "definitions.h"
+#include "parse.h"
 
 static int	filter_types(t_lexer *lexer, t_symbols *sym, t_arg *arg)
 {

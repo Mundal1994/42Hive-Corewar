@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include "errors.h"
+#include "definitions.h"
 #include "parse.h"
 
 void	parse_init(t_parser *parser, t_lexer *lexer)

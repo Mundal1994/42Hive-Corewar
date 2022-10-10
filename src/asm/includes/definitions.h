@@ -28,17 +28,4 @@
 # define NEWLINE_C '\n'
 # define TABSPACE " \t"
 
-typedef struct s_pos
-{
-	size_t	r;
-	size_t	c;
-}		t_pos;
-
-typedef union s_arg
-{
-	uint8_t		reg;
-	uint16_t	ind;
-	uint32_t	dir;	
-}		t_arg;
-
 #endif

@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_ctype.h"
+#include "lexer.h"
 
 int	lexer_getdirect(t_source *source, t_symbols *sym)
 {

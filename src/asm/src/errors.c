@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_stdio.h"
+#include "definitions.h"
+#include "errors.h"
 
 t_errorset	errorset(t_pos pos, t_string str)
 {

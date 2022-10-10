@@ -13,11 +13,14 @@
 #ifndef SOURCE_H
 # define SOURCE_H
 
-# include <fcntl.h>
-# include <stdio.h>
 # include <stdbool.h>
 # include "Strings.h"
-# include "definitions.h"
+
+typedef struct s_pos
+{
+	size_t	r;
+	size_t	c;
+}		t_pos;
 
 typedef struct s_source
 {

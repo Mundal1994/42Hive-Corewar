@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "definitions.h"
+#include "source.h"
 
 static void	reset(t_source *source)
 {

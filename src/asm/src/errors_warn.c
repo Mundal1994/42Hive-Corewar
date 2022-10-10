@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_stdio.h"
+#include "definitions.h"
+#include "errors.h"
 
 int	warning(t_errorset error, char *msg)
 {

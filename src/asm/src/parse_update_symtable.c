@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_stdlib.h"
+#include "errors.h"
+#include "definitions.h"
 #include "parse.h"
 
 static int	new_reference(t_forwardrefs **newref, t_symentry newentry)

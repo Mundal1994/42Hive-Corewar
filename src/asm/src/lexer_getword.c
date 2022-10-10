@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_stdlib.h"
+#include "errors.h"
+#include "definitions.h"
+#include "lexer.h"
 
 static int	set_label(t_source *source, t_symbols *sym, char *start,
 		size_t len)

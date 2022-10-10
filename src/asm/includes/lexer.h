@@ -15,8 +15,6 @@
 
 # include "symbol.h"
 # include "source.h"
-# include "op.h"
-# include "libft.h"
 
 typedef struct s_lexer
 {

@@ -13,6 +13,8 @@
 #ifndef ASSEMBLE_H
 # define ASSEMBLE_H
 
+# include "Strings.h"
+# include "parse.h"
 # define BITS	8
 
 typedef struct s_assembler

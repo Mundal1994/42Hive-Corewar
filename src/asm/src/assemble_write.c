@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include "ft_stdio.h"
+#include "errors.h"
+#include "definitions.h"
+#include "assemble.h"
 
 static void	open_file(int *fd, t_assembler *assembler)
 {

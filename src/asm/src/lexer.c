@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "definitions.h"
+#include "lexer.h"
 
 void	lexer_init(t_lexer *lexer, const char *filename)
 {

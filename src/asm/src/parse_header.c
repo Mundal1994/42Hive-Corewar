@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
+#include "definitions.h"
 #include "parse.h"
 
 static int	parse_str(t_lexer *lexer, t_symbols *sym, char *dst, size_t size)

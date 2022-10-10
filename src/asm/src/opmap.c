@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include <stdio.h>
+#include "definitions.h"
+#include "opmap.h"
+#include "errors.h"
 
 t_op	g_op_tab[OP_NUMBER] = {
 {"live", 1, {T_DIR}, 1, 0, 0},
