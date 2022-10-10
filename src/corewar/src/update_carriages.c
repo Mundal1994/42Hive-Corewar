@@ -6,13 +6,13 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/07 16:03:09 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/10 15:09:27 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+static void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	//logic of how to check if it is a possible operation command? just check if it is less than 16
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
@@ -133,7 +133,7 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 }
 
 
-static void	make_move(t_carriage **carriage, int move)
+static void	make_move(t_carriage **carriage, int move, int *total)
 {
 	// if ((*carriage)->id == 13)
 	// 	ft_printf("pos %i    moves %i\n", (*carriage)->pos, move);
@@ -141,28 +141,30 @@ static void	make_move(t_carriage **carriage, int move)
 		(*carriage)->pos = ((*carriage)->pos + move) % MEM_SIZE;
 	else
 		(*carriage)->pos += move;
+	*total += move;
 }
 
-static void	move_carriage(t_info *info, t_carriage **carriage)
+static void	move_carriage(t_info *info, t_carriage **carriage, int *total)
 {
 	int	i;
 
 	i = 0;
 	// if ((*carriage)->id == 13)
 	// ft_printf("Begin\n");
+
 	if (info->operations[PCB][(*carriage)->statement_code - 1] == TRUE)
-		make_move(carriage, 2);
+		make_move(carriage, 2, total);
 	else
-		make_move(carriage, 1);
+		make_move(carriage, 1, total);
 	while (i < 3)
 	{
 		//ft_printf("%d	", (*carriage)->arg_types[i]);
 		if ((*carriage)->arg_types[i] == 1)
-			make_move(carriage, 1);
+			make_move(carriage, 1, total);
 		else if ((*carriage)->arg_types[i] == 3)
-			make_move(carriage, 2);
+			make_move(carriage, 2, total);
 		else if ((*carriage)->arg_types[i] == 2)
-			make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1]);
+			make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1], total);
 		++i;
 	}
 	// if ((*carriage)->id == 13)
@@ -171,16 +173,49 @@ static void	move_carriage(t_info *info, t_carriage **carriage)
 	// }
 }
 
-static int	args_found_error(t_info *info, t_carriage **carriage)
+static void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev)
 {
 	int	i;
 
+	ft_printf("ADV %d ", total);
+	if (prev == 0)
+		ft_printf("(0x0000 -> %#0.4x) ", (*carriage)->pos);
+	else if ((*carriage)->pos == 0)
+		ft_printf("(%#0.4x -> 0x0000) ", prev);
+	else if (prev > (*carriage)->pos)
+		ft_printf("(%#0.4x -> %#0.4x) ", prev, (*carriage)->pos + MEM_SIZE);
+	else
+		ft_printf("(%#0.4x -> %#0.4x) ", prev, (*carriage)->pos);
 	i = 0;
+	while (i < total)
+	{
+		if (prev + i >= MEM_SIZE)
+			prev = 0 - i;
+		if (core[prev + i] < 16)
+			ft_printf("0%x ", core[prev + i]);
+		else
+			ft_printf("%x ", core[prev + i]);
+		++i;
+	}
+	ft_putchar('\n');
+}
+
+static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **carriage)
+{
+	int	i;
+	int	total;
+	int	prev;
+
+	i = 0;
+	total = 0;
 	while (i < 3)
 	{
 		if ((*carriage)->args_found[i] < 0)
 		{
-			move_carriage(info, carriage);
+			prev = (*carriage)->pos;
+			move_carriage(info, carriage, &total);
+			if (info->flag[V_FLAG] == 16)
+				print_flag16(core, carriage, total, prev);
 			return (TRUE);
 		}
 		++i;
@@ -244,9 +279,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			// 	if ((*carriage)->arg_types[ARG1] == 1)
 			// 		ft_printf("reg[%d]: %d\n", (*carriage)->args_found[0], (*carriage)->registry[(*carriage)->args_found[0] - 1]);
 			// }
-			if ((*carriage)->id == 8 && (*carriage)->statement_code == 6)
-				ft_printf("seconf arg  %i\n", (*carriage)->args_found[ARG2]);
-			if (args_found_error(info, carriage) == TRUE)
+			if (args_found_error(core, info, carriage) == TRUE)
 				return ;
 		}
 		else
@@ -271,8 +304,16 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			(*carriage)->args_found[ARG3] = 0;
 		}
 		op_table[(*carriage)->statement_code - 1](core, carriage, info);
-		if ((*carriage)->statement_code != 9 || ((*carriage)->statement_code == 9 && !(*carriage)->carry))// added this statement
-			move_carriage(info, carriage);
+		if ((*carriage)->statement_code != OP_ZJMP || ((*carriage)->statement_code == OP_ZJMP && !(*carriage)->carry))// added this statement
+		{
+			int	prev;
+			int	total;
+			prev = (*carriage)->pos;
+			total = 0;
+			move_carriage(info, carriage, &total);
+			if (info->flag[V_FLAG] == 16)
+				print_flag16(core, carriage, total, prev);
+		}
 		// if ((*carriage)->id == 13)
 		// {
 		// 	ft_printf("core[%d]: %d\n", (*carriage)->pos, core[(*carriage)->pos]);
@@ -288,7 +329,10 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		}
 	}
 	else
-		make_move(carriage, 1);
+	{
+		int total = 0;
+		make_move(carriage, 1, &total);
+	}
 	// if ((*carriage)->pos < 2000 && (*carriage)->registry[0] == 0)
 	// {
 	// 	print_core(core, info);
