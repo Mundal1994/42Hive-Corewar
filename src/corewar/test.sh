@@ -13,6 +13,7 @@ then
 	arg2[absolute path your coreware vm]\n        arg3[absolute path champ1]\n        arg4[absolute path champ2]\n"
 	exit 0
 fi
+
 drop_down()
 {
 	rm vm_dump$COUNT.txt
@@ -110,12 +111,13 @@ drop_down_2()
 				drop_down
 			elif  [[ "$line" != "$line2" ]]
 			then
+				printf "ERROR\n"
 				FLAG=1
 				HOLD=$LINE_NBR
 			fi
 		done
 		#printf "END $DOWN\n"
-		if [[ FLAG -eq 0 ]]
+		if [[ FLAG -eq 1 ]]
 		then
 
 			printf "KO  [Difference at -d $((COUNT - DOWN + 1))]\nLINE\n$HOLD\n"
@@ -128,6 +130,7 @@ drop_down_2()
 		then
 			break
 		fi
+		printf "continue\n"
 	done
 }
 
@@ -194,5 +197,5 @@ do
 	#echo "end"
 	rm vm_dump$COUNT.txt
 	rm given_vm_dump$COUNT.txt
-	COUNT=$((COUNT+100))
+	COUNT=$((COUNT+50))
 done
