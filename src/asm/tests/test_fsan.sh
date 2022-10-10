@@ -13,3 +13,4 @@ for f in $(find . -type f -name "*"); do
 done
 
 rm valid/files/*.cor
+rm bonus/*.cor
