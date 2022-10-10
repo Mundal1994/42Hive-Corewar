@@ -12,14 +12,17 @@
 
 #include "asm.h"
 
-static int	load_statement(t_parser *parser, const char *name)
+static int	load_statement(t_parser *parser, t_lexer *lexer)
 {
 	t_op		*op;
 	t_statement	statement;
+	t_symbols	*sym;
 
-	op = opmap_get(&parser->opmap, name);
+	sym = &parser->sym;
+	op = opmap_get(&parser->opmap, symbol_str(sym));
 	if (!op)
-		return (ERROR);
+		return (error(errorset(lexer->source.pos, sym->str),
+				PARSER_UNKNOWN_INSTR));
 	statement.op = *op;
 	statement.acb = 0;
 	ft_bzero(statement.arguments, sizeof(t_arg) * 3);
@@ -73,12 +76,7 @@ static int	parse_arguments(t_parser *parser, t_lexer *lexer)
 
 int	parse_operation(t_parser *parser, t_lexer *lexer)
 {
-	t_symbols	*sym;
-	char		*name;
-
-	sym = &parser->sym;
-	name = symbol_str(sym);
-	if (load_statement(parser, name) == ERROR)
+	if (load_statement(parser, lexer) == ERROR)
 		return (ERROR);
 	return (++parser->size, parse_arguments(parser, lexer));
 }

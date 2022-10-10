@@ -47,6 +47,7 @@ of quote string"
 # define PARSER_NO_EOL "Syntax error: Command should end with new line"
 # define PARSER_EXPECT_START "Syntax error: Expected a label or instruction"
 # define PARSER_EXPECT_INSTR "Syntax error: Expected an operation instruction"
+# define PARSER_UNKNOWN_INSTR "Syntax error: Encountered an unknown instruction"
 # define PARSER_WRONG_ARG "Syntax error: Incorrect argument type"
 # define PARSER_INSUF_ARG "Syntax error: Insufficient arguments"
 # define PARSER_UNKNOWN_ARG "Syntax error: Unknown argument type"
@@ -58,7 +59,6 @@ of quote string"
 # define PARSER_UNKNOWN_ARGTYPE "Syntax error: Unidentifiable argument type"
 # define PARSER_WARN_EMPTY_QUOTE "Champion has empty name or comment"
 
-# define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
 # define SYMTABLE_DUP "Duplicate label declaration found, may lead to unexpected\

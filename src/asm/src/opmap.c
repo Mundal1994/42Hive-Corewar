@@ -53,7 +53,7 @@ t_op	*opmap_get(t_hashmap *opmap, const char *key)
 
 	index = hashmap_get(opmap, key);
 	if (!index)
-		return (exit_error_str(ERR_MSG_NO_OP), NULL);
+		return (NULL);
 	if (*index < 0 || *index >= OP_NUMBER)
 		return (exit_error_str(ERR_MSG_BAD_OP_IDX), NULL);
 	return (&g_op_tab[*index]);
