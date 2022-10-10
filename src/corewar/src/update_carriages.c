@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/07 16:03:09 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/07 17:04:02 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 		i = 0;
 		if ((*carriage)->arg_types[first] == 2)
 		{
-			if ((*carriage)->id == 8 && (*carriage)->statement_code == 6)
-				print_core(core, info);
+			// 
+			// 	print_core(core, info);
 			type = info->operations[SIZE][(*carriage)->statement_code - 1];
 			j = (info->operations[SIZE][(*carriage)->statement_code - 1] * 2) - 1;
 		}
@@ -244,8 +244,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			// 	if ((*carriage)->arg_types[ARG1] == 1)
 			// 		ft_printf("reg[%d]: %d\n", (*carriage)->args_found[0], (*carriage)->registry[(*carriage)->args_found[0] - 1]);
 			// }
-			if ((*carriage)->id == 8 && (*carriage)->statement_code == 6)
-				ft_printf("seconf arg  %i\n", (*carriage)->args_found[ARG2]);
+			// if ((*carriage)->id == 8 && (*carriage)->statement_code == 6)
+			// 	ft_printf("seconf arg  %i\n", (*carriage)->args_found[ARG2]);
 			if (args_found_error(info, carriage) == TRUE)
 				return ;
 		}

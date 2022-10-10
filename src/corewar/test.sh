@@ -51,6 +51,9 @@ drop_down()
 			#exit 0
 			if [[ "$line" != "$line2" ]]
 			then
+			echo "$line"
+			echo "$line2"
+			printf "\n"
 				FLAG=1
 				HOLD=$line2
 			fi
@@ -111,7 +114,6 @@ drop_down_2()
 				drop_down
 			elif  [[ "$line" != "$line2" ]]
 			then
-				printf "ERROR\n"
 				FLAG=1
 				HOLD=$LINE_NBR
 			fi
@@ -130,7 +132,6 @@ drop_down_2()
 		then
 			break
 		fi
-		printf "continue\n"
 	done
 }
 
@@ -154,8 +155,8 @@ checking_lines()
 	# 	exit 0
 	elif [[ "$line" != "$line2" ]]
 	then
-		echo $line
-		echo $line2
+		# echo $line
+		# echo $line2
 		#printf "problem\n"
 		drop_down
 		exit 0
@@ -192,7 +193,6 @@ do
 		#echo "$line"
 		#echo "$line2"
 		checking_lines
-		#printf "here\n"
 	done
 	#echo "end"
 	rm vm_dump$COUNT.txt
