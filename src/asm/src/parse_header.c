@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 18:07:09 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 21:45:44 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/10 11:02:44 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	parse_str(t_lexer *lexer, t_symbols *sym, char *dst, size_t size)
 	error_set = errorset(lexer->source.pos, sym->str);
 	if (sym->type != LA_cmdstr)
 		return (error(error_set, PARSER_NO_QUOTE));
+	if (sym->str.length == 0)
+		warning_ret(PARSER_WARN_EMPTY_QUOTE);
 	if (sym->str.length > size)
 		return (error_no_str(error_set, PARSER_STR_TOO_LONG));
 	ft_memcpy(dst, symbol_str(sym), sym->str.length);

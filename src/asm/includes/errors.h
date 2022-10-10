@@ -56,6 +56,8 @@ of quote string"
 # define PARSER_EXPECT_NUM "Syntax error: Expected number"
 # define PARSER_TOO_MANY_ARGS "Syntax error: Too many argument separators"
 # define PARSER_UNKNOWN_ARGTYPE "Syntax error: Unidentifiable argument type"
+# define PARSER_WARN_EMPTY_QUOTE "Empty quote string in command. You may be\
+ missing a name or comment, but assembly will continue"
 
 # define ERR_MSG_NO_OP "ERROR: Could not find operator from hashmap"
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
