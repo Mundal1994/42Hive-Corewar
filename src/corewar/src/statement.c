@@ -13,9 +13,9 @@ void	update_carry(int nbr, t_carriage **carriage)
 void	v_flag4_one_arg(t_carriage **carriage, char *command)
 {
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
-	if ((*carriage)->statement_code == 12 || (*carriage)->statement_code == 15)
+	if ((*carriage)->statement_code == OP_FORK || (*carriage)->statement_code == OP_LFORK)
 		ft_printf("%d ", (int16_t)(*carriage)->args_found[ARG1]);
-	else if ((*carriage)->statement_code == 9)
+	else if ((*carriage)->statement_code == OP_ZJMP)
 	{
 		ft_printf("%d ", (int16_t)(*carriage)->args_found[ARG1]);
 		if ((*carriage)->carry)
@@ -23,7 +23,7 @@ void	v_flag4_one_arg(t_carriage **carriage, char *command)
 		else
 			ft_printf("FAILURE\n");
 	}
-	else if ((*carriage)->statement_code == 1)
+	else if ((*carriage)->statement_code == OP_LIVE)
 		ft_printf("%d\n", (*carriage)->args_found[ARG1]);
 }
 
@@ -48,6 +48,9 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 		{
 			if (i == reg)
 				ft_printf("r%d", (*carriage)->args_found[i]);
+			else if (((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I) && \
+				(*carriage)->statement_code == OP_LD)
+				ft_printf("%d", (*carriage)->args_found[i]);
 			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
 				ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 		}

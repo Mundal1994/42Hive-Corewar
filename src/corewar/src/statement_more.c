@@ -301,7 +301,7 @@ static int	copy_carriage(t_info **info, t_carriage *carriage, int new_pos)
 	(*info)->carriage_count++;
 	new->id = (*info)->carriage_count;
 	new->carry = carriage->carry;
-	new->statement_code = 0;
+	new->statement_code = OP_NULL;
 	new->last_live_call = carriage->last_live_call;
 	new->delay = carriage->delay;
 	new->pos =new_pos;
@@ -321,14 +321,13 @@ static int	copy_carriage(t_info **info, t_carriage *carriage, int new_pos)
 	(*info)->head_carriage = new;
 	return (0);
 }
-void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int		pos;
 	int16_t	sum;
 
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && core)
 		v_flag4_one_arg(carriage, "fork");
 	sum = (int16_t)(*carriage)->args_found[ARG1];
 	if (sum < 0)
@@ -337,25 +336,19 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		pos = (*carriage)->pos + sum % IDX_MOD;
 	limit_jump(&pos);
 	copy_carriage(&info, *carriage, pos);
-	//set_statement_code(core, &info->head_carriage, info);
 	if (info->flag[V_FLAG] == 4)
 		ft_printf("(%d)\n", pos);
-	if (!core)
-		ft_printf("no fork \n");
 }
 
 void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 
-	if (info->flag[V_FLAG] == 4)
+	if (info->flag[V_FLAG] == 4 && core)
 		v_flag4_one_arg(carriage, "lfork");
 	pos = (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1];
 	limit_jump(&pos);
 	copy_carriage(&info, *carriage, pos);
 	if (info->flag[V_FLAG] == 4)
 		ft_printf("(%d)\n", pos);
-	//set_statement_code(core, &info->head_carriage, info);
-	if (!core)
-		ft_printf("no fork \n");
 }

@@ -1,5 +1,5 @@
 Introducing contestants...
-* Player 1, weighing 23 bytes, "zork" ("I'M ALIIIIVE") !
+* Player 1, weighing 23 bytes, "zork" ("just a basic living prog") !
 * Player 2, weighing 617 bytes, "helltrain" ("choo-choo, motherf*****s !") !
 0x0000 : 70 03 ff ff 01 ff ff ff fe 03 70 02 00 0f 03 70 03 ff ff 01 ff ff ff fe 03 70 02 00 0f 03 70 03 ff ff 01 ff ff ff fe 03 70 02 00 0f 03 70 03 ff ff 01 ff ff ff fe 03 70 02 00 17 03 70 03 ff ff
 0x0040 : 01 ff ff ff fe 03 70 02 00 0f 03 70 03 ff ff 01 00 ff ff fe 03 70 02 00 17 03 70 03 ff ff 01 ff ff ff fe 03 70 02 00 0f 03 70 03 ff ff 01 00 ff ff fe 03 70 02 00 0f 03 70 03 ff ff 01 ff ff ff
