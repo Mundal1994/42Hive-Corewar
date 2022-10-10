@@ -33,19 +33,19 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 
 	i = 0;
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
-	while (i < ARGS)
+	while (i < ARG3)
 	{
 		if (i != 0)
 			ft_putchar(' ');
-		if (reg == -1)
-		{
-			if ((*carriage)->arg_types[i] == R)
-				ft_printf("r%d", (*carriage)->args_found[i]);
-			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
-				ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
-		}
-		else
-		{
+		// if (reg == -1)
+		// {
+		// 	if ((*carriage)->arg_types[i] == R)
+		// 		ft_printf("r%d", (*carriage)->args_found[i]);
+		// 	else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
+		// 		ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
+		// }
+		// else
+		// {
 			if (i == reg)
 				ft_printf("r%d", (*carriage)->args_found[i]);
 			else if (((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I) && \
@@ -53,7 +53,7 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 				ft_printf("%d", (*carriage)->args_found[i]);
 			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
 				ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
-		}
+		//}
 		++i;
 	}
 	ft_putchar('\n');
@@ -78,6 +78,8 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	// if ((*carriage)->id == 14)
+	// 	ft_printf("CARRIAGE 4 ENTERED LIVE\n");
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles + 1;//removed +1
@@ -183,6 +185,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG2] % IDX_MOD);
 		limit_jump(&pos);
+		//ft_printf("	carriage->pos: %d	new->pos: %d\n", (*carriage)->pos, pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	}
 }
@@ -192,7 +195,8 @@ void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int	sum;
 
 	if (info->flag[V_FLAG] == 4 && core && info)
-		v_flag4_two_arg(carriage, "add", -1);
+		v_flag4_three_arg(carriage, "add", -1);
+		//v_flag4_two_arg(carriage, "add", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] + (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
@@ -203,7 +207,7 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int	sum;
 
 	if (info->flag[V_FLAG] == 4 && core && info)
-		v_flag4_two_arg(carriage, "sub", -1);
+		v_flag4_three_arg(carriage, "sub", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] - (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
