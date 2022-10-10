@@ -21,7 +21,7 @@ void	v_flag4_one_arg(t_carriage **carriage, char *command)
 		if ((*carriage)->carry)
 			ft_printf("OK\n");
 		else
-			ft_printf("FAILURE\n");
+			ft_printf("FAILED\n");
 	}
 	else if ((*carriage)->statement_code == OP_LIVE)
 		ft_printf("%d\n", (*carriage)->args_found[ARG1]);

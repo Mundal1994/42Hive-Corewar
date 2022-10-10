@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/03 16:50:16 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/07 17:04:02 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ static int64_t	first_arg(u_int32_t first, t_carriage **carriage, t_info *info, u
 		i = 0;
 		if ((*carriage)->arg_types[first] == 2)
 		{
+			// 
+			// 	print_core(core, info);
 			type = info->operations[SIZE][(*carriage)->statement_code - 1];
 			j = (info->operations[SIZE][(*carriage)->statement_code - 1] * 2) - 1;
 		}
@@ -231,6 +233,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
 		 && core[(*carriage)->pos] == (*carriage)->statement_code)
 	{
+		//ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
+		//ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
 		// if ((*carriage)->id == 13)
 		// {
 		// 	ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
@@ -245,7 +249,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		(*carriage)->tmp_pos = (*carriage)->pos;
 		make_move_tmp(carriage, 1);
 		// if ((*carriage)->id == 13)
-		// 	ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
+		//ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
 		if (info->operations[PCB][(*carriage)->statement_code - 1] == 1) //statements using typecode
 		{
 			i = 0;
@@ -258,8 +262,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			arg_found[ARG3] = arg_found[ARG3] >> 6;
 			// if ((*carriage)->id == 13)
 			// {
-			// 	ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
-			// 	ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			 	//ft_printf("ARG TYPES %i  %i  %i\n", arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
+			 	//ft_printf("TYPECODE %i   ARG TYPES %i  %i  %i\n",  core[((*carriage)->tmp_pos)], arg_found[ARG1],arg_found[ARG2],arg_found[ARG3]);
 			// }
 			(*carriage)->arg_types[ARG1] = arg_found[ARG1];
 			(*carriage)->arg_types[ARG2] = arg_found[ARG2];
@@ -271,7 +275,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			//ft_printf("wait %i %lli\n", third_arg((u_int32_t)arg_found[ARG3], *carriage, info, core), (*carriage)->args_found[ARG3]);
 			// if ((*carriage)->id == 13)
 			// {
-			// 	ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
+			//ft_printf("first = %i second %i  third %i\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG3]);
 			// 	if ((*carriage)->arg_types[ARG1] == 1)
 			// 		ft_printf("reg[%d]: %d\n", (*carriage)->args_found[0], (*carriage)->registry[(*carriage)->args_found[0] - 1]);
 			// }
@@ -280,6 +284,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		}
 		else
 		{
+			//ft_printf("No PCb\n");
 			if ((*carriage)->statement_code == 16)
 			{
 				(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, 1);
@@ -293,6 +298,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 			{
 				(*carriage)->arg_types[ARG1] = D;
 				(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+				//ft_printf("call %i\n", (*carriage)->args_found[ARG1]);
 			}
 			(*carriage)->args_found[ARG2] = 0;
 			(*carriage)->args_found[ARG3] = 0;
