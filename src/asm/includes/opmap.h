@@ -28,6 +28,7 @@ typedef struct s_op
 	bool		label;
 }				t_op;
 
+/* Opmap stores the opcodes to identify assembly instructions */
 int		opmap_new(t_hashmap *opmap);
 t_op	*opmap_get(t_hashmap *opmap, const char *key);
 void	opmap_free(t_hashmap *opmap);

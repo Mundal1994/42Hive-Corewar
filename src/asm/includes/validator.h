@@ -15,6 +15,7 @@
 
 # define EXTENSION_IN ".s"
 
+/* Input argument validation */
 void	validate_arguments(int argc, char **argv);
 
 #endif

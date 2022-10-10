@@ -17,6 +17,7 @@
 # include "parse.h"
 # define BITS	8
 
+/* Assembly stage, writes the binary once text parsing is complete. */
 typedef struct s_assembler
 {
 	t_string	filename;	

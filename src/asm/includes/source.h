@@ -31,6 +31,7 @@ typedef struct s_source
 	char		*next;
 }				t_source;
 
+/* Source stores assembly file in buffer, and emits one character at a time */
 void	source_init(t_source *source);
 void	source_read(t_source *source, const char *filename);
 char	*source_peek(t_source *source);

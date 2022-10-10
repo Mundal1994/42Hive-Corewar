@@ -18,6 +18,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 
+/* Symtable is used to maintain forward references to labes */
 typedef struct s_forwardrefs
 {
 	size_t					statement_id;

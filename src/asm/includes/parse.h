@@ -17,6 +17,8 @@
 # include "opmap.h"
 # include "symtable.h"
 
+/* Parser performs syntax analysis of the input file, and creates structured
+ * form of instructions for later assembly */
 typedef union s_arg
 {
 	uint8_t		reg;

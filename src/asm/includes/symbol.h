@@ -19,6 +19,7 @@
 
 # define DEFAULT_SYMBOL_LEN 128
 
+/* Lexer emits 1 of 14 possible token symbols, by reading the source */
 typedef enum s_symtypes
 {
 	LA_unknown,

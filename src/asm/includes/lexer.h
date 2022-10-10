@@ -38,12 +38,14 @@ int		lexer_getreference(t_source *source, t_symbols *sym);
 int		lexer_getquote(t_source *source, t_symbols *sym);
 int		lexer_getchar(t_source *source, t_symbols *sym);
 
+/* Boolean utility functions for lexer */
 bool	is_wordch(char c);
 bool	is_register(const char *str);
 bool	is_operator(char c);
 
 typedef int					(*t_lexer_getter)(t_source *, t_symbols *);
 
+/* Getter dispatch table maps to character at number 33 on the ascii able */
 static const t_lexer_getter	g_lexer_getter[33] = {
 	NULL,
 	NULL,

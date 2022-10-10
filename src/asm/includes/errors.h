@@ -16,15 +16,17 @@
 # include "source.h"
 # include "Strings.h"
 
+# define RED "\033[0;31m"
+# define YELLOW "\033[0;33m"
+# define NOCOLOR "\033[0m"
+
+/* Initial file validation */
 # define MSG_USAGE "Usage: ./asm <sourcefile.s>"
 # define ARG_INVALID_EXT "Unrecognised file type"
 # define ERR_MSG_EMPTY_FILE "ERROR: empty file"
 # define ERR_MSG_NO_SOURCE "ERROR: Source memory not initialized"
 
-# define RED "\033[0;31m"
-# define YELLOW "\033[0;33m"
-# define NOCOLOR "\033[0m"
-
+/* Lexer messages */
 # define LEXER_BAD_INSTR "Illegal character found in instruction"
 # define LEXER_BAD_REF "Illegal or empty label reference"
 # define LEXER_BAD_QUOTE "Quote string incomplete, please close end \
@@ -34,7 +36,7 @@ of quote string"
 # define REG_WARNING "Register number out of bounds, may lead to\
  Virtual Machine memory errors"
 
-/* Parser */
+/* Parser messages */
 # define PARSER_EXPECT_CMD "Syntax error: Expected a command, found something\
  else instead"
 # define PARSER_UNKNOWN_CMD "Syntax error: Unrecognised command. Allowed\
@@ -59,8 +61,10 @@ of quote string"
 # define PARSER_WARN_EMPTY_QUOTE "Champion has empty name or comment"
 # define PARSER_EMPTY_CODE "Champion code is empty"
 
+/* Op table messages */
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
+/* Symbol table messages */
 # define SYMTABLE_DUP "Duplicate label declaration found, may lead to unexpected\
  outcomes"
 # define SYMTABLE_OUTSTANDING "Outstanding reference found, missing a label"
