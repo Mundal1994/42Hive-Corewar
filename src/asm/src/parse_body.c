@@ -57,5 +57,7 @@ int	parse_body(t_parser *parser, t_lexer *lexer)
 		if (res == ERROR)
 			return (res);
 	}
+	if (parser->size == 0)
+		return (error_ret(PARSER_EMPTY_CODE));
 	return (symtable_outstanding(&parser->symtable));
 }

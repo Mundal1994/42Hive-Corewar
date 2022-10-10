@@ -58,6 +58,7 @@ of quote string"
 # define PARSER_TOO_MANY_ARGS "Syntax error: Too many argument separators"
 # define PARSER_UNKNOWN_ARGTYPE "Syntax error: Unidentifiable argument type"
 # define PARSER_WARN_EMPTY_QUOTE "Champion has empty name or comment"
+# define PARSER_EMPTY_CODE "Champion code is empty"
 
 # define ERR_MSG_BAD_OP_IDX "ERROR: Internal error, bad op index"
 
@@ -65,9 +66,6 @@ of quote string"
  outcomes"
 # define SYMTABLE_OUTSTANDING "Outstanding reference found, missing a label"
 # define SYMTABLE_MULT_OUT "Multiple outstanding references to labels"
-
-/* Assembler */
-# define ASSEMBLE_EMPTY_CODE "Champion has empty code"
 
 typedef enum s_errors
 {
