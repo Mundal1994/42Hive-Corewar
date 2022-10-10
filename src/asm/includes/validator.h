@@ -14,7 +14,6 @@
 # define VALIDATOR_H
 
 # define EXTENSION_IN ".s"
-# define EXTENSION_OUT ".cor"
 
 void	validate_arguments(int argc, char **argv);
 

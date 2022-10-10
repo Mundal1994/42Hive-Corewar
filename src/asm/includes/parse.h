@@ -20,13 +20,6 @@
 # include "opmap.h"
 # include "symtable.h"
 
-typedef enum s_start
-{
-	ST_label = 1,
-	ST_op,
-	ST_all
-}			t_start;
-
 typedef struct s_statement
 {
 	t_op		op;

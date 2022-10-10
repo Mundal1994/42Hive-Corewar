@@ -24,17 +24,9 @@
 # define ERROR	-1
 # define OK		1
 # define DONE	0
-# define TRUE	1
-# define FALSE	0
 
-# define NEWLINE "\n"
 # define NEWLINE_C '\n'
-# define WHITESPACE " \t\n\v\f\r"
 # define TABSPACE " \t"
-
-# define MAX_ALENGTH 64
-
-typedef char	t_alfa[65];
 
 typedef struct s_pos
 {

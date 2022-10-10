@@ -67,23 +67,6 @@ of quote string"
 # define SYMTABLE_OUTSTANDING "Outstanding reference found, missing a label"
 # define SYMTABLE_MULT_OUT "Multiple outstanding references to labels"
 
-typedef enum s_errors
-{
-	ASM_invalidcode,
-	ASM_undefinedlabel,
-	ASM_invalidaddress,
-	ASM_unlabelled,
-	ASM_hasaddress,
-	ASM_noaddress,
-	ASM_ecessfields,
-	ASM_mismatched,
-	ASM_nonalpha,
-	ASM_badlabel,
-	ASM_invalidchar,
-	ASM_invaliduote,
-	ASM_overflow
-}			t_errors;
-
 typedef struct s_errorset
 {
 	t_pos		pos;

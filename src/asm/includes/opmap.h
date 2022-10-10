@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:05:33 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 22:35:23 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/10 14:06:42 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,11 @@
 # include "op.h"
 # include "hashmap.h"
 
-# define MAX_ARGS 3
-
-typedef enum e_opcodes
-{
-	OP_NULL,
-	OP_LIVE,
-	OP_LD,
-	OP_ST,
-	OP_ADD,
-	OP_SUB,
-	OP_AND,
-	OP_OR,
-	OP_XOR,
-	OP_ZJMP,
-	OP_LDI,
-	OP_STI,
-	OP_FORK,
-	OP_LLD,
-	OP_LLDI,
-	OP_LFORK,
-	OP_AFF
-}			t_opcodes;
-
 typedef struct s_op
 {
 	char		*name;
 	uint8_t		argc;
-	t_arg_type	arg_types[MAX_ARGS];
+	t_arg_type	arg_types[3];
 	uint8_t		opcode;
 	bool		acb;
 	bool		label;

@@ -18,7 +18,6 @@
 # include "errors.h"
 # include <stdbool.h>
 # include <stdint.h>
-# define SYMENTRY_FOUND 2
 
 typedef struct s_forwardrefs
 {
