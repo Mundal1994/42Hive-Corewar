@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/03 16:45:49 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/11 11:45:49 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_profile
 typedef struct s_input
 {
 	u_int8_t	*t_script;
+	char		*filename;
 	size_t		capacity;
 	size_t		current;
 }				t_input;

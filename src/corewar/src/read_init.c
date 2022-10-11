@@ -140,6 +140,16 @@ static int	champ_stats(t_profile **champ, t_input **input, int i)
 	return (0);
 }
 
+static int	error_final_head(t_profile **champ)
+{
+	if ((*champ) == (*champ)->head)
+	{
+		free((*champ)->head);
+		(*champ) = NULL;
+		return (1);
+	}
+	return (0);
+}
 int	error_clean(t_input **input, t_profile **champ, int c)
 {
 	t_profile	*temp;
@@ -148,8 +158,8 @@ int	error_clean(t_input **input, t_profile **champ, int c)
 	i = 0;
 	while ((*champ) && (*champ)->head)
 	{
-		if ((*champ) == (*champ)->head)
-			(*champ) = NULL;
+		if (error_final_head(champ))
+			break ;
 		temp = (*champ)->head;
 		(*champ)->head = (*champ)->head->next;
 		free(temp);
@@ -158,6 +168,7 @@ int	error_clean(t_input **input, t_profile **champ, int c)
 	{
 		while (i < c)
 		{
+			free(input[i]->filename);
 			free(input[i]->t_script);
 			free(input[i]);
 			++i;
@@ -168,25 +179,27 @@ int	error_clean(t_input **input, t_profile **champ, int c)
 	return (-1);
 }
 
-static int	store_champs(t_profile **champ, int argc, t_input **input, int c)
+static int	store_champs(t_profile **champ, int c, t_input **input)
 {
 	int i;
 
 	i = 0;
-	while (i < (argc - c))
+	while (i < c)
 	{
 		if (create_champ(champ) == -1)
-			return (error_clean(input, champ, (argc - c)));
+			return (error_clean(input, champ, c));
 		if (input[i]->t_script[0] != 0 || input[i]->t_script[1] \
 			!= 234 || input[i]->t_script[2] != 131 || input[i]->t_script[3] \
 			!= 243)
 		{
-			exit (1);
+			ft_printf("Error: File %s has an invalid header\n", \
+				input[i]->filename);
+			return (error_clean(input, champ, c));
 		}
-		ft_bzero((*champ)->name, (PROG_NAME_LENGTH + 1)); //(PROG_NAME_LENGTH + 1)
-		ft_bzero((*champ)->comment, (COMMENT_LENGTH + 1)); //(COMMENT_LENGTH + 1)what checks unprintable chars?
+		ft_bzero((*champ)->name, (PROG_NAME_LENGTH + 1));
+		ft_bzero((*champ)->comment, (COMMENT_LENGTH + 1));
 		if (champ_stats(champ, input, i) == -1)
-			return (error_clean(input, champ, (argc - c)));
+			return (error_clean(input, champ, c));
 		++i;
 	}
 	(*champ) = (*champ)->head;
@@ -205,14 +218,11 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 	input = NULL;
 	input = create_buf(input, argc, i);
 	if (!input)
-	{
 		return (NULL);
-	}
 	origin_i = i;
 	j = 0;
 	while (i < argc)
 	{
-		//file passed ends with .cor
 		//add check got max size of file
 		if (j != 0)
 			close(fd);
@@ -221,47 +231,26 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		{
 			ft_printf("Can't read file %s\n", argv[i]);
 			error_clean(input, champ, (argc - origin_i));
-			return (NULL); //make sure origin_i is correction distance to free
+			return (NULL);
 		}
 		ret = read(fd, buff, BUFF_SIZE);
 		if (ret == -1)
 		{
-			//clean out
 			error_clean(input, champ, (argc - origin_i));
-			return (NULL); //make sure origin_i is correction distance to free
+			return (NULL);
 		}
+		input[j]->filename = ft_strdup(argv[i]);
 		while (ret)
 		{
 			if (store_buf(input[j], buff, ret) == -1)
-			{
-				//free(input[i]->t_script); all
-				//free(input[i]); all
-				//free(input);
 				return (NULL);
-			}
 			ret = read(fd, buff, BUFF_SIZE);
 		}
-		//collect and store information
 		++j;
 		++i;
 	}
-	if (store_champs(champ, argc, input, origin_i) == -1)
-	{
-		error_clean(input, champ, (argc - origin_i));
-		return (NULL); //make sure origin_i is correction distance to free
-	}
-	// u_int8_t test = 192;
-	// test = test << 1;
-	// test = test >> 7;
-	// ft_printf("%i\n", test);
-	// exit (0);
-	// while ((*champ))
-	// {
-	// 	ft_printf("i: %d\n", (*champ)->i);
-	// 	ft_printf("name: %s\n", (*champ)->name);
-	// 	ft_printf("comment: %s\n", (*champ)->comment);
-	// 	ft_printf("exec code: %d\n", (*champ)->exec_cd_sz);
-	// 	(*champ) = (*champ)->next;
-	// }
+	if (store_champs(champ, argc - origin_i, input) == -1)
+		//free(info) outside!!!
+		return (NULL);
 	return (input);
 }
