@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/11 11:45:49 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/11 16:14:15 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
 void	check(t_info *info);
 
+//move fucntions
+void	make_move_tmp(t_carriage **carriage, int move);
+void	move_carriage(t_info *info, t_carriage **carriage);
+void	make_move(t_carriage **carriage, int move);
+
 //print functions
 void	print_core(uint8_t core[MEM_SIZE], t_info *info);
 void	introduce_contestants(t_profile *champ);
@@ -160,5 +165,11 @@ void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	v_flag4_one_arg(t_carriage **carriage, char *command);
 void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg);
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
+
+//reading bytes/args
+int64_t	read_args(u_int32_t first, t_carriage **carriage, t_info *info, \
+	u_int8_t core[MEM_SIZE]);
+int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+
 
 #endif
