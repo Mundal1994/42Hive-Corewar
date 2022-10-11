@@ -15,7 +15,7 @@
 #include "opmap.h"
 #include "errors.h"
 
-t_op	g_op_tab[OP_NUMBER] = {
+static const t_op	g_op_tab[OP_NUMBER] = {
 {"live", 1, {T_DIR}, 1, 0, 0},
 {"ld", 2, {T_DIR | T_IND, T_REG}, 2, 1, 0},
 {"st", 2, {T_REG, T_IND | T_REG}, 3, 1, 0},
@@ -50,7 +50,7 @@ int	opmap_new(t_hashmap *opmap)
 	return (OK);
 }
 
-t_op	*opmap_get(t_hashmap *opmap, const char *key)
+const t_op	*opmap_get(t_hashmap *opmap, const char *key)
 {
 	int	*index;
 

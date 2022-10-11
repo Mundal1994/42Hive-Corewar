@@ -16,9 +16,9 @@
 
 static int	load_statement(t_parser *parser, t_lexer *lexer)
 {
-	t_op		*op;
-	t_statement	statement;
-	t_symbols	*sym;
+	const t_op		*op;
+	t_statement		statement;
+	t_symbols		*sym;
 
 	sym = &parser->sym;
 	op = opmap_get(&parser->opmap, symbol_str(sym));
