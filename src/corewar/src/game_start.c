@@ -79,6 +79,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 	while (!one_carriage_left(info))
 	{
 		//ft_printf("NEW CYCLE\n");
+		check(info);
 		if (info->total_cycles == dump)//info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
 		{
 			print_core(core, info);
@@ -90,7 +91,6 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 		}
 		if (update_carriages(core, info, op_table) == ERROR)
 			return (ERROR);
-		check(info);
 	}
 	announce_winner(champ, info->winner);
 	return (0);

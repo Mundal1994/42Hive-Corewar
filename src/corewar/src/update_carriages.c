@@ -319,7 +319,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 		// 	ft_printf("core[%d]: %d\n", (*carriage)->pos, core[(*carriage)->pos]);
 		// 	print_core(core, info);
 		// }
-		(*carriage)->statement_code = 0;
+		//(*carriage)->statement_code = 0;
 		i = 0;
 		while (i < 3)
 		{
@@ -331,6 +331,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, t_inf
 	else
 	{
 		int total = 0;
+		//(*carriage)->statement_code = 0;//added this if statement_code hadn't been reset
 		make_move(carriage, 1, &total);
 	}
 	// if ((*carriage)->pos < 2000 && (*carriage)->registry[0] == 0)
@@ -356,7 +357,10 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[ST
 		if (carriage->delay > 0)
 			carriage->delay -= 1;
 		if (carriage->delay == 0)
+		{
 			perform_statement_code(core, &carriage, info, op_table);
+			carriage->statement_code = OP_NULL;
+		}
 		carriage = carriage->next;
 	}
 	return (0);

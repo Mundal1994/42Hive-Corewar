@@ -51,6 +51,9 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 			else if (((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I) && \
 				(*carriage)->statement_code == OP_LD)
 				ft_printf("%d", (*carriage)->args_found[i]);
+			// else if (((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I) && \
+			// 	(*carriage)->statement_code == OP_LLD)
+			// 	ft_printf("%d", (*carriage)->args_found[i]);NEED TO COME BACK TO THIS
 			else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
 				ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 		//}
@@ -82,7 +85,7 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	// 	ft_printf("CARRIAGE 4 ENTERED LIVE\n");
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_one_arg(carriage, "live");
-	(*carriage)->last_live_call = info->total_cycles + 1;//removed +1
+	(*carriage)->last_live_call = info->total_cycles;//removed +1
 	info->live_statement += 1;
 	if ((*carriage)->args_found[ARG1] == (*carriage)->registry[0] && core && info && \
 		(*carriage)->registry[0] >= -4 && (*carriage)->registry[0] <= -1)
@@ -140,6 +143,14 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_two_arg(carriage, "ld", ARG2);
+	// if ((*carriage)->id == 1)
+	// {
+	// 	print_core(core, info);
+	// 	ft_printf("car->pos: %d	cycle_count: %d\n", (*carriage)->pos, info->total_cycles);
+	// 	ft_printf("r%d: new value: %d\n", (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG1]);
+	// 	ft_printf("r10: %d\n", (*carriage)->registry[9]);
+
+	// }
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
 	update_carry((*carriage)->args_found[ARG1], carriage);
 }
@@ -185,7 +196,8 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG2] % IDX_MOD);
 		limit_jump(&pos);
-		//ft_printf("	carriage->pos: %d	new->pos: %d\n", (*carriage)->pos, pos);
+		// if ((*carriage)->id == 14 && info->total_cycles == 8908)
+		// ft_printf("carriage->pos: %d	put nbr at pos: %d	orignbr: %d	nbrput: %d\n", (*carriage)->pos, pos, (int16_t)(*carriage)->args_found[ARG2], (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	}
 }

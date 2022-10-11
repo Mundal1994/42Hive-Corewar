@@ -1,9 +1,9 @@
 #!/bin/bash
 
-GIVEN_VM=$1
-MY_VM=$2
-CHAMP1=$3
-CHAMP2=$4
+GIVEN_VM=../../../vm_champs/corewar
+MY_VM=./corewar
+CHAMP1=$1
+CHAMP2=$2
 END=0
 COUNT=1
 

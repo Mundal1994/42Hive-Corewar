@@ -7,9 +7,9 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if ((*carriage)->arg_types[ARG1] == I)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos - ((int16_t)(*carriage)->args_found[ARG1] * -1), core, SIZE);
+			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos - ((int16_t)(*carriage)->args_found[ARG1] * -1), core, 2);//orig machine read 2 instead of four
 		else
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, SIZE);
+			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, 2);
 	}
 	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
@@ -20,10 +20,8 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	if (info->flag[V_FLAG] == 4)
-		v_flag4_one_arg(carriage, "aff");
+	// if (info->flag[V_FLAG] == 4)
+	// 	v_flag4_one_arg(carriage, "aff");//aff doesn't show up in flag -v 4??
 	if (info->flag[A_FLAG] && core && info)
 		ft_printf("%c\n", (char)(*carriage)->args_found[ARG1]);
-	else
-		ft_printf("AFF FLAG NOT ON\n");
 }

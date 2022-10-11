@@ -20,6 +20,7 @@ void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
+	//ft_printf("cycle: %d	", info->total_cycles);
 	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_three_arg(carriage, "xor", ARG3);
 	sum = (*carriage)->args_found[ARG1] ^ (*carriage)->args_found[ARG2];

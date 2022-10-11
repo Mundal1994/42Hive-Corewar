@@ -38,12 +38,19 @@ static void	check_carriage_live_call(t_info *info)
 		limit = info->total_cycles - 1;
 	else
 		limit = info->total_cycles - info->cycles_to_die;
+	int found = FALSE;
 	//ft_printf("limit %d == %d - %d\n", limit, info->total_cycles, info->cycles_to_die);
 	while (carriage)
 	{
+		if (carriage->id == 1079 && found == TRUE)
+			ft_printf("limit %d == %d - %d	carriage: %d\n", limit, info->total_cycles, info->cycles_to_die, carriage->last_live_call);
 		if (carriage->last_live_call <= limit)
 		{
 			next = carriage->next;
+			if (info->flag[V_FLAG] == 8)
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", carriage->id, info->total_cycles - carriage->last_live_call, info->cycles_to_die);
+			if (carriage->id == 1093)
+				found = TRUE;
 			delete_carriage(info, carriage->id);
 			carriage = next;
 		}
@@ -87,6 +94,6 @@ void	check(t_info *info)
 	info->total_cycles += 1;
 	if (info->flag[V_FLAG] == 2)
 		ft_printf("It is now cycle %d\n", info->total_cycles);
-	if (info->cycle_count <= 0)
+	if (info->cycle_count < 1)
 		kill_carriages(info);
 }
