@@ -8,9 +8,9 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *a
 	else if ((*carriage)->arg_types[count] == I)
 	{
 		if (*arg < 0)
-			*arg = read_bytes(0, (*carriage)->pos - (*arg * -1) % IDX_MOD, core, SIZE);
+			*arg = read_bytes(0, (*carriage)->pos - ((*arg * -1) % IDX_MOD), core, SIZE);
 		else
-			*arg = read_bytes(0, (*carriage)->pos + *arg % IDX_MOD, core, SIZE);
+			*arg = read_bytes(0, (*carriage)->pos + (*arg % IDX_MOD), core, SIZE);
 	}
 }
 
@@ -20,7 +20,6 @@ void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
-	//ft_printf("cycle: %d	", info->total_cycles);
 	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_three_arg(carriage, "xor", ARG3);
 	sum = (*carriage)->args_found[ARG1] ^ (*carriage)->args_found[ARG2];

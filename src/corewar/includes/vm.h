@@ -112,6 +112,8 @@ typedef struct s_info
 	int			flag[FLAG_COUNT];
 	t_carriage	*head_carriage;
 	int			operations[OPS_COUNT][STATE];
+	char		*champ_names[4];
+	int			champ_total;
 }				t_info;
 
 typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);

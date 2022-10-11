@@ -87,14 +87,18 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;//removed +1
 	info->live_statement += 1;
-	if ((*carriage)->args_found[ARG1] == (*carriage)->registry[0] && core && info && \
-		(*carriage)->registry[0] >= -4 && (*carriage)->registry[0] <= -1)
+	if ((*carriage)->args_found[ARG1] >= (info->champ_total * -1) && core && info && \
+		(*carriage)->args_found[ARG1] <= -1)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
 		if (info->flag[V_FLAG] == 1)
-			ft_printf("Player %d is said to be alive\n", info->winner);// decide if we want to print name of the player as well
+			ft_printf("Player %d (%s) is said to be alive\n", info->winner, info->champ_names[info->winner - 1]);// decide if we want to print name of the player as well
 		//ft_printf("winner updated: %d\n", info->winner);
 	}
+	// if (info->flag[V_FLAG] == 1)
+	// 	ft_printf("Player %d is said to be alive\n", (*carriage)->registry[0]);
+	//if (info->flag[V_FLAG] == 1)
+	//	ft_printf("Player %d is said to be alive\n", info->winner);// decide if we want to print name of the player as well
 }
 
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)

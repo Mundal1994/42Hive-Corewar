@@ -15,7 +15,7 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
 	//still update carry?
-	//update_carry((*carriage)->args_found[0], carriage);
+	update_carry((*carriage)->args_found[ARG1], carriage);
 }
 
 void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)

@@ -353,12 +353,16 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[ST
 		if (carriage->delay == 0)
 		{
 			set_statement_code(core, &carriage, info);
+			//if (carriage->id == 1)// && info->total_cycles > 19130 && info->total_cycles < 20000)
+			//	ft_printf("statecode: carriage %d statement_code: %d	carry: %d	delay: %d	total_cycles: %d\n", carriage->id, carriage->statement_code, carriage->carry, carriage->delay, info->total_cycles);
 		}
 		if (carriage->delay > 0)
 			carriage->delay -= 1;
 		if (carriage->delay == 0)
 		{
 			perform_statement_code(core, &carriage, info, op_table);
+			// if (carriage->id == 1)// && info->total_cycles > 19130 && info->total_cycles < 20000)
+			// 	ft_printf("performed: carriage %d statement_code: %d	carry: %d	delay: %d	total_cycles: %d	r0: %d\n", carriage->id, carriage->statement_code, carriage->carry, carriage->delay, info->total_cycles, carriage->registry[0]);
 			carriage->statement_code = OP_NULL;
 		}
 		carriage = carriage->next;

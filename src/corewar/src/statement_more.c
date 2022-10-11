@@ -77,6 +77,7 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	limit_jump(&pos);
 	value = read_bytes(0, pos, core, SIZE);
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
+	update_carry(value, carriage);//one place it said that this function contrary to lld should update carry
 }
 
 void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)

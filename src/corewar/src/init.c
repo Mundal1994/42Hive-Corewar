@@ -16,7 +16,9 @@ static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ
 {
 	t_carriage	*new;
 	int			i;
+	int			j;
 
+	j = 0;
 	while (champ)
 	{
 		new = (t_carriage *)malloc(sizeof(t_carriage));
@@ -42,8 +44,11 @@ static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ
 			new->registry[i++] = 0;
 		new->next = (*info)->head_carriage;
 		(*info)->head_carriage = new;
+		(*info)->champ_names[j] = champ->name;
 		champ = champ->next;
+		++j;
 	}
+	(*info)->champ_total = j;
 	return (0);
 }
 static void type_code(t_info **info)
