@@ -101,41 +101,6 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	//	ft_printf("Player %d is said to be alive\n", info->winner);// decide if we want to print name of the player as well
 }
 
-int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
-{
-	int	i;
-	int	hold;
-	int	j;
-	int	type;
-
-	i = 0;
-	limit_jump(&pos);
-	if (third == 2 || third == 0)
-	{
-		type = size;
-		j = (size * 2) - 1;
-	}
-	else
-	{
-		type = 2;
-		j = 3;
-	}
-	third = 0;
-	//ft_printf("pos: %d size: %d\n", pos, size);
-	while (i < type)
-	{
-		if ((pos + i) >= MEM_SIZE)
-			pos = (pos % MEM_SIZE) - i;
-		hold = core[pos + i];
-		third += (hold / 16) * ft_pow(16, j--);
-		hold %= 16;
-		third += (hold % 16) * ft_pow(16, j--);
-		++i;
-	}
-	//ft_printf("VALUE %d\n", third);
-	return (third);
-}
-
 void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	if ((*carriage)->arg_types[ARG1] == I && info)
