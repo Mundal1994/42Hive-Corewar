@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "ft_string.h"
+#include "validator.h"
+#include "errors.h"
 
 static int	is_valid_extension(char *arg)
 {
@@ -25,6 +27,6 @@ void	validate_arguments(int argc, char **argv)
 	if (argc == 2 && is_valid_extension(argv[1]))
 		return ;
 	if (argc == 2)
-		ft_putendl_fd(ERR_MSG_INVALID_EXT, 2);
+		error_ret(ARG_INVALID_EXT);
 	exit_error_str(MSG_USAGE);
 }

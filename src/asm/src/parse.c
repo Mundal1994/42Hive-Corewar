@@ -5,19 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 13:45:41 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/20 13:45:44 by cchen            ###   ########.fr       */
+/*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
+/*   Updated: 2022/10/04 22:54:35 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include <stdlib.h>
+#include "errors.h"
+#include "definitions.h"
+#include "parse.h"
 
-static void	parse_init(t_ast syntax_tree,t_vec *buffer)
+void	parse_free(t_parser *parser)
 {
-
+	if (parser->sym.str.memory)
+		symbol_free(&parser->sym);
+	if (parser->body.memory)
+		vec_free(&parser->body);
+	if (parser->opmap.entries)
+		opmap_free(&parser->opmap);
+	symtable_free(&parser->symtable);
 }
 
-int	parse(t_ast *syntax_tree, t_vec *buffer)
+static void	parse_init(t_parser *parser, t_lexer *lexer)
 {
-	parse_init(syntax_tree, buffer);
+	t_header	*header;
+
+	header = &parser->header;
+	header->magic = COREWAR_EXEC_MAGIC;
+	header->prog_size = 0;
+	ft_bzero(header->prog_name, PROG_NAME_LENGTH + 1);
+	ft_bzero(header->comment, COMMENT_LENGTH + 1);
+	parser->size = 0;
+	if (symbol_init(&parser->sym) != ERROR
+		&& vec_new(&parser->body, 1, sizeof(t_statement)) != ERROR
+		&& opmap_new(&parser->opmap) != ERROR
+		&& symtable_init(&parser->symtable) != ERROR)
+		return ;
+	parse_free(parser);
+	lexer_free(lexer);
+	exit_error();
+}
+
+void	parse(t_parser *parser, const char *arg)
+{
+	t_lexer	lexer;
+
+	lexer_init(&lexer, arg);
+	parse_init(parser, &lexer);
+	if (parse_header(parser, &lexer) == ERROR
+		|| parse_body(parser, &lexer) == ERROR)
+	{
+		parse_free(parser);
+		lexer_free(&lexer);
+		exit(EXIT_FAILURE);
+	}
+	lexer_free(&lexer);
 }
