@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/11 16:14:15 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/12 12:34:53 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_input
 {
 	u_int8_t	*t_script;
 	char		*filename;
+	int			champ_count;
 	size_t		capacity;
 	size_t		current;
 }				t_input;
@@ -172,6 +173,9 @@ void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
 int64_t	read_args(u_int32_t first, t_carriage **carriage, t_info *info, \
 	u_int8_t core[MEM_SIZE]);
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
+
+//error
+int	error_clean(t_input **input, t_profile **champ, int c);
 
 
 #endif

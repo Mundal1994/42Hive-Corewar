@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/11 17:14:31 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/11 17:24:23 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	u_int8_t			arg_found[ARGS];
 	int	i;
-	int	total;
-	int	prev;
 
 	i = 0;
 	while (i < ARGS)
