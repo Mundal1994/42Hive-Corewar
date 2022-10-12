@@ -1,7 +1,6 @@
 
 #include "vm.h"
 
-
 void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;

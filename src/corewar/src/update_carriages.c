@@ -176,7 +176,24 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	}
 	else
 	{
-		make_move(carriage, 1, &total);
+		if ((*carriage)->statement_code >= 1 && (*carriage)->statement_code <= 16)
+		{
+			prev = (*carriage)->pos;
+			total = 0;
+			if (info->operations[PCB][(*carriage)->statement_code - 1] == 1)
+				make_move(carriage, 2, &total);
+			else
+				make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1] + 1, &total);
+			if (info->flag[V_FLAG] == 16)
+			{
+				//ft_printf("second %d ", (*carriage)->statement_code);
+				print_flag16(core, carriage, total, prev);
+			}
+		}
+		else
+		{
+			make_move(carriage, 1, &total);
+		}
 	}
 	reset_args(carriage);
 }
