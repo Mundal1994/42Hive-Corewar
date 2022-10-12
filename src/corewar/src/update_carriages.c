@@ -62,8 +62,6 @@ static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	u_int8_t			arg_found[ARGS];
 	int	i;
-	int	total;
-	int	prev;
 
 	i = 0;
 	while (i < ARGS)
