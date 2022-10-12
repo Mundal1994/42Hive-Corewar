@@ -27,39 +27,7 @@ void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	}
 }
 
-static int	args_found_error(t_info *info, t_carriage **carriage)
-{
-	int	i;
-	int	total;
-
-	i = 0;
-	while (i < 3)
-	{
-		if ((*carriage)->args_found[i] < 0)
-		{
-			total = 0;
-			move_carriage(info, carriage, &total);
-			return (TRUE);
-		}
-		++i;
-	}
-	return (FALSE);
-}
-
-static void	reset_args(t_carriage **carriage)
-{
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		(*carriage)->arg_types[i] = 0;
-		(*carriage)->args_found[i] = 0;
-		++i;
-	}
-}
-
-static void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev)
+void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev)
 {
 	int	i;
 
@@ -86,6 +54,42 @@ static void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int tota
 	ft_putchar('\n');
 }
 
+static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **carriage)
+{
+	int	i;
+	int	total;
+	int	prev;
+
+	i = 0;
+	while (i < 3)
+	{
+		if ((*carriage)->args_found[i] < 0)
+		{
+			total = 0;
+			prev = (*carriage)->pos;
+			move_carriage(info, carriage, &total);
+			if (info->flag[V_FLAG] == 16)
+				print_flag16(core, carriage, total, prev);
+			return (TRUE);
+		}
+		++i;
+	}
+	return (FALSE);
+}
+
+static void	reset_args(t_carriage **carriage)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		(*carriage)->arg_types[i] = 0;
+		(*carriage)->args_found[i] = 0;
+		++i;
+	}
+}
+
 static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	u_int8_t			arg_found[ARGS];
@@ -106,7 +110,7 @@ static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	(*carriage)->args_found[ARG1] = read_args(ARG1, carriage, info, core);
 	(*carriage)->args_found[ARG2] = read_args(ARG2, carriage, info, core);
 	(*carriage)->args_found[ARG3] = read_args(ARG3, carriage, info, core);
-	return (args_found_error(info, carriage));
+	return (args_found_error(core, info, carriage));
 }
 
 static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage, \
@@ -137,7 +141,6 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	int	prev;
 	int	total;
 
-	total = 0;
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
 		 && core[(*carriage)->pos] == (*carriage)->statement_code)
 	{
@@ -159,6 +162,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			OP_ZJMP && !(*carriage)->carry))
 		{
 			prev = (*carriage)->pos;
+			total = 0;
 			move_carriage(info, carriage, &total);
 			if (info->flag[V_FLAG] == 16)
 				print_flag16(core, carriage, total, prev);
@@ -166,7 +170,9 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 		reset_args(carriage);
 	}
 	else
+	{
 		make_move(carriage, 1, &total);
+	}
 }
 
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, \

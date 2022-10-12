@@ -194,7 +194,7 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if (info->flag[V_FLAG] == 4)
 		ft_printf("(%d)\n", pos);
 	limit_jump(&pos);
-	//ft_printf("fork\n");
+	//ft_printf("from car %d [%d] -> %d [%d]\n", (*carriage)->id, (*carriage)->pos, info->carriage_count + 1, pos);
 	copy_carriage(core, &info, *carriage, pos);
 	if (info->flag[V_FLAG] == 5 && found == FALSE)
 		found = v_flag5(carriage);

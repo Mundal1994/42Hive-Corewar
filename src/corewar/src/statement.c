@@ -122,8 +122,6 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
-	// if ((*carriage)->id == 14)
-	// 	ft_printf("CARRIAGE 4 ENTERED LIVE\n");
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;//removed +1
@@ -138,10 +136,6 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	if (info->flag[V_FLAG] == 5 && found == FALSE)
 		found = v_flag5(carriage);
-	// if (info->flag[V_FLAG] == 1)
-	// 	ft_printf("Player %d is said to be alive\n", (*carriage)->registry[0]);
-	//if (info->flag[V_FLAG] == 1)
-	//	ft_printf("Player %d is said to be alive\n", info->winner);// decide if we want to print name of the player as well
 }
 
 void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
@@ -156,14 +150,6 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_two_arg(carriage, "ld", ARG2);
-	// if ((*carriage)->id == 1)
-	// {
-	// 	print_core(core, info);
-	// 	ft_printf("car->pos: %d	cycle_count: %d\n", (*carriage)->pos, info->total_cycles);
-	// 	ft_printf("r%d: new value: %d\n", (*carriage)->args_found[ARG2], (*carriage)->args_found[ARG1]);
-	// 	ft_printf("r10: %d\n", (*carriage)->registry[9]);
-
-	// }
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
 	update_carry((*carriage)->args_found[ARG1], carriage);
 	if (info->flag[V_FLAG] == 5 && found == FALSE)
@@ -212,8 +198,6 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG2] % IDX_MOD);
 		limit_jump(&pos);
-		// if ((*carriage)->id == 14 && info->total_cycles == 8908)
-		// ft_printf("carriage->pos: %d	put nbr at pos: %d	orignbr: %d	nbrput: %d\n", (*carriage)->pos, pos, (int16_t)(*carriage)->args_found[ARG2], (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	}
 	if (info->flag[V_FLAG] == 5 && found == FALSE)
@@ -227,7 +211,6 @@ void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 	if (info->flag[V_FLAG] == 4 && core && info)
 		v_flag4_three_arg(carriage, "add", -1);
-		//v_flag4_two_arg(carriage, "add", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] + (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
