@@ -197,5 +197,5 @@ do
 	#echo "end"
 	rm vm_dump$COUNT.txt
 	rm given_vm_dump$COUNT.txt
-	COUNT=$((COUNT+50))
+	COUNT=$((COUNT+10000))
 done
