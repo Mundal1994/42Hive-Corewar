@@ -4,9 +4,16 @@
 void	limit_jump(int *pos)
 {
 	if (*pos >= MEM_SIZE)
+	{
+		//ft_printf("updated pos1: prev pos %d %% MEM_SSIZE(%d) = ", *pos, MEM_SIZE);
 		*pos %= MEM_SIZE;
+		//ft_printf("%d\n", *pos);
+	}
 	else if (*pos < 0)
+	{
 		*pos = MEM_SIZE - (*pos * -1);
+		//ft_printf("updated pos2\n");
+	}
 }
 
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
@@ -27,6 +34,8 @@ void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 		{
 			if (i == reg)
 				ft_printf("r%d", (*carriage)->args_found[i]);
+			else if ((*carriage)->statement_code == OP_STI || (*carriage)->statement_code == OP_LDI)
+				ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 			else
 				ft_printf("%d", (*carriage)->args_found[i]);
 		}
@@ -71,7 +80,7 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
 	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_three_arg(carriage, "lldi", ARG3);
-	sum = (*carriage)->args_found[ARG1] + (*carriage)->args_found[ARG2];
+	sum = (*carriage)->args_found[ARG1] + (*carriage)->args_found[ARG2];// should these also be int16_t limited like the others? or did i have a reason for leaving it like this
 	if (sum < 0)
 		pos = (*carriage)->pos - (sum * -1);
 	else
@@ -109,59 +118,24 @@ void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-// static void	init_op_table(op_table *op_table[STATE])
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	op_table[i++] = live;
-// 	op_table[i++] = ld;
-// 	op_table[i++] = st;
-// 	op_table[i++] = add;
-// 	op_table[i++] = sub;
-// 	op_table[i++] = and;
-// 	op_table[i++] = or;
-// 	op_table[i++] = xor;
-// 	op_table[i++] = zjmp;
-// 	op_table[i++] = ldi;
-// 	op_table[i++] = sti;
-// 	op_table[i++] = fork_op;
-// 	op_table[i++] = lld;
-// 	op_table[i++] = lldi;
-// 	op_table[i++] = lfork;
-// 	op_table[i++] = aff;
-// }
-
 static int	copy_carriage(uint8_t core[MEM_SIZE], t_info **info, t_carriage *carriage, int new_pos)
 {
 	t_carriage	*new;
 	int			i;
-	//op_table	*op_table[STATE];//copied from game start
 
 	new = (t_carriage *)malloc(sizeof(t_carriage));
 	if (!new)
 		return (ERROR);
 	(*info)->carriage_count++;
 	new->id = (*info)->carriage_count;
-	//if (new->id == 1968 || new->id == 1966)
-	//	ft_printf("id: %d", carriage->id);
 	new->carry = carriage->carry;
 	new->last_live_call = carriage->last_live_call;
 	new->delay = 0;
 	new->pos =new_pos;
 	new->statement_code = OP_NULL;
-	// set_statement_code(core, &new, *info);
-	// if (new->delay >= 1)
-	// 	new->delay -= 1;
-	// if (new->delay == 0)
-	// {
-	// 	init_op_table(op_table);
-	// 	perform_statement_code(core, &new, *info, op_table);
-	// 	carriage->statement_code = OP_NULL;
-	// }
 	new->home = carriage->home;//this should probably be different
 	new->current = carriage->current;//this should probably be different
-	new->skip = carriage->skip;//this should probably be different
+	new->skip = carriage->skip;//not using skip
 	i = -1;
 	while (++i < REG_NUMBER)
 		new->registry[i] = carriage->registry[i];

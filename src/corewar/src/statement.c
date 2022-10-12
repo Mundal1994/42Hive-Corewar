@@ -193,6 +193,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1];
 	else if ((*carriage)->arg_types[ARG2] == I)
 	{
+		//ft_printf("%d\n: ", (int16_t)(*carriage)->args_found[ARG2]);
 		if ((int16_t)(*carriage)->args_found[ARG2] < 0)
 			pos = (*carriage)->pos - (((int16_t)(*carriage)->args_found[ARG2] * -1) % IDX_MOD);
 		else
