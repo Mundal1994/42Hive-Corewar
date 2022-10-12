@@ -40,7 +40,7 @@ void	move_carriage(t_info *info, t_carriage **carriage, int *total)
 		make_move(carriage, 2, total);
 	else
 		make_move(carriage, 1, total);
-	while (i < 3)
+	while (i < 3 && (*carriage)->arg_types[i])
 	{
 		if ((*carriage)->arg_types[i] == 1)
 			make_move(carriage, 1, total);

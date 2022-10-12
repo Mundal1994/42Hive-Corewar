@@ -69,7 +69,10 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **c
 			prev = (*carriage)->pos;
 			move_carriage(info, carriage, &total);
 			if (info->flag[V_FLAG] == 16)
+			{
+				//ft_printf("first %d", total);
 				print_flag16(core, carriage, total, prev);
+			}
 			return (TRUE);
 		}
 		++i;
@@ -165,14 +168,17 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			total = 0;
 			move_carriage(info, carriage, &total);
 			if (info->flag[V_FLAG] == 16)
+			{
+				//ft_printf("second ");
 				print_flag16(core, carriage, total, prev);
+			}
 		}
-		reset_args(carriage);
 	}
 	else
 	{
 		make_move(carriage, 1, &total);
 	}
+	reset_args(carriage);
 }
 
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, \
