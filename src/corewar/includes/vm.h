@@ -124,11 +124,15 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info, op_table *op_table[STATE]);
 void	check(t_info *info);
+void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+	t_info *info);
+void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+	t_info *info, op_table *op_table[STATE]);
 
 //move fucntions
 void	make_move_tmp(t_carriage **carriage, int move);
-void	move_carriage(t_info *info, t_carriage **carriage);
-void	make_move(t_carriage **carriage, int move);
+void	move_carriage(t_info *info, t_carriage **carriage, int *total);
+void	make_move(t_carriage **carriage, int move, int *total);
 
 //print functions
 void	print_core(uint8_t core[MEM_SIZE], t_info *info);
@@ -173,5 +177,7 @@ int64_t	read_args(u_int32_t first, t_carriage **carriage, t_info *info, \
 	u_int8_t core[MEM_SIZE]);
 int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 
+
+int	v_flag5(t_carriage **carriage);
 
 #endif

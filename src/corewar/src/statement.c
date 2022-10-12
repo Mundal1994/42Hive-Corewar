@@ -10,6 +10,43 @@ void	update_carry(int nbr, t_carriage **carriage)
 }
 
 
+int	v_flag5(t_carriage **carriage)
+{
+	if ((*carriage)->statement_code == OP_LIVE)
+		ft_printf("LIVE (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_LD)
+		ft_printf("LD (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_ST)
+		ft_printf("ST (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_ADD)
+		ft_printf("add (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_SUB)
+		ft_printf("sub (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_AND)
+		ft_printf("AND (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_OR)
+		ft_printf("OR (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_XOR)
+		ft_printf("XOR (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_ZJMP)
+		ft_printf("ZJMP (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_LDI)
+		ft_printf("LDI (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_STI)
+		ft_printf("STI (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_FORK)
+		ft_printf("FORK (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_LLD)
+		ft_printf("LLD (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_LLDI)
+		ft_printf("LLDI (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_LFORK)
+		ft_printf("LFORK (%d)\n", (*carriage)->statement_code);
+	else if ((*carriage)->statement_code == OP_AFF)
+		ft_printf("AFF (%d)\n", (*carriage)->statement_code);
+	return (TRUE);
+}
+
 void	v_flag4_one_arg(t_carriage **carriage, char *command)
 {
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
@@ -65,6 +102,7 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
+	static int	found = FALSE;
 
 	if ((*carriage)->carry && core && info)
 	{
@@ -77,10 +115,13 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	if (info->flag[V_FLAG] == 4)
 		v_flag4_one_arg(carriage, "zjmp");
+	if (info->flag[V_FLAG] == 5 && found == FALSE)
+		found = v_flag5(carriage);
 }
 
 void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	static int	found = FALSE;
 	// if ((*carriage)->id == 14)
 	// 	ft_printf("CARRIAGE 4 ENTERED LIVE\n");
 	if (info->flag[V_FLAG] == 4)
@@ -95,6 +136,8 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 			ft_printf("Player %d (%s) is said to be alive\n", info->winner, info->champ_names[info->winner - 1]);// decide if we want to print name of the player as well
 		//ft_printf("winner updated: %d\n", info->winner);
 	}
+	if (info->flag[V_FLAG] == 5 && found == FALSE)
+		found = v_flag5(carriage);
 	// if (info->flag[V_FLAG] == 1)
 	// 	ft_printf("Player %d is said to be alive\n", (*carriage)->registry[0]);
 	//if (info->flag[V_FLAG] == 1)
@@ -103,6 +146,7 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	static int	found = FALSE;
 	if ((*carriage)->arg_types[ARG1] == I && info)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)
@@ -122,6 +166,8 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	// }
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
 	update_carry((*carriage)->args_found[ARG1], carriage);
+	if (info->flag[V_FLAG] == 5 && found == FALSE)
+		found = v_flag5(carriage);
 }
 
 void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
@@ -153,6 +199,7 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
+	static int	found = FALSE;
 
 	if (info->flag[V_FLAG] == 4 && info)
 		v_flag4_two_arg(carriage, "st", ARG1);
@@ -169,11 +216,14 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		// ft_printf("carriage->pos: %d	put nbr at pos: %d	orignbr: %d	nbrput: %d\n", (*carriage)->pos, pos, (int16_t)(*carriage)->args_found[ARG2], (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	}
+	if (info->flag[V_FLAG] == 5 && found == FALSE)
+		found = v_flag5(carriage);
 }
 
 void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
+	static int	found = FALSE;
 
 	if (info->flag[V_FLAG] == 4 && core && info)
 		v_flag4_three_arg(carriage, "add", -1);
@@ -181,15 +231,20 @@ void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] + (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
+	if (info->flag[V_FLAG] == 5 && found == FALSE)
+		found = v_flag5(carriage);
 }
 
 void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
+	static int	found = FALSE;
 
 	if (info->flag[V_FLAG] == 4 && core && info)
 		v_flag4_three_arg(carriage, "sub", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] - (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
 	update_carry(sum, carriage);
+	if (info->flag[V_FLAG] == 5 && found == FALSE)
+		found = v_flag5(carriage);
 }

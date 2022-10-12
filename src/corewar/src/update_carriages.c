@@ -30,13 +30,15 @@ void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 static int	args_found_error(t_info *info, t_carriage **carriage)
 {
 	int	i;
+	int	total;
 
 	i = 0;
 	while (i < 3)
 	{
 		if ((*carriage)->args_found[i] < 0)
 		{
-			move_carriage(info, carriage);
+			total = 0;
+			move_carriage(info, carriage, &total);
 			return (TRUE);
 		}
 		++i;
@@ -57,6 +59,32 @@ static void	reset_args(t_carriage **carriage)
 	}
 }
 
+static void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev)
+{
+	int	i;
+
+	ft_printf("ADV %d ", total);
+	if (prev == 0)
+		ft_printf("(0x0000 -> %#0.4x) ", (*carriage)->pos);
+	else if ((*carriage)->pos == 0)
+		ft_printf("(%#0.4x -> 0x0000) ", prev);
+	else if (prev > (*carriage)->pos)
+		ft_printf("(%#0.4x -> %#0.4x) ", prev, (*carriage)->pos + MEM_SIZE);
+	else
+		ft_printf("(%#0.4x -> %#0.4x) ", prev, (*carriage)->pos);
+	i = 0;
+	while (i < total)
+	{
+		if (prev + i >= MEM_SIZE)
+			prev = 0 - i;
+		if (core[prev + i] < 16)
+			ft_printf("0%x ", core[prev + i]);
+		else
+			ft_printf("%x ", core[prev + i]);
+		++i;
+	}
+	ft_putchar('\n');
+}
 
 static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
@@ -106,6 +134,10 @@ static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	t_info *info, op_table *op_table[STATE])
 {
+	int	prev;
+	int	total;
+
+	total = 0;
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
 		 && core[(*carriage)->pos] == (*carriage)->statement_code)
 	{
@@ -123,13 +155,18 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 		else
 			pcb_false(core, carriage, info);
 		op_table[(*carriage)->statement_code - 1](core, carriage, info);
-		if ((*carriage)->statement_code != 9 || ((*carriage)->statement_code == \
-			9 && !(*carriage)->carry))
-			move_carriage(info, carriage);
+		if ((*carriage)->statement_code != OP_ZJMP || ((*carriage)->statement_code == \
+			OP_ZJMP && !(*carriage)->carry))
+		{
+			prev = (*carriage)->pos;
+			move_carriage(info, carriage, &total);
+			if (info->flag[V_FLAG] == 16)
+				print_flag16(core, carriage, total, prev);
+		}
 		reset_args(carriage);
 	}
 	else
-		make_move(carriage, 1);
+		make_move(carriage, 1, &total);
 }
 
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, \

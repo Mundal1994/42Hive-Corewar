@@ -42,6 +42,19 @@ static void	check_carriage_live_call(t_info *info)
 	//ft_printf("limit %d == %d - %d\n", limit, info->total_cycles, info->cycles_to_die);
 	while (carriage)
 	{
+		// if (info->cycles_to_die == 836 && carriage->id == 1968)
+		// {
+		// 	ft_printf("carriage id: %d\n", carriage->id);
+		// 	ft_printf("limit %d == %d - %d	carriage : %d in regards to limit: %d\n", limit, info->total_cycles, info->cycles_to_die, carriage->last_live_call, info->total_cycles - carriage->last_live_call);
+		// 	found = TRUE;
+		// }
+		// if (carriage->id == 1966)
+		// {
+		// 	ft_printf("carriage id: %d\n", carriage->id);
+		// 	ft_printf("limit %d == %d - %d	carriage : %d in regards to limit: %d\n", limit, info->total_cycles, info->cycles_to_die, carriage->last_live_call, info->total_cycles - carriage->last_live_call);
+		// }
+			
+
 		//if (carriage->id == 1)
 		//ft_printf("limit %d == %d - %d	carriage : %d in regards to limit: %d\n", limit, info->total_cycles, info->cycles_to_die, carriage->last_live_call, info->total_cycles - carriage->last_live_call);
 		if (carriage->last_live_call <= limit)
