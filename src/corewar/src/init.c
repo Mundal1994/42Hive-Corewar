@@ -93,7 +93,7 @@ static void	statment_delay(t_info **info)
 		j += 2;
 	}
 	i = 0;
-	(*info)->operations[DELAY][i++] = 10;
+	(*info)->operations[DELAY][i++] = 10;//someone said 14 but it doesn't make sense with ours
 	(*info)->operations[DELAY][i++] = 5;
 	(*info)->operations[DELAY][i++] = 5;
 	(*info)->operations[DELAY][i++] = 10;

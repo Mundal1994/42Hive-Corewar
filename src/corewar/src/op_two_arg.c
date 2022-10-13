@@ -11,11 +11,11 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] % IDX_MOD), core, SIZE);
 	}
-	if (info->flag[V_FLAG] == 4)
+	if (print_command(info) == TRUE)
 		v_flag4_two_arg(carriage, "ld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
 	update_carry((*carriage)->args_found[ARG1], carriage);
-	if (info->flag[V_FLAG] == 5 && found == FALSE)
+	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -30,12 +30,12 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, 2);
 	}
-	if (info->flag[V_FLAG] == 4 && info)
+	if (print_command(info) == TRUE && info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
 	//still update carry?
 	update_carry((*carriage)->args_found[ARG1], carriage);
-	if (info->flag[V_FLAG] == 5 && found == FALSE)
+	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -44,7 +44,7 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int	pos;
 	static int	found = FALSE;
 
-	if (info->flag[V_FLAG] == 4 && info)
+	if (print_command(info) == TRUE && info)
 		v_flag4_two_arg(carriage, "st", ARG1);
 	if ((*carriage)->arg_types[ARG2] == R)
 		(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1];
@@ -58,6 +58,6 @@ void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		limit_jump(&pos);
 		put_nbr(core, pos, (uint32_t)(*carriage)->registry[(*carriage)->args_found[ARG1] - 1]);
 	}
-	if (info->flag[V_FLAG] == 5 && found == FALSE)
+	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }

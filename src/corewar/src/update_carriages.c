@@ -68,7 +68,7 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **c
 			total = 0;
 			prev = (*carriage)->pos;
 			move_carriage(info, carriage, &total);
-			if (info->flag[V_FLAG] == 16)
+			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
 			{
 				//ft_printf("first %d", total);
 				print_flag16(core, carriage, total, prev);
@@ -167,7 +167,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			prev = (*carriage)->pos;
 			total = 0;
 			move_carriage(info, carriage, &total);
-			if (info->flag[V_FLAG] == 16)
+			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
 			{
 				//ft_printf("second ");
 				print_flag16(core, carriage, total, prev);
@@ -184,7 +184,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 				make_move(carriage, 2, &total);
 			else
 				make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1] + 1, &total);
-			if (info->flag[V_FLAG] == 16)
+			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
 			{
 				//ft_printf("second %d ", (*carriage)->statement_code);
 				print_flag16(core, carriage, total, prev);

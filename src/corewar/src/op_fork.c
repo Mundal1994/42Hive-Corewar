@@ -41,19 +41,19 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int16_t	sum;
 	static int	found = FALSE;
 
-	if (info->flag[V_FLAG] == 4 && core)
+	if (print_command(info) == TRUE && core)
 		v_flag4_one_arg(carriage, "fork");
 	sum = (int16_t)(*carriage)->args_found[ARG1];
 	if (sum < 0)
 		pos = (*carriage)->pos - ((sum * -1) % IDX_MOD);
 	else
 		pos = (*carriage)->pos + (sum % IDX_MOD);
-	if (info->flag[V_FLAG] == 4)
+	if (print_command(info) == TRUE)
 		ft_printf("(%d)\n", pos);
 	limit_jump(&pos);
 	//ft_printf("from car %d [%d] -> %d [%d]\n", (*carriage)->id, (*carriage)->pos, info->carriage_count + 1, pos);
 	copy_carriage(core, &info, *carriage, pos);
-	if (info->flag[V_FLAG] == 5 && found == FALSE)
+	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -62,13 +62,13 @@ void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int	pos;
 	static int	found = FALSE;
 
-	if (info->flag[V_FLAG] == 4 && core)
+	if (print_command(info) == TRUE && core)
 		v_flag4_one_arg(carriage, "lfork");
 	pos = (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1];
-	if (info->flag[V_FLAG] == 4)
+	if (print_command(info) == TRUE)
 		ft_printf("(%d)\n", pos);
 	limit_jump(&pos);
 	copy_carriage(core, &info, *carriage, pos);
-	if (info->flag[V_FLAG] == 5 && found == FALSE)
+	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }
