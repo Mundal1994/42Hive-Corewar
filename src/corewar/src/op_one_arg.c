@@ -24,7 +24,9 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] % IDX_MOD);
 		limit_jump(&pos);
+		//ft_printf("from pos: %0.4x	", (*carriage)->pos);
 		(*carriage)->pos = pos;
+	//	ft_printf("to pos: %0.4x ", (*carriage)->pos);
 	}
 	if (print_command(info) == TRUE)
 		v_flag4_one_arg(carriage, "zjmp");

@@ -9,7 +9,7 @@ void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if (print_command(info) == TRUE && core && info)
 		v_flag4_three_arg(carriage, "add", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] + (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
-	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
+	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)sum;
 	update_carry(sum, carriage);
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
@@ -23,7 +23,7 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if (print_command(info) == TRUE && core && info)
 		v_flag4_three_arg(carriage, "sub", -1);
 	sum = (*carriage)->registry[(*carriage)->args_found[ARG1] - 1] - (*carriage)->registry[(*carriage)->args_found[ARG2] - 1];
-	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = sum;
+	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)sum;
 	update_carry(sum, carriage);
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
@@ -49,7 +49,7 @@ void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", (int16_t)(*carriage)->args_found[ARG1], (int16_t)(*carriage)->args_found[ARG2], sum, pos);
 	limit_jump(&pos);
 	value = read_bytes(0, pos, core, SIZE);
-	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
+	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)value;
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }
@@ -74,7 +74,7 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		ft_printf("       | -> load from %d + %d = %d (with pc %d)\n", (*carriage)->args_found[ARG1], (*carriage)->args_found[ARG2], sum, pos);
 	limit_jump(&pos);
 	value = read_bytes(0, pos, core, SIZE);
-	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = value;
+	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)value;
 	update_carry(value, carriage);//one place it said that this function contrary to lld should update carry
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);

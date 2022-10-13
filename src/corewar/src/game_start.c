@@ -81,6 +81,8 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 		//ft_printf("NEW CYCLE\n");
 		if (print_cycle_count(info) == TRUE)
 			ft_printf("It is now cycle %d\n", info->total_cycles);
+		if (update_carriages(core, info, op_table) == ERROR)
+			return (ERROR);
 		if (info->total_cycles == dump)//info->flag[D_FLAG] && info->total_cycles == info->flag[D_FLAG])
 		{
 			print_core(core, info);
@@ -90,8 +92,6 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 				print_carriages(info);
 			exit(0);//need to make better exit code with freeing everything
 		}
-		if (update_carriages(core, info, op_table) == ERROR)
-			return (ERROR);
 		check(info);
 	}
 	announce_winner(champ, info->winner);

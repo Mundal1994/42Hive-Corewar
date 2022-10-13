@@ -7,13 +7,13 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if ((*carriage)->arg_types[ARG1] == I && info)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos - (((int16_t)(*carriage)->args_found[ARG1] * -1) % IDX_MOD), core, SIZE);
+			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, (*carriage)->pos - (((int16_t)(*carriage)->args_found[ARG1] * -1) % IDX_MOD), core, SIZE);
 		else
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] % IDX_MOD), core, SIZE);
+			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] % IDX_MOD), core, SIZE);
 	}
 	if (print_command(info) == TRUE)
 		v_flag4_two_arg(carriage, "ld", ARG2);
-	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
+	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (int32_t)(*carriage)->args_found[ARG1];
 	update_carry((*carriage)->args_found[ARG1], carriage);
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
@@ -26,13 +26,13 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if ((*carriage)->arg_types[ARG1] == I)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos - ((int16_t)(*carriage)->args_found[ARG1] * -1), core, 2);//orig machine read 2 instead of four
+			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, (*carriage)->pos - ((int16_t)(*carriage)->args_found[ARG1] * -1), core, 2);//orig machine read 2 instead of four
 		else
-			(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, 2);
+			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, 2);
 	}
 	if (print_command(info) == TRUE && info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
-	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (*carriage)->args_found[ARG1];
+	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = (int32_t)(*carriage)->args_found[ARG1];
 	//still update carry?
 	update_carry((*carriage)->args_found[ARG1], carriage);
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
