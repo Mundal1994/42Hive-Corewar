@@ -181,5 +181,6 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 int	v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev);
 int	print_command(t_info *info);
+int	print_cycle_count(t_info *info);
 
 #endif

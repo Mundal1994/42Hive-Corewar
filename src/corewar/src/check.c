@@ -1,14 +1,14 @@
 #include "vm.h"
 
-static int	print_cycle_count(t_info *info)
+int	print_cycle_count(t_info *info)
 {
-	if (info->flag[V_FLAG] == 2 || info->flag[V_FLAG] == 6)
+	if (info->flag[V_FLAG] == 2 || info->flag[V_FLAG] == 3 || info->flag[V_FLAG] == 6)
 		return (TRUE);
-	if (info->flag[V_FLAG] == 11 || info->flag[V_FLAG] == 14)
+	if (info->flag[V_FLAG] == 7 || info->flag[V_FLAG] == 11 || info->flag[V_FLAG] == 14)
 		return (TRUE);
-	if (info->flag[V_FLAG] >= 18 && info->flag[V_FLAG] <= 19)
+	if (info->flag[V_FLAG] == 10 || (info->flag[V_FLAG] >= 18 && info->flag[V_FLAG] <= 19))
 		return (TRUE);
-	if (info->flag[V_FLAG] >= 22 && info->flag[V_FLAG] <= 24)
+	if (info->flag[V_FLAG] == 15 || (info->flag[V_FLAG] >= 22 && info->flag[V_FLAG] <= 23))
 		return (TRUE);
 	return (FALSE);
 }
@@ -72,7 +72,7 @@ static void	check_carriage_live_call(t_info *info)
 		if (carriage->last_live_call <= limit)
 		{
 			next = carriage->next;
-			if ((info->flag[V_FLAG] >= 8 && info->flag[V_FLAG] <= 14) || info->flag[V_FLAG] == 24)
+			if ((info->flag[V_FLAG] >= 8 && info->flag[V_FLAG] <= 15) || info->flag[V_FLAG] == 24)
 			{
 				if (info->cycles_to_die < 0)
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", carriage->id, info->total_cycles - carriage->last_live_call - 1, info->cycles_to_die);
@@ -125,6 +125,4 @@ void	check(t_info *info)
 	info->total_cycles += 1;
 	if (info->cycle_count <= 0)
 		kill_carriages(info);
-	if (print_cycle_count(info) == TRUE)
-		ft_printf("It is now cycle %d\n", info->total_cycles);
 }
