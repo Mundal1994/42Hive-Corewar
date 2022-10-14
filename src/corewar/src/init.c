@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
+static int	init_carriage(t_info **info, t_profile *champ)
 {
 	t_carriage	*new;
 	int			i;
@@ -27,19 +27,11 @@ static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ
 		new->id = champ->i;
 		new->carry = 0;
 		new->statement_code = 0;
-		new->last_live_call = 0;
+		new->last_live_call = -1;
 		new->delay = 0;
 		new->pos = champ->pos;
-		new->home = &core[0];
-		new->current = &core[new->pos];
-		new->skip = 0;
 		i = 0;
 		new->registry[i++] = champ->i * -1;
-		// reg_1 = - player_id	NEEDS TO STILL FIX LOGIC OF THE REGISTRYS
-		/*
-		r1 == registry[0]
-		r2 == registry[1]
-		*/
 		while (i < REG_NUMBER)
 			new->registry[i++] = 0;
 		new->next = (*info)->head_carriage;
@@ -51,6 +43,7 @@ static int	init_carriage(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ
 	(*info)->champ_total = j;
 	return (0);
 }
+
 static void type_code(t_info **info)
 {
 	int		i;
@@ -112,7 +105,7 @@ static void	statment_delay(t_info **info)
 	type_code(info);
 }
 
-static int	init_info(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
+static int	init_info(t_info **info, t_profile *champ)
 {
 	int	i;
 
@@ -123,7 +116,7 @@ static int	init_info(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
 	(*info)->cycle_count = CYCLE_TO_DIE;
 	(*info)->checks_count = 0;
 	(*info)->head_carriage = NULL;
-	if (init_carriage(core, info, champ) == ERROR)
+	if (init_carriage(info, champ) == ERROR)
 		return (ERROR);
 	(*info)->winner = (*info)->head_carriage->id;
 	(*info)->carriage_count = (*info)->head_carriage->id;
@@ -170,7 +163,7 @@ int	init(int argc, char **argv, int i, t_info *info)
 		return (ERROR);
 	add_players_to_core(core, &champ, input, argc - i);
 	// doens't use input anymore after this point
-	if (init_info(core, &info, champ) == ERROR)
+	if (init_info(&info, champ) == ERROR)
 		return (ERROR);//free info and champ here before exiting
 	if (game_start(core, info, champ) == ERROR)
 		return (ERROR);//free info and champ here before exiting

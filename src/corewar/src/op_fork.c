@@ -28,9 +28,8 @@ static int	copy_carriage(uint8_t core[MEM_SIZE], t_info **info, t_carriage *carr
 	new->delay = 0;
 	new->pos =new_pos;
 	new->statement_code = OP_NULL;
-	new->home = carriage->home;//this should probably be different
-	new->current = carriage->current;//this should probably be different
-	new->skip = carriage->skip;//not using skip
+	//new->home = carriage->home;//this should probably be different
+	//new->current = carriage->current;//this should probably be different
 	i = -1;
 	while (++i < REG_NUMBER)
 		new->registry[i] = carriage->registry[i];

@@ -29,28 +29,28 @@ static int	one_carriage_left(t_info *info)
 	return (FALSE);
 }
 
-static void	init_op_table(op_table *op_table[STATE])
-{
-	int	i;
+// static void	init_op_table(op_table *op_table[STATE])
+// {
+// 	int	i;
 
-	i = 0;
-	op_table[i++] = op_live;
-	op_table[i++] = op_ld;
-	op_table[i++] = op_st;
-	op_table[i++] = op_add;
-	op_table[i++] = op_sub;
-	op_table[i++] = op_and;
-	op_table[i++] = op_or;
-	op_table[i++] = op_xor;
-	op_table[i++] = op_zjmp;
-	op_table[i++] = op_ldi;
-	op_table[i++] = op_sti;
-	op_table[i++] = op_fork;
-	op_table[i++] = op_lld;
-	op_table[i++] = op_lldi;
-	op_table[i++] = op_lfork;
-	op_table[i++] = op_aff;
-}
+// 	i = 0;
+// 	op_table[i++] = op_live;
+// 	op_table[i++] = op_ld;
+// 	op_table[i++] = op_st;
+// 	op_table[i++] = op_add;
+// 	op_table[i++] = op_sub;
+// 	op_table[i++] = op_and;
+// 	op_table[i++] = op_or;
+// 	op_table[i++] = op_xor;
+// 	op_table[i++] = op_zjmp;
+// 	op_table[i++] = op_ldi;
+// 	op_table[i++] = op_sti;
+// 	op_table[i++] = op_fork;
+// 	op_table[i++] = op_lld;
+// 	op_table[i++] = op_lldi;
+// 	op_table[i++] = op_lfork;
+// 	op_table[i++] = op_aff;
+// }
 
 int	free_carriage(t_info *info)
 {
@@ -81,19 +81,18 @@ static int	flag_check(t_info *info)
 
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 {
-	op_table	*op_table[STATE];
+	//op_table	*op_table[STATE];
 	int			dump;
 
-	init_op_table(op_table);
+	//init_op_table(op_table);
 	introduce_contestants(champ);
 	dump = flag_check(info);
 	if (dump == 0)
 		return (print_dump_flags(core, info));
 	while (!one_carriage_left(info))
 	{
-		if (print_cycle_count(info) == TRUE)
-			ft_printf("It is now cycle %d\n", info->total_cycles);
-		if (update_carriages(core, info, op_table) == ERROR)
+		print_cycle_count(info);
+		if (update_carriages(core, info) == ERROR)//, op_table) == ERROR)
 			return (free_carriage(info));
 		if (info->total_cycles == dump)
 			return (print_dump_flags(core, info));

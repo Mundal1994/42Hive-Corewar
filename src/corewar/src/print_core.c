@@ -14,9 +14,10 @@
 
 static void	print_color(t_info *info, int i)
 {
-	t_carriage *carriage;
+	t_carriage	*carriage;
 
-	if (info->flag[DC_FLAG] >= 0 || info->flag[DI_FLAG] >= 0 || info->flag[C_FLAG] >= 0)
+	if (info->flag[DC_FLAG] >= 0 || info->flag[DI_FLAG] >= 0 || \
+		info->flag[C_FLAG] >= 0)
 	{
 		carriage = info->head_carriage;
 		while (carriage)
@@ -57,7 +58,8 @@ void	print_core(uint8_t core[MEM_SIZE], t_info *info)
 			ft_printf("0%x", core[i]);
 		else
 			ft_printf("%x", core[i]);
-		if (info->flag[DC_FLAG] >= 0 || info->flag[DI_FLAG] >= 0 || info->flag[C_FLAG] >= 0)
+		if (info->flag[DC_FLAG] >= 0 || info->flag[DI_FLAG] >= 0 || \
+			info->flag[C_FLAG] >= 0)
 			ft_printf(RESET);
 		++line;
 		++i;
