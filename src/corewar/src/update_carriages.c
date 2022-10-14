@@ -63,7 +63,6 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **c
 	i = 0;
 	while (i < 3)
 	{
-		//ft_printf("(*carriage)->args_found[i]: %d	", (*carriage)->args_found[i]);
 		if ((*carriage)->args_found[i] < 0)
 		{
 			total = 0;
@@ -71,7 +70,6 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **c
 			move_carriage(info, carriage, &total);
 			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
 			{
-				//ft_printf("first %d", total);
 				print_flag16(core, carriage, total, prev);
 			}
 			return (TRUE);
@@ -186,7 +184,6 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 				make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1] + 1, &total);
 			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
 			{
-				//ft_printf("second %d ", (*carriage)->statement_code);
 				print_flag16(core, carriage, total, prev);
 			}
 		}

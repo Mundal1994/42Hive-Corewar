@@ -59,7 +59,10 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	static int	found = FALSE;
 
 	if (print_command(info) == TRUE)
+	{
+		//ft_printf("pos: %d	", (*carriage)->pos, (*carriage)->args_found);
 		v_flag4_one_arg(carriage, "live");
+	}
 	(*carriage)->last_live_call = info->total_cycles;//removed +1
 	info->live_statement += 1;
 	if ((*carriage)->args_found[ARG1] >= (info->champ_total * -1) && core \

@@ -4,7 +4,8 @@ GIVEN_VM=../../../vm_champs/corewar
 MY_VM=./corewar
 CHAMP1=$1
 CHAMP2=$2
-flag=$3
+CHAMP3=$3
+flag=$4
 END=0
 COUNT=0
 FILE1=v_flags_results/given_vm.txt
@@ -12,8 +13,8 @@ FILE2=v_flags_results/vm.txt
 
 rm -fr v_flags_results
 mkdir v_flags_results
-$GIVEN_VM -v $flag $CHAMP1 $CHAMP2 > $FILE1 #v_flags_results/given_vm$COUNT.txt
-$MY_VM -v $flag $CHAMP1 $CHAMP2 > $FILE2 #v_flags_results/vm$COUNT.txt
+$GIVEN_VM -v $flag $CHAMP1 $CHAMP2 $CHAMP3 > $FILE1 #v_flags_results/given_vm$COUNT.txt
+$MY_VM -v $flag $CHAMP1 $CHAMP2 $CHAMP3 > $FILE2 #v_flags_results/vm$COUNT.txt
 
 eof3=0
 eof4=0
