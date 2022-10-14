@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:03:29 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/20 16:31:18 by molesen          ###   ########.fr       */
+/*   Updated: 2022/10/13 11:26:10 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,17 @@ int	main(int argc, char **argv)
 		if (!info)
 			return (0);
 		flag_count = valid_flags(argc, argv, info);
-		if ((flag_count == 0 && argc <= 5 && argc >= 2) || \
-			(flag_count == 1 && argc <= 6 && argc >= 3) || \
-			(flag_count == 2 && argc <= 7 && argc >= 4))
-		{
+		// if ((flag_count == 0 && argc <= 5 && argc >= 2) || \
+		// 	(flag_count == 1 && argc <= 6 && argc >= 3) || \
+		// 	(flag_count == 2 && argc <= 7 && argc >= 4))
+		// {
 			if (init(argc, argv, flag_count + 1, info) == ERROR)
 				return (ERROR);//depending on error either put USAGE MESSAGE or just exit completely and write error
-		}
-		else if (argc < 4 || flag_count == ERROR)
-			return (ft_putendl(MSG_USAGE), 1);
-		else
-			return (ft_putendl(TOO_MANY_CHAMPS), 1);
+		// }
+		// else if (argc < 4 || flag_count == ERROR)
+		// 	return (ft_putendl(MSG_USAGE), 1);
+		// else
+		// 	return (ft_putendl(TOO_MANY_CHAMPS), 1);
 	}
 	else
 		return (ft_putendl(MSG_USAGE), 1);

@@ -6,46 +6,45 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:32:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/12 16:14:29 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/14 12:22:08 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-t_input **create_buf(t_input **input, int argc, int c)
+t_input **create_buf(t_input **input, int size)
 {
 	int	i;
 
 	i = 0;
-	//if (!input)
-	//{
-		input = (t_input **)malloc((argc - c) * sizeof(t_input *));
-		if (!input)
-			return (NULL);
-		while (i < (argc - c))
+	if (size == -1)
+		return (NULL);
+	input = (t_input **)malloc(size * sizeof(t_input *));
+	if (!input)
+		return (NULL);
+	while (i < size)
+	{
+		input[i] = (t_input *)malloc(sizeof(t_input));
+		if (!input[i])
 		{
-			input[i] = (t_input *)malloc(sizeof(t_input));
-			if (!input[i])
-			{
-				error_clean(input, NULL, i + 1);
-				return (NULL);
-			}
-			//input[i]->t_script = NULL;
-			input[i]->champ_count = c;
-			input[i]->filename = NULL;
-			input[i]->t_script = (u_int8_t *) malloc (sizeof(u_int8_t) * (BUFF_SIZE * 2));
-			if (!input[i]->t_script)
-			{
-				//free_2d() along with input[i]->t_script
-				//free(input);
-				error_clean(input, NULL, i + 1);
-				return (NULL);
-			}
-			input[i]->capacity = (BUFF_SIZE * 2);
-			input[i]->current = 0;
-			++i;
+			error_clean(input, NULL, i + 1);
+			return (NULL);
 		}
-	//}
+		//input[i]->t_script = NULL;
+		input[i]->champ_count = size;
+		input[i]->filename = NULL;
+		input[i]->t_script = (u_int8_t *) malloc (sizeof(u_int8_t) * (BUFF_SIZE * 2));
+		if (!input[i]->t_script)
+		{
+			//free_2d() along with input[i]->t_script
+			//free(input);
+			error_clean(input, NULL, i + 1);
+			return (NULL);
+		}
+		input[i]->capacity = (BUFF_SIZE * 2);
+		input[i]->current = 0;
+		++i;
+	}
 	return (input);
 }
 
@@ -144,7 +143,7 @@ static int	champs_exec_cd(t_profile **champ, t_input *input, int *k)
 		++(*k);
 	}
 	if ((*champ)->exec_cd_sz > MEM_SIZE / 6)
-		return (-1);
+		return (ERROR);
 	return (0);
 }
 
@@ -168,7 +167,7 @@ static int	champ_stats(t_profile **champ, t_input **input, int i)
 	while (k < 2192)
 	{
 		if (input[i]->t_script[k] != 0)
-			return (-1);
+			return (ERROR);
 		k++;
 	}
 	return (0);
@@ -207,14 +206,14 @@ static int	read_binary(int fd, int ret, u_int8_t buff[BUFF_SIZE], t_input *input
 	if (ret == -1)
 	{
 		ft_printf("Error: File %s is too small to be a champion\n", input->filename);
-		return (ret);
+		return (ERROR);
 	}
 	while (ret)
 	{
 		if (store_buf(input, buff, ret) == -1)
 		{
 			//error_clean(input, NULL, (argc - input[j]->champ_count));
-			return (-1);
+			return (ERROR);
 		}
 		ret = read(fd, buff, BUFF_SIZE);
 	}
@@ -224,78 +223,143 @@ static int	read_binary(int fd, int ret, u_int8_t buff[BUFF_SIZE], t_input *input
 static int	open_binary(int *fd, int j, char *file, t_input *input)
 {
 	if (j != 0)
-		close((*fd));
+		close((*fd));//better way to close with 
 	(*fd) = open(file, O_RDONLY | 0);
-	if ((*fd) == -1)
+	if ((*fd) == ERROR)
 	{
 		ft_printf("Can't read file %s\n", file);
-		return (-1);
+		return (ERROR);
 	}
 	input->filename = ft_strdup(file);
 	return (0);
 }
-static int	flag_check(int i, char **argv, int argc)
+
+static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 {
 	int	j;
-	int	count;
-	int	champs[SIZE];
-	int size;
 	int	index;
 
-	count = 0;
+	j = 0;
+	++(*i);
+	while (argv[(*i)][j] != '\0')
+	{
+		if (!ft_isdigit(argv[(*i)][j]))
+			return (ERROR);
+		++j;
+	}
+	if (ft_strstr(argv[(*i) + 1], ".cor"))
+	{
+		index = ft_atoi(argv[(*i)]);
+		if (index > 4 || index < 1 || (*pos)[index - 1])
+			return (ERROR);
+		if ((*max_ind) < index)
+			(*max_ind) = index;
+		(*pos)[index - 1] = ++(*i);
+	}
+	return ((*max_ind));
+}
+static int	combine_players(int size, int max_ind, int (*champs)[SIZE], int (*pos)[SIZE])
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		if ((*champs)[i])
+		{
+			j = 0;
+			while (j < SIZE && (*pos)[j])
+				++j;
+			(*pos)[j++] = (*champs)[i];
+			while (j < SIZE && (*pos)[j])
+				++j;
+		}
+		++i;
+		if (j >= SIZE)
+			break ;
+	}
+	if (i < size || max_ind > j)
+	{
+		ft_printf("Error: player not within range\n");
+		return (ERROR);
+	}
+	return (j);
+}
+
+static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
+{
+	int	j;
+	int	champs[SIZE];
+	int size;
+	int max_ind;
+
 	size = 0;
-	ft_bzero(champs, SIZE);
-	while (i < argc - i)
+	j = 0;
+	max_ind = 0;
+	while (j < SIZE)
+	{
+		champs[j] = 0;
+		(*pos)[j++] = 0;
+	}
+	while (i < argc)
 	{
 		if (!ft_strcmp(argv[i], "-n"))
 		{
-			++i;
-			j = 0;
-			while (argv[i][j] != '\0')
+			max_ind = collect_players(argv, &i, pos, &max_ind);
+			if (max_ind == ERROR)
 			{
-				if (!ft_isdigit(argv[i][j]))
-					return (-1);
-				++j;
+				ft_printf("Error: player position invalid\n");
+				return (ERROR);
 			}
-			//++i;
-			if (ft_strstr(argv[i + 1], ".cor"))
-			{
-				index = ft_atoi(argv[i]);
-				if (index > 4 || index < 1)
-					return (-1);
-				++count;
-			}
+		}
+		else if (ft_strstr(argv[i], ".cor"))
+		{
+			if (size > 3)
+				return (ERROR);
+			champs[size++] = i;
 		}
 		++i;
 	}
+	// j = combine_players(size, max_ind, &champs, &pos);
+	// if (j )
+	return (combine_players(size, max_ind, &champs, pos));
 }
-//static int	create_set(t_input **input, int *)
+
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 {
 	t_input		**input;
 	u_int8_t	buff[BUFF_SIZE];
 	int			fd;
 	int			ret;
-	int			j;
+	int			pos[SIZE];
 
 	input = NULL;
-	input = create_buf(input, argc, i);
+	input = create_buf(input, flag_check(i, argv, argc, &pos));
 	if (!input)
 		return (NULL);
-	j = 0;
+	i = 0;
 	ret = 0;
-	while (i < argc)
+	while (i < input[0]->champ_count)
 	{
-		if (open_binary(&fd, j, argv[i],input[j]) == -1 || \
-			read_binary(fd, ret, buff, input[j]) == -1)
+		if (open_binary(&fd, i, argv[pos[i]], input[i]) == -1 || \
+			read_binary(fd, ret, buff, input[i]) == -1)
 		{
-			error_clean(input, champ, (argc - input[j]->champ_count));
+			error_clean(input, champ, input[0]->champ_count);
 			return (NULL);
 		}
-		++j;
+		//++j;
 		++i;
 	}
-	if (store_champs(champ, argc - input[0]->champ_count, input) == -1)
+	i = 0;
+	int til = input[0]->champ_count;
+	while (i < til)
+	{
+		ft_printf("name %s til %i\n", input[i]->filename,  til);
+		++i;
+	}
+	exit (0);
+	if (store_champs(champ, input[0]->champ_count, input) == -1)
 		//free(info) outside!!!
 		return (NULL);
 	return (input);
