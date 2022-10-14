@@ -15,11 +15,12 @@
 
 # define MSG_USAGE "Usage: ./corewar [-d N -s N -v N | -a | -v] \
 [-n [number] champion.cor ...]\n\
-	-d N	: dumps memory after <nbr_cycles> on standard output,\
+	-dump N	: dumps memory after <nbr_cycles> on standard output,\
  then quits the game\n\
 	-dc N	: variation of -d. displays carriages position on standard output\n\
 	-di N	: variation of -dc. also print information about struct info\n\
 	-c N	: variation of -dc. also prints carriages on standard output\n\
+	-i N	: prints basic information about the game to standard output\n\
 	-s N	: Runs N cycles, dumps memory, pauses, then repeats\n\
  	-n N	: Manually set the number of the next player\n\
 	-v N	: Verbosity levels, can be added together to enable several\n\
@@ -29,7 +30,9 @@
 			- 4 : Show operations (Params are NOT litteral ...)\n\
 			- 8 : Show deaths\n\
 			- 16 : Show PC movements (Except for jumps)\n\
-	-vis	: visualizer"
+			Verbosity level flags can be executed at the same time\n\
+			ex run flag 1 & 2 by using number 3\n\
+			run flag 4 & 2 by using number 6 etc..."
 # define TOO_MANY_CHAMPS "Too many champions"
 
 #endif

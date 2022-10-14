@@ -93,7 +93,7 @@ static void	statment_delay(t_info **info)
 		j += 2;
 	}
 	i = 0;
-	(*info)->operations[DELAY][i++] = 10;
+	(*info)->operations[DELAY][i++] = 10;//someone said 14 but it doesn't make sense with ours
 	(*info)->operations[DELAY][i++] = 5;
 	(*info)->operations[DELAY][i++] = 5;
 	(*info)->operations[DELAY][i++] = 10;
@@ -117,7 +117,7 @@ static int	init_info(uint8_t core[MEM_SIZE], t_info **info, t_profile *champ)
 	int	i;
 
 	i = 0;
-	(*info)->total_cycles = 0;
+	(*info)->total_cycles = 1;
 	(*info)->live_statement = 0;
 	(*info)->cycles_to_die = CYCLE_TO_DIE;
 	(*info)->cycle_count = CYCLE_TO_DIE;

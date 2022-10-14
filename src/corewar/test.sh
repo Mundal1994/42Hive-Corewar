@@ -121,7 +121,8 @@ drop_down_2()
 		#printf "END $DOWN\n"
 		if [[ FLAG -eq 1 ]]
 		then
-
+			echo "$line"
+			echo "$line2"
 			printf "KO  [Difference at -d $((COUNT - DOWN + 1))]\nLINE\n$HOLD\n"
 			exit 0
 		fi
@@ -155,8 +156,8 @@ checking_lines()
 	# 	exit 0
 	elif [[ "$line" != "$line2" ]]
 	then
-		# echo $line
-		# echo $line2
+		echo $line
+		echo $line2
 		#printf "problem\n"
 		drop_down
 		exit 0
@@ -197,5 +198,5 @@ do
 	#echo "end"
 	rm vm_dump$COUNT.txt
 	rm given_vm_dump$COUNT.txt
-	COUNT=$((COUNT+50))
+	COUNT=$((COUNT+21148))
 done
