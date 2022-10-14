@@ -77,7 +77,7 @@ int	init_flags(int argc, char **argv, t_info *info)
 			i = 0;
 			while (i < FLAG_COUNT)
 			{
-				if (info->flag[i])
+				if (info->flag[i] == 1)
 					info->flag[i] = ft_atoi(argv[2]);
 				++i;
 			}

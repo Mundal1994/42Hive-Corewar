@@ -13,7 +13,7 @@
 
 #include "vm.h"
 
-void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 	static int	found = FALSE;
@@ -27,7 +27,7 @@ void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 	static int	found = FALSE;
@@ -41,7 +41,7 @@ void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int		value;
 	int		pos;
@@ -66,7 +66,7 @@ void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	value;
 	int	pos;
@@ -92,7 +92,7 @@ void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int		pos;
 	int16_t	sum;

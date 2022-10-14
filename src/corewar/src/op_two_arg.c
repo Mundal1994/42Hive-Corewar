@@ -13,7 +13,7 @@
 
 #include "vm.h"
 
-void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
 	if ((*carriage)->arg_types[ARG1] == I && info)
@@ -32,7 +32,7 @@ void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 }
 
 //pretty much a copy of ld but with no % IDX_MOD
-void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
 	if ((*carriage)->arg_types[ARG1] == I)
@@ -51,7 +51,7 @@ void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 	static int	found = FALSE;

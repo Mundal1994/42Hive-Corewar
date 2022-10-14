@@ -34,22 +34,22 @@ static void	init_op_table(op_table *op_table[STATE])
 	int	i;
 
 	i = 0;
-	op_table[i++] = live;
-	op_table[i++] = ld;
-	op_table[i++] = st;
-	op_table[i++] = add;
-	op_table[i++] = sub;
-	op_table[i++] = and;
-	op_table[i++] = or;
-	op_table[i++] = xor;
-	op_table[i++] = zjmp;
-	op_table[i++] = ldi;
-	op_table[i++] = sti;
-	op_table[i++] = fork_op;
-	op_table[i++] = lld;
-	op_table[i++] = lldi;
-	op_table[i++] = lfork;
-	op_table[i++] = aff;
+	op_table[i++] = op_live;
+	op_table[i++] = op_ld;
+	op_table[i++] = op_st;
+	op_table[i++] = op_add;
+	op_table[i++] = op_sub;
+	op_table[i++] = op_and;
+	op_table[i++] = op_or;
+	op_table[i++] = op_xor;
+	op_table[i++] = op_zjmp;
+	op_table[i++] = op_ldi;
+	op_table[i++] = op_sti;
+	op_table[i++] = op_fork;
+	op_table[i++] = op_lld;
+	op_table[i++] = op_lldi;
+	op_table[i++] = op_lfork;
+	op_table[i++] = op_aff;
 }
 
 int	free_carriage(t_info *info)
@@ -72,7 +72,6 @@ static int	flag_check(t_info *info)
 	i = D_FLAG;
 	while (i < FLAG_COUNT)
 	{
-		ft_printf("%d\n", info->flag[i]);
 		if (info->flag[i] >= 0)
 			return (info->flag[i]);
 		++i;
@@ -100,7 +99,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 			return (print_dump_flags(core, info));
 		check(info);
 	}
-	if (info->flag[I_FLAG] == 0)
+	if (info->flag[I_FLAG] == TRUE)
 		print_info(info);
 	free_carriage(info);
 	announce_winner(champ, info->winner);

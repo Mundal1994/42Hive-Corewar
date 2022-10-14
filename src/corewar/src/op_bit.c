@@ -13,7 +13,7 @@
 
 #include "vm.h"
 
-void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 	static int	found = FALSE;
@@ -29,7 +29,7 @@ void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 	static int	found = FALSE;
@@ -45,7 +45,7 @@ void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	sum;
 	static int	found = FALSE;

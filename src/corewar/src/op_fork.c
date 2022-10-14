@@ -47,7 +47,7 @@ static int	copy_carriage(uint8_t core[MEM_SIZE], t_info **info, t_carriage *carr
 	return (0);
 }
 
-void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_fork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int		pos;
 	int16_t	sum;
@@ -69,7 +69,7 @@ void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+void	op_lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 	static int	found = FALSE;

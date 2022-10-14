@@ -256,6 +256,8 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 			(*max_ind) = index;
 		(*pos)[index - 1] = ++(*i);
 	}
+	else
+		return (ERROR);
 	return ((*max_ind));
 }
 static int	combine_players(int size, int max_ind, int (*champs)[SIZE], int (*pos)[SIZE])

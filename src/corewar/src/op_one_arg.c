@@ -13,6 +13,7 @@
 
 #include "vm.h"
 
+/*	function that determines if commands should be printed to standard output	*/
 int	print_command(t_info *info)
 {
 	if (info->flag[V_FLAG] >= 4 && info->flag[V_FLAG] <= 7)
@@ -24,7 +25,11 @@ int	print_command(t_info *info)
 	return (FALSE);
 }
 
-void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+/*
+makes carriage able to jump to different positions on the
+board with the limitations of IDX_MOD (-512 to 512)
+*/
+void	op_zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int	pos;
 	static int	found = FALSE;
@@ -36,9 +41,7 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		else
 			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] % IDX_MOD);
 		limit_jump(&pos);
-		//ft_printf("from pos: %0.4x	", (*carriage)->pos);
 		(*carriage)->pos = pos;
-	//	ft_printf("to pos: %0.4x ", (*carriage)->pos);
 	}
 	if (print_command(info) == TRUE)
 		v_flag4_one_arg(carriage, "zjmp");
@@ -46,36 +49,50 @@ void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
-void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+/*
+calls a player to be alive if the number read from the first argument is
+equal to a player ex. if we read the first argument to be -2
+then we will call player 2 to be alive
+*/
+void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
+
 	if (print_command(info) == TRUE)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;//removed +1
 	info->live_statement += 1;
-	if ((*carriage)->args_found[ARG1] >= (info->champ_total * -1) && core && info && \
-		(*carriage)->args_found[ARG1] <= -1)
+	if ((*carriage)->args_found[ARG1] >= (info->champ_total * -1) && core \
+		&& info && (*carriage)->args_found[ARG1] <= -1)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
 		if (info->flag[NO_FLAG] == TRUE)
-			ft_printf("A process shows that player %d (%s) is alive\n", info->winner, info->champ_names[info->winner - 1]);
-		else if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || info->flag[V_FLAG] == 5 || \
-			info->flag[V_FLAG] == 7 || info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
-			(info->flag[V_FLAG] >= 13 && info->flag[V_FLAG] <= 15) || info->flag[V_FLAG] == 19 || \
-			(info->flag[V_FLAG] >= 23 && info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || info->flag[V_FLAG] == 21)
-			ft_printf("Player %d (%s) is said to be alive\n", info->winner, info->champ_names[info->winner - 1]);
-		//ft_printf("winner updated: %d\n", info->winner);
+			ft_printf("A process shows that player %d (%s) is alive\n\
+			", info->winner, info->champ_names[info->winner - 1]);
+		else if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
+			info->flag[V_FLAG] == 5 || info->flag[V_FLAG] == 7 || \
+			info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
+			(info->flag[V_FLAG] >= 13 && info->flag[V_FLAG] <= 15) || \
+			info->flag[V_FLAG] == 19 || (info->flag[V_FLAG] >= 23 && \
+			info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || \
+			info->flag[V_FLAG] == 21)
+			ft_printf("Player %d (%s) is said to be alive\n\
+			", info->winner, info->champ_names[info->winner - 1]);
 	}
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }
 
-void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+/*
+prints the correlating number to standard output in the form of a char
+this operand only shows if flag -a is active
+*/
+void	op_aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int32_t		nbr;
 	static int	found = FALSE;
 	
-	if (info->flag[A_FLAG] && core && info)
+	if (info->flag[A_FLAG] == TRUE && core && info)
 	{
 		nbr = (int32_t)(*carriage)->registry[(int32_t)(*carriage)->args_found[ARG1] - 1];
 		ft_printf("Aff: %c\n", (char)nbr % 256);

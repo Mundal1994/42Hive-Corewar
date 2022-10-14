@@ -32,9 +32,9 @@ typedef enum e_flag
 	NO_FLAG,
 	A_FLAG,
 	I_FLAG,//print info only - maybe delete
+	V_FLAG,//have implemented but not exactly like they have
 	D_FLAG,//dump flag
 	S_FLAG,//haven't implemented this one - might delete
-	V_FLAG,//have implemented but not exactly like they have
 	DC_FLAG,//prints colorod version of -d flag
 	DI_FLAG,//prints colored -d with info
 	C_FLAG,//prints carriages
@@ -152,22 +152,22 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *a
 void	check_second_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg);
 void	check_third_arg_type(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg);
 void	update_carry(int nbr, t_carriage **carriage);
-void	zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	fork_op(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_add(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_sub(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_fork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	op_aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
 //print4 flag
 void	v_flag4_one_arg(t_carriage **carriage, char *command);
