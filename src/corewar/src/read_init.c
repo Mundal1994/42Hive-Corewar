@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:32:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/14 12:58:29 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:21:10 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ t_input **create_buf(t_input **input, int size)
 
 	i = 0;
 	if (size == -1)
+	{
+		ft_printf("Error: player position invalid\n");
 		return (NULL);
+	}
 	input = (t_input **)malloc(size * sizeof(t_input *));
 	if (!input)
 		return (NULL);
@@ -323,7 +326,7 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 	}
 	while (i < argc)
 	{
-		if (!ft_strcmp(argv[i], "-n"))
+		if (!ft_strcmp(argv[i], "-n") && i + 2 < argc)
 		{
 			max_ind = collect_players(argv, &i, pos, &max_ind);
 			if (max_ind == ERROR)
@@ -335,8 +338,17 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 		else if (ft_strstr(argv[i], ".cor"))
 		{
 			if (size > 3)
+			{
+				ft_printf("CRAp2\n");
 				return (ERROR);
+			}
 			champs[size++] = i;
+		}
+		else
+		{
+			ft_printf("%s\n", argv[i]);
+			ft_printf("CRAp2\n");
+			return (ERROR);
 		}
 		++i;
 	}
