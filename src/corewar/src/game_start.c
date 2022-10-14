@@ -88,7 +88,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 	init_op_table(op_table);
 	introduce_contestants(champ);
 	dump = flag_check(info);
-	if (!dump)
+	if (dump == 0)
 		return (print_dump_flags(core, info));
 	while (!one_carriage_left(info))
 	{
@@ -100,7 +100,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 			return (print_dump_flags(core, info));
 		check(info);
 	}
-	if (info->flag[I_FLAG])
+	if (info->flag[I_FLAG] == 0)
 		print_info(info);
 	free_carriage(info);
 	announce_winner(champ, info->winner);

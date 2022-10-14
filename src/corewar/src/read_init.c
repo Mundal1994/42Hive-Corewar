@@ -351,14 +351,6 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		//++j;
 		++i;
 	}
-	i = 0;
-	int til = input[0]->champ_count;
-	while (i < til)
-	{
-		ft_printf("name %s til %i\n", input[i]->filename,  til);
-		++i;
-	}
-	exit (0);
 	if (store_champs(champ, input[0]->champ_count, input) == -1)
 		//free(info) outside!!!
 		return (NULL);
