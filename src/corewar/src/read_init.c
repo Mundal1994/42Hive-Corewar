@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:32:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/14 13:21:10 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:59:07 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,9 +301,9 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		if (j >= SIZE)
 			break ;
 	}
-	if (i < size || (max_ind > j && range_invalid(max_ind, (*pos), &j)))
+	if (i < size || (size != 0 && max_ind > j) || range_invalid(max_ind, (*pos), &j))
 	{
-		ft_printf("Error: player not within range\n");
+		//ft_printf("Error: player not within range\n");
 		return (ERROR);
 	}
 	return (j);
@@ -331,23 +331,19 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 			max_ind = collect_players(argv, &i, pos, &max_ind);
 			if (max_ind == ERROR)
 			{
-				ft_printf("Error: player position invalid\n");
+				//ft_printf("CHECK\n");
+				//ft_printf("Error: player position invalid\n");
 				return (ERROR);
 			}
 		}
 		else if (ft_strstr(argv[i], ".cor"))
 		{
 			if (size > 3)
-			{
-				ft_printf("CRAp2\n");
 				return (ERROR);
-			}
 			champs[size++] = i;
 		}
 		else
 		{
-			ft_printf("%s\n", argv[i]);
-			ft_printf("CRAp2\n");
 			return (ERROR);
 		}
 		++i;
