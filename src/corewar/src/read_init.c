@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:32:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/14 12:22:08 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/14 12:58:29 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,19 +256,38 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 			(*max_ind) = index;
 		(*pos)[index - 1] = ++(*i);
 	}
+	else
+		return (ERROR);
 	return ((*max_ind));
 }
-static int	combine_players(int size, int max_ind, int (*champs)[SIZE], int (*pos)[SIZE])
+static int	range_invalid(int max_ind, int pos[SIZE], int *j)
+{
+	int i;
+
+	i = 0;
+	while (i < max_ind)
+	{
+		if (pos[i] == 0)
+			(*j) = -1;
+			//return (ERROR);
+		++i;
+	}
+	(*j) = max_ind;
+	return (0);
+}
+
+static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
+	int (*pos)[SIZE])
 {
 	int	i;
 	int	j;
 
 	i = 0;
+	j = 0;
 	while (i < size)
 	{
 		if ((*champs)[i])
 		{
-			j = 0;
 			while (j < SIZE && (*pos)[j])
 				++j;
 			(*pos)[j++] = (*champs)[i];
@@ -279,7 +298,7 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], int (*pos
 		if (j >= SIZE)
 			break ;
 	}
-	if (i < size || max_ind > j)
+	if (i < size || (max_ind > j && range_invalid(max_ind, (*pos), &j)))
 	{
 		ft_printf("Error: player not within range\n");
 		return (ERROR);
@@ -321,8 +340,6 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 		}
 		++i;
 	}
-	// j = combine_players(size, max_ind, &champs, &pos);
-	// if (j )
 	return (combine_players(size, max_ind, &champs, pos));
 }
 
@@ -351,14 +368,6 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 		//++j;
 		++i;
 	}
-	i = 0;
-	int til = input[0]->champ_count;
-	while (i < til)
-	{
-		ft_printf("name %s til %i\n", input[i]->filename,  til);
-		++i;
-	}
-	exit (0);
 	if (store_champs(champ, input[0]->champ_count, input) == -1)
 		//free(info) outside!!!
 		return (NULL);
