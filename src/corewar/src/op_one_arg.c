@@ -67,8 +67,8 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
 		if (info->flag[NO_FLAG] == TRUE)
-			ft_printf("A process shows that player %d (%s) is alive\n\
-			", info->winner, info->champ_names[info->winner - 1]);
+			ft_printf("A process shows that player %d (%s) is alive\n", \
+			info->winner, info->champ_names[info->winner - 1]);
 		else if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
 			info->flag[V_FLAG] == 5 || info->flag[V_FLAG] == 7 || \
 			info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
@@ -76,8 +76,8 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 			info->flag[V_FLAG] == 19 || (info->flag[V_FLAG] >= 23 && \
 			info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || \
 			info->flag[V_FLAG] == 21)
-			ft_printf("Player %d (%s) is said to be alive\n\
-			", info->winner, info->champ_names[info->winner - 1]);
+			ft_printf("Player %d (%s) is said to be alive\n", \
+			info->winner, info->champ_names[info->winner - 1]);
 	}
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
