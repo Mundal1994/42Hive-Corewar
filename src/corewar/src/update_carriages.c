@@ -138,7 +138,7 @@ static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 }
 
 void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
-	t_info *info, op_table *op_table[STATE])
+	t_info *info)//, op_table *op_table[STATE])
 {
 	int	prev;
 	int	total;
@@ -159,7 +159,7 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 		}
 		else
 			pcb_false(core, carriage, info);
-		op_table[(*carriage)->statement_code - 1](core, carriage, info);
+		g_op_table[(*carriage)->statement_code - 1](core, carriage, info);
 		if ((*carriage)->statement_code != OP_ZJMP || ((*carriage)->statement_code == \
 			OP_ZJMP && !(*carriage)->carry))
 		{
@@ -195,8 +195,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	reset_args(carriage);
 }
 
-int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, \
-	op_table *op_table[STATE])
+int	update_carriages(uint8_t core[MEM_SIZE], t_info *info)//, \
+	//op_table *op_table[STATE])
 {
 	t_carriage	*carriage;
 
@@ -213,7 +213,7 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info, \
 			carriage->delay -= 1;
 		if (carriage->delay == 0)
 		{
-			perform_statement_code(core, &carriage, info, op_table);
+			perform_statement_code(core, &carriage, info);//, op_table);
 			// if (carriage->id == 1)// && info->total_cycles > 19130 && info->total_cycles < 20000)
 			// 	ft_printf("performed: carriage %d statement_code: %d	carry: %d	delay: %d	total_cycles: %d	r0: %d\n", carriage->id, carriage->statement_code, carriage->carry, carriage->delay, info->total_cycles, carriage->registry[0]);
 			carriage->statement_code = OP_NULL;

@@ -40,8 +40,6 @@ static int	check_int_flag(char *str, t_info *info)
 		return (set_flag_true(info, DI_FLAG));
 	if (!ft_strcmp(str, "-c"))
 		return (set_flag_true(info, C_FLAG));
-	if (!ft_strcmp(str, "-s"))//if we don't create this we need to delete
-		return (set_flag_true(info, S_FLAG));
 	if (!ft_strcmp(str, "-v"))
 		return (set_flag_true(info, V_FLAG));
 	return (FALSE);
@@ -67,7 +65,7 @@ int	init_flags(int argc, char **argv, t_info *info)
 					info->flag[i] = ft_atoi(argv[2]);
 				++i;
 			}
-			return (2);//figure out how strict to be with this flag
+			return (2);
 		}
 		return (ERROR);
 	}
