@@ -1,4 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: molesen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/14 11:56:28 by molesen           #+#    #+#             */
+/*   Updated: 2022/10/14 11:56:31 by molesen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
+
+static void	print_ops_info(int j)
+{
+	if (j == ARG1)
+		ft_printf("ARG1	: ");
+	else if (j == ARG2)
+		ft_printf("ARG2	: ");
+	else if (j == ARG3)
+		ft_printf("ARG3	: ");
+	else if (j == DELAY)
+		ft_printf("DELAY	: ");
+	else if (j == SIZE)
+		ft_printf("SIZE	: ");
+	else if (j == PCB)
+		ft_printf("PCB	: ");
+}
 
 void	print_info(t_info *info)
 {
@@ -13,18 +41,7 @@ void	print_info(t_info *info)
 	while (j < 6)
 	{
 		i = 0;
-		if (j == ARG1)
-			ft_printf("ARG1	: ");
-		else if (j == ARG2)
-			ft_printf("ARG2	: ");
-		else if (j == ARG3)
-			ft_printf("ARG3	: ");
-		else if (j == DELAY)
-			ft_printf("DELAY	: ");
-		else if (j == SIZE)
-			ft_printf("SIZE	: ");
-		else if (j == PCB)
-			ft_printf("PCB	: ");
+		print_ops_info(j);
 		while (i < STATE)
 		{
 			ft_printf("%d	", info->operations[j][i]);
@@ -33,6 +50,7 @@ void	print_info(t_info *info)
 		ft_printf("\n");
 		++j;
 	}
+	ft_putchar('\n');
 }
 
 void	print_carriages(t_info *info)
@@ -54,71 +72,6 @@ void	print_carriages(t_info *info)
 				ft_printf("\n");
 		}
 		carriage = carriage->next;
-	}
-}
-
-static void	print_color(t_info *info, int i)
-{
-	t_carriage *carriage;
-
-	if (info->flag[DC_FLAG] || info->flag[DI_FLAG] || info->flag[C_FLAG])
-	{
-		carriage = info->head_carriage;
-		while (carriage)
-		{
-			if (carriage->pos == i)
-			{
-				ft_printf(GREEN);
-			}
-			carriage = carriage->next;
-		}
-	}
-}
-
-static void	print_newline_or_space(int *line, int i)
-{
-	if (*line >= 64)
-	{
-		ft_printf("\n");
-		*line = 0;
-		if (i >= MEM_SIZE)
-			return ;
-		ft_printf("%#0.4x : ", i);
-	}
-	else
-		ft_printf(" ");
-}
-
-void	print_core(uint8_t core[MEM_SIZE], t_info *info)
-{
-	int	i;
-	int	line;
-
-	i = 0;
-	line = 0;
-	ft_printf("0x0000 : ");
-	while (i < MEM_SIZE)
-	{
-		print_color(info, i);
-		if (core[i] < 16)
-			ft_printf("0%x", core[i]);
-		else
-			ft_printf("%x", core[i]);
-		if (info->flag[DC_FLAG] || info->flag[DI_FLAG] || info->flag[C_FLAG])
-			ft_printf(RESET);
-		++line;
-		++i;
-		print_newline_or_space(&line, i);
-		// if (line >= 64)
-		// {
-		// 	ft_printf("\n");
-		// 	line = 0;
-		// 	if (i >= MEM_SIZE)
-		// 		break ;
-		// 	ft_printf("%#0.4x : ", i);
-		// }
-		// else
-		// 	ft_printf(" ");
 	}
 }
 

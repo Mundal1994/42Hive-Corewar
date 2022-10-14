@@ -24,22 +24,21 @@
 # define ERROR	-1
 # define STATE	16
 # define ARGS	3
-# define FLAG_COUNT	9
-# define OPS_COUNT	6
 # define RESET   "\033[0m"
 # define GREEN   "\033[32m"
 
 typedef enum e_flag
 {
+	NO_FLAG,
 	A_FLAG,
-	D_FLAG,
-	S_FLAG,
-	V_FLAG,
-	I_FLAG,
+	I_FLAG,//print info only - maybe delete
+	D_FLAG,//dump flag
+	S_FLAG,//haven't implemented this one - might delete
+	V_FLAG,//have implemented but not exactly like they have
 	DC_FLAG,//prints colorod version of -d flag
 	DI_FLAG,//prints colored -d with info
 	C_FLAG,//prints carriages
-	VIS_FLAG,
+	FLAG_COUNT,
 }	t_flag;
 
 typedef enum e_arg
@@ -62,6 +61,7 @@ typedef enum e_ops
 	DELAY,
 	SIZE = 4,//DON'T CHANGE THIS POS WE NEED IT TO BE FOUR
 	PCB,
+	OPS_COUNT
 }			t_ops;
 
 typedef struct s_profile
@@ -120,6 +120,7 @@ typedef struct s_info
 
 typedef void	op_table(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 
+int		init_flags(int argc, char **argv, t_info *info);
 int		init(int argc, char **argv, int i, t_info *info);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
@@ -181,10 +182,11 @@ int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size);
 //error
 int	error_clean(t_input **input, t_profile **champ, int c);
 
-
 int	v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev);
 int	print_command(t_info *info);
 int	print_cycle_count(t_info *info);
+int	print_dump_flags(uint8_t core[MEM_SIZE], t_info *info);
+int	free_carriage(t_info *info);
 
 #endif

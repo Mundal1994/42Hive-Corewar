@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   op_one_arg.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: molesen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/14 11:57:05 by molesen           #+#    #+#             */
+/*   Updated: 2022/10/14 11:57:07 by molesen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "vm.h"
 
@@ -45,11 +57,13 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		(*carriage)->args_found[ARG1] <= -1)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
-		if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || info->flag[V_FLAG] == 5 || \
+		if (info->flag[NO_FLAG] == TRUE)
+			ft_printf("A process shows that player %d (%s) is alive\n", info->winner, info->champ_names[info->winner - 1]);
+		else if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || info->flag[V_FLAG] == 5 || \
 			info->flag[V_FLAG] == 7 || info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
 			(info->flag[V_FLAG] >= 13 && info->flag[V_FLAG] <= 15) || info->flag[V_FLAG] == 19 || \
 			(info->flag[V_FLAG] >= 23 && info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || info->flag[V_FLAG] == 21)
-			ft_printf("Player %d (%s) is said to be alive\n", info->winner, info->champ_names[info->winner - 1]);// decide if we want to print name of the player as well
+			ft_printf("Player %d (%s) is said to be alive\n", info->winner, info->champ_names[info->winner - 1]);
 		//ft_printf("winner updated: %d\n", info->winner);
 	}
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
@@ -58,11 +72,14 @@ void	live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
+	int32_t		nbr;
 	static int	found = FALSE;
-	// if (print_command(info) == TRUE)
-	// 	v_flag4_one_arg(carriage, "aff");//aff doesn't show up in flag -v 4??
+	
 	if (info->flag[A_FLAG] && core && info)
-		ft_printf("%c\n", (char)(*carriage)->args_found[ARG1]);
+	{
+		nbr = (int32_t)(*carriage)->registry[(int32_t)(*carriage)->args_found[ARG1] - 1];
+		ft_printf("Aff: %c\n", (char)nbr % 256);
+	}
 	if (info->flag[V_FLAG] == 25 && found == FALSE)
 		found = v_flag5(carriage);
 }

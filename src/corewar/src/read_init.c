@@ -234,41 +234,42 @@ static int	open_binary(int *fd, int j, char *file, t_input *input)
 	input->filename = ft_strdup(file);
 	return (0);
 }
-static int	flag_check(int i, char **argv, int argc)
-{
-	int	j;
-	int	count;
-	int	champs[SIZE];
-	int size;
-	int	index;
 
-	count = 0;
-	size = 0;
-	ft_bzero(champs, SIZE);
-	while (i < argc - i)
-	{
-		if (!ft_strcmp(argv[i], "-n"))
-		{
-			++i;
-			j = 0;
-			while (argv[i][j] != '\0')
-			{
-				if (!ft_isdigit(argv[i][j]))
-					return (-1);
-				++j;
-			}
-			//++i;
-			if (ft_strstr(argv[i + 1], ".cor"))
-			{
-				index = ft_atoi(argv[i]);
-				if (index > 4 || index < 1)
-					return (-1);
-				++count;
-			}
-		}
-		++i;
-	}
-}
+// static int	flag_check(int i, char **argv, int argc)
+// {
+// 	int	j;
+// 	int	count;
+// 	int	champs[SIZE];
+// 	int size;
+// 	int	index;
+
+// 	count = 0;
+// 	size = 0;
+// 	ft_bzero(champs, SIZE);
+// 	while (i < argc - i)
+// 	{
+// 		if (!ft_strcmp(argv[i], "-n"))
+// 		{
+// 			++i;
+// 			j = 0;
+// 			while (argv[i][j] != '\0')
+// 			{
+// 				if (!ft_isdigit(argv[i][j]))
+// 					return (-1);
+// 				++j;
+// 			}
+// 			//++i;
+// 			if (ft_strstr(argv[i + 1], ".cor"))
+// 			{
+// 				index = ft_atoi(argv[i]);
+// 				if (index > 4 || index < 1)
+// 					return (-1);
+// 				++count;
+// 			}
+// 		}
+// 		++i;
+// 	}
+// }
 //static int	create_set(t_input **input, int *)
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 {

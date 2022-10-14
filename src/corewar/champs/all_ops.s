@@ -16,7 +16,7 @@ l2:		live %1
 		lld 1, r12
 		lldi :live, r13, r14
 		lfork %:live
-		aff r15
+		aff r65
 		lfork %:dead
 
 live:	live %1
