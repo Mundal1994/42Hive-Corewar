@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 17:20:09 by molesen           #+#    #+#             */
-/*   Updated: 2022/09/29 13:10:45 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/14 16:42:41 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,9 @@ static void	add_players_to_core(uint8_t core[MEM_SIZE], t_profile **champ, t_inp
 		k = div * i;
 		(*champ)->pos = k;
 		while (j < input[i]->current)
+		{
 			core[k++] = input[i]->t_script[j++];
+		}
 		++i;
 		*champ = (*champ)->next;
 	}
@@ -168,7 +170,7 @@ int	init(int argc, char **argv, int i, t_info *info)
 	input = read_init(argc, argv, i, &champ);
 	if (!input)
 		return (ERROR);
-	add_players_to_core(core, &champ, input, argc - i);
+	add_players_to_core(core, &champ, input, input[0]->champ_count);
 	// doens't use input anymore after this point
 	if (init_info(core, &info, champ) == ERROR)
 		return (ERROR);//free info and champ here before exiting

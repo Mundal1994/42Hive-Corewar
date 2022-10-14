@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:32:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/14 13:59:07 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/14 17:26:00 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ t_input **create_buf(t_input **input, int size)
 			error_clean(input, NULL, i + 1);
 			return (NULL);
 		}
-		//input[i]->t_script = NULL;
 		input[i]->champ_count = size;
 		input[i]->filename = NULL;
 		input[i]->t_script = (u_int8_t *) malloc (sizeof(u_int8_t) * (BUFF_SIZE * 2));
 		if (!input[i]->t_script)
 		{
-			//free_2d() along with input[i]->t_script
-			//free(input);
 			error_clean(input, NULL, i + 1);
 			return (NULL);
 		}
@@ -86,20 +83,14 @@ static int	create_champ(t_profile	**champ)
 		(*champ) = (t_profile *) malloc (sizeof(t_profile));
 		(*champ)->head = (*champ);
 		if (!(*champ))
-		{
-			//free everything
 			return (-1);
-		}
 		(*champ)->i = 1;
 	}
 	else
 	{
 		(*champ)->next = (t_profile *) malloc (sizeof(t_profile));
 		if (!(*champ)->next)
-		{
-			//free head
 			return (-1);
-		}
 		(*champ)->next->head = (*champ)->head;
 		(*champ)->next->i = (*champ)->i + 1;
 		(*champ) = (*champ)->next;
@@ -214,10 +205,7 @@ static int	read_binary(int fd, int ret, u_int8_t buff[BUFF_SIZE], t_input *input
 	while (ret)
 	{
 		if (store_buf(input, buff, ret) == -1)
-		{
-			//error_clean(input, NULL, (argc - input[j]->champ_count));
 			return (ERROR);
-		}
 		ret = read(fd, buff, BUFF_SIZE);
 	}
 	return (0);
@@ -226,7 +214,7 @@ static int	read_binary(int fd, int ret, u_int8_t buff[BUFF_SIZE], t_input *input
 static int	open_binary(int *fd, int j, char *file, t_input *input)
 {
 	if (j != 0)
-		close((*fd));//better way to close with 
+		close((*fd));
 	(*fd) = open(file, O_RDONLY | 0);
 	if ((*fd) == ERROR)
 	{
@@ -263,6 +251,7 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 		return (ERROR);
 	return ((*max_ind));
 }
+
 static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 {
 	int i;
@@ -272,10 +261,19 @@ static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 	{
 		if (pos[i] == 0)
 			(*j) = -1;
-			//return (ERROR);
 		++i;
 	}
-	(*j) = max_ind;
+	i = max_ind;
+	while (max_ind < SIZE)
+	{
+		if (pos[max_ind])
+			++max_ind;
+		else
+			break ;
+		++i;
+	}
+	if ((*j != -1))
+		(*j) = max_ind;
 	return (0);
 }
 
@@ -289,23 +287,22 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 	j = 0;
 	while (i < size)
 	{
-		if ((*champs)[i])
+		while ((*champs)[i])
 		{
-			while (j < SIZE && (*pos)[j])
-				++j;
-			(*pos)[j++] = (*champs)[i];
-			while (j < SIZE && (*pos)[j])
-				++j;
+			if (j >= SIZE)
+				return (ERROR);
+			if (!(*pos)[j])
+			{
+				(*pos)[j++] = (*champs)[i];
+				break ;
+			}
+			++j;
 		}
 		++i;
-		if (j >= SIZE)
-			break ;
 	}
+	//ft_printf("%i < %i   %i > %i   %i \n", i, size, max_ind, j, range_invalid(max_ind, (*pos), &j));
 	if (i < size || (size != 0 && max_ind > j) || range_invalid(max_ind, (*pos), &j))
-	{
-		//ft_printf("Error: player not within range\n");
 		return (ERROR);
-	}
 	return (j);
 }
 
@@ -330,11 +327,7 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 		{
 			max_ind = collect_players(argv, &i, pos, &max_ind);
 			if (max_ind == ERROR)
-			{
-				//ft_printf("CHECK\n");
-				//ft_printf("Error: player position invalid\n");
 				return (ERROR);
-			}
 		}
 		else if (ft_strstr(argv[i], ".cor"))
 		{
@@ -343,9 +336,7 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 			champs[size++] = i;
 		}
 		else
-		{
 			return (ERROR);
-		}
 		++i;
 	}
 	return (combine_players(size, max_ind, &champs, pos));
@@ -373,11 +364,9 @@ t_input	**read_init(int argc, char **argv, int i, t_profile **champ)
 			error_clean(input, champ, input[0]->champ_count);
 			return (NULL);
 		}
-		//++j;
 		++i;
 	}
 	if (store_champs(champ, input[0]->champ_count, input) == -1)
-		//free(info) outside!!!
 		return (NULL);
 	return (input);
 }
