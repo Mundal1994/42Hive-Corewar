@@ -95,7 +95,7 @@ typedef struct s_carriage
 	uint8_t				*home;
 	uint8_t				*current;
 	int32_t				skip;//nbr of bytes that needs to be skipped to go to next statement
-	int64_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
+	int32_t				registry[REG_NUMBER];//not acccurate numbers//first r1 will be identification number of player on whose code the carraige stands
 	int32_t				arg_types[ARGS];
 	int64_t				args_found[ARGS];
 	struct s_carriage	*next;
