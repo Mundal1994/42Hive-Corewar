@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static int	set_flag_minus(t_info *info)
+static void	set_flag_minus(t_info *info)
 {
 	int	i;
 
