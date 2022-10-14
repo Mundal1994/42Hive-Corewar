@@ -61,15 +61,18 @@ void	limit_jump(int *pos)
 	}
 }
 
-void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, int64_t *arg, int count)
+void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+	int64_t *arg, int count)
 {
 	if ((*carriage)->arg_types[count] == R)
 		*arg = (*carriage)->registry[*arg - 1];
 	else if ((*carriage)->arg_types[count] == I)
 	{
 		if (*arg < 0)
-			*arg = (int32_t)read_bytes(0, (*carriage)->pos - ((*arg * -1) % IDX_MOD), core, SIZE);
+			*arg = (int32_t)read_bytes(0, (*carriage)->pos - ((*arg * -1) \
+			% IDX_MOD), core, SIZE);
 		else
-			*arg = (int32_t)read_bytes(0, (*carriage)->pos + (*arg % IDX_MOD), core, SIZE);
+			*arg = (int32_t)read_bytes(0, (*carriage)->pos + (*arg % IDX_MOD), \
+			core, SIZE);
 	}
 }

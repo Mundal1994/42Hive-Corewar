@@ -25,7 +25,7 @@ void	op_xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	sum = (*carriage)->args_found[ARG1] ^ (*carriage)->args_found[ARG2];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)sum;
 	update_carry(sum, carriage);
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -41,7 +41,7 @@ void	op_or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	sum = (*carriage)->args_found[ARG1] | (*carriage)->args_found[ARG2];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)sum;
 	update_carry(sum, carriage);
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -57,6 +57,6 @@ void	op_and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	sum = (*carriage)->args_found[ARG1] & (*carriage)->args_found[ARG2];
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)sum;
 	update_carry(sum, carriage);
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }

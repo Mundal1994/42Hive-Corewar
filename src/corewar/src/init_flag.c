@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static void	set_flag_minus(t_info *info)
+static int	set_flag_minus(t_info *info)
 {
 	int	i;
 
@@ -53,6 +53,8 @@ int	init_flags(int argc, char **argv, t_info *info)
 	if (!ft_strcmp(argv[1], "-a"))
 		return (set_flag_true(info, A_FLAG));
 	if (!ft_strcmp(argv[1], "-i"))
+		return (set_flag_true(info, I_FLAG));
+	if (!ft_strcmp(argv[1], "-o"))
 		return (set_flag_true(info, I_FLAG));
 	if (check_int_flag(argv[1], info))
 	{

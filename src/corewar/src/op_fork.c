@@ -28,8 +28,6 @@ static int	copy_carriage(uint8_t core[MEM_SIZE], t_info **info, t_carriage *carr
 	new->delay = 0;
 	new->pos =new_pos;
 	new->statement_code = OP_NULL;
-	//new->home = carriage->home;//this should probably be different
-	//new->current = carriage->current;//this should probably be different
 	i = -1;
 	while (++i < REG_NUMBER)
 		new->registry[i] = carriage->registry[i];
@@ -64,7 +62,7 @@ void	op_fork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	limit_jump(&pos);
 	//ft_printf("from car %d [%d] -> %d [%d]\n", (*carriage)->id, (*carriage)->pos, info->carriage_count + 1, pos);
 	copy_carriage(core, &info, *carriage, pos);
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -80,6 +78,6 @@ void	op_lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		ft_printf("(%d)\n", pos);
 	limit_jump(&pos);
 	copy_carriage(core, &info, *carriage, pos);
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
