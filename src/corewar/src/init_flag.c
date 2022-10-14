@@ -26,7 +26,7 @@ static int	str_digit(char *str)
 	return (TRUE);
 }
 
-static void	set_flag_minus(t_info *info)
+static int	set_flag_minus(t_info *info)
 {
 	int	i;
 
@@ -68,6 +68,8 @@ int	init_flags(int argc, char **argv, t_info *info)
 		return (set_flag_true(info, A_FLAG));
 	else if (!ft_strcmp(argv[1], "-i"))
 		return (set_flag_true(info, I_FLAG));
+	else if (!ft_strcmp(argv[1], "-o"))
+		return (set_flag_true(info, I_FLAG));
 	else if (check_int_flag(argv[1], info))
 	{
 		if (argc > 3 && str_digit(argv[2]))
@@ -81,8 +83,7 @@ int	init_flags(int argc, char **argv, t_info *info)
 			}
 			return (2);
 		}
-		else
-			return (ERROR);
+		return (ERROR);
 	}
 	info->flag[NO_FLAG] = TRUE;
 	return (0);

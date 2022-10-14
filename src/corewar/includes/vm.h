@@ -32,6 +32,7 @@ typedef enum e_flag
 	NO_FLAG,
 	A_FLAG,
 	I_FLAG,
+	O_FLAG,
 	V_FLAG,
 	D_FLAG,
 	DC_FLAG,

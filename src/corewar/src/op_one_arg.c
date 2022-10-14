@@ -45,7 +45,7 @@ void	op_zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	}
 	if (print_command(info) == TRUE)
 		v_flag4_one_arg(carriage, "zjmp");
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -82,7 +82,7 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 			ft_printf("Player %d (%s) is said to be alive\n", \
 			info->winner, info->champ_names[info->winner - 1]);
 	}
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
 
@@ -100,6 +100,6 @@ void	op_aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		nbr = (int32_t)(*carriage)->registry[(int32_t)(*carriage)->args_found[ARG1] - 1];
 		ft_printf("Aff: %c\n", (char)nbr % 256);
 	}
-	if (info->flag[V_FLAG] == 25 && found == FALSE)
+	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }
