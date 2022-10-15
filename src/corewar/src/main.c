@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 		flag_count = init_flags(argc, argv, info);
 		if ((flag_count == 0 && argc >= 2) || \
 			(flag_count == 1 && argc >= 3) || \
-			(flag_count == 2 && argc >= 4))//removed  && argc <= 5		&& argc <= 6		&& argc <= 7
+			(flag_count == 2 && argc >= 4))
 		{
 			if (init(argc, argv, flag_count + 1, info) == ERROR)
 			{
@@ -48,18 +48,3 @@ int	main(int argc, char **argv)
 		return (ft_putendl(MSG_USAGE), 1);
 	return (0);
 }
-
-/*
-
-testcase
-
-./corewar -d 10000 champs/examples/bigzork.cor champs/examples/helltrain.cor
-./corewar -d 100000 champs/examples/bigzork.cor champs/examples/helltrain.cor
-
-
-Last print
-./corewar -d 24366 champs/examples/bigzork.cor champs/examples/helltrain.cor
-helltrain wins
-./corewar -d 24367 champs/examples/bigzork.cor champs/examples/helltrain.cor
-
-*/

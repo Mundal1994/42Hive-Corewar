@@ -67,7 +67,8 @@ static void	check_carriage_live_call(t_info *info)
 		if (carriage->last_live_call <= limit)
 		{
 			next = carriage->next;
-			if ((info->flag[V_FLAG] >= 8 && info->flag[V_FLAG] <= 15) || info->flag[V_FLAG] == 24)
+			if ((info->flag[V_FLAG] >= 8 && info->flag[V_FLAG] <= 15) || \
+				info->flag[V_FLAG] == 24)
 				print_process_killed(info, carriage);
 			delete_carriage(info, carriage->id);
 			carriage = next;
@@ -92,7 +93,7 @@ void	check(t_info *info)
 		}
 		else
 		{
-			info->checks_count += 1;//unsure about corellation of max_checks and checks_count....
+			info->checks_count += 1;
 			if (info->checks_count >= MAX_CHECKS)
 			{
 				info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
@@ -100,7 +101,6 @@ void	check(t_info *info)
 				print_cycle_count(info);
 			}
 		}
-		//info->checks_count += 1;
 		info->cycle_count = info->cycles_to_die;
 		info->live_statement = 0;
 	}

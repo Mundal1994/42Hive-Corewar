@@ -45,17 +45,24 @@ static int	check_int_flag(char *str, t_info *info)
 	return (FALSE);
 }
 
+static int	check_flag_with_no_digit(char *str, t_info *info)
+{
+	if (!ft_strcmp(str, "-a"))
+		return (set_flag_true(info, A_FLAG));
+	if (!ft_strcmp(str, "-i"))
+		return (set_flag_true(info, I_FLAG));
+	if (!ft_strcmp(str, "-o"))
+		return (set_flag_true(info, I_FLAG));
+	return (FALSE);
+}
+
 int	init_flags(int argc, char **argv, t_info *info)
 {
 	int	i;
 
 	set_flag_minus(info);
-	if (!ft_strcmp(argv[1], "-a"))
-		return (set_flag_true(info, A_FLAG));
-	if (!ft_strcmp(argv[1], "-i"))
-		return (set_flag_true(info, I_FLAG));
-	if (!ft_strcmp(argv[1], "-o"))
-		return (set_flag_true(info, I_FLAG));
+	if (check_flag_with_no_digit(argv[1], info))
+		return (TRUE);
 	if (check_int_flag(argv[1], info))
 	{
 		if (argc > 3 && ft_isnumber(argv[2]))

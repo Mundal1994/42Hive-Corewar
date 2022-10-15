@@ -117,6 +117,7 @@ typedef struct s_info
 
 int		init_flags(int argc, char **argv, t_info *info);
 int		init(int argc, char **argv, int i, t_info *info);
+void	set_arg(t_carriage **carriage);
 t_input	**read_init(int argc, char **argv, int i, t_profile **champ);
 int		game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ);
 int		update_carriages(uint8_t core[MEM_SIZE], t_info *info);
@@ -207,6 +208,15 @@ static const t_op_table	g_op_table[STATE] = {
 	op_lldi,
 	op_lfork,
 	op_aff,
+};
+
+static const int		g_operations[OPS_COUNT][STATE] = {
+{2, 6, 1, 1, 1, 7, 7, 7, 2, 7, 1, 2, 6, 7, 2, 1},
+{0, 1, 5, 1, 1, 7, 7, 7, 0, 4, 7, 0, 1, 4, 0, 0},
+{0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 4, 0, 0, 1, 0, 0},
+{10, 5, 5, 10, 10, 6, 6, 6, 20, 25, 25, 800, 10, 50, 1000, 2},
+{4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 4, 2, 2, 4},
+{0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1},
 };
 
 #endif

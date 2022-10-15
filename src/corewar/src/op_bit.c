@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "vm.h"
 
 void	op_xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	sum;
+	int			sum;
 	static int	found = FALSE;
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
@@ -31,7 +30,7 @@ void	op_xor(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	op_or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	sum;
+	int			sum;
 	static int	found = FALSE;
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
@@ -47,7 +46,7 @@ void	op_or(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 
 void	op_and(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	sum;
+	int			sum;
 	static int	found = FALSE;
 
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);

@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "vm.h"
 
-/*	function that determines if commands should be printed to standard output	*/
+/*
+function that determines if commands should be printed to standard output
+*/
 int	print_command(t_info *info)
 {
 	if (info->flag[V_FLAG] >= 4 && info->flag[V_FLAG] <= 7)
@@ -31,15 +32,17 @@ board with the limitations of IDX_MOD (-512 to 512)
 */
 void	op_zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	int	pos;
+	int			pos;
 	static int	found = FALSE;
 
 	if ((*carriage)->carry && core && info)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)
-			pos = (*carriage)->pos - (((int16_t)(*carriage)->args_found[ARG1] * -1) % IDX_MOD);
+			pos = (*carriage)->pos - (((int16_t)(*carriage)->args_found[ARG1] \
+			* -1) % IDX_MOD);
 		else
-			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] % IDX_MOD);
+			pos = (*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] \
+			% IDX_MOD);
 		limit_jump(&pos);
 		(*carriage)->pos = pos;
 	}
@@ -59,11 +62,8 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	static int	found = FALSE;
 
 	if (print_command(info) == TRUE)
-	{
-		//ft_printf("pos: %d	", (*carriage)->pos, (*carriage)->args_found);
 		v_flag4_one_arg(carriage, "live");
-	}
-	(*carriage)->last_live_call = info->total_cycles;//removed +1
+	(*carriage)->last_live_call = info->total_cycles;
 	info->live_statement += 1;
 	if ((*carriage)->args_found[ARG1] >= (info->champ_total * -1) && core \
 		&& info && (*carriage)->args_found[ARG1] <= -1)
@@ -94,10 +94,11 @@ void	op_aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int32_t		nbr;
 	static int	found = FALSE;
-	
+
 	if (info->flag[A_FLAG] == TRUE && core && info)
 	{
-		nbr = (int32_t)(*carriage)->registry[(int32_t)(*carriage)->args_found[ARG1] - 1];
+		nbr = (int32_t)(*carriage)->registry[(int32_t)(*carriage)->\
+		args_found[ARG1] - 1];
 		ft_printf("Aff: %c\n", (char)nbr % 256);
 	}
 	if (info->flag[O_FLAG] == TRUE && found == FALSE)

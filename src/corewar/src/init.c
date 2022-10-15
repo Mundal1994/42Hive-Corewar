@@ -34,6 +34,7 @@ static int	init_carriage(t_info **info, t_profile *champ)
 		new->registry[i++] = champ->i * -1;
 		while (i < REG_NUMBER)
 			new->registry[i++] = 0;
+		set_arg(&new);
 		new->next = (*info)->head_carriage;
 		(*info)->head_carriage = new;
 		(*info)->champ_names[j] = champ->name;
