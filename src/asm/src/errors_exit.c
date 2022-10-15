@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.h                                        :+:      :+:    :+:   */
+/*   errors_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 10:08:24 by caruychen         #+#    #+#             */
-/*   Updated: 2022/09/18 10:20:15 by caruychen        ###   ########.fr       */
+/*   Created: 2022/09/29 11:06:40 by cchen             #+#    #+#             */
+/*   Updated: 2022/09/29 11:06:42 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VALIDATOR_H
-# define VALIDATOR_H
+#include <stdio.h>
+#include <stdlib.h>
+#include "ft_stdio.h"
+#include "errors.h"
 
-# define EXTENSION_IN ".s"
+void	exit_error(void)
+{
+	perror("ERROR");
+	exit(EXIT_FAILURE);
+}
 
-/* Input argument validation */
-void	validate_arguments(int argc, char **argv);
-
-#endif
+void	exit_error_str(char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(EXIT_FAILURE);
+}
