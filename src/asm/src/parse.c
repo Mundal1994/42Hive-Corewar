@@ -56,6 +56,7 @@ static void	parse_init(t_parser *parser, t_lexer *lexer)
 	exit_error();
 }
 
+/* Single pass parser, performing lexical and syntax analysis */
 void	parse(t_parser *parser, const char *arg)
 {
 	t_lexer	lexer;
@@ -72,6 +73,7 @@ void	parse(t_parser *parser, const char *arg)
 	lexer_free(&lexer);
 }
 
+/* Free's memory allocated to the parser */
 void	parse_free(t_parser *parser)
 {
 	if (parser->sym.str.memory)
