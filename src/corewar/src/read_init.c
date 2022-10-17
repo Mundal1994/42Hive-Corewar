@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:32:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/14 17:26:00 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/17 11:56:53 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,9 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 	{
 		index = ft_atoi(argv[(*i)]);
 		if (index > 4 || index < 1 || (*pos)[index - 1])
+		{
 			return (ERROR);
+		}
 		if ((*max_ind) < index)
 			(*max_ind) = index;
 		(*pos)[index - 1] = ++(*i);
@@ -264,9 +266,9 @@ static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 		++i;
 	}
 	i = max_ind;
-	while (max_ind < SIZE)
+	while (i < SIZE)
 	{
-		if (pos[max_ind])
+		if (pos[i])
 			++max_ind;
 		else
 			break ;
@@ -301,26 +303,32 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		++i;
 	}
 	//ft_printf("%i < %i   %i > %i   %i \n", i, size, max_ind, j, range_invalid(max_ind, (*pos), &j));
-	if (i < size || (size != 0 && max_ind > j) || range_invalid(max_ind, (*pos), &j))
+	if (i < size || range_invalid(max_ind, (*pos), &j) || (size != 0 && max_ind > j) )
 		return (ERROR);
 	return (j);
 }
 
+static	void	initialise_arr(int (*champs)[SIZE], int (*pos)[SIZE])
+{
+	int	i;
+	
+	i = 0;
+	while (i < SIZE)
+	{
+		(*champs)[i] = 0;
+		(*pos)[i++] = 0;
+	}
+}
+
 static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 {
-	int	j;
 	int	champs[SIZE];
 	int size;
 	int max_ind;
 
 	size = 0;
-	j = 0;
 	max_ind = 0;
-	while (j < SIZE)
-	{
-		champs[j] = 0;
-		(*pos)[j++] = 0;
-	}
+	initialise_arr(&champs, pos);
 	while (i < argc)
 	{
 		if (!ft_strcmp(argv[i], "-n") && i + 2 < argc)
