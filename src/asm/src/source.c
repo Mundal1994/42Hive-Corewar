@@ -10,17 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** *
+ * The fundamental phase of the parser is the source character handler.
+ * The source handler scans the source text, returning a character at a time
+ * and analyses the source into lines.
+ *
+ * The t_source data structure has the following fields:
+ * 1. buffer (t_string):	Points to the source text stored in main memory
+ * 2. index:				Current index position of the source text
+ * 3. pos -> {r, c}:		Row and column of the current position.
+ * 4. curr:					Pointer to the current character.
+ * 5. next:					Pointer to the next character
+ * 
+ * The primary interface for t_source is the 'source_next' function which:
+ *   - Returns the next character.
+ *   - Updates current position data in the t_source struct.
+ * ************************************************************************* */
+
 #include "definitions.h"
 #include "source.h"
 
-static void	reset(t_source *source)
-{
-	source->index = 0;
-	source->pos = (t_pos){1, 0};
-	source->curr = NULL;
-	source->next = source_buffer(source);
-}
-
+/* Initialises meta-data fields in source */
 void	source_init(t_source *source)
 {
 	source->index = 0;
@@ -30,6 +40,16 @@ void	source_init(t_source *source)
 	source->buffer.memory = NULL;
 }
 
+/* Resets meta-data fields in source */
+static void	reset(t_source *source)
+{
+	source->index = 0;
+	source->pos = (t_pos){1, 0};
+	source->curr = NULL;
+	source->next = source_buffer(source);
+}
+
+/* Returns the next character without moving the source pointer forward */
 char	*source_peek(t_source *source)
 {
 	if (!source)
@@ -41,6 +61,7 @@ char	*source_peek(t_source *source)
 	return (source->next);
 }
 
+/* Returns the next character, and moves the source pointer forward */
 char	*source_next(t_source *source)
 {
 	int	is_newline;
@@ -62,6 +83,7 @@ char	*source_next(t_source *source)
 	return (source->curr);
 }
 
+/* Frees allocated source data memory */
 void	source_free(t_source *source)
 {
 	if (source_buffer(source))

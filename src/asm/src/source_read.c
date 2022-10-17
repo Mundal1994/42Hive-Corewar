@@ -10,6 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** *
+ * The source reader initialises source handler with input text.
+ * Data is read into primary memory first, and kept in the "buffer" field
+ * of t_source.
+ * 
+ * Reading into primary memory first avoids the expensive procedure of
+ * repeated file system read calls.
+ * ************************************************************************* */
+
 #include <fcntl.h>
 #include <unistd.h>
 #include "errors.h"
@@ -70,6 +79,7 @@ static void	read_file(const int fd, t_string *buffer)
 	}
 }
 
+/* Reads source text into buffer */
 void	source_read(t_source *source, const char *filename)
 {
 	int		fd;
