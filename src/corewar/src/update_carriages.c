@@ -69,10 +69,8 @@ t_carriage **carriage)
 			total = 0;
 			prev = (*carriage)->pos;
 			move_carriage(carriage, &total);
-			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
-			{
+			if ((info->flag[V_FLAG] & 16) == 16)
 				print_flag16(core, carriage, total, prev);
-			}
 			return (TRUE);
 		}
 		++i;
@@ -164,7 +162,7 @@ void	perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			prev = (*carriage)->pos;
 			total = 0;
 			move_carriage(carriage, &total);
-			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
+			if ((info->flag[V_FLAG] & 16) == 16)
 				print_flag16(core, carriage, total, prev);
 		}
 	}

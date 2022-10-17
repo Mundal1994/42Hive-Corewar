@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	deletes the carriages in the struct regardless of location	*/
 static void	delete_carriage(t_info *info, int id)
 {
 	t_carriage	*carriage;
@@ -39,6 +40,11 @@ static void	delete_carriage(t_info *info, int id)
 	}
 }
 
+/*
+if flag -v 8 is activated the processes/carriage that has been killed
+will be printed to standard output. It will also print how long carrriage
+has been dead.
+*/
 static void	print_process_killed(t_info *info, t_carriage *carriage)
 {
 	if (info->cycles_to_die < 0)
@@ -51,6 +57,10 @@ static void	print_process_killed(t_info *info, t_carriage *carriage)
 		info->cycles_to_die);
 }
 
+/*
+checks if the carriages last_live_call is within the limit
+if one is not within the limit it will be removed from the linked list
+*/
 static void	check_carriage_live_call(t_info *info)
 {
 	t_carriage	*carriage;
@@ -67,8 +77,7 @@ static void	check_carriage_live_call(t_info *info)
 		if (carriage->last_live_call <= limit)
 		{
 			next = carriage->next;
-			if ((info->flag[V_FLAG] >= 8 && info->flag[V_FLAG] <= 15) || \
-				info->flag[V_FLAG] == 24)
+			if ((info->flag[V_FLAG] & 8) == 8)
 				print_process_killed(info, carriage);
 			delete_carriage(info, carriage->id);
 			carriage = next;
@@ -78,6 +87,24 @@ static void	check_carriage_live_call(t_info *info)
 	}
 }
 
+/*
+if flag -v 2 is activated it will print what cycle_to_die is currently on
+*/
+static void	flag_print_cycle_to_die(t_info *info)
+{
+	if ((info->flag[V_FLAG] & 2) == 2)
+		ft_printf("Cycle to die is now %d\n", info->cycles_to_die);
+}
+
+/*
+check that happens every cycle. Increase total_cycle counter and if
+the cycle count reached 0 we will also check the carriages last_live_call.
+The cycle_to_die will be updated depending on how many live_statements
+have been made in total. If it is below 21 cycle_to_die will stay the same,
+if it is above we will reduce cycle_to_die by CYCLE_DELTA.
+An additional way to reduce cycle_to_die is if checks_count reaches MAX_CHECKS
+in that case we will reduce cycle_to_die as well.
+*/
 void	check(t_info *info)
 {
 	info->cycle_count -= 1;
@@ -89,7 +116,7 @@ void	check(t_info *info)
 		{
 			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 			info->checks_count = 0;
-			print_cycle_count(info, TRUE);
+			flag_print_cycle_to_die(info);
 		}
 		else
 		{
@@ -98,7 +125,7 @@ void	check(t_info *info)
 			{
 				info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 				info->checks_count = 0;
-				print_cycle_count(info, TRUE);
+				flag_print_cycle_to_die(info);
 			}
 		}
 		info->cycle_count = info->cycles_to_die;

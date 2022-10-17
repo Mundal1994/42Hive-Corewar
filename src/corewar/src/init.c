@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	sets the value of an individual carriage	*/
 static void	set_values(t_carriage **new, t_profile *champ)
 {
 	int	i;
@@ -29,6 +30,12 @@ static void	set_values(t_carriage **new, t_profile *champ)
 		(*new)->registry[i++] = 0;
 }
 
+/*
+initializes the carriages by looping through each of the champs
+each carriage is going to get an unique id, starting position and
+value stored in registry 1 which will depend on the individual
+champion
+*/
 static int	init_carriage(t_info **info, t_profile *champ)
 {
 	t_carriage	*new;
@@ -51,6 +58,7 @@ static int	init_carriage(t_info **info, t_profile *champ)
 	return (0);
 }
 
+/*	initializing info and all of its variables	*/
 static int	init_info(t_info **info, t_profile *champ)
 {
 	int	i;
@@ -69,6 +77,7 @@ static int	init_info(t_info **info, t_profile *champ)
 	return (0);
 }
 
+/*	adds the champs to the core with equal spacing in between the champs	*/
 static void	add_players_to_core(uint8_t core[MEM_SIZE], t_profile **champ, \
 t_input **input, int count)
 {
@@ -97,6 +106,10 @@ t_input **input, int count)
 	*champ = head;
 }
 
+/*
+reads from files and does all of the initialization before
+calling the game_start function that will begin the game
+*/
 int	init(int argc, char **argv, int i, t_info *info)
 {
 	t_profile	*champ;

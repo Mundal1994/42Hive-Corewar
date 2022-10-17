@@ -180,9 +180,6 @@ int		error_clean(t_input **input, t_profile **champ, int c);
 int		v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, \
 int prev);
-int		print_command(t_info *info);
-void	print_cycle_count(t_info *info, int die);
-int		print_dump_flags(uint8_t core[MEM_SIZE], t_info *info);
 int		free_carriage(t_info *info);
 
 typedef void			(*t_op_table)(uint8_t core[MEM_SIZE], \

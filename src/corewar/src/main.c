@@ -12,12 +12,17 @@
 
 #include "vm.h"
 
+/*	frees info and puts usage message	*/
 static int	free_and_return(t_info **info)
 {
 	free(*info);
 	return (ft_putendl(MSG_USAGE), 1);
 }
 
+/*
+checks argc and makes sure the minimum requirements are meet before
+calling the init function
+*/
 int	main(int argc, char **argv)
 {
 	t_info	*info;

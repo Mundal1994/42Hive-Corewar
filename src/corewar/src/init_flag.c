@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	initializes all the flags to -1 before locating which are present	*/
 static void	set_flag_minus(t_info *info)
 {
 	int	i;
@@ -24,12 +25,14 @@ static void	set_flag_minus(t_info *info)
 	}
 }
 
+/*	set the flag in info to TRUE while returning TRUE	*/
 static int	set_flag_true(t_info *info, int type)
 {
 	info->flag[type] = TRUE;
 	return (TRUE);
 }
 
+/*	checks flags that require a digit	*/
 static int	check_int_flag(char *str, t_info *info)
 {
 	if (!ft_strcmp(str, "-dump") || !ft_strcmp(str, "-d"))
@@ -45,6 +48,7 @@ static int	check_int_flag(char *str, t_info *info)
 	return (FALSE);
 }
 
+/*	checks flags that doesn't require a digit	*/
 static int	check_flag_with_no_digit(char *str, t_info *info)
 {
 	if (!ft_strcmp(str, "-a"))
@@ -56,6 +60,7 @@ static int	check_flag_with_no_digit(char *str, t_info *info)
 	return (FALSE);
 }
 
+/*	initializes the flags and checks which one has been activated	*/
 int	init_flags(int argc, char **argv, t_info *info)
 {
 	int	i;
@@ -78,6 +83,6 @@ int	init_flags(int argc, char **argv, t_info *info)
 		}
 		return (ERROR);
 	}
-	info->flag[NO_FLAG] = TRUE;
+	info->flag[NO_FLAG] = TRUE;//delete this?
 	return (0);
 }

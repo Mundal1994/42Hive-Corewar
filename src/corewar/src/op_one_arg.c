@@ -13,20 +13,6 @@
 #include "vm.h"
 
 /*
-function that determines if commands should be printed to standard output
-*/
-int	print_command(t_info *info)
-{
-	if (info->flag[V_FLAG] >= 4 && info->flag[V_FLAG] <= 7)
-		return (TRUE);
-	if (info->flag[V_FLAG] >= 12 && info->flag[V_FLAG] <= 15)
-		return (TRUE);
-	if (info->flag[V_FLAG] >= 20 && info->flag[V_FLAG] <= 23)
-		return (TRUE);
-	return (FALSE);
-}
-
-/*
 makes carriage able to jump to different positions on the
 board with the limitations of IDX_MOD (-512 to 512)
 */
@@ -46,7 +32,7 @@ void	op_zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		limit_jump(&pos);
 		(*carriage)->pos = pos;
 	}
-	if (print_command(info) == TRUE)
+	if ((info->flag[V_FLAG] & 4) == 4)
 		v_flag4_one_arg(carriage, "zjmp");
 	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
@@ -61,7 +47,7 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
 
-	if (print_command(info) == TRUE)
+	if ((info->flag[V_FLAG] & 4) == 4)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;
 	info->live_statement += 1;
@@ -72,13 +58,14 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		// if (info->flag[NO_FLAG] == TRUE)
 		// 	ft_printf("A process shows that player %d (%s) is alive\n", \
 		// 	info->winner, info->champ_names[info->winner - 1]);
-		if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
-			info->flag[V_FLAG] == 5 || info->flag[V_FLAG] == 7 || \
-			info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
-			info->flag[V_FLAG] == 13 || info->flag[V_FLAG] == 15 || \
-			info->flag[V_FLAG] == 19 || (info->flag[V_FLAG] >= 23 && \
-			info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || \
-			info->flag[V_FLAG] == 21)
+		// if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
+		// 	info->flag[V_FLAG] == 5 || info->flag[V_FLAG] == 7 || \
+		// 	info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
+		// 	info->flag[V_FLAG] == 13 || info->flag[V_FLAG] == 15 || \
+		// 	info->flag[V_FLAG] == 19 || (info->flag[V_FLAG] >= 23 && \
+		// 	info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || \
+		// 	info->flag[V_FLAG] == 21)
+		if ((info->flag[V_FLAG] & 1) == 1)
 			ft_printf("Player %d (%s) is said to be alive\n", \
 			info->winner, info->champ_names[info->winner - 1]);
 	}
