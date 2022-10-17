@@ -23,7 +23,7 @@ static int	parse_label(t_parser *parser, t_lexer *lexer)
 		return (ERROR);
 	if (lexer_next(lexer, sym) == ERROR)
 		return (ERROR);
-	if (sym->type == LA_eol)
+	if (sym->type == LA_eol || sym->type == LA_com)
 		return (OK);
 	if (sym->type == LA_instr)
 		return (parse_operation(parser, lexer));
