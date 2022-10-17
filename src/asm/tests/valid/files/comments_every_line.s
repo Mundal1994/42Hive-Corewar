@@ -6,3 +6,5 @@ l2:		sti r1, %:live, %1	;line4
 							;line6
 live:	live %1				#line7
 		zjmp %:live			;line8
+live2:						#line9
+live3:						;line10
