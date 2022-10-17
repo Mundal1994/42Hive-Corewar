@@ -14,6 +14,8 @@
 #include "definitions.h"
 #include "parse.h"
 
+/* Loads the correct operation based on the instruction symbol and optable,
+ * returns ERROR if the operation doesn't exist */
 static int	load_statement(t_parser *parser, t_lexer *lexer)
 {
 	const t_op		*op;
@@ -34,6 +36,8 @@ static int	load_statement(t_parser *parser, t_lexer *lexer)
 	return (OK);
 }
 
+/* Parses the next argument in the operation, determining whether it is
+ * a register, direct, or indirect argument */
 static int	next_argument(t_parser *parser, t_lexer *lexer,
 		t_statement *statement, uint8_t index)
 {
@@ -55,6 +59,7 @@ static int	next_argument(t_parser *parser, t_lexer *lexer,
 	return (error(errorset(lexer->source.pos, sym->str), PARSER_UNKNOWN_ARG));
 }
 
+/* Reads all relevant arguments from the source, depending on the operation */
 static int	parse_arguments(t_parser *parser, t_lexer *lexer)
 {
 	uint8_t		index;
@@ -76,6 +81,7 @@ static int	parse_arguments(t_parser *parser, t_lexer *lexer)
 	return (OK);
 }
 
+/* Checks that the instruction exists in the op table, and parses arguments */
 int	parse_operation(t_parser *parser, t_lexer *lexer)
 {
 	if (load_statement(parser, lexer) == ERROR)
