@@ -21,9 +21,15 @@
  *     what the next word is.
  *   - Reports an error if it finds any unrecognised symbols. So the client
  *     won't have to worry about "word correctness"
+ *   - Client callers should not have to worry about identifying what type
+ *     the next symbol/token is.
  *
  * The main interface to the lexer is the "lexer_next" function, found in
  * lexer_next.c
+ *
+ * lexer_next should be the only function that client procedures need. All
+ * other functions outside of this file, and lexer_next should be considered
+ * private to lexer.
  *
  * Function found in this file serve mainly as utility functions.
  * ************************************************************************* */
