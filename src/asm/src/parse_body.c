@@ -31,6 +31,8 @@ static int	parse_label(t_parser *parser, t_lexer *lexer)
 			PARSER_EXPECT_INSTR));
 }
 
+/* Always begins at the first symbol of a line, and determines whether it
+ * starts with a 'label' or the 'operator' */
 static int	parse_line(t_parser *parser, t_lexer *lexer)
 {
 	t_symbols	*sym;
