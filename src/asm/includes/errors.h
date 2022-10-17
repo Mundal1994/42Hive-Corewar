@@ -70,6 +70,9 @@ of quote string"
 # define SYMTABLE_OUTSTANDING "Outstanding reference found, missing a label"
 # define SYMTABLE_MULT_OUT "Multiple outstanding references to labels"
 
+/* Assemble messages */
+# define ASM_WARN_LARGE_CHAMP "Champion size may be too large for vm"
+
 typedef struct s_errorset
 {
 	t_pos		pos;
