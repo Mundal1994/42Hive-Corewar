@@ -14,6 +14,9 @@
 #include "definitions.h"
 #include "lexer.h"
 
+/* Emits the quotation string symbol, typically after the name/comment cmd
+ * Seeks to the end of the quotation string and returns the entire string.
+ * Returns an UNKNOWN symbol on an ERROR */
 int	lexer_getquote(t_source *source, t_symbols *sym)
 {
 	size_t	len;
