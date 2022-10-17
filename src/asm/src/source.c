@@ -15,6 +15,9 @@
  * The source handler scans the source text, returning a character at a time
  * and analyses the source into lines.
  *
+ * Client procedures should not have to worry about keeping track of source
+ * text position.
+ *
  * The t_source data structure has the following fields:
  * 1. buffer (t_string):	Points to the source text stored in main memory
  * 2. index:				Current index position of the source text
