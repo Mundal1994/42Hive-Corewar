@@ -6,25 +6,35 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:58:53 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/04 22:54:35 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/17 10:52:04 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* ************************************************************************** *
+ * There are three phases to Parsing:
+ * 1. Source handling
+ *   - Source character handler. Scans the source text, returning a character
+ *     at a time, and analyses the source into lines.
+ *   - Keeps track of its position in the source text, as well as row & column.
+ * 2. Lexical analysis
+ *   - Scans source characters, and converts the sequence of characters into
+ *     a sequence of lexical tokens.
+ *   - A valid recognised token is emitted as a "symbol", defined in symbol.h
+ *   - A symbol (token) can be of 14 different types, defined in symbol.h
+ * 3. Syntax analysis
+ *   - Analyses the string of symbols produced by the lexer.
+ *   - Syntax tree rules are encoded into parse_body.c, and checks that the
+ *     sequence of symbols conforms to the grammatical rules of the corewar
+ *     language.
+ *   - Labels are handled using a "symbol table handler", defined in symtable.h
+ *     and symtable.c. Symtable is necessary to deadl with forward references
+ *     to labels in the operations arguments.
+ * ************************************************************************* */
 
 #include <stdlib.h>
 #include "errors.h"
 #include "definitions.h"
 #include "parse.h"
-
-void	parse_free(t_parser *parser)
-{
-	if (parser->sym.str.memory)
-		symbol_free(&parser->sym);
-	if (parser->body.memory)
-		vec_free(&parser->body);
-	if (parser->opmap.entries)
-		opmap_free(&parser->opmap);
-	symtable_free(&parser->symtable);
-}
 
 static void	parse_init(t_parser *parser, t_lexer *lexer)
 {
@@ -60,4 +70,15 @@ void	parse(t_parser *parser, const char *arg)
 		exit(EXIT_FAILURE);
 	}
 	lexer_free(&lexer);
+}
+
+void	parse_free(t_parser *parser)
+{
+	if (parser->sym.str.memory)
+		symbol_free(&parser->sym);
+	if (parser->body.memory)
+		vec_free(&parser->body);
+	if (parser->opmap.entries)
+		opmap_free(&parser->opmap);
+	symtable_free(&parser->symtable);
 }

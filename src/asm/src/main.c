@@ -6,15 +6,11 @@
 /*   By: caruychen <cchen@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:16:33 by caruychen         #+#    #+#             */
-/*   Updated: 2022/10/17 10:16:12 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/17 10:51:47 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "validator.h"
-#include "assemble.h"
-
-/*
+/* ************************************************************************** *
  * 2 Primary stages of the assembler:
  * 1. Parse
  *   - Single pass
@@ -33,7 +29,12 @@
  * 3. Syntax analysis
  *   - Symbol table handling
  * More details for the parsing staged outlined in parse.c
-*/
+ * ************************************************************************* */
+
+#include <stdlib.h>
+#include "validator.h"
+#include "assemble.h"
+
 int	main(int argc, char **argv)
 {
 	t_parser	parser;
