@@ -12,13 +12,12 @@
 
 #include "vm.h"
 
-void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
-	t_info *info)
+void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage)
 {
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		(*carriage)->statement_code = core[(*carriage)->pos];
-		(*carriage)->delay = (u_int32_t)info->operations[DELAY]\
+		(*carriage)->delay = (u_int32_t)g_operations[DELAY]\
 		[core[(*carriage)->pos] - 1];
 	}
 	else
@@ -34,10 +33,10 @@ void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int 
 	ft_printf("ADV %d ", total);
 	if (prev == 0)
 		ft_printf("(0x0000 -> %#0.4x) ", (*carriage)->pos);
-	else if ((*carriage)->pos == 0)
-		ft_printf("(%#0.4x -> 0x0000) ", prev);
 	else if (prev > (*carriage)->pos)
 		ft_printf("(%#0.4x -> %#0.4x) ", prev, (*carriage)->pos + MEM_SIZE);
+	else if ((*carriage)->pos == 0)
+		ft_printf("(%#0.4x -> 0x0000) ", prev);
 	else
 		ft_printf("(%#0.4x -> %#0.4x) ", prev, (*carriage)->pos);
 	i = 0;
@@ -67,7 +66,7 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **c
 		{
 			total = 0;
 			prev = (*carriage)->pos;
-			move_carriage(info, carriage, &total);
+			move_carriage(carriage, &total);
 			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
 			{
 				print_flag16(core, carriage, total, prev);
@@ -109,14 +108,13 @@ static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	(*carriage)->arg_types[ARG2] = arg_found[ARG2];
 	(*carriage)->arg_types[ARG3] = arg_found[ARG3];
 	make_move_tmp(carriage, 1);
-	(*carriage)->args_found[ARG1] = read_args(ARG1, carriage, info, core);
-	(*carriage)->args_found[ARG2] = read_args(ARG2, carriage, info, core);
-	(*carriage)->args_found[ARG3] = read_args(ARG3, carriage, info, core);
+	(*carriage)->args_found[ARG1] = read_args(ARG1, carriage, core);
+	(*carriage)->args_found[ARG2] = read_args(ARG2, carriage, core);
+	(*carriage)->args_found[ARG3] = read_args(ARG3, carriage, core);
 	return (args_found_error(core, info, carriage));
 }
 
-static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage, \
-	t_info *info)
+static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage)
 {
 	if ((*carriage)->statement_code == 16)
 	{
@@ -131,72 +129,48 @@ static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	{
 		(*carriage)->arg_types[ARG1] = D;
 		(*carriage)->args_found[ARG1] = read_bytes(0, (*carriage)->tmp_pos, \
-			core, info->operations[SIZE][(*carriage)->statement_code - 1]);
+			core, g_operations[SIZE][(*carriage)->statement_code - 1]);
 	}
+	(*carriage)->arg_types[ARG2] = 0;
+	(*carriage)->arg_types[ARG3] = 0;
 	(*carriage)->args_found[ARG2] = 0;
 	(*carriage)->args_found[ARG3] = 0;
 }
 
 void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
-	t_info *info)//, op_table *op_table[STATE])
+	t_info *info)
 {
 	int	prev;
 	int	total;
 
-	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16\
-		 && core[(*carriage)->pos] == (*carriage)->statement_code)
+	if ((*carriage)->statement_code >= 1 && (*carriage)->statement_code <= 16)
 	{
-		//ft_printf("\nCARRIAGE NBR: %d\n", (*carriage)->id);
-		//ft_printf(" statement code   %i    pos %i\n", core[(*carriage)->pos], (*carriage)->pos);
-		(*carriage)->statement_code = core[(*carriage)->pos];
 		(*carriage)->tmp_pos = (*carriage)->pos;
 		make_move_tmp(carriage, 1);
-		//ft_printf("typecode %i   pcb %i   pos %d\n", core[(*carriage)->pos + 1], info->operations[PCB][(*carriage)->statement_code - 1], (*carriage)->pos);
-		if (info->operations[PCB][(*carriage)->statement_code - 1] == 1) //statements using typecode
+		if (g_operations[PCB][(*carriage)->statement_code - 1] == 1)
 		{
 			if (pcb_true(core, carriage, info) == TRUE)
 				return ;
 		}
 		else
-			pcb_false(core, carriage, info);
+			pcb_false(core, carriage);
 		g_op_table[(*carriage)->statement_code - 1](core, carriage, info);
 		if ((*carriage)->statement_code != OP_ZJMP || ((*carriage)->statement_code == \
 			OP_ZJMP && !(*carriage)->carry))
 		{
 			prev = (*carriage)->pos;
 			total = 0;
-			move_carriage(info, carriage, &total);
+			move_carriage(carriage, &total);
 			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
-			{
 				print_flag16(core, carriage, total, prev);
-			}
 		}
 	}
 	else
-	{
-		if ((*carriage)->statement_code >= 1 && (*carriage)->statement_code <= 16)// && (*carriage)->statement_code != OP_ZJMP)
-		{
-			prev = (*carriage)->pos;
-			total = 0;
-			if (info->operations[PCB][(*carriage)->statement_code - 1] == 1)
-				make_move(carriage, 2, &total);
-			else
-				make_move(carriage, info->operations[SIZE][(*carriage)->statement_code - 1] + 1, &total);
-			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
-			{
-				print_flag16(core, carriage, total, prev);
-			}
-		}
-		else
-		{
-			make_move(carriage, 1, &total);
-		}
-	}
+		make_move(carriage, 1, &total);
 	reset_args(carriage);
 }
 
-int	update_carriages(uint8_t core[MEM_SIZE], t_info *info)//, \
-	//op_table *op_table[STATE])
+int	update_carriages(uint8_t core[MEM_SIZE], t_info *info)
 {
 	t_carriage	*carriage;
 
@@ -205,26 +179,16 @@ int	update_carriages(uint8_t core[MEM_SIZE], t_info *info)//, \
 	{
 		if (carriage->delay == 0)
 		{
-			set_statement_code(core, &carriage, info);
-			//if (carriage->id == 1)// && info->total_cycles > 19130 && info->total_cycles < 20000)
-			//	ft_printf("statecode: carriage %d statement_code: %d	carry: %d	delay: %d	total_cycles: %d\n", carriage->id, carriage->statement_code, carriage->carry, carriage->delay, info->total_cycles);
+			set_statement_code(core, &carriage);
 		}
 		if (carriage->delay > 0)
 			carriage->delay -= 1;
 		if (carriage->delay == 0)
 		{
-			perform_statement_code(core, &carriage, info);//, op_table);
-			// if (carriage->id == 1)// && info->total_cycles > 19130 && info->total_cycles < 20000)
-			// 	ft_printf("performed: carriage %d statement_code: %d	carry: %d	delay: %d	total_cycles: %d	r0: %d\n", carriage->id, carriage->statement_code, carriage->carry, carriage->delay, info->total_cycles, carriage->registry[0]);
+			perform_statement_code(core, &carriage, info);
 			carriage->statement_code = OP_NULL;
 		}
 		carriage = carriage->next;
 	}
 	return (0);
 }
-
-
-/*
-./test_v_flag.sh ../../../vm_champs/corewar ./corewar champs/examples/zork.cor champs/examples/jinx.cor
-
-*/

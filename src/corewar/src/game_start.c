@@ -29,29 +29,6 @@ static int	one_carriage_left(t_info *info)
 	return (FALSE);
 }
 
-// static void	init_op_table(op_table *op_table[STATE])
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	op_table[i++] = op_live;
-// 	op_table[i++] = op_ld;
-// 	op_table[i++] = op_st;
-// 	op_table[i++] = op_add;
-// 	op_table[i++] = op_sub;
-// 	op_table[i++] = op_and;
-// 	op_table[i++] = op_or;
-// 	op_table[i++] = op_xor;
-// 	op_table[i++] = op_zjmp;
-// 	op_table[i++] = op_ldi;
-// 	op_table[i++] = op_sti;
-// 	op_table[i++] = op_fork;
-// 	op_table[i++] = op_lld;
-// 	op_table[i++] = op_lldi;
-// 	op_table[i++] = op_lfork;
-// 	op_table[i++] = op_aff;
-// }
-
 int	free_carriage(t_info *info)
 {
 	t_carriage	*next;
@@ -81,18 +58,16 @@ static int	flag_check(t_info *info)
 
 int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 {
-	//op_table	*op_table[STATE];
-	int			dump;
+	int	dump;
 
-	//init_op_table(op_table);
 	introduce_contestants(champ);
 	dump = flag_check(info);
 	if (dump == 0)
 		return (print_dump_flags(core, info));
 	while (!one_carriage_left(info))
 	{
-		print_cycle_count(info);
-		if (update_carriages(core, info) == ERROR)//, op_table) == ERROR)
+		print_cycle_count(info, FALSE);
+		if (update_carriages(core, info) == ERROR)
 			return (free_carriage(info));
 		if (info->total_cycles == dump)
 			return (print_dump_flags(core, info));

@@ -46,7 +46,7 @@ void	print_info(t_info *info)
 		print_ops_info(j);
 		while (i < STATE)
 		{
-			ft_printf("%d	", info->operations[j][i]);
+			ft_printf("%d	", g_operations[j][i]);
 			++i;
 		}
 		ft_printf("\n");

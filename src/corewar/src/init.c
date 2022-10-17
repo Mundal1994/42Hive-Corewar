@@ -45,67 +45,6 @@ static int	init_carriage(t_info **info, t_profile *champ)
 	return (0);
 }
 
-static void type_code(t_info **info)
-{
-	int		i;
-	int		j;
-	char	*dir;
-	char	*pcb;
-	char	*arg1;
-
-	i = 0;
-	j = 0;
-	dir = "4 4 4 4 4 4 4 4 2 2 2 2 4 2 2 4";
-	pcb = "0 1 1 1 1 1 1 1 0 1 1 0 1 1 0 1";
-	arg1 = "2 6 1 1 1 7 7 7 2 7 1 2 6 7 2 1";
-	while (i < STATE)
-	{
-		(*info)->operations[SIZE][i] = dir[j] - '0';
-		(*info)->operations[PCB][i] = pcb[j] - '0';
-		(*info)->operations[ARG1][i] = arg1[j] - '0';
-		++i;
-		j += 2;
-	}
-}
-
-static void	statment_delay(t_info **info)
-{
-	int		i;
-	int		j;
-	char	*arg2;
-	char	*arg3;
-
-	i = 0;
-	j = 0;
-	arg2 = "0 1 5 1 1 7 7 7 0 4 7 0 1 4 0 0";
-	arg3 = "0 0 0 1 1 1 1 1 0 1 4 0 0 1 0 0";
-	while (i < STATE)
-	{
-		(*info)->operations[ARG2][i] = arg2[j] - '0';
-		(*info)->operations[ARG3][i] = arg3[j] - '0';
-		++i;
-		j += 2;
-	}
-	i = 0;
-	(*info)->operations[DELAY][i++] = 10;//someone said 14 but it doesn't make sense with ours
-	(*info)->operations[DELAY][i++] = 5;
-	(*info)->operations[DELAY][i++] = 5;
-	(*info)->operations[DELAY][i++] = 10;
-	(*info)->operations[DELAY][i++] = 10;
-	(*info)->operations[DELAY][i++] = 6;
-	(*info)->operations[DELAY][i++] = 6;
-	(*info)->operations[DELAY][i++] = 6;
-	(*info)->operations[DELAY][i++] = 20;
-	(*info)->operations[DELAY][i++] = 25;
-	(*info)->operations[DELAY][i++] = 25;
-	(*info)->operations[DELAY][i++] = 800;
-	(*info)->operations[DELAY][i++] = 10;
-	(*info)->operations[DELAY][i++] = 50;
-	(*info)->operations[DELAY][i++] = 1000;
-	(*info)->operations[DELAY][i++] = 2;
-	type_code(info);
-}
-
 static int	init_info(t_info **info, t_profile *champ)
 {
 	int	i;
@@ -121,7 +60,6 @@ static int	init_info(t_info **info, t_profile *champ)
 		return (ERROR);
 	(*info)->winner = (*info)->head_carriage->id;
 	(*info)->carriage_count = (*info)->head_carriage->id;
-	statment_delay(info); //coud be a double array to store delays as well as effect on carry
 	return (0);
 }
 
