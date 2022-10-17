@@ -19,8 +19,8 @@
  * 2. Lexical analysis
  *   - Scans source characters, and converts the sequence of characters into
  *     a sequence of lexical tokens.
- *   - A valid recognised token is emitted as a "symbol", defined in symbol.h
- *   - A symbol (token) can be of 14 different types, defined in symbol.h
+ *   - A valid token is emitted as a "symbol", defined in symbol.h
+ *   - A symbol (token) can be one of 14 different types, defined in symbol.h
  * 3. Syntax analysis
  *   - Analyses the string of symbols produced by the lexer.
  *   - Syntax tree rules are encoded into parse_body.c, and checks that the
