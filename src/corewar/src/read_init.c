@@ -12,6 +12,12 @@
 
 #include "vm.h"
 
+static int	error_print(char *str)
+{
+	ft_printf("%s\n", str);
+	return (ERROR);
+}
+
 t_input **create_buf(t_input **input, int size)
 {
 	int	i;
@@ -19,7 +25,7 @@ t_input **create_buf(t_input **input, int size)
 	i = 0;
 	if (size == -1)
 	{
-		ft_printf("Error: player position invalid\n");
+		//ft_printf("Error: player position invalid\n");
 		return (NULL);
 	}
 	input = (t_input **)malloc(size * sizeof(t_input *));
@@ -235,7 +241,7 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 	while (argv[(*i)][j] != '\0')
 	{
 		if (!ft_isdigit(argv[(*i)][j]))
-			return (ERROR);
+			return (error_print("Error: player position invalid"));
 		++j;
 	}
 	if (ft_strstr(argv[(*i) + 1], ".cor"))
@@ -243,14 +249,14 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 		index = ft_atoi(argv[(*i)]);
 		if (index > 4 || index < 1 || (*pos)[index - 1])
 		{
-			return (ERROR);
+			return (error_print("Error: player position invalid"));
 		}
 		if ((*max_ind) < index)
 			(*max_ind) = index;
 		(*pos)[index - 1] = ++(*i);
 	}
 	else
-		return (ERROR);
+		return (error_print("Error: not a .cor file"));
 	return ((*max_ind));
 }
 
@@ -274,7 +280,7 @@ static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 			break ;
 		++i;
 	}
-	if ((*j != -1))
+	if ((*j) != -1)
 		(*j) = max_ind;
 	return (0);
 }
@@ -292,7 +298,7 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		while ((*champs)[i])
 		{
 			if (j >= SIZE)
-				return (ERROR);
+				return (error_print("Too many champions"));
 			if (!(*pos)[j])
 			{
 				(*pos)[j++] = (*champs)[i];
@@ -303,8 +309,8 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		++i;
 	}
 	//ft_printf("%i < %i   %i > %i   %i \n", i, size, max_ind, j, range_invalid(max_ind, (*pos), &j));
-	if (i < size || range_invalid(max_ind, (*pos), &j) || (size != 0 && max_ind > j) )
-		return (ERROR);
+	if (i < size || range_invalid(max_ind, (*pos), &j) || (size != 0 && max_ind > j) || j == -1)
+		return (error_print("Error: player position invalid"));
 	return (j);
 }
 
@@ -340,11 +346,11 @@ static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 		else if (ft_strstr(argv[i], ".cor"))
 		{
 			if (size > 3)
-				return (ERROR);
+				return (error_print("Too many champions"));
 			champs[size++] = i;
 		}
 		else
-			return (ERROR);
+			return (error_print("Error: invalid file"));
 		++i;
 	}
 	return (combine_players(size, max_ind, &champs, pos));
