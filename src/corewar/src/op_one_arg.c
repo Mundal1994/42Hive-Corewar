@@ -62,20 +62,17 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	static int	found = FALSE;
 
 	if (print_command(info) == TRUE)
-	{
-		//ft_printf("%lld	%d	", (int16_t)(*carriage)->args_found[ARG1], (*carriage)->pos);
 		v_flag4_one_arg(carriage, "live");
-	}
 	(*carriage)->last_live_call = info->total_cycles;
 	info->live_statement += 1;
 	if ((*carriage)->args_found[ARG1] >= (info->champ_total * -1) && core \
 		&& info && (*carriage)->args_found[ARG1] <= -1)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
-		if (info->flag[NO_FLAG] == TRUE)
-			ft_printf("A process shows that player %d (%s) is alive\n", \
-			info->winner, info->champ_names[info->winner - 1]);
-		else if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
+		// if (info->flag[NO_FLAG] == TRUE)
+		// 	ft_printf("A process shows that player %d (%s) is alive\n", \
+		// 	info->winner, info->champ_names[info->winner - 1]);
+		if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
 			info->flag[V_FLAG] == 5 || info->flag[V_FLAG] == 7 || \
 			info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
 			info->flag[V_FLAG] == 13 || info->flag[V_FLAG] == 15 || \
