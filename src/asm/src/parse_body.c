@@ -48,6 +48,7 @@ static int	parse_line(t_parser *parser, t_lexer *lexer)
 			PARSER_EXPECT_START));
 }
 
+/* Parse main body of source text, analyses by looping one line at a time */
 int	parse_body(t_parser *parser, t_lexer *lexer)
 {
 	int	res;
