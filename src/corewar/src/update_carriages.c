@@ -17,8 +17,8 @@ void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage)
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		(*carriage)->statement_code = core[(*carriage)->pos];
-		(*carriage)->delay = (u_int32_t)g_operations[DELAY]\
-		[core[(*carriage)->pos] - 1];
+		(*carriage)->delay = \
+		(u_int32_t)g_operations[DELAY][core[(*carriage)->pos] - 1];
 	}
 	else
 	{
@@ -26,7 +26,8 @@ void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage)
 	}
 }
 
-void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev)
+void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+int total, int prev)
 {
 	int	i;
 
@@ -53,7 +54,8 @@ void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int 
 	ft_putchar('\n');
 }
 
-static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **carriage)
+static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, \
+t_carriage **carriage)
 {
 	int	i;
 	int	total;
@@ -91,15 +93,16 @@ static void	reset_args(t_carriage **carriage)
 	}
 }
 
-static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
+static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+t_info *info)
 {
-	u_int8_t			arg_found[ARGS];
-	int	i;
+	u_int8_t	arg_found[ARGS];
+	int			i;
 
 	i = 0;
 	while (i < ARGS)
 		arg_found[i++] = core[((*carriage)->tmp_pos)];
-	arg_found[ARG1] = arg_found[ARG1] >> 6; 
+	arg_found[ARG1] = arg_found[ARG1] >> 6;
 	arg_found[ARG2] = arg_found[ARG2] << 2;
 	arg_found[ARG2] = arg_found[ARG2] >> 6;
 	arg_found[ARG3] = arg_found[ARG3] << 4;
@@ -137,7 +140,7 @@ static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage)
 	(*carriage)->args_found[ARG3] = 0;
 }
 
-void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+void	perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	t_info *info)
 {
 	int	prev;
@@ -155,8 +158,8 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 		else
 			pcb_false(core, carriage);
 		g_op_table[(*carriage)->statement_code - 1](core, carriage, info);
-		if ((*carriage)->statement_code != OP_ZJMP || ((*carriage)->statement_code == \
-			OP_ZJMP && !(*carriage)->carry))
+		if ((*carriage)->statement_code != OP_ZJMP || \
+			((*carriage)->statement_code == OP_ZJMP && !(*carriage)->carry))
 		{
 			prev = (*carriage)->pos;
 			total = 0;

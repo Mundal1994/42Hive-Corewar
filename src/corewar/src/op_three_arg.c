@@ -49,7 +49,6 @@ void	op_ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int			sum;
 	static int	found = FALSE;
 
-	//ft_printf("typecode %d %d %d	", (*carriage)->arg_types[0], (*carriage)->arg_types[1],(*carriage)->arg_types[2]);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
 	if (print_command(info) == TRUE && info)

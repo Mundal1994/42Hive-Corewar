@@ -32,7 +32,7 @@ static int	set_flag_true(t_info *info, int type)
 
 static int	check_int_flag(char *str, t_info *info)
 {
-	if (!ft_strcmp(str, "-dump"))
+	if (!ft_strcmp(str, "-dump") || !ft_strcmp(str, "-d"))
 		return (set_flag_true(info, D_FLAG));
 	if (!ft_strcmp(str, "-dc"))
 		return (set_flag_true(info, DC_FLAG));

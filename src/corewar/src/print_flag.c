@@ -115,8 +115,6 @@ void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 		{
 			if (i == reg)
 				ft_printf("r%d", (*carriage)->args_found[i]);
-			// else if (*carriage)->statement_code == OP_STI)
-			// 	ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 			else
 				ft_printf("%d", (*carriage)->args_found[i]);
 		}

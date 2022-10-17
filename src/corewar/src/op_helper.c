@@ -28,7 +28,7 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 {
 	uint32_t	value;
 	uint32_t	result;
-	int	j;
+	int			j;
 
 	value = nbr;
 	j = 3;
@@ -73,5 +73,5 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			core, SIZE);
 	}
 	else
-		*arg = (int16_t)*arg;
+		*arg = (int16_t)(*arg);
 }

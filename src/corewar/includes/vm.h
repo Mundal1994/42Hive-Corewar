@@ -171,7 +171,8 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg);
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
 
 //reading bytes/args
-int64_t	read_args(u_int32_t first, t_carriage **carriage, u_int8_t core[MEM_SIZE]);
+int64_t	read_args(u_int32_t first, t_carriage **carriage, \
+u_int8_t core[MEM_SIZE]);
 int		read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size);
 
 //error

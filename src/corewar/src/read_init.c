@@ -18,7 +18,7 @@ static int	error_print(char *str)
 	return (ERROR);
 }
 
-t_input **create_buf(t_input **input, int size)
+t_input	**create_buf(t_input **input, int size)
 {
 	int	i;
 
@@ -41,7 +41,8 @@ t_input **create_buf(t_input **input, int size)
 		}
 		input[i]->champ_count = size;
 		input[i]->filename = NULL;
-		input[i]->t_script = (u_int8_t *) malloc (sizeof(u_int8_t) * (BUFF_SIZE * 2));
+		input[i]->t_script = (u_int8_t *)malloc(sizeof(u_int8_t) * \
+		(BUFF_SIZE * 2));
 		if (!input[i]->t_script)
 		{
 			error_clean(input, NULL, i + 1);
@@ -127,10 +128,11 @@ static int	champ_name(t_profile **champ, t_input *input)
 	}
 	return (k);
 }
+
 static int	champs_exec_cd(t_profile **champ, t_input *input, int *k)
 {
 	int	j;
-	int hold;
+	int	hold;
 
 	j = 7;
 	while ((*k) < 140)
@@ -175,7 +177,7 @@ static int	champ_stats(t_profile **champ, t_input **input, int i)
 
 static int	store_champs(t_profile **champ, int c, t_input **input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < c)
@@ -200,12 +202,14 @@ static int	store_champs(t_profile **champ, int c, t_input **input)
 	return (0);
 }
 
-static int	read_binary(int fd, int ret, u_int8_t buff[BUFF_SIZE], t_input *input)
+static int	read_binary(int fd, int ret, u_int8_t buff[BUFF_SIZE], \
+t_input *input)
 {
 	ret = read(fd, buff, BUFF_SIZE);
 	if (ret == -1)
 	{
-		ft_printf("Error: File %s is too small to be a champion\n", input->filename);
+		ft_printf("Error: File %s is too small to be a champion\n", \
+		input->filename);
 		return (ERROR);
 	}
 	while (ret)
@@ -262,7 +266,7 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 
 static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < max_ind)
@@ -309,15 +313,16 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		++i;
 	}
 	//ft_printf("%i < %i   %i > %i   %i \n", i, size, max_ind, j, range_invalid(max_ind, (*pos), &j));
-	if (i < size || range_invalid(max_ind, (*pos), &j) || (size != 0 && max_ind > j) || j == -1)
+	if (i < size || range_invalid(max_ind, (*pos), &j) || \
+		(size != 0 && max_ind > j) || j == -1)
 		return (error_print("Error: player position invalid"));
 	return (j);
 }
 
-static	void	initialise_arr(int (*champs)[SIZE], int (*pos)[SIZE])
+static void	initialise_arr(int (*champs)[SIZE], int (*pos)[SIZE])
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < SIZE)
 	{
@@ -329,8 +334,8 @@ static	void	initialise_arr(int (*champs)[SIZE], int (*pos)[SIZE])
 static int	flag_check(int i, char **argv, int argc, int (*pos)[SIZE])
 {
 	int	champs[SIZE];
-	int size;
-	int max_ind;
+	int	size;
+	int	max_ind;
 
 	size = 0;
 	max_ind = 0;

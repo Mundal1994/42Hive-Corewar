@@ -12,6 +12,11 @@
 
 #include "vm.h"
 
+static int	free_and_return(t_info **info)
+{
+	free(*info);
+	return (ft_putendl(MSG_USAGE), 1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -31,18 +36,11 @@ int	main(int argc, char **argv)
 			if (init(argc, argv, flag_count + 1, info) == ERROR)
 			{
 				free(info);
-				return (ERROR);//depending on error either put USAGE MESSAGE or just exit completely and write error
+				return (ERROR);
 			}
-			//print this error message if too many champs
-			//return (ft_putendl(TOO_MANY_CHAMPS), 1);
 		}
 		else
-		{
-			free(info);
-			if (flag_count == ERROR)
-				ft_printf("Error: flags can't be combined with minus number\n\n");
-			return (ft_putendl(MSG_USAGE), 1);
-		}
+			return (free_and_return(&info));
 	}
 	else
 		return (ft_putendl(MSG_USAGE), 1);
