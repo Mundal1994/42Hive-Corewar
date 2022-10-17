@@ -33,6 +33,8 @@ static int	set_register(t_source source, t_symbols *sym)
 	return (OK);
 }
 
+/* Emits the instruction symbol for the next word. If the word is identified
+ * as a register, then a register symbol is emitted */
 int	lexer_getword(t_source *source, t_symbols *sym)
 {
 	size_t	len;	
