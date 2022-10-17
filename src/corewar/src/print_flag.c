@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "vm.h"
 
 static void	v_flag5_helper(t_carriage **carriage)
@@ -59,7 +58,8 @@ int	v_flag5(t_carriage **carriage)
 void	v_flag4_one_arg(t_carriage **carriage, char *command)
 {
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
-	if ((*carriage)->statement_code == OP_FORK || (*carriage)->statement_code == OP_LFORK)
+	if ((*carriage)->statement_code == OP_FORK || \
+		(*carriage)->statement_code == OP_LFORK)
 		ft_printf("%d ", (int16_t)(*carriage)->args_found[ARG1]);
 	else if ((*carriage)->statement_code == OP_ZJMP)
 	{
@@ -85,13 +85,12 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 			ft_putchar(' ');
 		if (i == reg)
 			ft_printf("r%d", (*carriage)->args_found[i]);
-		else if (((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I) && \
+		else if (((*carriage)->arg_types[i] == D || \
+			(*carriage)->arg_types[i] == I) && \
 			(*carriage)->statement_code == OP_LD)
 			ft_printf("%d", (*carriage)->args_found[i]);
-		// else if (((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I) && \
-		// 	(*carriage)->statement_code == OP_LLD)
-		// 	ft_printf("%d", (*carriage)->args_found[i]);NEED TO COME BACK TO THIS
-		else if ((*carriage)->arg_types[i] == D || (*carriage)->arg_types[i] == I)
+		else if ((*carriage)->arg_types[i] == D || \
+			(*carriage)->arg_types[i] == I)
 			ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 		++i;
 	}
@@ -116,7 +115,8 @@ void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 		{
 			if (i == reg)
 				ft_printf("r%d", (*carriage)->args_found[i]);
-			else if ((*carriage)->statement_code == OP_STI || (*carriage)->statement_code == OP_LDI)
+			else if ((*carriage)->statement_code == OP_STI || \
+				(*carriage)->statement_code == OP_LDI)
 				ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 			else
 				ft_printf("%d", (*carriage)->args_found[i]);
