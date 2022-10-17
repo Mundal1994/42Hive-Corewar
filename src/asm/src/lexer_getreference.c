@@ -14,6 +14,8 @@
 #include "definitions.h"
 #include "lexer.h"
 
+/* Emits the the reference token (forward reference labels). Assigns T_LAB
+ * and T_IND (if not already T_DIR) to the argtype */
 int	lexer_getreference(t_source *source, t_symbols *sym)
 {
 	size_t	len;
