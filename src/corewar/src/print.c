@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	prints the information about the operations	*/
 static void	print_ops_info(int j)
 {
 	if (j == ARG1)
@@ -28,6 +29,7 @@ static void	print_ops_info(int j)
 		ft_printf("PCB	: ");
 }
 
+/*	prints the struct info to standard output	*/
 void	print_info(t_info *info)
 {
 	int	i;
@@ -55,6 +57,7 @@ void	print_info(t_info *info)
 	ft_putchar('\n');
 }
 
+/*	prints the carriages and the values they contain to standard output	*/
 void	print_carriages(t_info *info)
 {
 	t_carriage	*carriage;
@@ -80,6 +83,7 @@ void	print_carriages(t_info *info)
 	}
 }
 
+/*	introduces champions	*/
 void	introduce_contestants(t_profile *champ)
 {
 	ft_printf("Introducing contestants...\n");
@@ -91,6 +95,7 @@ void	introduce_contestants(t_profile *champ)
 	}
 }
 
+/*	prints winner to standard output	*/
 void	announce_winner(t_profile *champ, int winner)
 {
 	while (champ)

@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	prints flag -v 5 to standard output	*/
 static void	v_flag5_helper(t_carriage **carriage)
 {
 	if ((*carriage)->statement_code == OP_XOR)
@@ -34,6 +35,7 @@ static void	v_flag5_helper(t_carriage **carriage)
 		ft_printf("AFF (%d)\n", (*carriage)->statement_code);
 }
 
+/*	prints flag -v 5 to standard output	*/
 int	v_flag5(t_carriage **carriage)
 {
 	if ((*carriage)->statement_code == OP_LIVE)
@@ -55,6 +57,10 @@ int	v_flag5(t_carriage **carriage)
 	return (TRUE);
 }
 
+/*
+prints flag -v 4 to standard output for the operations that takes
+one argument
+*/
 void	v_flag4_one_arg(t_carriage **carriage, char *command)
 {
 	ft_printf("P %4d | %s ", (*carriage)->id, command);
@@ -73,6 +79,10 @@ void	v_flag4_one_arg(t_carriage **carriage, char *command)
 		ft_printf("%d\n", (*carriage)->args_found[ARG1]);
 }
 
+/*
+prints flag -v 4 to standard output for the operations that takes
+two arguments
+*/
 void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 {
 	int	i;
@@ -97,6 +107,10 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 	ft_putchar('\n');
 }
 
+/*
+prints flag -v 4 to standard output for the operations that takes
+three arguments
+*/
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg)
 {
 	int	i;

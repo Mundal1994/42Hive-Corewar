@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	sets the statement_code and delay	*/
 void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage)
 {
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
@@ -78,19 +79,6 @@ t_carriage **carriage)
 	return (FALSE);
 }
 
-static void	reset_args(t_carriage **carriage)
-{
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		(*carriage)->arg_types[i] = 0;
-		(*carriage)->args_found[i] = 0;
-		++i;
-	}
-}
-
 static int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 t_info *info)
 {
@@ -138,6 +126,7 @@ static void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage)
 	(*carriage)->args_found[ARG3] = 0;
 }
 
+/*	performs the statement code and moves accordingly if an error is found	*/
 void	perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	t_info *info)
 {
@@ -168,9 +157,13 @@ void	perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	}
 	else
 		make_move(carriage, 1, &total);
-	reset_args(carriage);
+	set_arg(carriage);
 }
 
+/*
+goes through all the carriages and either updates the statement
+code or delay time for executing a statement code
+*/
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info)
 {
 	t_carriage	*carriage;
