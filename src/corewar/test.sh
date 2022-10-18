@@ -4,6 +4,8 @@ GIVEN_VM=../../../vm_champs/corewar
 MY_VM=./corewar
 CHAMP1=$1
 CHAMP2=$2
+CHAMP3=$3
+CHAMP4=$4
 END=0
 COUNT=1
 
@@ -26,8 +28,8 @@ drop_down()
 		eof6=0
 		LINE_NBR=0
 		#printf "$COUNT   $DOWN\n"
-		$GIVEN_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > given_vm_dump$((COUNT - DOWN)).txt
-		$MY_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > vm_dump$((COUNT - DOWN)).txt
+		$GIVEN_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> given_vm_dump$((COUNT - DOWN)).txt
+		$MY_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> vm_dump$((COUNT - DOWN)).txt
 		exec 5<given_vm_dump$((COUNT - DOWN)).txt
 		exec 6<vm_dump$((COUNT - DOWN)).txt
 		while [[ $eof5 -eq 0  ||  $eof6 -eq 0 ]]
@@ -71,8 +73,8 @@ drop_down()
 	done
 }
 
-drop_down_2()
 {
+drop_down_2()
 	rm vm_dump$COUNT.txt
 	rm given_vm_dump$COUNT.txt
 	DOWN=1
@@ -82,8 +84,8 @@ drop_down_2()
 		eof5=0
 		eof6=0
 		LINE_NBR=0
-		$GIVEN_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > given_vm_dump$((COUNT - DOWN)).txt
-		$MY_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 > vm_dump$((COUNT - DOWN)).txt
+		$GIVEN_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> given_vm_dump$((COUNT - DOWN)).txt
+		$MY_VM -d $((COUNT - DOWN)) $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> vm_dump$((COUNT - DOWN)).txt
 		exec 5<given_vm_dump$((COUNT - DOWN)).txt
 		exec 6<vm_dump$((COUNT - DOWN)).txt
 		while [[ $eof5 -eq 0  ||  $eof6 -eq 0 ]]
@@ -168,8 +170,8 @@ YES=0
 
 while [[ END -eq 0 ]]
 do
-	$GIVEN_VM -d $COUNT $CHAMP1 $CHAMP2 > given_vm_dump$COUNT.txt
-	$MY_VM -d $COUNT $CHAMP1 $CHAMP2 > vm_dump$COUNT.txt
+	$GIVEN_VM -d $COUNT $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> given_vm_dump$COUNT.txt
+	$MY_VM -d $COUNT $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> vm_dump$COUNT.txt
 	eof3=0
 	eof4=0
 	exec 3<given_vm_dump$COUNT.txt

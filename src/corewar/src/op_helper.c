@@ -72,4 +72,6 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			*arg = (int32_t)read_bytes(0, (*carriage)->pos + (*arg % IDX_MOD), \
 			core, SIZE);
 	}
+	else
+		*arg = (int16_t)*arg;
 }

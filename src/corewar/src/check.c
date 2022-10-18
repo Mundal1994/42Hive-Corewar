@@ -89,7 +89,7 @@ void	check(t_info *info)
 		{
 			info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 			info->checks_count = 0;
-			print_cycle_count(info);
+			print_cycle_count(info, TRUE);
 		}
 		else
 		{
@@ -98,7 +98,7 @@ void	check(t_info *info)
 			{
 				info->cycles_to_die = info->cycles_to_die - CYCLE_DELTA;
 				info->checks_count = 0;
-				print_cycle_count(info);
+				print_cycle_count(info, TRUE);
 			}
 		}
 		info->cycle_count = info->cycles_to_die;
