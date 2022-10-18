@@ -38,11 +38,8 @@ int	main(int argc, char **argv)
 			(flag_count == 1 && argc >= 3) || \
 			(flag_count == 2 && argc >= 4))
 		{
-			if (init(argc, argv, flag_count + 1, info) == ERROR)
-			{
-				free(info);
-				return (ERROR);
-			}
+			init(argc, argv, flag_count + 1, info);
+			free(info);
 		}
 		else
 			return (free_and_return(&info));

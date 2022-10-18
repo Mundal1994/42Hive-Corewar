@@ -81,7 +81,7 @@ static int	init_info(t_info **info, t_profile *champ)
 static void	add_players_to_core(uint8_t core[MEM_SIZE], t_profile **champ, \
 t_input **input, int count)
 {
-	t_profile	*head;
+	t_profile	*prev;
 	int			i;
 	size_t		j;
 	int			k;
@@ -92,7 +92,7 @@ t_input **input, int count)
 		core[i++] = 0;
 	div = MEM_SIZE / count;
 	i = 0;
-	head = (*champ)->head;
+	prev = (*champ)->head;
 	while (*champ)
 	{
 		j = 2192;
@@ -101,9 +101,10 @@ t_input **input, int count)
 		while (j < input[i]->current)
 			core[k++] = input[i]->t_script[j++];
 		++i;
+		prev = *champ;
 		*champ = (*champ)->next;
 	}
-	*champ = head;
+	*champ = prev;
 }
 
 /*
@@ -121,10 +122,11 @@ int	init(int argc, char **argv, int i, t_info *info)
 	if (!input)
 		return (ERROR);
 	add_players_to_core(core, &champ, input, input[0]->champ_count);
-	// free input function
-	if (init_info(&info, champ) == ERROR)
-		return (ERROR);//free info and champ here before exiting
-	if (game_start(core, info, champ) == ERROR)
-		return (ERROR);//free info and champ here before exiting
+	error_clean(input, NULL, input[0]->champ_count);
+	if (init_info(&info, champ->head) == ERROR)
+		return (error_clean(NULL, &champ, 0));//free info and champ here before exiting
+	if (game_start(core, info, champ->head) == ERROR)
+		return (error_clean(NULL, &champ, 0));//free info and champ here before exiting
+	error_clean(NULL, &champ, 0);
 	return (0);
 }

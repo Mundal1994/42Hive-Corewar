@@ -77,7 +77,7 @@ static void	check_carriage_live_call(t_info *info)
 		if (carriage->last_live_call <= limit)
 		{
 			next = carriage->next;
-			if ((info->flag[V_FLAG] & 8) == 8)
+			if ((info->flag[V_FLAG] & 8) == 8 && info->flag[V_FLAG] > 0)
 				print_process_killed(info, carriage);
 			delete_carriage(info, carriage->id);
 			carriage = next;
@@ -92,7 +92,7 @@ if flag -v 2 is activated it will print what cycle_to_die is currently on
 */
 static void	flag_print_cycle_to_die(t_info *info)
 {
-	if ((info->flag[V_FLAG] & 2) == 2)
+	if ((info->flag[V_FLAG] & 2) == 2 && info->flag[V_FLAG] > 0)
 		ft_printf("Cycle to die is now %d\n", info->cycles_to_die);
 }
 

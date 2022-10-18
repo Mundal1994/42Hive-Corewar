@@ -22,7 +22,7 @@ void	op_st(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int			pos;
 	static int	found = FALSE;
 
-	if (((info->flag[V_FLAG] & 4) == 4) && info)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)
 		v_flag4_two_arg(carriage, "st", ARG1);
 	if ((*carriage)->arg_types[ARG2] == R)
 		(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = \
@@ -65,7 +65,7 @@ void	op_ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 			(*carriage)->pos + ((int16_t)(*carriage)->args_found[ARG1] \
 			% IDX_MOD), core, SIZE);
 	}
-	if ((info->flag[V_FLAG] & 4) == 4)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0)
 		v_flag4_two_arg(carriage, "ld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = \
 	(int32_t)(*carriage)->args_found[ARG1];
@@ -92,7 +92,7 @@ void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, \
 			(*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, 2);
 	}
-	if (((info->flag[V_FLAG] & 4) == 4) && info)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = \
 	(int32_t)(*carriage)->args_found[ARG1];

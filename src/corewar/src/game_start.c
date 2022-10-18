@@ -96,7 +96,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 		return (print_dump_flags(core, info));
 	while (!one_carriage_left(info))
 	{
-		if ((info->flag[V_FLAG] & 2) == 2)
+		if ((info->flag[V_FLAG] & 2) == 2 && info->flag[V_FLAG] > 0)
 			ft_printf("It is now cycle %d\n", info->total_cycles);
 		if (update_carriages(core, info) == ERROR)
 			return (free_carriage(info));

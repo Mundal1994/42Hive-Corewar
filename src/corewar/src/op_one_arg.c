@@ -32,7 +32,7 @@ void	op_zjmp(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		limit_jump(&pos);
 		(*carriage)->pos = pos;
 	}
-	if ((info->flag[V_FLAG] & 4) == 4)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0)
 		v_flag4_one_arg(carriage, "zjmp");
 	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
@@ -47,7 +47,7 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
 
-	if ((info->flag[V_FLAG] & 4) == 4)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;
 	info->live_statement += 1;
@@ -65,7 +65,7 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		// 	info->flag[V_FLAG] == 19 || (info->flag[V_FLAG] >= 23 && \
 		// 	info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || \
 		// 	info->flag[V_FLAG] == 21)
-		if ((info->flag[V_FLAG] & 1) == 1)
+		if ((info->flag[V_FLAG] & 1) == 1 && info->flag[V_FLAG] > 0)
 			ft_printf("Player %d (%s) is said to be alive\n", \
 			info->winner, info->champ_names[info->winner - 1]);
 	}
