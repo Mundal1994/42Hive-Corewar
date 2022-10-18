@@ -22,15 +22,18 @@ static int	one_carriage_left(t_info *info)
 	t_carriage	*carriage;
 	int			count;
 
-	carriage = info->head_carriage;
-	count = 0;
-	while (carriage)
+	if (info->total_cycles >= CYCLE_TO_DIE)
 	{
-		++count;
-		carriage = carriage->next;
+		carriage = info->head_carriage;
+		count = 0;
+		while (carriage)
+		{
+			++count;
+			carriage = carriage->next;
+		}
+		if (count <= 1)
+			return (TRUE);
 	}
-	if (count <= 1)
-		return (TRUE);
 	return (FALSE);
 }
 

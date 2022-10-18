@@ -82,6 +82,7 @@ except it doesn't use IDX_MOD when finding the address to read from
 void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
+
 	if ((*carriage)->arg_types[ARG1] == I)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)

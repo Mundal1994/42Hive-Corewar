@@ -100,7 +100,8 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg)
 			(*carriage)->statement_code == OP_LD)
 			ft_printf("%d", (*carriage)->args_found[i]);
 		else if ((*carriage)->arg_types[i] == D || \
-			(*carriage)->arg_types[i] == I)
+			(*carriage)->arg_types[i] == I || \
+			(*carriage)->statement_code == OP_ST)
 			ft_printf("%d", (int16_t)(*carriage)->args_found[i]);
 		++i;
 	}

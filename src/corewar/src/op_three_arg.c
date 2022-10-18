@@ -132,8 +132,7 @@ void	op_lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
 	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)
 		v_flag4_three_arg(carriage, "lldi", ARG3);
-	sum = (*carriage)->args_found[ARG1] + \
-		(*carriage)->args_found[ARG2];
+	sum = (*carriage)->args_found[ARG1] + (*carriage)->args_found[ARG2];
 	if (sum < 0)
 		pos = (*carriage)->pos - (sum * -1);
 	else
@@ -144,8 +143,7 @@ void	op_lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	limit_jump(&pos);
 	value = read_bytes(0, pos, core, SIZE);
 	(*carriage)->registry[(*carriage)->args_found[ARG3] - 1] = (int32_t)value;
-	//find a place to test this one?
-	//update_carry(value, carriage);//one place it said that this function contrary to lld should update carry
+	update_carry(value, carriage);
 	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }

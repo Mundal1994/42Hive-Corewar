@@ -54,7 +54,7 @@ void	limit_jump(int *pos)
 	if (*pos >= MEM_SIZE)
 		*pos %= MEM_SIZE;
 	else if (*pos < 0)
-		*pos = MEM_SIZE - (*pos * -1);
+		*pos = MEM_SIZE - ((*pos * -1) % MEM_SIZE);
 }
 
 /*	updates arg values based on their types	*/
