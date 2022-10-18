@@ -12,8 +12,8 @@
 
 /* ************************************************************************** *
  * Lexical analysis
- *   - Deals with  the "words"
- *   - Converts the sequence of characters into a sequence symbols (tokens).
+ *   - Deals with the "words"
+ *   - Converts a sequence of characters into a sequence symbols (tokens).
  *   - The source characters can be assembled into one of 14 different types
  *     of symbols, such as a label, comma, operation, argument etc. The full
  *     list of symbol types can be found in symbol.h
@@ -21,7 +21,7 @@
  *     what the next word is.
  *   - Reports an error if it finds any unrecognised symbols. So the client
  *     won't have to worry about "word correctness"
- *   - Client callers should not have to worry about identifying what type
+ *   - Client procedures should not have to worry about identifying what type
  *     the next symbol/token is.
  *
  * The main interface to the lexer is the "lexer_next" function, found in
