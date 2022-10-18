@@ -23,9 +23,9 @@
  *   - A symbol (token) can be one of 14 different types, defined in symbol.h
  * 3. Syntax analysis
  *   - Analyses the string of symbols produced by the lexer.
- *   - Syntax tree rules are encoded into parse_body.c, and checks that the
- *     sequence of symbols conforms to the grammatical rules of the corewar
- *     language.
+ *   - Syntax tree rules are encoded into parse_body.c.
+ *   - The symbols emitted by the lexer are analysed for correctness against
+ *     he grammatical rules of the Corewar assembly language.
  *   - Labels are handled using a "symbol table handler", defined in symtable.h
  *     and symtable.c. Symtable is necessary to deadl with forward references
  *     to labels in the operations arguments.

@@ -14,6 +14,8 @@
 #include "definitions.h"
 #include "parse.h"
 
+/* Parses the label first, and returns OK if an end of line is found.
+ * Otherwise, calls parse_operation for the rest of the line */
 static int	parse_label(t_parser *parser, t_lexer *lexer)
 {
 	t_symbols	*sym;
@@ -31,8 +33,9 @@ static int	parse_label(t_parser *parser, t_lexer *lexer)
 			PARSER_EXPECT_INSTR));
 }
 
-/* Always begins at the first symbol of a line, and determines whether it
- * starts with a 'label' or the 'operator' */
+/* Performs syntax analysis on a line of source text, if the line begins with:
+ * - Label:		calls parse_label
+ * - Operation:	calls parse_operation */
 static int	parse_line(t_parser *parser, t_lexer *lexer)
 {
 	t_symbols	*sym;
@@ -50,7 +53,7 @@ static int	parse_line(t_parser *parser, t_lexer *lexer)
 			PARSER_EXPECT_START));
 }
 
-/* Parse main body of source text, analyses by looping one line at a time */
+/* Parse main body of source text, performs syntax analysis */
 int	parse_body(t_parser *parser, t_lexer *lexer)
 {
 	int	res;
