@@ -23,7 +23,7 @@ do
 	eof4=0
 	exec 3<$FILE1
 	exec 4<$FILE2
-
+	ERROR=0
 	while [[ $eof3 -eq 0  ||  $eof4 -eq 0 ]]
 	do
 		COUNT=$((COUNT+1))
@@ -65,10 +65,16 @@ do
 			echo $line
 			echo $line2
 			printf "\n"
+			ERROR=1
 			break
 		fi
 	done
-	printf "flag $flag OK\n"
+	if [[ ERROR -eq 0 ]]
+	then
+		printf "flag $flag OK\n"
+	else
+		printf "flag $flag ERROR\n"
+	fi
 	rm $FILE1
 	rm $FILE2
 	flag=$((flag+1))

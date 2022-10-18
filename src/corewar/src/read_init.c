@@ -145,7 +145,10 @@ static int	champs_exec_cd(t_profile **champ, t_input *input, int *k)
 		++(*k);
 	}
 	if ((*champ)->exec_cd_sz > MEM_SIZE / 6)
+	{
+		ft_printf("Error: File %s has too large a code (%i bytes > 682 bytes)\n", input->filename, (*champ)->exec_cd_sz);
 		return (ERROR);
+	}
 	return (0);
 }
 
@@ -228,7 +231,7 @@ static int	open_binary(int *fd, int j, char *file, t_input *input)
 	(*fd) = open(file, O_RDONLY | 0);
 	if ((*fd) == ERROR)
 	{
-		ft_printf("Can't read file %s\n", file);
+		ft_printf("Can't read source file %s\n", file);
 		return (ERROR);
 	}
 	input->filename = ft_strdup(file);
