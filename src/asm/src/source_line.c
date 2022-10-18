@@ -39,7 +39,7 @@ char	*source_seekstart(t_source *source)
 {
 	if (!source->curr)
 		return (NULL);
-	while (ft_strchr(TABSPACE, *(source->curr)) && !source_at_lineend(*source))
+	while (!source_at_lineend(*source) && ft_strchr(TABSPACE, *(source->curr)))
 		source_next(source);
 	return (source->curr);
 }
