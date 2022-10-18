@@ -10,6 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** *
+ * Assembly expectes a successfully parsed source code.
+ * Processes the unpacked instructions from parser->body, and follows the 
+ * following stages:
+ * 1. Initialise assembly buffer
+ * 2. Loads bytecode into buffer memory
+ * 3. Writes the buffer into file
+ * ************************************************************************* */
+
 #include "assemble.h"
 #include "errors.h"
 #include "ft_printf.h"
@@ -48,6 +57,7 @@ void	assemble_free(t_assembler *assembler)
 		string_free(&assembler->buffer);
 }
 
+/* Begins main assembly phase */
 void	assemble(t_parser *parser, const char *arg)
 {
 	t_assembler	assembler;
