@@ -12,7 +12,6 @@
 
 SRC_DIR := ./src
 SRCS := $(SRC_DIR)/main.c
-SRCS += $(SRC_DIR)/op.c
 SRCS += $(SRC_DIR)/init.c
 SRCS += $(SRC_DIR)/init_flag.c
 SRCS += $(SRC_DIR)/init_read.c
@@ -20,7 +19,6 @@ SRCS += $(SRC_DIR)/init_input.c
 SRCS += $(SRC_DIR)/game_start.c
 SRCS += $(SRC_DIR)/update_carriages.c
 SRCS += $(SRC_DIR)/check.c
-SRCS += $(SRC_DIR)/check_flag.c
 SRCS += $(SRC_DIR)/print.c
 SRCS += $(SRC_DIR)/print_core.c
 SRCS += $(SRC_DIR)/print_flag.c

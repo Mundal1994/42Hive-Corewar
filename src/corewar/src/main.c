@@ -12,7 +12,17 @@
 
 #include "vm.h"
 
+/*	frees info and puts usage message	*/
+static int	free_and_return(t_info **info)
+{
+	free(*info);
+	return (ft_putendl(MSG_USAGE), 1);
+}
 
+/*
+checks argc and makes sure the minimum requirements are meet before
+calling the init function
+*/
 int	main(int argc, char **argv)
 {
 	t_info	*info;
@@ -28,21 +38,11 @@ int	main(int argc, char **argv)
 			(flag_count == 1 && argc >= 3) || \
 			(flag_count == 2 && argc >= 4))
 		{
-			if (init(argc, argv, flag_count + 1, info) == ERROR)
-			{
-				free(info);
-				return (ERROR);//depending on error either put USAGE MESSAGE or just exit completely and write error
-			}
-			//print this error message if too many champs
-			//return (ft_putendl(TOO_MANY_CHAMPS), 1);
+			init(argc, argv, flag_count + 1, info);
+			free(info);
 		}
 		else
-		{
-			free(info);
-			if (flag_count == ERROR)
-				ft_printf("Error: flags can't be combined with minus number\n\n");
-			return (ft_putendl(MSG_USAGE), 1);
-		}
+			return (free_and_return(&info));
 	}
 	else
 		return (ft_putendl(MSG_USAGE), 1);

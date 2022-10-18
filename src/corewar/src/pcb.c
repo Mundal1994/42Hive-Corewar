@@ -6,12 +6,13 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:24:40 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 11:29:48 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 15:32:36 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*	Resetting arguments collecting arrays	*/
 void	reset_args(t_carriage **carriage)
 {
 	int	i;
@@ -25,7 +26,9 @@ void	reset_args(t_carriage **carriage)
 	}
 }
 
-static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **carriage)
+/*	Searching for any errors with the args found using the typecode	*/
+static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, \
+	t_carriage **carriage)
 {
 	int	i;
 	int	total;
@@ -50,15 +53,16 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, t_carriage **c
 	return (FALSE);
 }
 
+/*	Collecting args for statement using type codes	*/
 int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
-	u_int8_t			arg_found[ARGS];
-	int	i;
+	u_int8_t	arg_found[ARGS];
+	int			i;
 
 	i = 0;
 	while (i < ARGS)
 		arg_found[i++] = core[((*carriage)->tmp_pos)];
-	arg_found[ARG1] = arg_found[ARG1] >> 6; 
+	arg_found[ARG1] = arg_found[ARG1] >> 6;
 	arg_found[ARG2] = arg_found[ARG2] << 2;
 	arg_found[ARG2] = arg_found[ARG2] >> 6;
 	arg_found[ARG3] = arg_found[ARG3] << 4;
@@ -73,6 +77,7 @@ int	pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	return (args_found_error(core, info, carriage));
 }
 
+/*	COllecting values for functions not using typecodes	*/
 void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage)
 {
 	if ((*carriage)->statement_code == 16)

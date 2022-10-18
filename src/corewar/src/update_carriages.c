@@ -6,24 +6,26 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 12:33:24 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/18 11:36:08 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 15:22:41 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*	sets the statement_code and delay	*/
 void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage)
 {
 	if (core[(*carriage)->pos] >= 1 && core[(*carriage)->pos] <= 16)
 	{
 		(*carriage)->statement_code = core[(*carriage)->pos];
-		(*carriage)->delay = (u_int32_t)g_operations[DELAY]\
-		[core[(*carriage)->pos] - 1];
+		(*carriage)->delay = \
+		(u_int32_t)g_operations[DELAY][core[(*carriage)->pos] - 1];
 	}
 	else
 		(*carriage)->delay = 0;
 }
 
+/*	checks if the statecode uses or type code or not and executes according*/
 static int	pcb(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	t_info *info)
 {
@@ -37,7 +39,10 @@ static int	pcb(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	return (0);
 }
 
-void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+/*	performs the fubction related to the function code or error, and moves 
+	carriage position
+*/
+void	perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	t_info *info)
 {
 	int	prev;
@@ -56,15 +61,19 @@ void perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			prev = (*carriage)->pos;
 			total = 0;
 			move_carriage(carriage, &total);
-			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
+			if ((info->flag[V_FLAG] & 16) == 16 && info->flag[V_FLAG] > 0)
 				print_flag16(core, carriage, total, prev);
 		}
 	}
 	else
 		make_move(carriage, 1, &total);
-	reset_args(carriage);
+	set_arg(carriage);
 }
 
+/*
+goes through all the carriages and either updates the statement
+code or delay time for executing a statement code
+*/
 int	update_carriages(uint8_t core[MEM_SIZE], t_info *info)
 {
 	t_carriage	*carriage;

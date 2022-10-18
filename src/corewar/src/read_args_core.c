@@ -6,13 +6,13 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:26 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:51 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 12:19:43 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
+int	read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
 {
 	int	i;
 	int	hold;
@@ -65,8 +65,8 @@ static int	if_arg_two_three(u_int32_t first, t_carriage **carriage)
 
 static int	if_arg_one(u_int32_t first, t_carriage **carriage)
 {
-	if ((*carriage)->arg_types[first] == 1 && (g_operations[first]\
-		[(*carriage)->statement_code - 1] == 1 \
+	if ((*carriage)->arg_types[first] == 1 && \
+	(g_operations[first][(*carriage)->statement_code - 1] == 1 \
 	|| g_operations[first][(*carriage)->statement_code - 1] == 4 \
 	|| g_operations[first][(*carriage)->statement_code - 1] == 5 \
 	|| g_operations[first][(*carriage)->statement_code - 1] == 7))
@@ -74,7 +74,8 @@ static int	if_arg_one(u_int32_t first, t_carriage **carriage)
 	return (FALSE);
 }
 
-int64_t	read_args(u_int32_t first, t_carriage **carriage, u_int8_t core[MEM_SIZE])
+int64_t	read_args(u_int32_t first, t_carriage **carriage, \
+u_int8_t core[MEM_SIZE])
 {
 	int	i;
 	int	temp;
@@ -82,7 +83,7 @@ int64_t	read_args(u_int32_t first, t_carriage **carriage, u_int8_t core[MEM_SIZE
 	if (g_operations[first][(*carriage)->statement_code - 1] == 0)
 	{
 		(*carriage)->arg_types[first] = 0;
-		return (0);	
+		return (0);
 	}
 	if (if_arg_one(first, carriage) == TRUE)
 	{

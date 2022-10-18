@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   champs_collect.c                                   :+:      :+:    :+:   */
+/*   collect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:08:10 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 12:11:04 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 15:42:13 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*	Mallocing t_profile struct, as well as extending linked list		*/
 static int	create_champ(t_profile	**champ)
 {
 	if (!(*champ))
@@ -36,6 +37,7 @@ static int	create_champ(t_profile	**champ)
 	return (0);
 }
 
+/*	Collection champions name	*/
 static int	champ_name(t_profile **champ, t_input *input)
 {
 	int	j;
@@ -57,10 +59,12 @@ static int	champ_name(t_profile **champ, t_input *input)
 	}
 	return (k);
 }
+
+/*	Collecting execution code size	*/
 static int	champs_exec_cd(t_profile **champ, t_input *input, int *k)
 {
 	int	j;
-	int hold;
+	int	hold;
 
 	j = 7;
 	while ((*k) < 140)
@@ -76,6 +80,7 @@ static int	champs_exec_cd(t_profile **champ, t_input *input, int *k)
 	return (0);
 }
 
+/*	Checking execution code and its size, as well as comments	*/
 static int	champ_stats(t_profile **champ, t_input **input, int i)
 {
 	int	j;
@@ -102,9 +107,11 @@ static int	champ_stats(t_profile **champ, t_input **input, int i)
 	return (0);
 }
 
+/*	Collecting champs name, comment and execution code, as well as error
+	checking structure of file	*/
 int	store_champs(t_profile **champ, int c, t_input **input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < c)

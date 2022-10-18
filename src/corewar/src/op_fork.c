@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	makes sure arg_types and args_found is set to zero	*/
 void	set_arg(t_carriage **carriage)
 {
 	int	i;
@@ -24,6 +25,7 @@ void	set_arg(t_carriage **carriage)
 	}
 }
 
+/*	copies carriage and sets the new position	*/
 static int	copy_carriage(t_info **info, t_carriage *carriage, int new_pos)
 {
 	t_carriage	*new;
@@ -48,20 +50,24 @@ static int	copy_carriage(t_info **info, t_carriage *carriage, int new_pos)
 	return (0);
 }
 
+/*
+makes a copy of the carriage and places it at the address found by
+first argument % IDX_MOD
+*/
 void	op_fork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int			pos;
 	int16_t		sum;
 	static int	found = FALSE;
 
-	if (print_command(info) == TRUE && core)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && core)
 		v_flag4_one_arg(carriage, "fork");
 	sum = (int16_t)(*carriage)->args_found[ARG1];
 	if (sum < 0)
 		pos = (*carriage)->pos - ((sum * -1) % IDX_MOD);
 	else
 		pos = (*carriage)->pos + (sum % IDX_MOD);
-	if (print_command(info) == TRUE)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0)
 		ft_printf("(%d)\n", pos);
 	limit_jump(&pos);
 	copy_carriage(&info, *carriage, pos);
@@ -69,15 +75,18 @@ void	op_fork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		found = v_flag5(carriage);
 }
 
+/*
+behaves like op_fork except it is not limited by IDX_MOD
+*/
 void	op_lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	int			pos;
 	static int	found = FALSE;
 
-	if (print_command(info) == TRUE && core)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && core)
 		v_flag4_one_arg(carriage, "lfork");
 	pos = (*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1];
-	if (print_command(info) == TRUE)
+	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0)
 		ft_printf("(%d)\n", pos);
 	limit_jump(&pos);
 	copy_carriage(&info, *carriage, pos);

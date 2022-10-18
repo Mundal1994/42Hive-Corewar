@@ -6,12 +6,15 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:55:08 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 12:02:09 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 15:27:20 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*	collects players according to arguments specified using 
+	the -n flag
+*/
 static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 {
 	int	j;
@@ -41,9 +44,10 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 	return ((*max_ind));
 }
 
+/*	checks players have been placed without gaps inbetween */
 static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < max_ind)
@@ -66,6 +70,9 @@ static int	range_invalid(int max_ind, int pos[SIZE], int *j)
 	return (0);
 }
 
+/*	combines players collected on the different arrays, to see if
+	players are placed in invalid postions
+*/
 static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 	int (*pos)[SIZE])
 {
@@ -89,16 +96,17 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		}
 		++i;
 	}
-	//ft_printf("%i < %i   %i > %i   %i \n", i, size, max_ind, j, range_invalid(max_ind, (*pos), &j));
-	if (i < size || range_invalid(max_ind, (*pos), &j) || (size != 0 && max_ind > j) )
+	if (i < size || range_invalid(max_ind, (*pos), &j) \
+		|| (size != 0 && max_ind > j) || j == -1)
 		return (ERROR);
 	return (j);
 }
 
+/*	initialises arrays used to collect player positions*/
 static	void	initialise_arr(int (*champs)[SIZE], int (*pos)[SIZE])
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < SIZE)
 	{
@@ -107,16 +115,19 @@ static	void	initialise_arr(int (*champs)[SIZE], int (*pos)[SIZE])
 	}
 }
 
+/*	checking if players have been placed using -n flag or
+	not. Plus errors with placement
+*/
 int	check_flag(int i, char **argv, int argc, int (*pos)[SIZE])
 {
 	int	champs[SIZE];
-	int size;
-	int max_ind;
+	int	size;
+	int	max_ind;
 
 	size = 0;
 	max_ind = 0;
 	initialise_arr(&champs, pos);
-	while (i < argc)
+	while (++i < argc)
 	{
 		if (!ft_strcmp(argv[i], "-n") && i + 2 < argc)
 		{
@@ -132,7 +143,6 @@ int	check_flag(int i, char **argv, int argc, int (*pos)[SIZE])
 		}
 		else
 			return (ERROR);
-		++i;
 	}
 	return (combine_players(size, max_ind, &champs, pos));
 }

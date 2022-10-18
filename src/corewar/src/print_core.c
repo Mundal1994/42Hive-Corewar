@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	prints the color when the flags -dc -di and -c are activated	*/
 static void	print_color(t_info *info, int i)
 {
 	t_carriage	*carriage;
@@ -29,6 +30,7 @@ static void	print_color(t_info *info, int i)
 	}
 }
 
+/*	prints newline or space depending on the value of line	*/
 static void	print_newline_or_space(int *line, int i)
 {
 	if (*line >= 64)
@@ -43,6 +45,7 @@ static void	print_newline_or_space(int *line, int i)
 		ft_printf(" ");
 }
 
+/*	prints the state of the core to standard output	*/
 void	print_core(uint8_t core[MEM_SIZE], t_info *info)
 {
 	int	i;

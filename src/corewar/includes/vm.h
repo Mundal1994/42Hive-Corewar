@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/18 12:14:14 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 12:21:33 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,8 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg);
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
 
 //reading bytes/args
-int64_t	read_args(u_int32_t first, t_carriage **carriage, u_int8_t core[MEM_SIZE]);
+int64_t	read_args(u_int32_t first, t_carriage **carriage, \
+u_int8_t core[MEM_SIZE]);
 int		read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size);
 
 //error
@@ -185,9 +186,6 @@ int		error_clean(t_input **input, t_profile **champ, int c);
 int		v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, \
 int prev);
-int		print_command(t_info *info);
-void	print_cycle_count(t_info *info, int die);
-int		print_dump_flags(uint8_t core[MEM_SIZE], t_info *info);
 int		free_carriage(t_info *info);
 
 typedef void			(*t_op_table)(uint8_t core[MEM_SIZE], \

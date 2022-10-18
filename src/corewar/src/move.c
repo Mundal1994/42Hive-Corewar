@@ -6,12 +6,14 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:01:56 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/11 16:05:19 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 15:35:17 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*	Moving the tmp_pos (which is used to collect args with
+	changes carriage position, incase of error)	*/
 void	make_move_tmp(t_carriage **carriage, int move)
 {
 	if ((*carriage)->tmp_pos + move >= MEM_SIZE)
@@ -22,6 +24,8 @@ void	make_move_tmp(t_carriage **carriage, int move)
 		(*carriage)->tmp_pos += move;
 }
 
+/*	Moving position, taking into account cyclical nature of
+	the core memory	*/
 void	make_move(t_carriage **carriage, int move, int *total)
 {
 	if ((*carriage)->pos + move >= MEM_SIZE)
@@ -29,9 +33,10 @@ void	make_move(t_carriage **carriage, int move, int *total)
 	else
 		(*carriage)->pos += move;
 	*total += move;
-	//ft_printf("total: %d	", *total);
 }
 
+/*	moving carriages after statement code execution 
+	according to args types	*/
 void	move_carriage(t_carriage **carriage, int *total)
 {
 	int	i;
@@ -43,7 +48,6 @@ void	move_carriage(t_carriage **carriage, int *total)
 		make_move(carriage, 1, total);
 	while (i < 3)
 	{
-		//ft_printf("argt: %d argf: %d	", (*carriage)->arg_types[i], (*carriage)->args_found[i]);
 		if ((*carriage)->arg_types[i] == 1)
 			make_move(carriage, 1, total);
 		else if ((*carriage)->arg_types[i] == 3)
