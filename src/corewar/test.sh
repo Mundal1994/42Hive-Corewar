@@ -200,5 +200,5 @@ do
 	#echo "end"
 	rm vm_dump$COUNT.txt
 	rm given_vm_dump$COUNT.txt
-	COUNT=$((COUNT+21148))
+	COUNT=$((COUNT+50))
 done
