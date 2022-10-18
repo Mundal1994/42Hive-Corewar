@@ -124,9 +124,9 @@ int	init(int argc, char **argv, int i, t_info *info)
 	add_players_to_core(core, &champ, input, input[0]->champ_count);
 	error_clean(input, NULL, input[0]->champ_count);
 	if (init_info(&info, champ->head) == ERROR)
-		return (error_clean(NULL, &champ, 0));//free info and champ here before exiting
+		return (error_clean(NULL, &champ, 0));
 	if (game_start(core, info, champ->head) == ERROR)
-		return (error_clean(NULL, &champ, 0));//free info and champ here before exiting
+		return (error_clean(NULL, &champ, 0));
 	error_clean(NULL, &champ, 0);
 	return (0);
 }
