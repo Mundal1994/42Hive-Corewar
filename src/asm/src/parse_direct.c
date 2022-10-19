@@ -12,6 +12,8 @@
 
 #include "parse.h"
 
+/* Called for direct argument types, and calls parse_reference or parse_numeric
+ * depending on the argtype */
 int	parse_direct(t_parser *parser, t_lexer *lexer, t_statement *statement,
 	uint8_t index)
 {

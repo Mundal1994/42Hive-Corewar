@@ -14,6 +14,9 @@
 #include "definitions.h"
 #include "lexer.h"
 
+/* Emits the command token if the word preceded by a '.' and contains only
+ * alphanumeric characters. This function is only called if the current token
+ * starts with '.' */
 int	lexer_getcmd(t_source *source, t_symbols *sym)
 {
 	size_t	len;

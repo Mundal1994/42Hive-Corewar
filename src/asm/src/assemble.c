@@ -10,8 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** *
+ * Assembly expectes a successfully parsed source code.
+ * Processes the unpacked instructions from parser->body, and follows the 
+ * following stages:
+ * 1. Initialise assembly buffer
+ * 2. Loads bytecode into buffer memory
+ * 3. Writes the buffer into file
+ * ************************************************************************* */
+
 #include "assemble.h"
 #include "errors.h"
+#include "ft_printf.h"
 
 static void	assemble_init(t_assembler *assembler, t_parser *parser,
 		const char *arg)
@@ -19,6 +29,13 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 	size_t	len;
 	size_t	cor_size;
 
+	if (parser->size > CHAMP_MAX_SIZE)
+	{
+		warning_ret(ASM_WARN_LARGE_CHAMP);
+		ft_printf("\tYour champion size: %ld bytes > %d bytes (CHAMP_MAX_SIZE)\n",
+			parser->size,
+			CHAMP_MAX_SIZE);
+	}
 	assembler->parser = parser;
 	len = ft_strrchr(arg, '.') - arg + 1;
 	cor_size = 8 + PROG_NAME_LENGTH + COMMENT_LENGTH + parser->size;
@@ -40,6 +57,7 @@ void	assemble_free(t_assembler *assembler)
 		string_free(&assembler->buffer);
 }
 
+/* Begins main assembly phase */
 void	assemble(t_parser *parser, const char *arg)
 {
 	t_assembler	assembler;
