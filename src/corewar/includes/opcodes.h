@@ -59,15 +59,4 @@ typedef enum e_opindex
 	IDX_NULL
 }			t_opindex;
 
-typedef struct s_op {
-	char		*name;
-	uint8_t		argument_num;
-	t_arg_type	arguments[3];
-	uint8_t		opcode;
-	uint16_t	cycle_cost;
-	char		*description;
-	bool		no_acb;
-	bool		label;
-}				t_op;
-
 #endif
