@@ -6,13 +6,14 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:22:55 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 11:23:18 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:19:40 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, int prev)
+void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, \
+	int total, int prev)
 {
 	int	i;
 

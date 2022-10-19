@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:57:40 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/18 12:22:23 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:25:48 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr)
 	j = 3;
 	while (j >= 0)
 	{
-		//ft_printf("result %i\n", (value % 16) * ft_pow(16, 0));
 		result = (value % 16) * ft_pow(16, 0);
 		value /= 16;
-		//ft_printf("result %i\n", (value % 16) * ft_pow(16, 1));
 		result += (value % 16) * ft_pow(16, 1);
 		value /= 16;
 		if (pos + j >= MEM_SIZE)

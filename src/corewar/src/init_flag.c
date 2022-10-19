@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:11:44 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/18 12:45:45 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:21:06 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ int	init_flags(int argc, char **argv, t_info *info)
 		}
 		return (ERROR);
 	}
-	info->flag[NO_FLAG] = TRUE;//delete this?
+	info->flag[NO_FLAG] = TRUE;
 	return (0);
 }
