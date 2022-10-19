@@ -21,7 +21,7 @@ static void	set_values(t_carriage **new, t_profile *champ)
 	(*new)->id = champ->i;
 	(*new)->carry = 0;
 	(*new)->statement_code = 0;
-	(*new)->last_live_call = -1;
+	(*new)->last_live_call = 0;
 	(*new)->delay = 0;
 	set_arg(new);
 	(*new)->pos = champ->pos;
