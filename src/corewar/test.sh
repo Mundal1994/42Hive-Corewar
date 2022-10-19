@@ -73,6 +73,7 @@ drop_down()
 	done
 }
 
+drop_down_2()
 {
 	rm dump_test/vm_dump$COUNT.txt
 	rm dump_test/given_vm_dump$COUNT.txt
@@ -103,33 +104,8 @@ drop_down()
 			else
 				eof6=1
 			fi
-			# if [[ "$line" == *"has won"*  &&  "$line2" != *"has won"* ]]
-			# then
-			# 	rm dump_test/given_vm_dump$((COUNT - DOWN)).txt
-			# 	rm dump_test/vm_dump$((COUNT - DOWN)).txt
-			# 	COUNT=$((COUNT - DOWN))
-			# 	drop_down
-			if [[ "$line2" == *"has won"*  &&  "$line" != *"has won"* ]]
+			if  [[ "$line" != "$line2" ]]
 			then
-				rm dump_test/given_vm_dump$((COUNT - DOWN)).txt
-				rm dump_test/vm_dump$((COUNT - DOWN)).txt
-				echo "check 1"
-				COUNT=$((COUNT - DOWN))
-				drop_down
-			elif [[ "$line2" != *"has won"*  &&  "$line" == *"has won"* ]]
-			then
-				rm dump_test/given_vm_dump$((COUNT - DOWN)).txt
-				rm dump_test/vm_dump$((COUNT - DOWN)).txt
-				echo "check 1"
-				COUNT=$((COUNT - DOWN))
-				drop_down
-			elif  [[ "$line" != "$line2" ]]
-			then
-			echo $((COUNT - DOWN))
-			echo HERE
-			echo "$line"
-			echo "$line2"
-				FLAG=1
 				HOLD=$LINE_NBR
 			fi
 		done
@@ -154,11 +130,13 @@ checking_lines()
 {
 	if [[ "$line" == *"has won"* && "$line2" == *"has won"* ]]
 	then
+		echo "Ended together..."
 		drop_down_2
 		printf "OK\n"
 		exit 0
 	elif [[ "$line" != "$line2" ]]
 	then
+		echo "Problem..."
 		echo $line
 		echo $line2
 		drop_down
@@ -196,7 +174,6 @@ do
 		fi
 		checking_lines
 	done
-	#echo "end"
 	rm dump_test/vm_dump$COUNT.txt
 	rm dump_test/given_vm_dump$COUNT.txt
 	COUNT=$((COUNT+50))

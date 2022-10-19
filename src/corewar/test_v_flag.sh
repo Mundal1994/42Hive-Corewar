@@ -19,45 +19,26 @@ do
 	$GIVEN_VM -v $flag $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> $FILE1
 	$MY_VM -v $flag $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> $FILE2
 
-	eof3=0
-	eof4=0
-	exec 3<$FILE1
-	exec 4<$FILE2
+	eof10=0
+	eof11=0
+	exec 10<$FILE1
+	exec 11<$FILE2
 	ERROR=0
-	while [[ $eof3 -eq 0  ||  $eof4 -eq 0 ]]
+	while [[ $eof10 -eq 0  ||  $eof11 -eq 0 ]]
 	do
 		COUNT=$((COUNT+1))
 		YES=$((YES+1))
-		if read line <&3
+		if read line <&10
 		then
-			# while [[ "$line" != *"P"* ]]
-			# do
-			# 	if read line <&3
-			# 	then
-			# 		YES=0
-			# 	else
-			# 		eof3=1
-			# 	fi
-			# done
 			YES=0
 		else
-			eof3=1
+			eof10=1
 		fi
-		if read line2 <&4
+		if read line2 <&11
 		then
-			# while [[ "$line2" != *"P"* ]]
-			# do
-			# 	COUNT=$((COUNT+1))
-			# 	if read line2 <&4
-			# 	then
-			# 		YES=0
-			# 	else
-			# 		eof3=1
-			# 	fi
-			# done
 			YES=0
 		else
-			eof4=1
+			eof11=1
 		fi
 		if [[ "$line" != "$line2" ]]
 		then
@@ -79,3 +60,5 @@ do
 	rm $FILE2
 	flag=$((flag+1))
 done
+
+./test.sh $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4
