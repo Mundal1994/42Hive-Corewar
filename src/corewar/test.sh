@@ -179,3 +179,5 @@ do
 	rm dump_test/given_vm_dump$COUNT.txt
 	COUNT=$((COUNT+50))
 done
+
+leaks -atExit -- $MY_VM -v 0 $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> dump_test/given_vm_dump.txt
