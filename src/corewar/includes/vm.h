@@ -14,7 +14,6 @@
 # define VM_H
 
 # include "libft.h"
-# include "op.h"
 # include "opcodes.h"
 # include "error.h"
 # include <fcntl.h>
