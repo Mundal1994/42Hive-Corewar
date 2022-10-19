@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:57:05 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/18 12:26:18 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:23:53 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,10 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		&& info && (*carriage)->args_found[ARG1] <= -1)
 	{
 		info->winner = (*carriage)->args_found[ARG1] * -1;
-		// if (info->flag[NO_FLAG] == TRUE)
-		// 	ft_printf("A process shows that player %d (%s) is alive\n", \
-		// 	info->winner, info->champ_names[info->winner - 1]);
-		// if (info->flag[V_FLAG] == 1 || info->flag[V_FLAG] == 3 || \
-		// 	info->flag[V_FLAG] == 5 || info->flag[V_FLAG] == 7 || \
-		// 	info->flag[V_FLAG] == 9 || info->flag[V_FLAG] == 11 || \
-		// 	info->flag[V_FLAG] == 13 || info->flag[V_FLAG] == 15 || \
-		// 	info->flag[V_FLAG] == 19 || (info->flag[V_FLAG] >= 23 && \
-		// 	info->flag[V_FLAG] <= 23) || info->flag[V_FLAG] == 17 || \
-		// 	info->flag[V_FLAG] == 21)
-		if ((info->flag[V_FLAG] & 1) == 1 && info->flag[V_FLAG] > 0)
+		if (info->flag[NO_FLAG] == TRUE)
+			ft_printf("A process shows that player %d (%s) is alive\n", \
+			info->winner, info->champ_names[info->winner - 1]);
+		else if ((info->flag[V_FLAG] & 1) == 1 && info->flag[V_FLAG] > 0)
 			ft_printf("Player %d (%s) is said to be alive\n", \
 			info->winner, info->champ_names[info->winner - 1]);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_two_arg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molesen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:56:59 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/14 11:57:01 by molesen          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:24:52 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	op_ld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 behaves like the op_ld statement.
 except it doesn't use IDX_MOD when finding the address to read from
 */
-//pretty much a copy of ld but with no % IDX_MOD
 void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
@@ -97,7 +96,7 @@ void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 		v_flag4_two_arg(carriage, "lld", ARG2);
 	(*carriage)->registry[(*carriage)->args_found[ARG2] - 1] = \
 	(int32_t)(*carriage)->args_found[ARG1];
-	update_carry((*carriage)->args_found[ARG1], carriage);//still update carry?
+	update_carry((*carriage)->args_found[ARG1], carriage);
 	if (info->flag[O_FLAG] == TRUE && found == FALSE)
 		found = v_flag5(carriage);
 }

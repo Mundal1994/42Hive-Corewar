@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:13:26 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 15:36:53 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:19:09 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ t_input	**create_buf(t_input **input, int size)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (size == -1)
 		return (NULL);
 	input = (t_input **)malloc(size * sizeof(t_input *));
 	if (!input)
 		return (NULL);
-	while (i < size)
+	while (++i < size)
 	{
 		if (mal_input(input, i))
 			return (NULL);
@@ -51,7 +51,6 @@ t_input	**create_buf(t_input **input, int size)
 		}
 		input[i]->capacity = (BUFF_SIZE * 2);
 		input[i]->current = 0;
-		++i;
 	}
 	return (input);
 }

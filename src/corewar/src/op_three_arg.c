@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:57:14 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/18 12:22:48 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:25:25 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	op_sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)
 		v_flag4_three_arg(carriage, "sti", ARG1);
 	sum = (*carriage)->args_found[ARG2] + \
-		(*carriage)->args_found[ARG3];//added int16 due to flag thingy
+		(*carriage)->args_found[ARG3];
 	if (sum < 0)
 		pos = (*carriage)->pos - ((sum * -1) % IDX_MOD);
 	else

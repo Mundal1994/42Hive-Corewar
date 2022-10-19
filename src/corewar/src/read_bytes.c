@@ -6,10 +6,9 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:51:38 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/19 10:56:05 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:16:59 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "vm.h"
 
@@ -27,7 +26,7 @@ static void	choice_type(int third, int size, int *j, int *type)
 	}
 }
 
-int	read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
+int	read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size)
 {
 	int	i;
 	int	hold;
