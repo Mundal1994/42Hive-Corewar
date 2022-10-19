@@ -65,7 +65,7 @@ void	op_sti(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)
 		v_flag4_three_arg(carriage, "sti", ARG1);
 	sum = (*carriage)->args_found[ARG2] + \
-		(*carriage)->args_found[ARG3];
+		(*carriage)->args_found[ARG3];//added int16 due to flag thingy
 	if (sum < 0)
 		pos = (*carriage)->pos - ((sum * -1) % IDX_MOD);
 	else
@@ -93,7 +93,6 @@ void	op_ldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	int			sum;
 	static int	found = FALSE;
 
-	//ft_printf("typecode %d %d %d	", (*carriage)->arg_types[0], (*carriage)->arg_types[1],(*carriage)->arg_types[2]);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG1], ARG1);
 	update_arg_values(core, carriage, &(*carriage)->args_found[ARG2], ARG2);
 	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)

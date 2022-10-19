@@ -73,5 +73,10 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			core, SIZE);
 	}
 	else
-		*arg = (int16_t)(*arg);
+	{
+		if (g_operations[SIZE][(*carriage)->statement_code - 1] == 4)
+			*arg = (int32_t)(*arg);
+		else
+			*arg = (int16_t)(*arg);
+	}
 }
