@@ -51,6 +51,7 @@ static void	write_file(int fd, t_assembler *assembler)
 	}
 }
 
+/* Writes bytecode to file */
 void	assemble_write(t_assembler *assembler)
 {
 	int	fd;

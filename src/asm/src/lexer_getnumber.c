@@ -16,6 +16,8 @@
 #include "definitions.h"
 #include "lexer.h"
 
+/* Emits the number symbol, and assigns T_IND to argtype if not already
+ * assigned as T_DIR. Also stores the number value in the num field */
 int	lexer_getnumber(t_source *source, t_symbols *sym)
 {
 	size_t	len;

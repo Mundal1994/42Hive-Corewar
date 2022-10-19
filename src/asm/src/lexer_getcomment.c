@@ -14,6 +14,8 @@
 #include "definitions.h"
 #include "lexer.h"
 
+/* If symbol is preceded by a '#' or ';', emits the comment symbol and moves
+ * source to the next line */
 int	lexer_getcomment(t_source *source, t_symbols *sym)
 {
 	size_t	len;

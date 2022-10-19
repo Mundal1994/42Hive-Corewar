@@ -13,6 +13,10 @@
 #include "ft_ctype.h"
 #include "lexer.h"
 
+/* When a '%', this function is called to process direct arguments. Assigns
+ * T_DIR to the argtype of the symbol. Calls either getreference, or getnumber
+ * depending on the argument type. Otherwise, emits UNKNOWN and calls
+ * lexer_getcomment to emit an error */
 int	lexer_getdirect(t_source *source, t_symbols *sym)
 {
 	char	*next;

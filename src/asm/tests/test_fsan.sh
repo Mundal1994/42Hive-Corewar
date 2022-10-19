@@ -12,5 +12,5 @@ for f in $(find . -type f -name "*"); do
 	echo ""
 done
 
-rm valid/files/*.cor
+rm valid/files/**/*.cor
 rm bonus/*.cor

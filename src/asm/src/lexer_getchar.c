@@ -14,6 +14,8 @@
 #include "definitions.h"
 #include "lexer.h"
 
+/* If the next symbol is a character, emits the 'plus', 'comma' or 'minus'
+ * symbol. Otherwise, emits UNKNOWN symbol and returns ERROR */
 int	lexer_getchar(t_source *source, t_symbols *sym)
 {
 	char	*curr;

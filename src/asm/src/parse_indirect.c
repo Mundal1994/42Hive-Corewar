@@ -12,6 +12,8 @@
 
 #include "parse.h"
 
+/* Parses indirect argument types, and calls parse_reference or parse_numeric
+ * on the symbol depending on the argtype */
 int	parse_indirect(t_parser *parser, t_lexer *lexer, t_statement *statement,
 		uint8_t index)
 {
