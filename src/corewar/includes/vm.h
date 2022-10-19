@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/18 12:21:33 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 16:07:31 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ int		v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, \
 int prev);
 int		free_carriage(t_info *info);
+int	error_print(char *str);
 
 typedef void			(*t_op_table)(uint8_t core[MEM_SIZE], \
 t_carriage **carriage, t_info *info);

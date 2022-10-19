@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:55:08 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 15:27:20 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 16:20:40 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,20 @@ static int	collect_players(char **argv, int *i, int (*pos)[SIZE], int *max_ind)
 	while (argv[(*i)][j] != '\0')
 	{
 		if (!ft_isdigit(argv[(*i)][j]))
-			return (ERROR);
+			return (error_print("Error: invalid position"));
 		++j;
 	}
 	if (ft_strstr(argv[(*i) + 1], ".cor"))
 	{
 		index = ft_atoi(argv[(*i)]);
 		if (index > 4 || index < 1 || (*pos)[index - 1])
-		{
-			return (ERROR);
-		}
+			return (error_print("Error: invalid position"));
 		if ((*max_ind) < index)
 			(*max_ind) = index;
 		(*pos)[index - 1] = ++(*i);
 	}
 	else
-		return (ERROR);
+		return (error_print("Error: invalid file"));
 	return ((*max_ind));
 }
 
@@ -86,7 +84,7 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 		while ((*champs)[i])
 		{
 			if (j >= SIZE)
-				return (ERROR);
+				return (error_print("Too many chapions"));
 			if (!(*pos)[j])
 			{
 				(*pos)[j++] = (*champs)[i];
@@ -98,7 +96,7 @@ static int	combine_players(int size, int max_ind, int (*champs)[SIZE], \
 	}
 	if (i < size || range_invalid(max_ind, (*pos), &j) \
 		|| (size != 0 && max_ind > j) || j == -1)
-		return (ERROR);
+		return (error_print("Error: invalid position"));
 	return (j);
 }
 
@@ -138,11 +136,11 @@ int	check_flag(int i, char **argv, int argc, int (*pos)[SIZE])
 		else if (ft_strstr(argv[i], ".cor"))
 		{
 			if (size > 3)
-				return (ERROR);
+				return (error_print("Too many champions"));
 			champs[size++] = i;
 		}
 		else
-			return (ERROR);
+			return (error_print("Error: invalid argument"));
 	}
 	return (combine_players(size, max_ind, &champs, pos));
 }
