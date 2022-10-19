@@ -6,7 +6,7 @@
 #    By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 16:59:05 by caruychen         #+#    #+#              #
-#    Updated: 2022/10/12 12:35:15 by jdavis           ###   ########.fr        #
+#    Updated: 2022/10/19 10:53:32 by jdavis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,3 +30,4 @@ SRCS += $(SRC_DIR)/op_helper.c
 SRCS += $(SRC_DIR)/move.c
 SRCS += $(SRC_DIR)/read_args_core.c
 SRCS += $(SRC_DIR)/error.c
+SRCS += $(SRC_DIR)/read_bytes.c

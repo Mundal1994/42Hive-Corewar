@@ -6,47 +6,14 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:26 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:51 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 11:06:55 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int	read_bytes(u_int32_t third, int	pos, uint8_t core[MEM_SIZE], int size)
-{
-	int	i;
-	int	hold;
-	int	j;
-	int	type;
-
-	i = 0;
-	limit_jump(&pos);
-	if (third == 2 || third == 0)
-	{
-		type = size;
-		j = (size * 2) - 1;
-	}
-	else
-	{
-		type = 2;
-		j = 3;
-	}
-	third = 0;
-	//ft_printf("pos: %d size: %d\n", pos, size);
-	while (i < type)
-	{
-		if ((pos + i) >= MEM_SIZE)
-			pos = ((pos + i) % MEM_SIZE) - i;
-		hold = core[pos + i];
-		third += (hold / 16) * ft_pow(16, j--);
-		hold %= 16;
-		third += (hold % 16) * ft_pow(16, j--);
-		++i;
-	}
-	//ft_printf("VALUE %d\n", third);
-	return (third);
-}
-
+/*	Boolen function to detemine if first complies with the rules for 
+	the particular statement code for args 2 and three	*/
 static int	if_arg_two_three(u_int32_t first, t_carriage **carriage)
 {
 	if (((*carriage)->arg_types[first] == 2 && \
@@ -63,6 +30,8 @@ static int	if_arg_two_three(u_int32_t first, t_carriage **carriage)
 	return (FALSE);
 }
 
+/*	Boolen function to detemine if first complies with the rules for 
+	the particular statement code for arg 1	*/
 static int	if_arg_one(u_int32_t first, t_carriage **carriage)
 {
 	if ((*carriage)->arg_types[first] == 1 && \
@@ -74,6 +43,17 @@ static int	if_arg_one(u_int32_t first, t_carriage **carriage)
 	return (FALSE);
 }
 
+/*	Choice function to determine how to move the carriage postions
+	after execution	*/
+static int	choice_i(int choice, t_carriage **carriage)
+{
+	if (choice == 2)
+		return (g_operations[SIZE][(*carriage)->statement_code - 1]);
+	else
+		return (2);
+}
+
+/*	reading the bytes off of the board depending on the argument	*/
 int64_t	read_args(u_int32_t first, t_carriage **carriage, \
 u_int8_t core[MEM_SIZE])
 {
@@ -95,10 +75,7 @@ u_int8_t core[MEM_SIZE])
 	}
 	else if (if_arg_two_three(first, carriage) == TRUE)
 	{
-		if ((*carriage)->arg_types[first] == 2)
-			i = g_operations[SIZE][(*carriage)->statement_code - 1];
-		else
-			i = 2;
+		i = choice_i((*carriage)->arg_types[first], carriage);
 		first = read_bytes((*carriage)->arg_types[first], (*carriage)->tmp_pos, \
 		core, g_operations[SIZE][(*carriage)->statement_code - 1]);
 		make_move_tmp(carriage, i);
