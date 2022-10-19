@@ -13,6 +13,7 @@
 #include "definitions.h"
 #include "parse.h"
 
+/* Parses register argument type */
 int	parse_register(t_parser *parser, t_lexer *lexer, t_statement *statement,
 		uint8_t index)
 {

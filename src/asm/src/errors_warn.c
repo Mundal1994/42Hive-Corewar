@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* Warnings for Lexer and Syntax analyser, but allows assembler to continue */
+
 #include "ft_stdio.h"
 #include "definitions.h"
 #include "errors.h"

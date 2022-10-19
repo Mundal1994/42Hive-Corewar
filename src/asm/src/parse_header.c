@@ -76,6 +76,7 @@ static int	parse_headerline(t_parser *parser, t_lexer *lexer)
 			PARSER_UNKNOWN_CMD));
 }
 
+/* Parse header information: "name" and "comment" */
 int	parse_header(t_parser *parser, t_lexer *lexer)
 {
 	if (parse_headerline(parser, lexer) == OK

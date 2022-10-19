@@ -22,6 +22,7 @@ CHECK_LEAKS () {
 		echo "${GREEN}No leaks.${NC}"
 	else
 		echo "${RED}LEAKS!!!${NC}"
+		exit 1
 	fi
 	/bin/rm res
 	/bin/rm $2
@@ -53,6 +54,7 @@ COMPARE () {
 	then
 		echo "${RED}Found a difference${NC}"
 		echo $DIFF > $DIFF_FILE
+		exit 1
 	else
 		echo "${GREEN}Outputs identical${NC}"
 		/bin/rm $COR $HIVE

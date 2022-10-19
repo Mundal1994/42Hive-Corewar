@@ -71,6 +71,20 @@ static void	complete_references(t_symentry *entry, t_parser *parser,
 	}
 }
 
+/* Manages the symbol table:
+ * If an entry does not exist in the symtable: 
+ *   - A new entry is added to the symtable
+ * If an entry does exist:
+ *   - & entry is defined (the location is known):
+ *      - & new entry is entered as forward reference:
+ *          - the new entry's argument is updated with the label's location
+ *      - otherwise, a warning of duplicate labels is emitted.
+ *   - & entry is undefined:
+ *      - the new entry is a forward reference:
+ *          - new entry is added to the forward reference list.
+ *      - new entry is the label:
+ *          - all existing forward references are updated with label location
+ */
 int	parse_update_symtable(t_parser *parser, const char *name,
 		uint8_t arg)
 {

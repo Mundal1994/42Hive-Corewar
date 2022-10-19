@@ -35,6 +35,8 @@ static int	is_mathsym(t_symbols *sym)
 	return (sym->type == LA_plus || sym->type == LA_minus);
 }
 
+/* Parses numeric argument data, and calls parse_math on any mathematical
+ * operations */
 int	parse_numeric(t_statement *statement, t_lexer *lexer, t_symbols *sym,
 		uint8_t index)
 {

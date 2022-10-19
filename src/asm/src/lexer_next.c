@@ -45,6 +45,7 @@ static int	getter_index(const char *curr)
 	return (*curr - ' ');
 }
 
+/* Emits the next symbol/token from the source */
 int	lexer_next(t_lexer *lexer, t_symbols *sym)
 {
 	t_source		*source;
