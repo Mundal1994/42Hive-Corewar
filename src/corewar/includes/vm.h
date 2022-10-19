@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/12 12:34:53 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/18 12:21:33 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,12 @@ void	check(t_info *info);
 void	set_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage);
 void	perform_statement_code(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 t_info *info);
+void	pcb_false(uint8_t core[MEM_SIZE], t_carriage **carriage);
+int		pcb_true(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
+void	reset_args(t_carriage **carriage);
+int		check_flag(int i, char **argv, int argc, int (*pos)[SIZE]);
+int		store_champs(t_profile **champ, int c, t_input **input);
+t_input	**create_buf(t_input **input, int size);
 
 //move fucntions
 void	make_move_tmp(t_carriage **carriage, int move);

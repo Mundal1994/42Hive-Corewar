@@ -9,11 +9,11 @@ CHAMP4=$4
 flag=1
 END=0
 COUNT=0
-FILE1=v_flags_results/given_vm.txt
-FILE2=v_flags_results/vm.txt
+FILE1=v_flags_results_test/given_vm.txt
+FILE2=v_flags_results_test/vm.txt
 
-rm -fr v_flags_results
-mkdir v_flags_results
+rm -fr v_flags_results_test
+mkdir v_flags_results_test
 while [[ flag -lt 25 ]]
 do
 	$GIVEN_VM -v $flag $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> $FILE1
@@ -32,12 +32,12 @@ do
 		then
 			# while [[ "$line" != *"P"* ]]
 			# do
-			#	 if read line <&3
-			#	 then
-			#		 YES=0
-			#	 else
-			#		 eof3=1
-			#	 fi
+			# 	if read line <&3
+			# 	then
+			# 		YES=0
+			# 	else
+			# 		eof3=1
+			# 	fi
 			# done
 			YES=0
 		else
@@ -47,13 +47,13 @@ do
 		then
 			# while [[ "$line2" != *"P"* ]]
 			# do
-			#	 COUNT=$((COUNT+1))
-			#	 if read line2 <&4
-			#	 then
-			#		 YES=0
-			#	 else
-			#		 eof3=1
-			#	 fi
+			# 	COUNT=$((COUNT+1))
+			# 	if read line2 <&4
+			# 	then
+			# 		YES=0
+			# 	else
+			# 		eof3=1
+			# 	fi
 			# done
 			YES=0
 		else

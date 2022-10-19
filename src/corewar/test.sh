@@ -73,7 +73,6 @@ drop_down()
 	done
 }
 
-drop_down_2()
 {
 	rm dump_test/vm_dump$COUNT.txt
 	rm dump_test/given_vm_dump$COUNT.txt

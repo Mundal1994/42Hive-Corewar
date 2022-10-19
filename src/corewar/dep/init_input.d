@@ -1,4 +1,4 @@
-obj/read_init.o dep/read_init.d : src/read_init.c includes/vm.h ../../libft/includes/libft.h \
+obj/init_input.o dep/init_input.d : src/init_input.c includes/vm.h ../../libft/includes/libft.h \
   ../../libft/includes/libft/ft_ctype.h \
   ../../libft/includes/libft/ft_math.h \
   ../../libft/includes/libft/ft_stdio.h \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_helper.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molesen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:57:40 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/14 11:57:41 by molesen          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:22:23 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,10 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 			core, SIZE);
 	}
 	else
-		*arg = (int16_t)(*arg);
+	{
+		if (g_operations[SIZE][(*carriage)->statement_code - 1] == 4)
+			*arg = (int32_t)(*arg);
+		else
+			*arg = (int16_t)(*arg);
+	}
 }
