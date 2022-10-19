@@ -60,5 +60,5 @@ do
 	rm $FILE2
 	flag=$((flag+1))
 done
-
+rm -r v_flags_results_test
 ./test.sh $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4

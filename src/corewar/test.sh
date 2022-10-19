@@ -132,7 +132,8 @@ checking_lines()
 	then
 		echo "Ended together..."
 		drop_down_2
-		printf "OK\n"
+		printf "Dump flag OK\n"
+		rm -r dump_test
 		exit 0
 	elif [[ "$line" != "$line2" ]]
 	then
