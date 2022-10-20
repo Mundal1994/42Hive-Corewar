@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:13:26 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/19 16:19:11 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/20 11:52:26 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ t_input	**create_buf(t_input **input, int size)
 
 	i = -1;
 	if (size == -1)
+	{
+		ft_printf("HERE\n");
 		return (NULL);
+	}
 	input = (t_input **)malloc(size * sizeof(t_input *));
 	if (!input)
 		return (NULL);

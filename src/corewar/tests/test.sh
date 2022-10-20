@@ -18,6 +18,38 @@ then
 	exit 0
 fi
 
+leaks_checks()
+{
+	leaks -atExit -- $MY_VM -v 0 $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> dump_test/vm_dump.txt
+	eof12=0
+	exec 12<dump_test/given_vm_dump.txt
+	while [[ $eof12 -eq 0 ]]
+	do
+		if read line <&12
+		then
+			YES=0
+		else
+			eof12=1
+		fi
+		if [[ "$line" == "Process *" && "$line" == "*leaked bytes." ]]
+		then
+			IFS=' '
+			read -a strarr <<< "$line"
+			break
+		fi
+	done
+
+	rm -r dump_test
+
+	COMP=${line//[^0-9]/}
+	if [[ $COMP -eq 0 ]]
+	then
+		echo "0 leaks"
+	else
+		echo $line
+	fi
+}
+
 drop_down()
 {
 	DOWN=1
@@ -52,21 +84,20 @@ drop_down()
 			fi
 			if [[ "$line" != "$line2" ]]
 			then
-			echo "$line"
-			echo "$line2"
-			printf "\n"
 				FLAG=1
 				HOLD=$line2
 			fi
 		done
 		if [[ FLAG -eq 1 ]]
 		then
-
 			printf "KO [Difference at -d $((COUNT - DOWN + 1))]\nLINE\n$HOLD\n"
+			leaks_checks
 			exit 0
 		fi
 		rm dump_test/given_vm_dump$((COUNT - DOWN)).txt
 		rm dump_test/vm_dump$((COUNT - DOWN)).txt
+		exec 8>&-
+		exec 9>&-
 		DOWN=$((DOWN+1))
 	done
 }
@@ -109,8 +140,6 @@ drop_down_2()
 		done
 		if [[ FLAG -eq 1 ]]
 		then
-			echo "$line"
-			echo "$line2"
 			printf "KO  [Difference at -d $((COUNT - DOWN + 1))]\nLINE\n$HOLD\n"
 			exit 0
 		fi
@@ -119,6 +148,8 @@ drop_down_2()
 		DOWN=$((DOWN+1))
 		if [[ $DOWN -gt 50 ]]
 		then
+			exec 5>&-
+			exec 6>&-
 			break
 		fi
 	done
@@ -132,14 +163,14 @@ checking_lines()
 		drop_down_2
 		printf "Dump flag OK\n"
 		rm -r dump_test
-		exit 0
+		return 2
 	elif [[ "$line" != "$line2" ]]
 	then
 		echo "Problem..."
 		echo $line
 		echo $line2
 		drop_down
-		exit 0
+		return 2
 	fi
 }
 
@@ -171,9 +202,16 @@ do
 		else
 			eof4=1
 		fi
-		checking_lines
+		checking_lines RUN
+		if [[ RUN == 2 ]]
+		then
+			break
+		fi
 	done
 	rm dump_test/vm_dump$COUNT.txt
 	rm dump_test/given_vm_dump$COUNT.txt
+	exec 3>&-
+	exec 4>&-
 	COUNT=$((COUNT+50))
 done
+
