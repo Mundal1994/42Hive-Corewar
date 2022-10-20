@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	prints flag -v 16 (carriages movement) to standard output	*/
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 	int total, int prev)
 {
