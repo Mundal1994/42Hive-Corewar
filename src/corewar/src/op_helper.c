@@ -63,6 +63,7 @@ void	update_arg_values(uint8_t core[MEM_SIZE], t_carriage **carriage, \
 		*arg = (*carriage)->registry[*arg - 1];
 	else if ((*carriage)->arg_types[count] == I)
 	{
+		*arg = (int16_t)(*arg);
 		if (*arg < 0)
 			*arg = (int32_t)read_bytes(0, (*carriage)->pos - ((*arg * -1) \
 			% IDX_MOD), core, SIZE);
