@@ -6,36 +6,11 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:40:48 by molesen           #+#    #+#             */
-/*   Updated: 2022/10/18 12:25:16 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/20 12:52:07 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-/*
-checks how many carriages are left.
-It will return FALSE if there are more than one carriage
-otherwise it will return TRUE
-*/
-static int	no_carriages_left(t_info *info)
-{
-	t_carriage	*carriage;
-	int			count;
-
-	if (info->total_cycles >= CYCLE_TO_DIE)
-	{
-		carriage = info->head_carriage;
-		count = 0;
-		while (carriage)
-		{
-			++count;
-			carriage = carriage->next;
-		}
-		if (count == 0)
-			return (TRUE);
-	}
-	return (FALSE);
-}
 
 /*	frees carriages both in case of error and when ending the game/program	*/
 int	free_carriage(t_info *info)
@@ -95,7 +70,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 
 	introduce_contestants(champ);
 	dump = flag_check(info);
-	while (!no_carriages_left(info))
+	while (info->head_carriage)
 	{
 		if (info->total_cycles - 1 == dump)
 			return (print_dump_flags(core, info));

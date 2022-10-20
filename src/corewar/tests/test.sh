@@ -20,9 +20,11 @@ fi
 
 leaks_checks()
 {
+	rm -fr dump_test
+	mkdir dump_test
 	leaks -atExit -- $MY_VM -v 0 $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> dump_test/vm_dump.txt
 	eof12=0
-	exec 12<dump_test/given_vm_dump.txt
+	exec 12<dump_test/vm_dump.txt
 	while [[ $eof12 -eq 0 ]]
 	do
 		if read line <&12
@@ -48,6 +50,7 @@ leaks_checks()
 	else
 		echo $line
 	fi
+	exit 0
 }
 
 drop_down()
@@ -163,14 +166,14 @@ checking_lines()
 		drop_down_2
 		printf "Dump flag OK\n"
 		rm -r dump_test
-		return 2
+		leaks_checks
 	elif [[ "$line" != "$line2" ]]
 	then
 		echo "Problem..."
 		echo $line
 		echo $line2
 		drop_down
-		return 2
+		leaks_checks
 	fi
 }
 
@@ -202,11 +205,7 @@ do
 		else
 			eof4=1
 		fi
-		checking_lines RUN
-		if [[ RUN == 2 ]]
-		then
-			break
-		fi
+		checking_lines
 	done
 	rm dump_test/vm_dump$COUNT.txt
 	rm dump_test/given_vm_dump$COUNT.txt
@@ -214,4 +213,3 @@ do
 	exec 4>&-
 	COUNT=$((COUNT+50))
 done
-

@@ -23,7 +23,7 @@
 	-dc N	: variation of -d. displays carriages position on standard output\n\
 	-di N	: variation of -dc. also print information about struct info\n\
 	-c N	: variation of -dc. also prints carriages on standard output\n\
-	-v N	: Verbosity levels, can be added together to enable several (0-24)\n\
+	-v N	: Verbosity levels, can be added together to enable several\n\
 			- 0 : Show only essentials\n\
 			- 1 : Show lives\n\
 			- 2 : Show cycles\n\
@@ -36,6 +36,5 @@
 				run flag 4 & 2 by using number 6 etc...\n\
 	-n N	: Manually set the number of the players\
  Have to be in range of the users you are using"
-# define TOO_MANY_CHAMPS "Too many champions"
 
 #endif

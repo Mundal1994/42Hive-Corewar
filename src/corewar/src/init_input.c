@@ -32,10 +32,7 @@ t_input	**create_buf(t_input **input, int size)
 
 	i = -1;
 	if (size == -1)
-	{
-		ft_printf("HERE\n");
 		return (NULL);
-	}
 	input = (t_input **)malloc(size * sizeof(t_input *));
 	if (!input)
 		return (NULL);
