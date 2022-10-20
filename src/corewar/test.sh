@@ -134,7 +134,7 @@ checking_lines()
 		drop_down_2
 		printf "Dump flag OK\n"
 		rm -r dump_test
-		exit 0
+		return 2
 	elif [[ "$line" != "$line2" ]]
 	then
 		echo "Problem..."
@@ -173,9 +173,39 @@ do
 		else
 			eof4=1
 		fi
-		checking_lines
+		if [[ checking_lines == 2 ]]
+			break
 	done
 	rm dump_test/vm_dump$COUNT.txt
 	rm dump_test/given_vm_dump$COUNT.txt
 	COUNT=$((COUNT+50))
 done
+
+leaks -atExit -- $MY_VM -v 0 $CHAMP1 $CHAMP2 $CHAMP3 $CHAMP4> dump_test/vm_dump.txt
+eof12=0
+exec 12<dump_test/given_vm_dump.txt
+while [[ $eof12 -eq 0 ]]
+do
+	if read line <&12
+	then
+		YES=0
+	else
+		eof12=1
+	fi
+	if [[ "$line" == "Process *" && "$line" == "*leaked bytes." ]]
+	then
+		IFS=' '
+		read -a strarr <<< "$line"
+		break
+	fi
+done
+
+rm -r dump_test
+
+COMP=${line//[^0-9]/}
+if [[ $COMP -eq 0 ]]
+then
+	echo "no leaks"
+else
+	echo $line
+fi
