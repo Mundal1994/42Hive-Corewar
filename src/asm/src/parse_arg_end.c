@@ -36,6 +36,7 @@ static int	end_arguments(t_lexer *lexer, t_symbols *sym)
 			PARSER_EXPECT_EOL));
 }
 
+/* Parses the end of an argument entry, checking that it ends correctly */
 int	parse_arg_end(t_lexer *lexer, t_symbols *sym, t_statement *statement,
 		uint8_t index)
 {

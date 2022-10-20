@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:08:10 by jdavis            #+#    #+#             */
-/*   Updated: 2022/10/18 15:42:13 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/19 16:12:56 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ static int	champs_exec_cd(t_profile **champ, t_input *input, int *k)
 		++(*k);
 	}
 	if ((*champ)->exec_cd_sz > MEM_SIZE / 6)
+	{
+		ft_printf("Error: File %s has too large a code (%i bytes > 682 bytes)\n"\
+		, input->filename, (*champ)->exec_cd_sz);
 		return (ERROR);
+	}
 	return (0);
 }
 

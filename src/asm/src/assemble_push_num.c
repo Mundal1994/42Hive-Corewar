@@ -42,6 +42,7 @@ static t_string	*push_num(t_string *buffer, uint32_t num, uint8_t size)
 	return (buffer);
 }
 
+/* Loads numeric argument of size 1, 2 or 4 bytes */
 t_string	*assemble_push_num(t_string *buffer, t_arg arg, uint8_t size)
 {
 	uint32_t	num;
@@ -57,6 +58,7 @@ t_string	*assemble_push_num(t_string *buffer, t_arg arg, uint8_t size)
 	return (push_num(buffer, num, size));
 }
 
+/* Loads integer argument (specifically 4 bytes) into buffer */
 t_string	*assemble_push_int(t_string *buffer, uint32_t num)
 {
 	return (push_num(buffer, num, 4));

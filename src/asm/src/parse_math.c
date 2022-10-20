@@ -49,6 +49,7 @@ static int	get_next_op(t_arg *arg, t_lexer *lexer, t_symbols *sym, int *action)
 	return (get_number(arg, lexer, sym, action));
 }
 
+/* Parses mathematical operations in arguments of a statement */
 int	parse_math(t_statement *statement, t_lexer *lexer, t_symbols *sym,
 		uint8_t index)
 {

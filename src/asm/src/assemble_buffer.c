@@ -95,6 +95,7 @@ static void	buff_body(t_assembler *assembler)
 	}
 }
 
+/* Buffers header data and code body in 2 separate stages */
 void	assemble_buffer(t_assembler *assembler)
 {
 	buff_header(assembler);

@@ -39,6 +39,7 @@ static void	recalculate_arg(t_statement *statement, t_arg orig, uint8_t index)
 	arg->dir = orig.dir - diff;
 }
 
+/* Parses labels in arguments, updates the forward reference symbol table */
 int	parse_reference(t_parser *parser, t_lexer *lexer, t_statement *statement,
 		uint8_t index)
 {

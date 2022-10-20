@@ -10,6 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** *
+ * Symtable is used to maintain a list of forward references in the source.
+ *
+ * There will be instances in the source code, where a reference to a label
+ * appears before the label itself is defined. The parser will need to convert
+ * the label reference to the correct position in memory, but will only be
+ * able to do so once the location of the label is known.
+ *
+ * The symbol table solves this problem by maintaining a list of label entries.
+ * Within each entry is also a linked list of forward references (t_forwardrefs)
+ * which maintain the index position of the statement and argument number that
+ * the reference appears in. 
+ *
+ * Updating the symbol table is managed by parser_update_symtable.c
+ * ************************************************************************* */
+
 #ifndef SYMTABLE_H
 # define SYMTABLE_H
 
@@ -18,7 +34,6 @@
 # include <stdbool.h>
 # include <stdint.h>
 
-/* Symtable is used to maintain forward references to labes */
 typedef struct s_forwardrefs
 {
 	size_t					statement_id;
