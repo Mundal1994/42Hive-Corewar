@@ -169,7 +169,7 @@ void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg);
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
 int64_t	read_args(u_int32_t first, t_carriage **carriage, \
 u_int8_t core[MEM_SIZE]);
-int		read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size);
+int		read_bytes(u_int32_t choice, int pos, uint8_t core[MEM_SIZE], int size);
 int		error_clean(t_input **input, t_profile **champ, int c);
 int		v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, \
