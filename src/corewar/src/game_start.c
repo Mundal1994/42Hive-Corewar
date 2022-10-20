@@ -17,7 +17,7 @@ checks how many carriages are left.
 It will return FALSE if there are more than one carriage
 otherwise it will return TRUE
 */
-static int	one_carriage_left(t_info *info)
+static int	no_carriages_left(t_info *info)
 {
 	t_carriage	*carriage;
 	int			count;
@@ -31,7 +31,7 @@ static int	one_carriage_left(t_info *info)
 			++count;
 			carriage = carriage->next;
 		}
-		if (count <= 1)
+		if (count == 0)
 			return (TRUE);
 	}
 	return (FALSE);
@@ -95,7 +95,7 @@ int	game_start(uint8_t core[MEM_SIZE], t_info *info, t_profile *champ)
 
 	introduce_contestants(champ);
 	dump = flag_check(info);
-	while (!one_carriage_left(info))
+	while (!no_carriages_left(info))
 	{
 		if (info->total_cycles - 1 == dump)
 			return (print_dump_flags(core, info));
