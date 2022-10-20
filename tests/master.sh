@@ -81,9 +81,9 @@ NORMINETTE () {
 }
 
 tput clear
-echo "Let's stop these mother@#$%in snakes on this mother@#$%in helltrain!\n"
+echo "\n${YELLOW}Let's stop these mother@#$%in snakes on this mother@#$%in helltrain!\n{$NC}"
 
-echo "Welcome to the Corewar test, let's begin with the basics:"
+echo "Welcome to the Corewar test, let's begin with the basics (make sure you have run make already...):"
 READ_CONT
 
 echo -n "- Something was submitted: "
