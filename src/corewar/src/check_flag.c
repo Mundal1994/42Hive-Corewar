@@ -12,6 +12,7 @@
 
 #include "vm.h"
 
+/*	print flag -v 2 (cycle count and cycle to die value)	*/
 static void	print_cycle_text(t_info *info, int die)
 {
 	if (die == TRUE)
@@ -20,22 +21,7 @@ static void	print_cycle_text(t_info *info, int die)
 		ft_printf("It is now cycle %d\n", info->total_cycles);
 }
 
-void	print_cycle_count(t_info *info, int die)
-{
-	if (info->flag[V_FLAG] == 2 || info->flag[V_FLAG] == 3 || \
-		info->flag[V_FLAG] == 6)
-		print_cycle_text(info, die);
-	if (info->flag[V_FLAG] == 7 || info->flag[V_FLAG] == 11 || \
-		info->flag[V_FLAG] == 14)
-		print_cycle_text(info, die);
-	if (info->flag[V_FLAG] == 10 || (info->flag[V_FLAG] >= 18 && \
-		info->flag[V_FLAG] <= 19))
-		print_cycle_text(info, die);
-	if (info->flag[V_FLAG] == 15 || (info->flag[V_FLAG] >= 22 && \
-		info->flag[V_FLAG] <= 23))
-		print_cycle_text(info, die);
-}
-
+/*	prints the different variations of the dump flag	*/
 int	print_dump_flags(uint8_t core[MEM_SIZE], t_info *info)
 {
 	print_core(core, info);

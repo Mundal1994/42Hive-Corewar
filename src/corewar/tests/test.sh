@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GIVEN_VM=../../../vm_champs/corewar
-MY_VM=./corewar
+GIVEN_VM=./corewar
+MY_VM=../corewar
 CHAMP1=$1
 CHAMP2=$2
 CHAMP3=$3
@@ -21,8 +21,6 @@ fi
 drop_down()
 {
 	DOWN=1
-	#rm dump_test/vm_dump$COUNT.txt
-	#rm dump_test/given_vm_dump$COUNT.txt
 	while [[ END -eq 0 ]]
 	do
 		if [[ DOWN -gt 50 ]]
