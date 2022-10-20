@@ -12,9 +12,11 @@
 
 #include "vm.h"
 
-static void	choice_type(int third, int size, int *j, int *type)
+/*	Choice function collecting bytes from the core depending on the type of
+	argument being read	*/
+static void	choice_type(int choice, int size, int *j, int *type)
 {
-	if (third == 2 || third == 0)
+	if (choice == 2 || choice == 0)
 	{
 		*type = size;
 		*j = (size * 2) - 1;
@@ -26,7 +28,8 @@ static void	choice_type(int third, int size, int *j, int *type)
 	}
 }
 
-int	read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size)
+/*	reads bytes from the core and returns the number */
+int	read_bytes(u_int32_t choice, int pos, uint8_t core[MEM_SIZE], int size)
 {
 	int	i;
 	int	hold;
@@ -35,17 +38,17 @@ int	read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size)
 
 	i = 0;
 	limit_jump(&pos);
-	choice_type(third, size, &j, &type);
-	third = 0;
+	choice_type(choice, size, &j, &type);
+	choice = 0;
 	while (i < type)
 	{
 		if ((pos + i) >= MEM_SIZE)
 			pos = ((pos + i) % MEM_SIZE) - i;
 		hold = core[pos + i];
-		third += (hold / 16) * ft_pow(16, j--);
+		choice += (hold / 16) * ft_pow(16, j--);
 		hold %= 16;
-		third += (hold % 16) * ft_pow(16, j--);
+		choice += (hold % 16) * ft_pow(16, j--);
 		++i;
 	}
-	return (third);
+	return (choice);
 }

@@ -1,14 +1,13 @@
 #!/bin/bash
 
-GIVEN_VM=../../../vm_champs/corewar
-MY_VM=./corewar
+GIVEN_VM=./corewar
+MY_VM=../corewar
 CHAMP1=$1
 CHAMP2=$2
 CHAMP3=$3
 CHAMP4=$4
 flag=1
 END=0
-COUNT=0
 FILE1=v_flags_results_test/given_vm.txt
 FILE2=v_flags_results_test/vm.txt
 
@@ -23,6 +22,7 @@ do
 	eof11=0
 	exec 10<$FILE1
 	exec 11<$FILE2
+	COUNT=0
 	ERROR=0
 	while [[ $eof10 -eq 0  ||  $eof11 -eq 0 ]]
 	do
@@ -42,7 +42,8 @@ do
 		fi
 		if [[ "$line" != "$line2" ]]
 		then
-			printf "ERROR on line $COUNT of $FILE2, flag $flag\n"
+			printf "flag $flag ERROR\n"
+			printf "line $COUNT of $FILE2, flag $flag\n"
 			echo $line
 			echo $line2
 			printf "\n"
@@ -53,11 +54,11 @@ do
 	if [[ ERROR -eq 0 ]]
 	then
 		printf "flag $flag OK\n"
-	else
-		printf "flag $flag ERROR\n"
 	fi
 	rm $FILE1
 	rm $FILE2
+	exec 10>&-
+	exec 11>&-
 	flag=$((flag+1))
 done
 rm -r v_flags_results_test

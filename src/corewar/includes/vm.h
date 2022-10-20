@@ -6,7 +6,7 @@
 /*   By: jdavis <jdavis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 09:07:42 by cchen             #+#    #+#             */
-/*   Updated: 2022/10/19 16:57:56 by jdavis           ###   ########.fr       */
+/*   Updated: 2022/10/20 11:52:15 by jdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,20 +130,14 @@ void	reset_args(t_carriage **carriage);
 int		check_flag(int i, char **argv, int argc, int (*pos)[SIZE]);
 int		store_champs(t_profile **champ, int c, t_input **input);
 t_input	**create_buf(t_input **input, int size);
-
-//move fucntions
 void	make_move_tmp(t_carriage **carriage, int move);
 void	move_carriage(t_carriage **carriage, int *total);
 void	make_move(t_carriage **carriage, int move, int *total);
-
-//print functions
 void	print_core(uint8_t core[MEM_SIZE], t_info *info);
 void	introduce_contestants(t_profile *champ);
 void	announce_winner(t_profile *champ, int winner);
 void	print_carriages(t_info *info);
 void	print_info(t_info *info);
-
-//statement functions
 int		read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size);
 void	put_nbr(uint8_t core[MEM_SIZE], int pos, uint32_t nbr);
 void	limit_jump(int *pos);
@@ -170,18 +164,12 @@ void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	op_lldi(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	op_lfork(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
 void	op_aff(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info);
-
-//print4 flag
 void	v_flag4_one_arg(t_carriage **carriage, char *command);
 void	v_flag4_two_arg(t_carriage **carriage, char *command, int reg);
 void	v_flag4_three_arg(t_carriage **carriage, char *command, int reg);
-
-//reading bytes/args
 int64_t	read_args(u_int32_t first, t_carriage **carriage, \
 u_int8_t core[MEM_SIZE]);
-int		read_bytes(u_int32_t third, int pos, uint8_t core[MEM_SIZE], int size);
-
-//error
+int		read_bytes(u_int32_t choice, int pos, uint8_t core[MEM_SIZE], int size);
 int		error_clean(t_input **input, t_profile **champ, int c);
 int		v_flag5(t_carriage **carriage);
 void	print_flag16(uint8_t core[MEM_SIZE], t_carriage **carriage, int total, \
