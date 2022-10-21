@@ -111,8 +111,7 @@ echo "Otherwise, our asm might ocassionally print 'warning' for some .s files, t
 echo "Are you ready? [y/n]${NC}"
 if RET_YN
 then
-	cp ../asm ../src/asm/
-	./../src/asm/tests/valid/test_valid.sh hive_asm
+	./asm/valid/test_valid.sh hive_asm
 else
 	echo "okay..."
 fi
@@ -131,7 +130,7 @@ echo "${YELLOW}Time for error management tests, we have many."
 echo "Are you ready? [y/n]${NC}"
 if RET_YN
 then
-	./../src/asm/tests/invalid/test_invalid.sh
+	./asm/invalid/test_invalid.sh
 else
 	echo "okay..."
 fi
@@ -139,21 +138,21 @@ fi
 echo "${YELLOW}Here is how we deal with the following errors mentioned in the eval:"
 READ_CONT
 echo "- Unknown instruction:"
-./../asm ../src/asm/tests/invalid/bad_statement/unknown_instr.s
+./../asm asm/invalid/bad_statement/unknown_instr.s
 echo "${YELLOW}- Wrong argument number for an instruction:"
 echo "${YELLOW}-   Too few arguments:"
-./../asm ../src/asm/tests/invalid/bad_statement/insufficient_args.s
+./../asm asm/invalid/bad_statement/insufficient_args.s
 echo "${YELLOW}-   Too many arguments:"
-./../asm ../src/asm/tests/invalid/bad_statement/too_many_args.s
+./../asm asm/invalid/bad_statement/too_many_args.s
 echo "${YELLOW}- Wrong type of argument for an instruction:"
-./../asm ../src/asm/tests/invalid/bad_statement/incorrect_args.s
+./../asm asm/invalid/bad_statement/incorrect_args.s
 echo "${YELLOW}- Wrong character in a label:"
-./../asm ../src/asm/tests/invalid/bad_labels/illegal_label_char.s
+./../asm asm/invalid/bad_labels/illegal_label_char.s
 echo "${YELLOW}- Reference to an unexisting label from a direct or indirect:"
 echo "${YELLOW}-   One unexiisting label:"
-./../asm ../src/asm/tests/invalid/bad_labels/one_outstanding_refs.s
+./../asm asm/invalid/bad_labels/one_outstanding_refs.s
 echo "${YELLOW}-   Multiple unexiisting labels:"
-./../asm ../src/asm/tests/invalid/bad_labels/multiple_outstanding_refs.s
+./../asm asm/invalid/bad_labels/multiple_outstanding_refs.s
 
 echo "${YELLOW}\nHow was it? did everything pass? [y/n]${NC}"
 if RET_YN
