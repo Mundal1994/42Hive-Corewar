@@ -163,3 +163,17 @@ else
 	tput clear
 	echo "- Error management is OK: ${RED}NO${NC}"
 fi
+
+echo "**********************************************************************************************"
+echo "THE VM"
+echo "**********************************************************************************************"
+echo "${YELLOW}Lets enter the ARENAAA!!!"
+echo "Are you ready to test the Virtual Machine? This will be lot's of fun."
+echo "Kick back, relax, and have a chat. It'll take about an hour...[y/n]${NC}"
+if RET_YN
+then
+	cd corewar
+	./run_tests.sh
+else
+	echo "okay..."
+fi
