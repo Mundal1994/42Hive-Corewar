@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GIVEN_VM=./corewar
-MY_VM=../corewar
+MY_VM=../../corewar
 CHAMP1=$1
 CHAMP2=$2
 CHAMP3=$3

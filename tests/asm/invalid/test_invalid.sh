@@ -7,7 +7,7 @@ DIR=$(dirname `which $0`)
 cd $DIR
 
 LEAKS () {
-	leaks --atExit -- ../../asm $1 &> res
+	leaks --atExit -- ../../../asm $1 &> res
 	if tail -n2 res | head -n1 | grep -q '0 leaks for 0 total leaked bytes.'; then
 		echo "${GREEN}No leaks.${NC}"
 	else
@@ -18,7 +18,7 @@ LEAKS () {
 
 TEST_INVALID () {
 	echo $1
-	../../asm $1 &> res
+	../../../asm $1 &> res
 	ERR=$(grep 'Error' res)
 	if [ "$ERR" != "" ]; then
 		echo "${GREEN}ERROR reported${NC}"
