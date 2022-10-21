@@ -17,7 +17,7 @@ HIVE_ASM=$1
 
 CHECK_LEAKS () {
 	echo -n "Leaks: "
-	leaks --atExit -- ../../asm $1 &> res
+	leaks --atExit -- ../../../asm $1 &> res
 	if tail -n2 res | head -n1 | grep -q '0 leaks for 0 total leaked bytes.'; then
 		echo "${GREEN}No leaks.${NC}"
 	else
@@ -31,7 +31,7 @@ CHECK_LEAKS () {
 RUN_ASM () {
 	echo "Running our asm:"
 	CHECK_LEAKS $1 $2
-	../../asm $1
+	../../../asm $1
 	echo ""
 }
 
@@ -62,7 +62,7 @@ COMPARE () {
 	/bin/rm dumpcor dumphive
 }
 
-if [[ -f "../../asm" ]]
+if [[ -f "../../../asm" ]]
 then
 	echo "${YELLOW}Testing valid maps...${NC}"
 else

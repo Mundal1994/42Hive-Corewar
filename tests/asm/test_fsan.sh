@@ -8,7 +8,7 @@ cd $DIR
 
 for f in $(find . -type f -name "*"); do
 	echo "$f"
-	../asm $f
+	../../asm $f
 	echo ""
 done
 
