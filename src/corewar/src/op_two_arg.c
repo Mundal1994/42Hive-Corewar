@@ -85,11 +85,11 @@ void	op_lld(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 	if ((*carriage)->arg_types[ARG1] == I)
 	{
 		if ((int16_t)(*carriage)->args_found[ARG1] < 0)
-			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, \
+			(*carriage)->args_found[ARG1] = (int16_t)read_bytes(0, \
 			(*carriage)->pos - ((int16_t)(*carriage)->args_found[ARG1] * -1), \
 			core, 2);
 		else
-			(*carriage)->args_found[ARG1] = (int32_t)read_bytes(0, \
+			(*carriage)->args_found[ARG1] = (int16_t)read_bytes(0, \
 			(*carriage)->pos + (int16_t)(*carriage)->args_found[ARG1], core, 2);
 	}
 	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0 && info)
