@@ -47,11 +47,15 @@
 # define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
 
 /* Champion name and description */
+# define CMD_CHAR			'.'
 # define NAME_CMD_STRING	".name"
 # define COMMENT_CMD_STRING	".comment"
 
 /* Corewar register will have REG_NUMBER registries */
 # define REG_NUMBER			16
+
+/* Nummber of operators */
+# define OP_NUMBER			16
 
 /* Cycle and lives tracking macros */
 # define CYCLE_TO_DIE		1536
