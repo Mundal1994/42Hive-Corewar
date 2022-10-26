@@ -42,10 +42,8 @@ static int	args_found_error(uint8_t core[MEM_SIZE], t_info *info, \
 			total = 0;
 			prev = (*carriage)->pos;
 			move_carriage(carriage, &total);
-			if (info->flag[V_FLAG] >= 16 && info->flag[V_FLAG] <= 24)
-			{
+			if ((info->flag[V_FLAG] & 16) == 16 && info->flag[V_FLAG] > 0)
 				print_flag16(core, carriage, total, prev);
-			}
 			return (TRUE);
 		}
 		++i;

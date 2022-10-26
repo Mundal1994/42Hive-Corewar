@@ -47,6 +47,7 @@ void	op_live(uint8_t core[MEM_SIZE], t_carriage **carriage, t_info *info)
 {
 	static int	found = FALSE;
 
+	(*carriage)->args_found[ARG1] = (int32_t)(*carriage)->args_found[ARG1];
 	if ((info->flag[V_FLAG] & 4) == 4 && info->flag[V_FLAG] > 0)
 		v_flag4_one_arg(carriage, "live");
 	(*carriage)->last_live_call = info->total_cycles;
