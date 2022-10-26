@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:53:37 by cchen             #+#    #+#             */
-/*   Updated: 2022/09/29 16:00:52 by caruychen        ###   ########.fr       */
+/*   Updated: 2022/10/26 10:22:15 by caruychen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	assemble_init(t_assembler *assembler, t_parser *parser,
 	}
 	assembler->parser = parser;
 	len = ft_strrchr(arg, '.') - arg + 1;
-	cor_size = 8 + PROG_NAME_LENGTH + COMMENT_LENGTH + parser->size;
+	cor_size = 16 + PROG_NAME_LENGTH + COMMENT_LENGTH + parser->size;
 	if (!string_from_n(&assembler->filename, arg, len)
 		|| !string_concat(&assembler->filename, "cor")
 		|| !string_new(&assembler->buffer, cor_size))
